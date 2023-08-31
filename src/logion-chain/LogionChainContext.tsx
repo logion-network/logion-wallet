@@ -21,6 +21,7 @@ export interface LogionChainContextType {
     api: LogionNodeApiClass | null,
     injectedAccountsConsumptionState: ConsumptionStatus
     injectedAccounts: InjectedAccount[] | null,
+    metaMaskAccounts: InjectedAccount[] | null,
     edgeNodes: Node[],
     connectedNodeMetadata: NodeMetadata | null,
     extensionsEnabled: boolean,
@@ -36,6 +37,7 @@ export interface LogionChainContextType {
     getOfficer?: (address: string | undefined) => LegalOfficerClass | undefined,
     saveOfficer?: (legalOfficer: LegalOfficer) => Promise<void>,
     reconnect: () => void,
+    tryEnableMetaMask: () => Promise<void>,
 }
 
 export interface FullLogionChainContextType extends LogionChainContextType {
@@ -49,6 +51,7 @@ const initState = (): FullLogionChainContextType => ({
     api: null,
     injectedAccountsConsumptionState: 'PENDING',
     injectedAccounts: null,
+    metaMaskAccounts: null,
     edgeNodes: config.edgeNodes,
     connectedNodeMetadata: null,
     extensionsEnabled: false,
@@ -62,6 +65,7 @@ const initState = (): FullLogionChainContextType => ({
     authenticate: (_: ValidAccountId[]) => Promise.reject(),
     authenticateAddress: (_: ValidAccountId) => Promise.reject(),
     reconnect: () => {},
+    tryEnableMetaMask: async () => {},
 });
 
 type ActionType = 'SET_SELECT_ADDRESS'
@@ -71,6 +75,7 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'START_INJECTED_ACCOUNTS_CONSUMPTION'
     | 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'
     | 'SET_INJECTED_ACCOUNTS'
+    | 'SET_METAMASK_ACCOUNTS'
     | 'EXTENSIONS_ENABLED'
     | 'SET_LOGOUT'
     | 'LOGOUT'
@@ -82,6 +87,7 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'RESET_CLIENT'
     | 'RECONNECT'
     | 'SET_RECONNECT'
+    | 'SET_TRY_ENABLE_METAMASK'
 ;
 
 interface Action {
@@ -89,6 +95,7 @@ interface Action {
     api?: LogionNodeApiClass,
     error?: string,
     injectedAccounts?: InjectedAccount[],
+    metaMaskAccounts?: InjectedAccount[],
     connectedNodeMetadata?: NodeMetadata,
     client?: LogionClient,
     signer?: ExtensionSigner,
@@ -103,6 +110,7 @@ interface Action {
     authenticateAddress?: (address: ValidAccountId) => Promise<LogionClient | undefined>;
     registeredLegalOfficers?: Set<string>;
     reconnect?: () => void;
+    tryEnableMetaMask?: () => Promise<void>;
 }
 
 function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
@@ -138,7 +146,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                 client: action.client!,
                 connectedNodeMetadata: action.connectedNodeMetadata!,
                 registeredLegalOfficers: action.registeredLegalOfficers,
-                ...buildClientHelpers(action.client!, state.injectedAccounts!, action.registeredLegalOfficers!),
+                ...buildClientHelpers(action.client!, state.injectedAccounts || [], state.metaMaskAccounts || [], action.registeredLegalOfficers!),
             };
 
         case 'START_INJECTED_ACCOUNTS_CONSUMPTION':
@@ -148,16 +156,20 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             return { ...state, injectedAccountsConsumptionState: 'STARTED' };
 
         case 'SET_INJECTED_ACCOUNTS':
+        case 'SET_METAMASK_ACCOUNTS': {
             let helpers = {};
+            const injectedAccounts = action.injectedAccounts || state.injectedAccounts;
+            const metaMaskAccounts = action.metaMaskAccounts || state.metaMaskAccounts;
             if(state.client && state.registeredLegalOfficers) {
-                helpers = buildClientHelpers(state.client!, action.injectedAccounts!, state.registeredLegalOfficers!);
+                helpers = buildClientHelpers(state.client!, injectedAccounts || [], metaMaskAccounts || [], state.registeredLegalOfficers!);
             }
             return {
                 ...state,
-                injectedAccounts: action.injectedAccounts!,
+                injectedAccounts,
+                metaMaskAccounts,
                 ...helpers,
             };
-
+        }
         case 'EXTENSIONS_ENABLED':
             return { ...state, extensionsEnabled: true, signer: action.signer || null };
 
@@ -173,7 +185,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             return {
                 ...state,
                 client,
-                ...buildClientHelpers(client, state.injectedAccounts!, state.registeredLegalOfficers!),
+                ...buildClientHelpers(client, state.injectedAccounts || [], state.metaMaskAccounts || [], state.registeredLegalOfficers!),
             };
         }
 
@@ -191,7 +203,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                 ...state,
                 client,
                 timer: undefined,
-                ...buildClientHelpers(client, state.injectedAccounts!, state.registeredLegalOfficers!),
+                ...buildClientHelpers(client, state.injectedAccounts || [], state.metaMaskAccounts || [], state.registeredLegalOfficers!),
             };
         }
 
@@ -248,7 +260,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                 }
                 return {
                     ...state,
-                    ...buildClientHelpers(client, state.injectedAccounts!, action.registeredLegalOfficers!),
+                    ...buildClientHelpers(client, state.injectedAccounts || [], state.metaMaskAccounts || [], action.registeredLegalOfficers!),
                     client,
                 }
             }
@@ -264,13 +276,23 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                 api: null,
                 connecting: false,
             }
+        case 'SET_TRY_ENABLE_METAMASK':
+            return {
+                ...state,
+                tryEnableMetaMask: action.tryEnableMetaMask!,
+            };
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
     }
 };
 
-function buildClientHelpers(client: LogionClient, injectedAccounts: InjectedAccount[], legalOfficers: Set<string>): {
+function buildClientHelpers(
+    client: LogionClient,
+    injectedAccounts: InjectedAccount[],
+    metaMaskAccounts: InjectedAccount[],
+    legalOfficers: Set<string>
+): {
     axiosFactory: AxiosFactory,
     isCurrentAuthenticated: () => boolean,
     getOfficer: (owner: string | undefined) => LegalOfficerClass | undefined,
@@ -282,7 +304,7 @@ function buildClientHelpers(client: LogionClient, injectedAccounts: InjectedAcco
         isCurrentAuthenticated: () => client.isTokenValid(DateTime.now()),
         getOfficer: address => client.allLegalOfficers.find(legalOfficer => legalOfficer.address === address),
         saveOfficer: legalOfficer => client.directoryClient.createOrUpdate(legalOfficer),
-        accounts: buildAccounts(injectedAccounts, client.currentAddress, client, legalOfficers),
+        accounts: buildAccounts(metaMaskAccounts.concat(injectedAccounts), client.currentAddress, client, legalOfficers),
     }
 }
 
@@ -294,22 +316,20 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
     } else if(state.injectedAccountsConsumptionState === 'STARTING') {
         dispatch({type: 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'});
 
-        let metamaskAccounts: InjectedAccount[] = [];
-        const metaMaskEnabled = await enableMetaMask(config.APP_NAME);
-        if(metaMaskEnabled) {
-            metamaskAccounts = await allMetamaskAccounts();
-        }
-
-        const register = await enableExtensions(config.APP_NAME);
         if(isExtensionAvailable()) {
+            const register = await enableExtensions(config.APP_NAME);
             dispatch({
                 type: 'EXTENSIONS_ENABLED',
                 signer: new ExtensionSigner(SIGN_AND_SEND_STRATEGY)
             });
-            register((accounts: InjectedAccount[]) => {
+            dispatch({
+                type: 'SET_INJECTED_ACCOUNTS',
+                injectedAccounts: [],
+            });
+            register((injectedAccounts: InjectedAccount[]) => {
                 dispatch({
                     type: 'SET_INJECTED_ACCOUNTS',
-                    injectedAccounts: metamaskAccounts.concat(accounts)
+                    injectedAccounts,
                 });
             });
         } else {
@@ -318,7 +338,7 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
             });
             dispatch({
                 type: 'SET_INJECTED_ACCOUNTS',
-                injectedAccounts: metamaskAccounts
+                injectedAccounts: [],
             });
         }
     }
@@ -507,6 +527,33 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
             });
         }
     }, [ state, reconnect ]);
+
+    const tryEnableMetaMask = useCallback(async () => {
+        if(state.metaMaskAccounts === null) {
+            dispatch({
+                type: 'SET_METAMASK_ACCOUNTS',
+                metaMaskAccounts: [],
+            });
+    
+            const metaMaskEnabled = await enableMetaMask(config.APP_NAME);
+            if(metaMaskEnabled) {
+                const metaMaskAccounts = await allMetamaskAccounts();
+                dispatch({
+                    type: 'SET_METAMASK_ACCOUNTS',
+                    metaMaskAccounts,
+                });
+            }
+        }
+    }, [ state.metaMaskAccounts ]);
+
+    useEffect(() => {
+        if(state.tryEnableMetaMask !== tryEnableMetaMask) {
+            dispatch({
+                type: 'SET_TRY_ENABLE_METAMASK',
+                tryEnableMetaMask,
+            });
+        }
+    }, [ state.tryEnableMetaMask, tryEnableMetaMask ]);
 
     return <LogionChainContext.Provider value={state}>
         {props.children}

@@ -53,13 +53,25 @@
     margin-right: 60px;
 }
 
+.Login .extensions-container {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+}
+
+.Login .extensions-container .metamask img {
+    margin-right: 10px;
+}
+
 .Login .node-info {
     text-align: center;
     margin-bottom: 60px;
 }
 
 .Login .node-info .name {
-    font-size: 1.7rem;
+    font-size: 1.2rem;
     font-weight: bold;
 }
 

@@ -12,6 +12,7 @@ import AbsoluteLogo from './AbsoluteLogo';
 
 import './Login.css';
 import Icon from "./common/Icon";
+import Alert from "./common/Alert";
 
 export const LOGIN_PATH = "/login";
 
@@ -31,12 +32,18 @@ function referrer(location: Location): string {
 export default function Login() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { connectedNodeMetadata, accounts, authenticate } = useLogionChain();
+    const { connectedNodeMetadata, accounts, authenticate, tryEnableMetaMask, metaMaskAccounts } = useLogionChain();
     const [ selectedAddresses, setSelectedAddresses ] = useState<ValidAccountId[]>([]);
+    const [ error, setError ] = useState<string>();
 
     const startLogin = useCallback(async () => {
-        await authenticate(selectedAddresses);
-        navigate(referrer(location));
+        setError(undefined);
+        try {
+            await authenticate(selectedAddresses);
+            navigate(referrer(location));
+        } catch(e) {
+            setError((e as Error).message);
+        }
     }, [ selectedAddresses, navigate, location, authenticate ]);
 
     if(accounts === null || connectedNodeMetadata === null) {
@@ -97,6 +104,27 @@ export default function Login() {
                         onClick={ startLogin }
                     >
                         Log in
+                    </Button>
+
+                    {
+                        error !== undefined &&
+                        <Alert
+                            variant="warning_color"
+                        >
+                            { error }
+                        </Alert>
+                    }
+                </div>
+
+                <div className="extensions-container">
+                    <h2>You do not see your account?</h2>
+
+                    <Button
+                        className="metamask"
+                        disabled={ metaMaskAccounts !== null }
+                        onClick={ tryEnableMetaMask }
+                    >
+                       <Icon icon={{ id: "metamask" }} height="30px" /> Try with MetaMask
                     </Button>
                 </div>
 

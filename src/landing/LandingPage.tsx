@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,6 +11,7 @@ import AbsoluteLogo from '../AbsoluteLogo';
 
 import './LandingPage.css';
 import { Tutorial } from './Tutorial';
+import { useLogionChain } from '../logion-chain';
 
 export interface Props {
     activeStep: Step,
@@ -21,6 +22,7 @@ export type Step = 'install' | 'create';
 type DialogType = 'install' | 'create' | 'recover' | null;
 
 export default function LandingPage(props: Props) {
+    const { tryEnableMetaMask } = useLogionChain();
     const [ showDialog, setShowDialog ] = useState<DialogType>(null);
 
     let stepsLeft;
@@ -32,6 +34,10 @@ export default function LandingPage(props: Props) {
         stepsLeft = 1;
     }
 
+    const loginWithMetaMask = useCallback(async () => {
+        await tryEnableMetaMask();
+    }, []);
+
     return (
         <div className="LandingPage">
             <Container fluid className="header-container">
@@ -41,6 +47,7 @@ export default function LandingPage(props: Props) {
                         <div className="call">
                             <span className="first">You are only { stepsLeft } (simple) steps away</span>
                             <span className="second">from your logion legal protection</span>
+                            <span className="third">(Using MetaMask? Click <Button variant="link" slim narrow onClick={ loginWithMetaMask }>here</Button>)</span>
                         </div>
                     </header>
                 </Container>

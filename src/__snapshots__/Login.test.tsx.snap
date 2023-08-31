@@ -66,6 +66,27 @@ exports[`Login renders 1`] = `
       </Button>
     </div>
     <div
+      className="extensions-container"
+    >
+      <h2>
+        You do not see your account?
+      </h2>
+      <Button
+        className="metamask"
+        disabled={true}
+      >
+        <Icon
+          height="30px"
+          icon={
+            Object {
+              "id": "metamask",
+            }
+          }
+        />
+         Try with MetaMask
+      </Button>
+    </div>
+    <div
       className="node-info"
     >
       <p
