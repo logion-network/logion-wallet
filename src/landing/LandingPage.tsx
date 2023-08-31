@@ -36,7 +36,7 @@ export default function LandingPage(props: Props) {
 
     const loginWithMetaMask = useCallback(async () => {
         await tryEnableMetaMask();
-    }, []);
+    }, [ tryEnableMetaMask ]);
 
     return (
         <div className="LandingPage">
