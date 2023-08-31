@@ -12,6 +12,7 @@ exports[`LocPublishLinkButton renders 1`] = `
       "status": "DRAFT",
       "submitter": Object {
         "address": "link-submitter",
+        "equals": [Function],
         "toKey": [Function],
         "type": "Polkadot",
       },

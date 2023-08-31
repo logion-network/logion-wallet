@@ -15,7 +15,19 @@ import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import './LocItems.css';
 import { Viewer, useCommonContext } from "src/common/CommonContext";
 import { useLocContext } from "./LocContext";
-import { buildItemTableColumns, LocItem, useDeleteMetadataCallback, useDeleteFileCallback, canDelete, canPublish, useDeleteLinkCallback, useRequestReviewCallback, canReview, canRequestReview } from "./LocItem";
+import {
+    buildItemTableColumns,
+    LocItem,
+    useDeleteMetadataCallback,
+    useDeleteFileCallback,
+    canDelete,
+    canPublish,
+    useDeleteLinkCallback,
+    useRequestReviewCallback,
+    canReview,
+    canRequestReview,
+    canAcknowledge
+} from "./LocItem";
 import StatusCell from "src/common/StatusCell";
 import { POLKADOT } from "src/common/ColorTheme";
 import AcknowledgeButton from "./AcknowledgeButton";
@@ -80,21 +92,21 @@ export function LocItems(props: LocItemsProps) {
         }
 
         if(locItem.type === 'Data') {
-            if(canPublish(viewer, accounts?.current?.accountId, loc!, locItem)) {
+            if(canPublish(viewer, loc!, locItem, props.contributionMode)) {
                 buttons.push(<LocPublishPublicDataButton key={++key} locItem={ locItem } locId={ locId } />);
             }
             if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
                 buttons.push(<DeleteButton key={++key} locItem={ locItem } action={ deleteMetadata } />);
             }
         } else if(locItem.type === 'Linked LOC') {
-            if(canPublish(viewer, accounts?.current?.accountId, loc!, locItem)) {
+            if(canPublish(viewer, loc!, locItem, props.contributionMode)) {
                 buttons.push(<LocPublishLinkButton  key={++key}locItem={ locItem } locId={ locId } />);
             }
             if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
                 buttons.push(<DeleteButton key={++key} locItem={ locItem } action={ deleteLinkCallback } />);
             }
         } else if(locItem.type === 'Document') {
-            if(canPublish(viewer, accounts?.current?.accountId, loc!, locItem)) {
+            if(canPublish(viewer, loc!, locItem, props.contributionMode)) {
                 buttons.push(<LocPublishPrivateFileButton key={++key} locItem={ locItem } locId={ locId } />);
             }
             if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
@@ -102,19 +114,21 @@ export function LocItems(props: LocItemsProps) {
             }
         }
 
-        if(locItem.status === "PUBLISHED" && locItem.type !== "Linked LOC") {
-            if(viewer === "User") {
-                buttons.push(<StatusCell
-                    key={++key}
-                    icon={ { id: 'published' } }
-                    text="Published"
-                    color={ POLKADOT }
-                    tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
-                    tooltipId={ `published-${locItem.type}-${locItem.name}` }
-                />);
-            } else {
-                buttons.push(<AcknowledgeButton key={++key} locItem={ locItem } locId={ locId } />);
-            }
+        const acknowledge = canAcknowledge(viewer, loc, locItem, props.contributionMode);
+
+        if (locItem.status === "PUBLISHED" && locItem.type !== "Linked LOC" && !acknowledge) {
+            buttons.push(<StatusCell
+                key={ ++key }
+                icon={ { id: 'published' } }
+                text="Published"
+                color={ POLKADOT }
+                tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
+                tooltipId={ `published-${ locItem.type }-${ locItem.name }` }
+            />);
+        }
+
+        if (acknowledge) {
+            buttons.push(<AcknowledgeButton key={++key} locItem={ locItem } locId={ locId } />);
         }
 
         if(locItem.status === "ACKNOWLEDGED") {

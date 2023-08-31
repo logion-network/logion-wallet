@@ -229,6 +229,8 @@ function givenMetadataItem(request: LocData, status: ItemStatus): LocItem[] {
         value: "Value",
         published: status === "PUBLISHED",
         status,
+        acknowledgedByOwner: status === "ACKNOWLEDGED",
+        acknowledgedByVerifiedIssuer: false,
     });
     return [{
         name: "Name",
@@ -265,6 +267,8 @@ function givenFileItem(request: LocData, status: ItemStatus): LocItem[] {
         contentType: "text/plain",
         size: 42n,
         status,
+        acknowledgedByOwner: status === "ACKNOWLEDGED",
+        acknowledgedByVerifiedIssuer: false,
     });
     return [{
         name: "Name",

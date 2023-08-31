@@ -4,6 +4,7 @@ import { It, Mock } from "moq.ts";
 import type { Text, Compact, u128 } from '@polkadot/types-codec';
 import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { TEST_WALLET_USER } from "src/wallet-user/TestData";
+import { AccountId } from "@logion/node-api/dist/types/Types";
 
 export const DEFAULT_LEGAL_OFFICER = mockValidPolkadotAccountId("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"); // Alice
 export const ANOTHER_LEGAL_OFFICER = mockValidPolkadotAccountId("5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"); // Bob
@@ -18,6 +19,7 @@ export function mockValidAccountId(address: string, type: AccountType): ValidAcc
         address,
         type,
         toKey: () => `${type}:${address}`,
+        equals: (other: AccountId) => other.type === type && other.address === address,
     } as ValidAccountId;
 }
 
@@ -58,7 +60,8 @@ export const CLOSED_IDENTITY_LOC: LegalOfficerCase = {
             nature: Hash.fromHex("0x636af5586476273b2b9d9fc318e0d1f124f4e9591b7218da4e4e27f6b071cc94"),
             submitter: TEST_WALLET_USER,
             size: 42n,
-            acknowledged: true,
+            acknowledgedByOwner: true,
+            acknowledgedByVerifiedIssuer: false,
         }
     ],
     metadata: [],

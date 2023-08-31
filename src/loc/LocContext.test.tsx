@@ -246,6 +246,8 @@ function givenDraftItems() {
         value: "Some value",
         published: false,
         status: "DRAFT",
+        acknowledgedByOwner: false,
+        acknowledgedByVerifiedIssuer: false,
     })
     _locData.files.push({
         hash: Hash.of("new-hash"),
@@ -258,6 +260,8 @@ function givenDraftItems() {
         contentType: "text/plain",
         size: 42n,
         status: "DRAFT",
+        acknowledgedByOwner: false,
+        acknowledgedByVerifiedIssuer: false,
     })
     _locData.links.push({
         addedOn: "",

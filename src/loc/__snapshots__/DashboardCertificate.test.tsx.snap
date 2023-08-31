@@ -30,6 +30,7 @@ exports[`DashboardCertificate renders item 1`] = `
       "locType": "Identity",
       "requesterAddress": Object {
         "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "equals": [Function],
         "toKey": [Function],
         "type": "Polkadot",
       },
