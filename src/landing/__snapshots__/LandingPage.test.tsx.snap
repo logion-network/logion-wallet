@@ -28,6 +28,20 @@ exports[`renders create 1`] = `
           >
             from your logion legal protection
           </span>
+          <span
+            className="third"
+          >
+            (Using MetaMask? Click 
+            <Button
+              narrow={true}
+              onClick={[Function]}
+              slim={true}
+              variant="link"
+            >
+              here
+            </Button>
+            )
+          </span>
         </div>
       </header>
     </Container>
@@ -560,6 +574,20 @@ exports[`renders install 1`] = `
             className="second"
           >
             from your logion legal protection
+          </span>
+          <span
+            className="third"
+          >
+            (Using MetaMask? Click 
+            <Button
+              narrow={true}
+              onClick={[Function]}
+              slim={true}
+              variant="link"
+            >
+              here
+            </Button>
+            )
           </span>
         </div>
       </header>

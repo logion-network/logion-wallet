@@ -21,27 +21,35 @@ export default function Main() {
 }
 
 export function AuthenticatedMain() {
-    const { injectedAccounts, extensionsEnabled } = useLogionChain();
+    const { injectedAccounts, extensionsEnabled, accounts } = useLogionChain();
 
     if (!extensionsEnabled) {
         return <Loader text="Enabling extensions..." />;
     } else {
-        if (isExtensionAvailable()) {
-            if (injectedAccounts === null) {
-                return <Loader text="Loading accounts from extension..." />;
-            } else {
-                if (injectedAccounts.length > 0) {
-                    return (
-                        <CommonContextProvider>
-                            <RootRouter />
-                        </CommonContextProvider>
-                    );
-                } else {
-                    return <LandingPage activeStep="create" />;
-                }
-            }
+        if (accounts !== null && accounts.all.length > 0) {
+            return (
+                <CommonContextProvider>
+                    <RootRouter />
+                </CommonContextProvider>
+            );
         } else {
-            return <LandingPage activeStep="install" />;
+            if (isExtensionAvailable()) {
+                if (injectedAccounts === null) {
+                    return <Loader text="Loading accounts from extension..." />;
+                } else {
+                    if (injectedAccounts.length > 0) {
+                        return (
+                            <CommonContextProvider>
+                                <RootRouter />
+                            </CommonContextProvider>
+                        );
+                    } else {
+                        return <LandingPage activeStep="create" />;
+                    }
+                }
+            } else {
+                return <LandingPage activeStep="install" />;
+            }
         }
     }
 }
