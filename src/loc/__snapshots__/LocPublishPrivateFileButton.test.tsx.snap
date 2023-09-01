@@ -12,6 +12,7 @@ exports[`LocPublishPrivateFileButton renders 1`] = `
       "status": "DRAFT",
       "submitter": Object {
         "address": "file-submitter",
+        "equals": [Function],
         "toKey": [Function],
         "type": "Polkadot",
       },

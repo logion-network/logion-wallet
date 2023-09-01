@@ -12,6 +12,7 @@ exports[`LocPublishPublicDataButton renders 1`] = `
       "status": "DRAFT",
       "submitter": Object {
         "address": "data-submitter",
+        "equals": [Function],
         "toKey": [Function],
         "type": "Polkadot",
       },

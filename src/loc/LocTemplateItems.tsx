@@ -8,7 +8,20 @@ import { useResponsiveContext } from "src/common/Responsive";
 import Table from "src/common/Table";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
-import { buildItemTableColumns, canAdd, canDelete, canPublish, canRequestReview, canReview, LocItem, useDeleteFileCallback, useDeleteLinkCallback, useDeleteMetadataCallback, useRequestReviewCallback } from "./LocItem";
+import {
+    buildItemTableColumns,
+    canAdd,
+    canDelete,
+    canPublish,
+    canRequestReview,
+    canReview,
+    LocItem,
+    useDeleteFileCallback,
+    useDeleteLinkCallback,
+    useDeleteMetadataCallback,
+    useRequestReviewCallback,
+    canAcknowledge
+} from "./LocItem";
 import LocLinkButton from "./LocLinkButton";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocPublicDataButton } from "./LocPublicDataButton";
@@ -87,7 +100,7 @@ export default function LocTemplateItems(props: Props) {
                 buttons.push(<ReviewItemButtons key={++key} locItem={ item }/>);
             }
 
-            if(canPublish(viewer, accounts?.current?.accountId, loc, item)) {
+            if(canPublish(viewer, loc, item, props.contributionMode)) {
                 if(item.type === "Data") {
                     buttons.push(<LocPublishPublicDataButton key={++key} locItem={ item } locId={ locId } />);
                 } else if(item.type === "Document") {
@@ -108,19 +121,21 @@ export default function LocTemplateItems(props: Props) {
                 );
             }
 
-            if(item.status === "PUBLISHED" && item.type !== "Linked LOC") {
-                if(viewer === "User") {
-                    buttons.push(<StatusCell
-                        key={++key}
-                        icon={ { id: 'published' } }
-                        text="Published"
-                        color={ POLKADOT }
-                        tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
-                        tooltipId={ `published-${item.type}-${item.name}` }
-                    />);
-                } else {
-                    buttons.push(<AcknowledgeButton key={++key} locItem={ item } locId={ locId } />);
-                }
+            const acknowledge = canAcknowledge(viewer, loc, item, props.contributionMode);
+
+            if(item.status === "PUBLISHED" && item.type !== "Linked LOC" && !acknowledge) {
+                buttons.push(<StatusCell
+                    key={++key}
+                    icon={ { id: 'published' } }
+                    text="Published"
+                    color={ POLKADOT }
+                    tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
+                    tooltipId={ `published-${item.type}-${item.name}` }
+                />);
+            }
+
+            if (acknowledge) {
+                buttons.push(<AcknowledgeButton key={++key} locItem={ item } locId={ locId } />);
             }
 
             if(item.status === "ACKNOWLEDGED") {

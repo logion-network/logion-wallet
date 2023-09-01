@@ -21,7 +21,7 @@ export default function TokensRecordButton(props: { contributionMode?: Contribut
             return tokensRecordPath(loc.id);
         } else if(props.contributionMode === "Requester") {
             return requesterTokensRecordPath(loc.id);
-        } else if(props.contributionMode === "Issuer") {
+        } else if(props.contributionMode === "VerifiedIssuer") {
             return issuerTokensRecordPath(loc.id);
         } else {
             return "";

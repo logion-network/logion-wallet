@@ -92,7 +92,7 @@ exports[`LocDetails renders for user as verified issuer 1`] = `
   }
 >
   <UserContextualizedLocDetails
-    contributionMode="Issuer"
+    contributionMode="VerifiedIssuer"
   />
 </UserLocContextProvider>
 `;

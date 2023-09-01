@@ -187,7 +187,7 @@ exports[`renders 1`] = `
     element={
       <UserLocDetails
         backPath="/user/verified-issuer"
-        contributionMode="Issuer"
+        contributionMode="VerifiedIssuer"
         detailsPath={[Function]}
       />
     }
@@ -216,7 +216,7 @@ exports[`renders 1`] = `
   <Route
     element={
       <UserTokensRecordPane
-        contributionMode="Issuer"
+        contributionMode="VerifiedIssuer"
       />
     }
     path="/verified-issuer/:locId/records"
@@ -232,7 +232,7 @@ exports[`renders 1`] = `
   <Route
     element={
       <UserTokensRecordDocumentClaimHistory
-        contributionMode="Issuer"
+        contributionMode="VerifiedIssuer"
       />
     }
     path="/verified-issuer/:locId/records/:recordId/claims/:hash"

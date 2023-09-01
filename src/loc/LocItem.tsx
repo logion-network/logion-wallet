@@ -51,6 +51,8 @@ export interface LocItem {
     storageFeePaidBy?: string;
     reviewedOn?: string;
     rejectReason?: string;
+    acknowledgedByOwner?: boolean;
+    acknowledgedByVerifiedIssuer?: boolean;
 }
 
 export enum PublishStatus {
@@ -181,7 +183,7 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
 }
 
 function canViewFile(viewer: Viewer, address: string | undefined, item: LocItem, contributionMode?: ContributionMode): boolean {
-    return (contributionMode !== 'Issuer' || item.submitter === address) && isSet(item) && (viewer === "User" || item.status !== "DRAFT");
+    return (contributionMode !== 'VerifiedIssuer' || item.submitter === address) && isSet(item) && (viewer === "User" || item.status !== "DRAFT");
 }
 
 function isSet(item: LocItem) {
@@ -255,10 +257,69 @@ export function canAdd(viewer: Viewer, loc: LocData) {
         || (viewer === "LegalOfficer" && (!loc.voidInfo && loc.status === "OPEN"));
 }
 
-export function canPublish(viewer: Viewer, account: ValidAccountId | undefined, loc: LocData, item: LocItem) {
-    return (item.status === "REVIEW_ACCEPTED" || (item.status === "DRAFT" && item.type === "Linked LOC" && viewer === "LegalOfficer"))
+type ActorType = "Owner" | ContributionMode;
+
+function getActorType(viewer: Viewer, contributionMode?: ContributionMode): ActorType {
+    if (viewer === "LegalOfficer") {
+        return "Owner"
+    } else {
+        return contributionMode!
+    }
+}
+
+function getSubmitterType(loc: LocData, item: LocItem): ActorType {
+    const submittedByOwner = item?.submitter?.address === loc.ownerAddress && item?.submitter?.type === "Polkadot";
+    const submittedByRequester = loc.requesterAddress !== undefined && item.submitter !== undefined && loc.requesterAddress.equals(item.submitter);
+
+    if (submittedByOwner) {
+        return "Owner";
+    } else if (submittedByRequester) {
+        return "Requester";
+    } else {
+        return "VerifiedIssuer";
+    }
+}
+
+export function canPublish(viewer: Viewer, loc: LocData, item: LocItem, contributionMode?: ContributionMode): boolean {
+
+    const actorType = getActorType(viewer, contributionMode);
+    if (actorType === "VerifiedIssuer") {
+        return false;
+    }
+
+    const submitterType = getSubmitterType(loc, item);
+
+    const publishedByOwner = submitterType === "Owner" || loc.requesterAddress === undefined || loc.requesterAddress.type !== "Polkadot" || item.type === "Linked LOC";
+
+    const publishable =
+        item.status === "REVIEW_ACCEPTED" ||
+        (item.status === "DRAFT" && item.type === "Linked LOC");
+
+    return publishable
         && loc.status === "OPEN" && !loc.voidInfo
-        && ((item.submitter?.type === "Polkadot" && item.submitter?.address === account?.address) || (item.submitter?.type !== "Polkadot" && viewer === "LegalOfficer"));
+        && (
+            (actorType === "Owner" && publishedByOwner) ||
+            (actorType === "Requester" && !publishedByOwner)
+        );
+}
+
+export function canAcknowledge(viewer: Viewer, loc: LocData, item: LocItem, contributionMode?: ContributionMode): boolean {
+
+    const actorType = getActorType(viewer, contributionMode);
+    if (actorType === "Requester") {
+        return false;
+    }
+
+    const submitterType = getSubmitterType(loc, item);
+
+    const acknowledgeable = item.status === "PUBLISHED";
+
+    return acknowledgeable
+        && loc.status === "OPEN" && !loc.voidInfo
+        && (
+            (submitterType === "VerifiedIssuer" && actorType === "VerifiedIssuer" && item.acknowledgedByVerifiedIssuer !== undefined && !item.acknowledgedByVerifiedIssuer) ||
+            (actorType === "Owner" && item.acknowledgedByOwner !== undefined && !item.acknowledgedByOwner)
+        )
 }
 
 export function canRequestReview(viewer: Viewer, loc: LocData, item: LocItem) {

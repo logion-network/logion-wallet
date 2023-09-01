@@ -25,6 +25,7 @@ exports[`AddressSwitcher renders 1`] = `
             Object {
               "accountId": Object {
                 "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+                "equals": [Function],
                 "toKey": [Function],
                 "type": "Polkadot",
               },
@@ -59,6 +60,7 @@ exports[`AddressSwitcher renders 1`] = `
             Object {
               "accountId": Object {
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "equals": [Function],
                 "toKey": [Function],
                 "type": "Polkadot",
               },

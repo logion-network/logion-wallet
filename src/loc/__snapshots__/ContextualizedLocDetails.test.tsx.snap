@@ -36,6 +36,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
       "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
       "requesterAddress": Object {
         "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "equals": [Function],
         "toKey": [Function],
         "type": "Polkadot",
       },
@@ -80,6 +81,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },
@@ -136,6 +138,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },
@@ -188,6 +191,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },
@@ -233,6 +237,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },
@@ -278,6 +283,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },
@@ -327,6 +333,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },
@@ -366,6 +373,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
       "locType": "Identity",
       "requesterAddress": Object {
         "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "equals": [Function],
         "toKey": [Function],
         "type": "Polkadot",
       },
@@ -404,6 +412,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },
@@ -454,6 +463,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },
@@ -500,6 +510,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },
@@ -539,6 +550,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },
@@ -578,6 +590,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": Object {
           "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "equals": [Function],
           "toKey": [Function],
           "type": "Polkadot",
         },

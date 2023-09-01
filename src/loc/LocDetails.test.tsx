@@ -33,7 +33,7 @@ describe("LocDetails", () => {
         const result = shallowRender(<UserLocDetails
             backPath="/"
             detailsPath={() => "/details"}
-            contributionMode='Issuer'
+            contributionMode='VerifiedIssuer'
         />);
         expect(result).toMatchSnapshot();
     })

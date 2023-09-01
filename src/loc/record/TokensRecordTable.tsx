@@ -107,7 +107,7 @@ function documentClaimHistory(viewer: Viewer, loc: LocData, record: TokensRecord
         return tokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
     } else if(contributionMode === "Requester") {
         return requesterTokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
-    } else if(contributionMode === "Issuer") {
+    } else if(contributionMode === "VerifiedIssuer") {
         return issuerTokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
     } else {
         return "";
