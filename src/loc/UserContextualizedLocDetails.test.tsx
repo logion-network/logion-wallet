@@ -23,7 +23,7 @@ describe("UserContextualizedLocDetails", () => {
         const uuid = UUID.fromDecimalString(OPEN_IDENTITY_LOC_ID)!;
         setLocId(uuid);
         setLoc(buildLocRequest(uuid, OPEN_IDENTITY_LOC));
-        const tree = shallowRender(<UserContextualizedLocDetails contributionMode="Issuer" />);
+        const tree = shallowRender(<UserContextualizedLocDetails contributionMode="VerifiedIssuer" />);
         expect(tree).toMatchSnapshot();
     })
 })

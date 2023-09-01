@@ -27,7 +27,7 @@ export default function LocPane(props: Props) {
 
     let paneTitle: string = "";
     let paneIcon: string = "";
-    if (contributionMode === 'Issuer') {
+    if (contributionMode === 'VerifiedIssuer') {
         paneTitle = "Verified Issuer LOC Management";
         paneIcon = 'issuer-icon';
     } else if (loc.locType === 'Transaction') {

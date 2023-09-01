@@ -183,7 +183,7 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
 }
 
 function canViewFile(viewer: Viewer, address: string | undefined, item: LocItem, contributionMode?: ContributionMode): boolean {
-    return (contributionMode !== 'Issuer' || item.submitter === address) && isSet(item) && (viewer === "User" || item.status !== "DRAFT");
+    return (contributionMode !== 'VerifiedIssuer' || item.submitter === address) && isSet(item) && (viewer === "User" || item.status !== "DRAFT");
 }
 
 function isSet(item: LocItem) {
@@ -276,14 +276,14 @@ function getSubmitterType(loc: LocData, item: LocItem): ActorType {
     } else if (submittedByRequester) {
         return "Requester";
     } else {
-        return "Issuer";
+        return "VerifiedIssuer";
     }
 }
 
 export function canPublish(viewer: Viewer, loc: LocData, item: LocItem, contributionMode?: ContributionMode): boolean {
 
     const actorType = getActorType(viewer, contributionMode);
-    if (actorType === "Issuer") {
+    if (actorType === "VerifiedIssuer") {
         return false;
     }
 
@@ -317,7 +317,7 @@ export function canAcknowledge(viewer: Viewer, loc: LocData, item: LocItem, cont
     return acknowledgeable
         && loc.status === "OPEN" && !loc.voidInfo
         && (
-            (submitterType === "Issuer" && actorType === "Issuer" && item.acknowledgedByVerifiedIssuer !== undefined && !item.acknowledgedByVerifiedIssuer) ||
+            (submitterType === "VerifiedIssuer" && actorType === "VerifiedIssuer" && item.acknowledgedByVerifiedIssuer !== undefined && !item.acknowledgedByVerifiedIssuer) ||
             (actorType === "Owner" && item.acknowledgedByOwner !== undefined && !item.acknowledgedByOwner)
         )
 }

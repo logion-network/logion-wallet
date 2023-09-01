@@ -258,7 +258,7 @@ export default function UserRouter() {
                 <UserLocDetails
                     backPath={ ISSUER_PATH }
                     detailsPath={ (locId: UUID, type: LocType) => issuerDetailsPath(locId) }
-                    contributionMode='Issuer'
+                    contributionMode='VerifiedIssuer'
                 />
             } />
             <Route path={ IDENFY_RELATIVE_PATH } element={
@@ -268,9 +268,9 @@ export default function UserRouter() {
             } />
             <Route path={ DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserDocumentClaimHistory/> } />
             <Route path={ TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='Requester'/> }/>
-            <Route path={ ISSUER_TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='Issuer'/> }/>
+            <Route path={ ISSUER_TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='VerifiedIssuer'/> }/>
             <Route path={ TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='Requester'/> } />
-            <Route path={ ISSUER_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='Issuer'/> } />
+            <Route path={ ISSUER_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='VerifiedIssuer'/> } />
         </Routes>
     );
 }

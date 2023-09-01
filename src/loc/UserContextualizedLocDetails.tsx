@@ -66,7 +66,7 @@ export default function UserContextualizedLocDetails(props: Props) {
                 <IdenfyVerification/>
             }
             {
-                props.contributionMode === "Issuer" &&
+                props.contributionMode === "VerifiedIssuer" &&
                 <IssuerInfo/>
             }
             <LocDetailsTab

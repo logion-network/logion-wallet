@@ -10,4 +10,4 @@ export function toItemId(maybeHex: string): Hash | undefined {
     }
 }
 
-export type ContributionMode = 'Requester' | 'Issuer';
+export type ContributionMode = 'Requester' | 'VerifiedIssuer';

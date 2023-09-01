@@ -274,7 +274,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
 
 exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
 <LocPane
-  contributionMode="Issuer"
+  contributionMode="VerifiedIssuer"
   loc={
     Object {
       "closed": false,
@@ -326,7 +326,7 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
         "result": "NONE",
       }
     }
-    contributionMode="Issuer"
+    contributionMode="VerifiedIssuer"
     legalOfficer={
       Object {
         "additionalDetails": "",
@@ -444,7 +444,7 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
       }
     />
     <CertificateAndLimits
-      contributionMode="Issuer"
+      contributionMode="VerifiedIssuer"
       isReadOnly={false}
       loc={
         Object {
