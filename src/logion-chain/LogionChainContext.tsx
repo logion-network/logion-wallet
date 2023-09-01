@@ -7,7 +7,7 @@ import { DateTime } from 'luxon';
 
 import config, { Node } from '../config';
 import Accounts, { buildAccounts, toValidAccountId } from '../common/types/Accounts';
-import { clearAll, loadCurrentAddress, loadTokens, storeCurrentAddress, storeTokens } from '../common/Storage';
+import { clearAll, clearCurrentAddress, loadCurrentAddress, loadTokens, storeCurrentAddress, storeTokens } from '../common/Storage';
 
 import { getEndpoints, NodeMetadata } from './Connection';
 
@@ -22,6 +22,7 @@ export interface LogionChainContextType {
     injectedAccountsConsumptionState: ConsumptionStatus
     injectedAccounts: InjectedAccount[] | null,
     metaMaskAccounts: InjectedAccount[] | null,
+    allAccounts: InjectedAccount[] | null,
     edgeNodes: Node[],
     connectedNodeMetadata: NodeMetadata | null,
     extensionsEnabled: boolean,
@@ -52,6 +53,7 @@ const initState = (): FullLogionChainContextType => ({
     injectedAccountsConsumptionState: 'PENDING',
     injectedAccounts: null,
     metaMaskAccounts: null,
+    allAccounts: null,
     edgeNodes: config.edgeNodes,
     connectedNodeMetadata: null,
     extensionsEnabled: false,
@@ -135,20 +137,24 @@ function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
 }
 
 const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionChainContextType, action: Action): FullLogionChainContextType => {
+    console.log(action.type)
     switch (action.type) {
         case 'CONNECT_INIT':
             return { ...state, connecting: true };
 
-        case 'CONNECT_SUCCESS':
+        case 'CONNECT_SUCCESS': {
+            const partialState = buildClientHelpers(action.client!, state.allAccounts || [], action.registeredLegalOfficers!);
+            if(state.client && partialState.accounts.current) {
+                storeCurrentAddress(state.client.logionApi, partialState.accounts.current.accountId);
+            }
             return {
                 ...state,
                 api: action.api!,
-                client: action.client!,
                 connectedNodeMetadata: action.connectedNodeMetadata!,
                 registeredLegalOfficers: action.registeredLegalOfficers,
-                ...buildClientHelpers(action.client!, state.injectedAccounts || [], state.metaMaskAccounts || [], action.registeredLegalOfficers!),
+                ...partialState,
             };
-
+        }
         case 'START_INJECTED_ACCOUNTS_CONSUMPTION':
             return { ...state, injectedAccountsConsumptionState: 'STARTING' };
 
@@ -157,17 +163,25 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
 
         case 'SET_INJECTED_ACCOUNTS':
         case 'SET_METAMASK_ACCOUNTS': {
-            let helpers = {};
+            let partialStateOrEmpty = {};
             const injectedAccounts = action.injectedAccounts || state.injectedAccounts;
             const metaMaskAccounts = action.metaMaskAccounts || state.metaMaskAccounts;
-            if(state.client && state.registeredLegalOfficers) {
-                helpers = buildClientHelpers(state.client!, injectedAccounts || [], metaMaskAccounts || [], state.registeredLegalOfficers!);
+            const allAccounts = injectedAccounts === null && metaMaskAccounts === null ? null : (metaMaskAccounts || []).concat(injectedAccounts || []);
+            const registeredLegalOfficers = action.registeredLegalOfficers || state.registeredLegalOfficers;
+            if(state.client) {
+                const partialState = buildClientHelpers(state.client, allAccounts || [], registeredLegalOfficers || new Set());
+                if(partialState.accounts.current) {
+                    storeCurrentAddress(state.client.logionApi, partialState.accounts.current.accountId);
+                }
+                partialStateOrEmpty = partialState;
             }
             return {
                 ...state,
                 injectedAccounts,
                 metaMaskAccounts,
-                ...helpers,
+                allAccounts,
+                registeredLegalOfficers,
+                ...partialStateOrEmpty,
             };
         }
         case 'EXTENSIONS_ENABLED':
@@ -184,8 +198,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             const client = state.client!.withCurrentAddress(action.newAddress!);
             return {
                 ...state,
-                client,
-                ...buildClientHelpers(client, state.injectedAccounts || [], state.metaMaskAccounts || [], state.registeredLegalOfficers!),
+                ...buildClientHelpers(client, state.allAccounts || [], state.registeredLegalOfficers!),
             };
         }
 
@@ -199,11 +212,11 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             clearAll();
             const client = state.client!.logout();
             clearInterval(state.timer!);
+            clearCurrentAddress(client.logionApi);
             return {
                 ...state,
-                client,
                 timer: undefined,
-                ...buildClientHelpers(client, state.injectedAccounts || [], state.metaMaskAccounts || [], state.registeredLegalOfficers!),
+                ...buildClientHelpers(client, state.allAccounts || [], state.registeredLegalOfficers!),
             };
         }
 
@@ -248,20 +261,14 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                 return state;
             } else {
                 storeTokens(client.tokens);
-                if(client.currentAddress && !(state.accounts?.current?.accountId)) {
-                    storeCurrentAddress(client.logionApi, client.currentAddress);
-                } else if(state.accounts?.current?.accountId && state.accounts.current.accountId !== client.currentAddress) {
-                    const clientWithCurrentAddress = client.withCurrentAddress(state.accounts.current.accountId);
-                    if(clientWithCurrentAddress.isTokenValid(DateTime.now())) {
-                        client = clientWithCurrentAddress;
-                    } else if(client.currentAddress) {
-                        storeCurrentAddress(client.logionApi, client.currentAddress);
-                    }
+                const partialState = buildClientHelpers(client, state.allAccounts || [], action.registeredLegalOfficers!);
+                if(state.client && partialState.accounts.current) {
+                    storeCurrentAddress(state.client.logionApi, partialState.accounts.current.accountId);
                 }
                 return {
                     ...state,
-                    ...buildClientHelpers(client, state.injectedAccounts || [], state.metaMaskAccounts || [], action.registeredLegalOfficers!),
-                    client,
+                    ...partialState,
+                    registeredLegalOfficers: action.registeredLegalOfficers!,
                 }
             }
         case 'SET_RECONNECT':
@@ -289,22 +296,28 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
 
 function buildClientHelpers(
     client: LogionClient,
-    injectedAccounts: InjectedAccount[],
-    metaMaskAccounts: InjectedAccount[],
-    legalOfficers: Set<string>
+    allAccounts: InjectedAccount[],
+    legalOfficers: Set<string>,
 ): {
     axiosFactory: AxiosFactory,
     isCurrentAuthenticated: () => boolean,
     getOfficer: (owner: string | undefined) => LegalOfficerClass | undefined,
     saveOfficer: (legalOfficer: LegalOfficer) => Promise<void>,
     accounts: Accounts,
+    client: LogionClient,
 } {
+    const accounts = buildAccounts(allAccounts, client.currentAddress, client, legalOfficers);
+    let updatedClient = client;
+    if(accounts.current && (!client.currentAddress || !accounts.current?.accountId.equals(client.currentAddress))) {
+        updatedClient = client.withCurrentAddress(accounts.current.accountId);
+    }
     return {
         axiosFactory: buildAxiosFactory(client),
         isCurrentAuthenticated: () => client.isTokenValid(DateTime.now()),
         getOfficer: address => client.allLegalOfficers.find(legalOfficer => legalOfficer.address === address),
         saveOfficer: legalOfficer => client.directoryClient.createOrUpdate(legalOfficer),
-        accounts: buildAccounts(metaMaskAccounts.concat(injectedAccounts), client.currentAddress, client, legalOfficers),
+        accounts,
+        client: updatedClient,
     }
 }
 
@@ -322,15 +335,18 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
                 type: 'EXTENSIONS_ENABLED',
                 signer: new ExtensionSigner(SIGN_AND_SEND_STRATEGY)
             });
-            dispatch({
-                type: 'SET_INJECTED_ACCOUNTS',
-                injectedAccounts: [],
-            });
             register((injectedAccounts: InjectedAccount[]) => {
-                dispatch({
-                    type: 'SET_INJECTED_ACCOUNTS',
-                    injectedAccounts,
-                });
+                (async function() {
+                    let registeredLegalOfficers = new Set<string>();
+                    if(state.client) {
+                        registeredLegalOfficers = await buildLegalOfficersSet(state.client!, injectedAccounts);
+                    }
+                    dispatch({
+                        type: 'SET_INJECTED_ACCOUNTS',
+                        injectedAccounts,
+                        registeredLegalOfficers,
+                    });
+                })();
             });
         } else {
             dispatch({
@@ -339,6 +355,7 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
             dispatch({
                 type: 'SET_INJECTED_ACCOUNTS',
                 injectedAccounts: [],
+                registeredLegalOfficers: new Set(),
             });
         }
     }
@@ -359,11 +376,12 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
     timeout = setTimeout(() => consumeInjectedAccounts(state, dispatch), 100);
 
     useEffect(() => {
-        if(state.injectedAccounts !== null && state.client === null && !state.connecting) {
+        if(state.allAccounts !== null && state.client === null && !state.connecting) {
             dispatch({
                 type: 'CONNECT_INIT'
             });
 
+            const accounts = state.allAccounts;
             (async function() {
                 const rpcEndpoints = getEndpoints();
                 const api = await buildApiClass(rpcEndpoints);
@@ -381,8 +399,8 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 }
                 let client = logionClient.useTokens(startupTokens);
 
-                if(startupTokens.length > 0 && state.injectedAccounts!.length > 0) {
-                    let candidates = [ loadCurrentAddress(api) || undefined, toValidAccountId(api, state.injectedAccounts![0]) ];
+                if(startupTokens.length > 0 && accounts.length > 0) {
+                    let candidates = [ loadCurrentAddress(api) || undefined, toValidAccountId(api, accounts[0]) ];
                     const now = DateTime.now();
                     let currentAddress = candidates.find(address => startupTokens.isAuthenticated(now, address));
                     if(currentAddress) {
@@ -398,11 +416,11 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                     connectedNodeMetadata: {
                         peerId : peerId.toString()
                     },
-                    registeredLegalOfficers: await buildLegalOfficersSet(client, state.injectedAccounts!),
+                    registeredLegalOfficers: await buildLegalOfficersSet(client, accounts),
                 });
             })();
         }
-    }, [ state.injectedAccounts, state.client, state.connecting ]);
+    }, [ state.allAccounts, state.client, state.connecting ]);
 
     const selectAddressCallback = useCallback((address: ValidAccountId) => {
         dispatch({
@@ -461,11 +479,11 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 dispatch({
                     type: 'RESET_CLIENT',
                     client,
-                    registeredLegalOfficers: await buildLegalOfficersSet(client, state.injectedAccounts!),
+                    registeredLegalOfficers: await buildLegalOfficersSet(client, state.allAccounts!),
                 })
             })();
         }
-    }, [ state.tokensToRefresh, dispatch, state.axiosFactory, state.client, state.accounts, state.injectedAccounts ]);
+    }, [ state.tokensToRefresh, dispatch, state.axiosFactory, state.client, state.accounts, state.allAccounts ]);
 
     const authenticateCallback = useCallback(async (addresses: ValidAccountId[]) => {
         if(!state.client || !state.signer) {
@@ -479,9 +497,9 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
         dispatch({
             type: 'RESET_CLIENT',
             client,
-            registeredLegalOfficers: await buildLegalOfficersSet(client, state.injectedAccounts!),
+            registeredLegalOfficers: await buildLegalOfficersSet(client, state.allAccounts!),
         });
-    }, [ state.client, state.signer, state.injectedAccounts ]);
+    }, [ state.client, state.signer, state.allAccounts ]);
 
     const authenticateAddressCallback = useCallback(async (address: ValidAccountId, signer?: RawSigner) => {
         if(!state.client || !state.signer) {
@@ -492,10 +510,10 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
         dispatch({
             type: 'RESET_CLIENT',
             client,
-            registeredLegalOfficers: await buildLegalOfficersSet(client, state.injectedAccounts!),
+            registeredLegalOfficers: await buildLegalOfficersSet(client, state.allAccounts!),
         });
         return client;
-    }, [ state.client, state.signer, state.injectedAccounts ]);
+    }, [ state.client, state.signer, state.allAccounts ]);
 
     useEffect(() => {
         if(state.authenticate !== authenticateCallback) {
@@ -543,8 +561,15 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                     metaMaskAccounts,
                 });
             }
+
+            if(!state.signer) {
+                dispatch({
+                    type: 'EXTENSIONS_ENABLED',
+                    signer: new ExtensionSigner(SIGN_AND_SEND_STRATEGY)
+                });
+            }
         }
-    }, [ state.metaMaskAccounts ]);
+    }, [ state.metaMaskAccounts, state.signer ]);
 
     useEffect(() => {
         if(state.tryEnableMetaMask !== tryEnableMetaMask) {
