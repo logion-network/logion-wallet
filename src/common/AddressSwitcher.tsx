@@ -7,16 +7,23 @@ import Button from './Button';
 import Dialog from './Dialog';
 import { useLogionChain } from '../logion-chain';
 import './AddressSwitcher.css';
+import { useNavigate } from "react-router-dom";
 
 export default function AddressSwitcher() {
     const { logout, accounts, authenticate, selectAddress } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const [ confirm, setConfirm ] = useState<boolean>(false);
+    const navigate = useNavigate();
+
+    const selectAddressCallback = useCallback(async (address: ValidAccountId) => {
+        selectAddress!(address);
+        navigate("/");
+    }, [ selectAddress, navigate ]);
 
     const authenticateCallback = useCallback(async (address: ValidAccountId) => {
         await authenticate([ address ]);
-        selectAddress!(address);
-    }, [ authenticate, selectAddress ]);
+        selectAddressCallback(address);
+    }, [ authenticate, selectAddressCallback ]);
 
     if(accounts === null || selectAddress === null || accounts.current === undefined) {
         return null;
@@ -52,7 +59,7 @@ export default function AddressSwitcher() {
                             .map(account => (
                             <Dropdown.Item
                                 key={ account.accountId.toKey() }
-                                onClick={ () => account.token ? selectAddress(account.accountId) : undefined }
+                                onClick={ () => account.token ? selectAddressCallback(account.accountId) : undefined }
                             >
                                 <AccountAddress
                                     account={ account }

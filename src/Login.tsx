@@ -42,6 +42,7 @@ export default function Login() {
             await authenticate(selectedAddresses);
             navigate(referrer(location));
         } catch(e) {
+            console.error(e);
             setError((e as Error).message);
         }
     }, [ selectedAddresses, navigate, location, authenticate ]);
