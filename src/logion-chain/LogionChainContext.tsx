@@ -1,5 +1,20 @@
-import { AccountTokens, LegalOfficer, LegalOfficerClass, LogionClient, DefaultSignAndSendStrategy, Token, RawSigner } from '@logion/client';
-import { allMetamaskAccounts, enableExtensions, enableMetaMask, ExtensionSigner, InjectedAccount, isExtensionAvailable } from '@logion/extension';
+import {
+    AccountTokens,
+    LegalOfficer,
+    LegalOfficerClass,
+    LogionClient,
+    DefaultSignAndSendStrategy,
+    Token,
+    RawSigner
+} from '@logion/client';
+import {
+    allMetamaskAccounts,
+    enableExtensions,
+    enableMetaMask,
+    ExtensionSigner,
+    InjectedAccount,
+    isExtensionAvailable
+} from '@logion/extension';
 import { buildApiClass, LogionNodeApiClass, ValidAccountId } from '@logion/node-api';
 import axios, { AxiosInstance } from 'axios';
 import React, { useReducer, useContext, Context, Reducer, useEffect, useCallback } from 'react';
@@ -7,7 +22,14 @@ import { DateTime } from 'luxon';
 
 import config, { Node } from '../config';
 import Accounts, { buildAccounts, toValidAccountId } from '../common/types/Accounts';
-import { clearAll, clearCurrentAddress, loadCurrentAddress, loadTokens, storeCurrentAddress, storeTokens } from '../common/Storage';
+import {
+    clearAll,
+    clearCurrentAddress,
+    loadCurrentAddress,
+    loadTokens,
+    storeCurrentAddress,
+    storeTokens
+} from '../common/Storage';
 
 import { getEndpoints, NodeMetadata } from './Connection';
 
@@ -329,7 +351,7 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
     } else if(state.injectedAccountsConsumptionState === 'STARTING') {
         dispatch({type: 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'});
 
-        if(isExtensionAvailable()) {
+        if(await isExtensionAvailable(config.APP_NAME)) {
             const register = await enableExtensions(config.APP_NAME);
             dispatch({
                 type: 'EXTENSIONS_ENABLED',

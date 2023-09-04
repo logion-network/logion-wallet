@@ -8,6 +8,8 @@ import { CommonContextProvider } from './common/CommonContext';
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import PublicRouter from "./PublicRouter";
 import { PUBLIC_PATH } from "./PublicPaths";
+import config from "./config";
+import { useState, useEffect } from "react";
 
 export default function Main() {
     return (
@@ -22,8 +24,16 @@ export default function Main() {
 
 export function AuthenticatedMain() {
     const { injectedAccounts, extensionsEnabled, accounts } = useLogionChain();
+    const [ extensionAvailable, setExtensionAvailable ] = useState<boolean>();
 
-    if (!extensionsEnabled) {
+    useEffect(() => {
+        if (extensionAvailable === undefined) {
+            isExtensionAvailable(config.APP_NAME)
+                .then(setExtensionAvailable);
+        }
+    }, [ extensionAvailable ]);
+
+    if (!extensionsEnabled || extensionAvailable === undefined) {
         return <Loader text="Enabling extensions..." />;
     } else {
         if (accounts !== null && accounts.all.length > 0) {
@@ -33,7 +43,7 @@ export function AuthenticatedMain() {
                 </CommonContextProvider>
             );
         } else {
-            if (isExtensionAvailable()) {
+            if (extensionAvailable) {
                 if (injectedAccounts === null) {
                     return <Loader text="Loading accounts from extension..." />;
                 } else {
