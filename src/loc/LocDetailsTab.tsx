@@ -315,6 +315,7 @@ export function LocDetailsTabContent(props: ContentProps) {
             templateItems.length > 0 &&
             <>
             <LocTemplateItems
+                contributionMode={ props.contributionMode }
                 templateItems={ templateItems }
             />
             <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
