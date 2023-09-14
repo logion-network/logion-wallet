@@ -309,6 +309,47 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
       />
     </Col>
   </Row>
+  <React.Fragment>
+    <div
+      className="separator"
+      style={
+        Object {
+          "backgroundColor": "black",
+        }
+      }
+    />
+    <TransactionInfo
+      loc={
+        Object {
+          "closed": true,
+          "closedOn": "2022-09-28T08:49:00.000+02:00",
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "CLOSED",
+        }
+      }
+    />
+  </React.Fragment>
   <div
     className="separator"
     style={
@@ -521,6 +562,47 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
       />
     </Col>
   </Row>
+  <React.Fragment>
+    <div
+      className="separator"
+      style={
+        Object {
+          "backgroundColor": "black",
+        }
+      }
+    />
+    <TransactionInfo
+      loc={
+        Object {
+          "closed": true,
+          "closedOn": "2022-09-28T08:49:00.000+02:00",
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "CLOSED",
+        }
+      }
+    />
+  </React.Fragment>
   <div
     className="separator"
     style={
@@ -717,6 +799,47 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
       />
     </Col>
   </Row>
+  <React.Fragment>
+    <div
+      className="separator"
+      style={
+        Object {
+          "backgroundColor": "black",
+        }
+      }
+    />
+    <TransactionInfo
+      loc={
+        Object {
+          "closed": false,
+          "closedOn": undefined,
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "OPEN",
+        }
+      }
+    />
+  </React.Fragment>
   <div
     className="separator"
     style={
@@ -936,6 +1059,47 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
       />
     </Col>
   </Row>
+  <React.Fragment>
+    <div
+      className="separator"
+      style={
+        Object {
+          "backgroundColor": "black",
+        }
+      }
+    />
+    <TransactionInfo
+      loc={
+        Object {
+          "closed": false,
+          "closedOn": undefined,
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "OPEN",
+        }
+      }
+    />
+  </React.Fragment>
   <div
     className="separator"
     style={
@@ -1404,6 +1568,48 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
       />
     </Col>
   </Row>
+  <React.Fragment>
+    <div
+      className="separator"
+      style={
+        Object {
+          "backgroundColor": "black",
+        }
+      }
+    />
+    <TransactionInfo
+      loc={
+        Object {
+          "closed": false,
+          "closedOn": undefined,
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "OPEN",
+          "voidInfo": Object {},
+        }
+      }
+    />
+  </React.Fragment>
   <div
     className="separator"
     style={
@@ -1607,6 +1813,48 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
       />
     </Col>
   </Row>
+  <React.Fragment>
+    <div
+      className="separator"
+      style={
+        Object {
+          "backgroundColor": "black",
+        }
+      }
+    />
+    <TransactionInfo
+      loc={
+        Object {
+          "closed": false,
+          "closedOn": undefined,
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "OPEN",
+          "voidInfo": Object {},
+        }
+      }
+    />
+  </React.Fragment>
   <div
     className="separator"
     style={

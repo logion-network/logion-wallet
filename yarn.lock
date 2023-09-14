@@ -2977,14 +2977,14 @@ __metadata:
   linkType: hard
 
 "@logion/client@npm:^0.30.1-1":
-  version: 0.30.1-1
-  resolution: "@logion/client@npm:0.30.1-1"
+  version: 0.30.1-4
+  resolution: "@logion/client@npm:0.30.1-4"
   dependencies:
-    "@logion/node-api": ^0.20.0
+    "@logion/node-api": ^0.21.0-2
     axios: ^0.27.2
     luxon: ^3.0.1
     mime-db: ^1.52.0
-  checksum: 1e3f5e145d43c982db4f5fcaa135e2ae4bf7da8cdac8b173d8457c1e6b208138716afe61fc2a0c6e90302e9b5b03f67d2d9e85f266d01381b76ff9b60df7588a
+  checksum: e9509a5309d2b2746738b47aec10fae1209a92bffe3a4eeb9fa625c2c6f2cf5b2585426773691e72afdc366963579566a1d0cc038aefb65447ce6b5a426b1a10
   languageName: node
   linkType: hard
 
@@ -3020,9 +3020,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/node-api@npm:^0.20.0":
-  version: 0.20.0
-  resolution: "@logion/node-api@npm:0.20.0"
+"@logion/node-api@npm:^0.21.0-2":
+  version: 0.21.0-2
+  resolution: "@logion/node-api@npm:0.21.0-2"
   dependencies:
     "@polkadot/api": ^10.9.1
     "@polkadot/util": ^12.3.2
@@ -3030,7 +3030,7 @@ __metadata:
     "@types/uuid": ^9.0.2
     fast-sha256: ^1.3.0
     uuid: ^9.0.0
-  checksum: e3d312763b0fc5bc858294477e51ce0424107888d5d632531dbcace622bd3aa87f30c69cd8347afb48d2908531b8934f7477d8e9d90f7cafdb245668bd05aef8
+  checksum: 36c3ebb8a65175654ed57e5e89215d74b24690316210f8b12e38f0abab21a3f0a3e0418cfcd8266606374dcf26210e5789b8ff916b7f568d26d9b6cbc4d76beb
   languageName: node
   linkType: hard
 

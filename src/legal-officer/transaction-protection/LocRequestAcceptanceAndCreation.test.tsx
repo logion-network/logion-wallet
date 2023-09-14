@@ -39,7 +39,7 @@ describe("LocRequestAcceptance", () => {
 
         setupApiMock(api => {
             const submittable = mockSubmittable();
-            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotTransactionLoc(It.IsAny(), It.IsAny())).returns(submittable.object());
+            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotTransactionLoc(It.IsAny(), It.IsAny(), null)).returns(submittable.object());
             const fees = new Mock<Fees>();
             api.setup(instance => instance.fees.estimateCreateLoc(It.IsAny())).returnsAsync(fees.object());
         });
@@ -70,7 +70,7 @@ describe("LocRequestAcceptance", () => {
 
         setupApiMock(api => {
             const submittable = mockSubmittable();
-            api.setup(instance => instance.polkadot.tx.logionLoc.createCollectionLoc(It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny())).returns(submittable.object());
+            api.setup(instance => instance.polkadot.tx.logionLoc.createCollectionLoc(It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), null)).returns(submittable.object());
             const fees = new Mock<Fees>();
             api.setup(instance => instance.fees.estimateCreateLoc(It.IsAny())).returnsAsync(fees.object());
         });

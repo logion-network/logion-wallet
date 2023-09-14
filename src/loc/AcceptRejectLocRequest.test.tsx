@@ -1,5 +1,5 @@
 import { LocData } from "@logion/client";
-import { UUID, Fees } from "@logion/node-api";
+import { UUID } from "@logion/node-api";
 import { getByText, render, screen, waitFor } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 
@@ -7,8 +7,7 @@ import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../logion-chai
 import { shallowRender } from "../tests";
 import AcceptRejectLocRequest from "./AcceptRejectLocRequest";
 import "./AcceptRejectLocRequest.tsx";
-import { mockSubmittable, mockValidPolkadotAccountId, setupApiMock } from 'src/__mocks__/LogionMock';
-import { It, Mock } from "moq.ts";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 jest.mock("../logion-chain");
 jest.mock('./Model');
@@ -50,12 +49,6 @@ describe("AcceptRejectLocRequest", () => {
     });
 
     it("opens acceptance process when click on accept", async () => {
-        setupApiMock(api => {
-            const submittable = mockSubmittable();
-            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotTransactionLoc(It.IsAny(), It.IsAny())).returns(submittable.object());
-            const fees = new Mock<Fees>();
-            api.setup(instance => instance.fees.estimateCreateLoc(It.IsAny())).returnsAsync(fees.object());
-        });
         const tree = render(<AcceptRejectLocRequest loc={{
             id: new UUID(REQUEST_ID),
             legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",

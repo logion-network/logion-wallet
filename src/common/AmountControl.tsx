@@ -15,8 +15,8 @@ export interface Props {
     placeholder?: string;
 }
 
-export function validateAmount(amount: Amount): string | undefined {
-    if(amount.value === "" || isNaN(Number(amount.value))) {
+export function validateAmount(amount: Amount | undefined): string | undefined {
+    if(amount !== undefined && amount !== null && (amount.value === "" || isNaN(Number(amount.value)))) {
         return "Invalid amount";
     } else {
         return undefined;
@@ -26,18 +26,18 @@ export function validateAmount(amount: Amount): string | undefined {
 export default function AmountControl(props: Props) {
 
     const onChangeValue = useCallback((value: string) => {
-        if(props.value && props.onChange) {
+        if(props.onChange) {
             props.onChange({
                 value,
-                unit: props.value.unit
+                unit: props.value?.unit || Numbers.NONE,
             });
         }
     }, [ props ]);
 
     const onChangeUnit = useCallback((unit: Numbers.UnitPrefix) => {
-        if(props.value && props.onChange) {
+        if(props.onChange) {
             props.onChange({
-                value: props.value.value,
+                value: props.value?.value || "0",
                 unit
             });
         }

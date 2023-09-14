@@ -1,0 +1,10 @@
+.TransactionInfo .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.TransactionInfo .Detail .label {
+    font-weight: bold;
+    font-size: 0.9rem;
+}
