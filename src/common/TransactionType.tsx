@@ -34,7 +34,7 @@ const palletLogionLocMethods: Record<LogionLocMethod, string> = {
     createLogionTransactionLoc: "Logion Identity LOC created",
     createOtherIdentityLoc: "Other Identity LOC created",
     createPolkadotIdentityLoc: "Polkadot Identity LOC created",
-    createPolkadotTransactionLoc: "Polkadot Identity LOC created",
+    createPolkadotTransactionLoc: "Polkadot Transaction LOC created",
     makeVoid: "LOC voided",
     makeVoidAndReplace: "LOC voided and replaced",
     addTokensRecord: "Tokens record added",

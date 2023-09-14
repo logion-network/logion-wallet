@@ -56,7 +56,7 @@ export function Content(props: Props & { type: WalletType }) {
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
 
-    if(balances === null || transactions === null) {
+    if(balances === null || balances.length === 0 || transactions === null) {
         return <Loader />;
     }
 

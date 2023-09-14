@@ -1,5 +1,6 @@
 import { Controller, Control, FieldErrors } from 'react-hook-form';
 import Form from "react-bootstrap/Form";
+import { Currency } from "@logion/node-api";
 
 import { BackgroundAndForegroundColors } from '../../common/ColorTheme';
 import FormGroup from '../../common/FormGroup';
@@ -8,11 +9,13 @@ import Select from '../../common/Select';
 import { buildOptions } from '../trust-protection/SelectLegalOfficer';
 import { useUserContext } from "../UserContext";
 import AmountControl, { Amount, validateAmount } from 'src/common/AmountControl';
+import CollapsePane from 'src/components/collapsepane/CollapsePane';
 
 export interface FormValues {
     description: string;
     legalOfficer: string;
     valueFee: Amount;
+    legalFee: Amount | undefined;
 }
 
 export interface Props {
@@ -32,6 +35,36 @@ export default function LocCreationForm(props: Props) {
 
     return (
         <>
+            <FormGroup
+                id={ `locOwner` }
+                label="Please select a Logion Legal Officer who already executed an Identity LOC linked to your Polkadot address:"
+                control={
+                    <Controller
+                        name="legalOfficer"
+                        control={ props.control }
+                        defaultValue=""
+                        rules={{
+                            required: 'You must select a Legal Officer',
+                            minLength: {
+                                value: 1,
+                                message: 'You must select a Legal Officer'
+                            },
+                            
+                        }}
+                        render={({ field }) => (
+                            <Select
+                                isInvalid={ !!props.errors.legalOfficer?.message }
+                                options={ buildOptions(locsState?.legalOfficersWithValidIdentityLoc) }
+                                value={ field.value }
+                                onChange={ field.onChange }
+                            />
+                        )}
+                      />
+                }
+                feedback={ props.errors.legalOfficer?.message }
+                colors={ props.colors }
+            />
+
             <FormGroup
                 id="locDescription"
                 label="Description"
@@ -66,36 +99,6 @@ export default function LocCreationForm(props: Props) {
                 feedback={ props.errors.description?.message }
             />
 
-            <FormGroup
-                id={ `locOwner` }
-                label="Please select a Logion Legal Officer who already executed an Identity LOC linked to your Polkadot address:"
-                control={
-                    <Controller
-                        name="legalOfficer"
-                        control={ props.control }
-                        defaultValue=""
-                        rules={{
-                            required: 'You must select a Legal Officer',
-                            minLength: {
-                                value: 1,
-                                message: 'You must select a Legal Officer'
-                            },
-                            
-                        }}
-                        render={({ field }) => (
-                            <Select
-                                isInvalid={ !!props.errors.legalOfficer?.message }
-                                options={ buildOptions(locsState?.legalOfficersWithValidIdentityLoc) }
-                                value={ field.value }
-                                onChange={ field.onChange }
-                            />
-                        )}
-                      />
-                }
-                feedback={ props.errors.legalOfficer?.message }
-                colors={ props.colors }
-            />
-
             {
                 props.showValueFee &&
                 <FormGroup
@@ -110,7 +113,6 @@ export default function LocCreationForm(props: Props) {
                             }}
                             render={ ({ field }) => (
                                 <AmountControl
-                                    //@ts-ignore
                                     isInvalid={ !!props.errors.valueFee?.message }
                                     value={ field.value }
                                     onChange={ field.onChange }
@@ -119,8 +121,7 @@ export default function LocCreationForm(props: Props) {
                             )}
                         />
                     }
-                    //@ts-ignore
-                    feedback={ props.errors.amount?.message }
+                    feedback={ props.errors.valueFee?.message }
                     colors={ props.colors }
                     help={
                         `The value fee is calculated in function of the value of the asset being protected by
@@ -129,6 +130,38 @@ export default function LocCreationForm(props: Props) {
                     }
                 />
             }
+
+            <CollapsePane
+                title="Advanced creation parameters"
+            >
+                <FormGroup
+                    id="legalFee"
+                    label="Legal fee"
+                    control={
+                        <Controller
+                            name="legalFee"
+                            control={ props.control }
+                            rules={{
+                                validate: validateAmount
+                            }}
+                            render={ ({ field }) => (
+                                <AmountControl
+                                    isInvalid={ !!props.errors.legalFee?.message }
+                                    value={ field.value }
+                                    onChange={ field.onChange }
+                                    placeholder="A custom legal fee"
+                                />
+                            )}
+                        />
+                    }
+                    feedback={ props.errors.legalFee?.message }
+                    colors={ props.colors }
+                    help={
+                        `If you leave the field empty, the default legal fee (2000 ${ Currency.SYMBOL }) is charged on LOC opening.
+    If you negotiated another rate with the selected Legal Officer, you may enter it here.`
+                    }
+                />
+            </CollapsePane>
         </>
     )
 }
