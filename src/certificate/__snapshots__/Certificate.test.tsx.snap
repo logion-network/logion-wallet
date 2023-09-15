@@ -1,22 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Certificate renders LOC not found 1`] = `
+exports[`Certificate renders temporary message 1`] = `
 <div
-  className="CertificateBox"
+  className="Certificate"
 >
-  <Container
-    fluid={false}
-  >
-    <div
-      className="Certificate"
-    >
-      <CertificateCell
-        label="LOC NOT FOUND"
-        md={4}
-      >
-        95306891657235687884416897796814545554
-      </CertificateCell>
-    </div>
-  </Container>
+  <p>
+    Connecting to node...
+  </p>
 </div>
 `;

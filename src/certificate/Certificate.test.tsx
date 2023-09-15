@@ -19,7 +19,7 @@ jest.mock("../common/Model");
 
 describe("Certificate", () => {
 
-    it("renders LOC not found", () => {
+    it("renders temporary message", () => {
         setParams({locId: "95306891657235687884416897796814545554"});
         setSearchParams(mockEmptySearchParams());
         let result;
@@ -27,6 +27,24 @@ describe("Certificate", () => {
             result = shallowRender(<Certificate />)
         });
         expect(result).toMatchSnapshot();
+    })
+
+    it("renders LOC not found", async () => {
+        const locId = UUID.fromDecimalStringOrThrow("95306891657235687884416897796814545554");
+        const loc = mockPublicLoc(locId);
+
+        const client = mockClient(loc);
+        setClientMock(client);
+
+        const nonExistentLoc = new UUID("28b53275-d974-4332-9783-841245f31998");
+        setParams({locId: nonExistentLoc.toDecimalString()});
+        setSearchParams(mockEmptySearchParams());
+
+        render(<Certificate/>);
+
+        await waitFor(() => expect(screen.getByText("LOC NOT FOUND")).toBeVisible());
+        expect(screen.getByText(nonExistentLoc.toDecimalString())).toBeVisible();
+        expect(() => screen.getByText("Legal Officer Case")).toThrow();
     })
 
     it("renders found LOC", async () => {
@@ -117,6 +135,8 @@ function mockClient(loc: PublicLoc, item?: CollectionItem): LogionClient {
             findLocById: (args: { locId: UUID }) => {
                 if(args.locId.toString() === loc.data.id.toString()) {
                     return Promise.resolve(loc);
+                } else {
+                    throw Error("LOC not found")
                 }
             },
             getTokensRecords: () => Promise.resolve([]),
