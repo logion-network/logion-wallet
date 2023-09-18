@@ -52,7 +52,7 @@ export default function Certificate() {
     const [ searchParams ] = useSearchParams();
     const locId: UUID = useMemo(() => UUID.fromAnyString(locIdParam)!, [ locIdParam ]);
     const { client } = useLogionChain();
-    const [ loc, setLoc ] = useState<PublicLoc | undefined>(undefined)
+    const [ loc, setLoc ] = useState<PublicLoc | undefined | null>(undefined);
     const [ supersededLoc, setSupersededLoc ] = useState<PublicLoc | undefined>(undefined)
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
     const [ voidWarningVisible, setVoidWarningVisible ] = useState<boolean>(false);
@@ -96,8 +96,11 @@ export default function Certificate() {
                                 setCollectionItem(collectionItem);
                             }
                         }
+                    } else {
+                        setLoc(null);
                     }
                 } catch(e) {
+                    setLoc(null);
                     setNodeDown(true);
                 }
             })()
@@ -105,7 +108,7 @@ export default function Certificate() {
     }, [ locId, loc, setLoc, client, searchParams, collectionItemIdParam ]);
 
     useEffect(() => {
-        if (client !== null && legalOfficer === null && loc !== undefined) {
+        if (client !== null && legalOfficer === null && loc) {
             setLegalOfficer(client.legalOfficers.find(legalOfficer => legalOfficer.address === loc.data.ownerAddress) || null);
         }
     }, [ client, legalOfficer, setLegalOfficer, loc ]);
@@ -117,7 +120,7 @@ export default function Certificate() {
         }
     }, [ client, locId, tokensRecords, tokenForDownload ]);
 
-    if (!client) {
+    if (!client || loc === undefined) {
         return (
             <div className="Certificate">
                 <p>Connecting to node...</p>
@@ -125,7 +128,7 @@ export default function Certificate() {
         )
     }
 
-    if (loc === undefined) {
+    if (loc === null) {
         return (
             <div className="CertificateBox">
                 <Container>
