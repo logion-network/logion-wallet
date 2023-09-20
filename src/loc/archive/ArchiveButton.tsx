@@ -1,11 +1,10 @@
 import { LocRequestState } from "@logion/client";
-import { Hash } from "@logion/node-api";
 import Button from "../../common/Button";
 import "./ArchiveButton.css";
 import { useState } from "react";
 import { useLocContext } from "../LocContext";
 import { FileInfo, openFiles } from "../../common/ViewFileButton";
-import { LocItem } from "../LocItem";
+import { FileItem } from "../LocItem";
 import { AxiosInstance } from "axios";
 import { getJsonLoc } from "../FileModel";
 import Dialog from "../../common/Dialog";
@@ -18,18 +17,11 @@ interface TypedFileInfo extends FileInfo {
     type: string
 }
 
-function documentToTypedFileInfo(locItem: LocItem, locState: LocRequestState): TypedFileInfo {
-    const name = locItem.name;
-    if(!name) {
-        throw new Error("Incomplete item");
-    }
-    const value = locItem.value;
-    if(!value) {
-        throw new Error("Incomplete item");
-    }
+function documentToTypedFileInfo(locItem: FileItem, locState: LocRequestState): TypedFileInfo {
+    const fileData = locItem.fileData();
     return {
-        fileName: name,
-        downloader: () => locState.getFile(Hash.fromHex(value)),
+        fileName: fileData.fileName,
+        downloader: () => locState.getFile(fileData.hash),
         type: "Document file"
     }
 }
@@ -54,7 +46,7 @@ export default function ArchiveButton() {
     const files: TypedFileInfo[] = [ backup ].concat(
         locItems
             .filter(locItem => locItem.type === 'Document')
-            .filter(locItem => locItem.name && locItem.value)
+            .filter(locItem => locItem.hasData())
             .map(locItem => documentToTypedFileInfo(locItem, locState)));
 
     return (

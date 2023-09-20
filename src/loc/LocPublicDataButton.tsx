@@ -9,6 +9,7 @@ import Icon from "../common/Icon";
 import { LocItem } from "./LocItem";
 import { useLocContext } from "./LocContext";
 import { EditableRequest } from "@logion/client";
+import { Hash } from "@logion/node-api";
 
 export interface Props {
     text: string;
@@ -23,7 +24,8 @@ export function LocPublicDataButton(props: Props) {
     const [ existingItem, setExistingItem ] = useState<LocItem | undefined>(undefined);
 
     const submit = useCallback(async (formValues: FormValues) => {
-        const existingItem = locItems.find(item => item.type === "Data" && item.name === formValues.dataName);
+        const nameHash = Hash.of(formValues.dataName);
+        const existingItem = locItems.find(item => item.type === "Data" && item.metadataData().nameHash.equalTo(nameHash));
         if (existingItem) {
             setVisible(false)
             setExistingItem(existingItem)
@@ -87,7 +89,7 @@ export function LocPublicDataButton(props: Props) {
                 ] }
             >
                 <p>A data with name</p>
-                <p>{ existingItem?.name }</p>
+                <p>{ existingItem?.metadataData().name }</p>
                 <p>already exists in this LOC.</p>
             </Dialog>
 

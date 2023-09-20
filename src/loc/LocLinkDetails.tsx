@@ -16,15 +16,15 @@ export default function LocLinkDetails(props: Props) {
         <Col className="LocItemDetails" style={ { width: "100%" } }>
             <div className="frame">
                 <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
-                <LocItemDetail label="Public Description">{ props.item.nature }</LocItemDetail>
+                <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.linkData().nature : "-" }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
                     { props.item.submitter?.address || "-" }
                 </LocItemDetail>
                 <LocItemDetail label="Linked LOC" className="linked-loc">
-                    <NewTabLink href={ props.item.linkDetailsPath } iconId="loc-link">{ props.item.value }</NewTabLink>
+                    <NewTabLink href={ props.item.hasData() ? props.item.linkData().linkDetailsPath : undefined } iconId="loc-link">{ props.item.hasData() ? props.item.linkData().linkedLoc.id.toDecimalString() : undefined }</NewTabLink>
                     {
-                        props.item.value !== undefined &&
-                        <CopyPasteButton value={ props.item.value } className="medium"/>
+                        props.item.hasData() &&
+                        <CopyPasteButton value={ props.item.linkData().linkedLoc.id.toDecimalString() } className="medium"/>
                     }
                 </LocItemDetail>
                 {

@@ -181,12 +181,11 @@ export function LocContextProvider(props: Props) {
 
                 const linkData = await getLinkData(accounts?.current?.accountId.address, locState.locsState(), item, props.detailsPath, client);
                 if (linkData) {
-                    const result = createLinkItem({
-                        link: item,
-                        otherLocDescription: linkData.linkedLoc.description || "- Confidential -",
-                        submitter: api!.queries.getValidAccountId(locOwner, "Polkadot"),
-                        linkDetailsPath: linkData.linkDetailsPath,
-                    })
+                    const result = createLinkItem(
+                        api!.queries.getValidAccountId(locOwner, "Polkadot"), // TODO: remove this
+                        linkData,
+                        item
+                    );
                     locItems.push(result.locItem)
                 }
             }

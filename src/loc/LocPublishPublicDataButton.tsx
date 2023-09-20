@@ -32,12 +32,10 @@ export default function LocPublishPublicDataButton(props: Props) {
             locItem={ props.locItem }
             publishMutator={ async (current, callback) => {
                 if(current instanceof OpenLoc
-                    && props.locItem.name
-                    && props.locItem.value
                     && props.locItem.submitter) {
 
                     return current.publishMetadata({
-                        nameHash: props.locItem.hash!,
+                        nameHash: props.locItem.metadataData().nameHash,
                         signer: signer!,
                         callback,
                     });
@@ -45,7 +43,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                     return current;
                 }
             }}
-            feesEstimator={ () => estimateFees(props.locItem.hash) }
+            feesEstimator={ () => estimateFees(props.locItem.metadataData().nameHash) }
             itemType="Public Data"
         />
     )

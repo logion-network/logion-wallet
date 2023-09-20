@@ -19,7 +19,7 @@ export interface Props {
 export default function LocPrivateFileDetails(props: Props) {
     const { documentClaimHistory } = props;
     const navigate = useNavigate();
-    const fileSize = props.item.size === undefined || props.item.size === 0n ? "N/A" : props.item.size.toString();
+    const fileSize = (!props.item.hasData() || props.item.fileData().size === 0n) ? "N/A" : props.item.fileData().size.toString();
 
     const leftPaneWidth = documentClaimHistory !== undefined ? "60%" : "100%";
     return (
@@ -27,7 +27,7 @@ export default function LocPrivateFileDetails(props: Props) {
             <Col className="LocItemDetails" style={{ width: leftPaneWidth }}>
                 <div className="frame">
                     <div className="frame-title">{ props.item.status === "DRAFT" ? "Document related data to be published" : "Published document related data" }</div>
-                    <LocItemDetail label="Public Description">{ props.item.nature }</LocItemDetail>
+                    <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.fileData().nature : null }</LocItemDetail>
                     {
                         props.fileName !== undefined &&
                         <LocItemDetail label="File name">{ props.fileName }</LocItemDetail>
@@ -40,7 +40,7 @@ export default function LocPrivateFileDetails(props: Props) {
                     <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
                         { props.item.submitter?.address || "-" }
                     </LocItemDetail>
-                    <LocItemDetail label="Document Hash" copyButtonText={ props.item.value }>{ props.item.value || "-" }</LocItemDetail>
+                    <LocItemDetail label="Document Hash" copyButtonText={ props.item.hasData() ? props.item.fileData().hash.toHex() : undefined }>{ props.item.hasData() ? props.item.fileData().hash.toHex() : "-" }</LocItemDetail>
                     {
                         props.item.fees &&
                         <>

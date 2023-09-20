@@ -30,29 +30,259 @@ import { ContributionMode } from "./types";
 import ReviewStatusCell from "./ReviewStatusCell";
 import HelpTooltip from "src/components/helptooltip/HelpTooltip";
 
-export type LocItemType = 'Data' | 'Document' | 'Linked LOC'
+export type LocItemType = 'Data' | 'Document' | 'Linked LOC';
 
-export interface LocItem {
-    hash?: Hash,
-    name: string | undefined,
-    value: string | undefined,
-    timestamp: string | null,
-    type: LocItemType,
-    submitter: ValidAccountId | undefined,
-    status: ItemStatus,
-    nature?: string,
-    target?: UUID,
-    newItem: boolean,
-    linkDetailsPath?: string,
-    template: boolean,
-    isSet?: boolean,
-    size?: bigint,
-    fees?: Fees,
-    storageFeePaidBy?: string;
-    reviewedOn?: string;
-    rejectReason?: string;
-    acknowledgedByOwner?: boolean;
-    acknowledgedByVerifiedIssuer?: boolean;
+export interface LinkData {
+    readonly linkedLoc: LocData;
+    readonly linkDetailsPath: string;
+    readonly nature: string;
+}
+
+export interface MetadataData {
+    readonly name?: string;
+    readonly nameHash: Hash;
+    readonly value: string;
+}
+
+export interface FileData {
+    readonly hash: Hash;
+    readonly fileName: string;
+    readonly nature: string;
+    readonly size: bigint;
+    readonly storageFeePaidBy: string;
+}
+
+export interface CommonData {
+    readonly timestamp: string | null;
+    readonly type: LocItemType;
+    readonly submitter?: ValidAccountId;
+    readonly status: ItemStatus;
+    readonly newItem: boolean;
+    readonly template: boolean;
+    readonly isSet?: boolean;
+    readonly fees?: Fees;
+    readonly reviewedOn?: string;
+    readonly rejectReason?: string;
+    readonly acknowledgedByOwner?: boolean;
+    readonly acknowledgedByVerifiedIssuer?: boolean;
+}
+
+export abstract class LocItem implements CommonData {
+
+    constructor(commonData: CommonData) {
+        this.commonData = commonData;
+    }
+
+    protected commonData: CommonData;
+
+    get timestamp() {
+        return this.commonData.timestamp;
+    }
+
+    get type() {
+        return this.commonData.type;
+    }
+
+    get submitter() {
+        return this.commonData.submitter;
+    }
+
+    get status() {
+        return this.commonData.status;
+    }
+
+    get newItem() {
+        return this.commonData.newItem;
+    }
+
+    get template() {
+        return this.commonData.template;
+    }
+
+    get isSet() {
+        return this.commonData.isSet;
+    }
+
+    get fees() {
+        return this.commonData.fees;
+    }
+
+    get reviewedOn() {
+        return this.commonData.reviewedOn;
+    }
+
+    get rejectReason() {
+        return this.commonData.rejectReason;
+    }
+
+    get acknowledgedByOwner() {
+        return this.commonData.acknowledgedByOwner;
+    }
+
+    get acknowledgedByVerifiedIssuer() {
+        return this.commonData.acknowledgedByVerifiedIssuer;
+    }
+
+    abstract title(): string;
+
+    hasData() {
+        return this.commonData.submitter !== undefined;
+    }
+
+    abstract metadataData(): MetadataData;
+
+    abstract fileData(): FileData;
+
+    abstract linkData(): LinkData;
+
+    abstract publish(timestamp: string | null, fees?: Fees, storageFeePaidBy?: string): LocItem;
+
+    get submitterOrThrow() {
+        if(this.commonData.submitter) {
+            return this.commonData.submitter;
+        } else {
+            throw new Error("Data not set");
+        }
+    }
+}
+
+export class MetadataItem extends LocItem {
+
+    constructor(commonData: CommonData, metadataData?: MetadataData) {
+        super(commonData);
+        this._metadataData = metadataData;
+    }
+
+    private _metadataData?: MetadataData;
+
+    override title() {
+        return this._metadataData?.name || "-";
+    }
+
+    override hasData(): boolean {
+        return super.hasData() && this._metadataData !== undefined;
+    }
+
+    metadataData(): MetadataData {
+        if(this._metadataData) {
+            return this._metadataData;
+        } else {
+            throw new Error("Data not set");
+        }
+    }
+
+    fileData(): FileData {
+        throw new Error("Method not implemented.");
+    }
+
+    linkData(): LinkData {
+        throw new Error("Method not implemented.");
+    }
+
+    override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): LocItem {
+        return new MetadataItem(
+            {
+                ...this.commonData,
+                timestamp,
+                fees,
+            },
+            this._metadataData,
+        );
+    }
+}
+
+export class FileItem extends LocItem {
+
+    constructor(commonData: CommonData, fileData?: FileData) {
+        super(commonData);
+        this._fileData = fileData;
+    }
+
+    readonly _fileData?: FileData;
+
+    override title() {
+        return this._fileData?.nature || "-";
+    }
+
+    override hasData(): boolean {
+        return super.hasData() && this._fileData !== undefined;
+    }
+
+    metadataData(): MetadataData {
+        throw new Error("Method not implemented.");
+    }
+
+    fileData(): FileData {
+        if(this._fileData) {
+            return this._fileData;
+        } else {
+            throw new Error("Data not set");
+        }
+    }
+
+    linkData(): LinkData {
+        throw new Error("Method not implemented.");
+    }
+
+    override publish(timestamp: string | null, fees?: Fees, storageFeePaidBy?: string): LocItem {
+        const newFileData = this._fileData && storageFeePaidBy ? {
+            ...this._fileData,
+            storageFeePaidBy,
+        } : this._fileData;
+        return new FileItem(
+            {
+                ...this.commonData,
+                timestamp,
+                fees,
+            },
+            newFileData,
+        );
+    }
+}
+
+export class LinkItem extends LocItem {
+
+    constructor(commonData: CommonData, linkData?: LinkData) {
+        super(commonData);
+        this._linkData = linkData;
+    }
+
+    readonly _linkData?: LinkData;
+
+    override title() {
+        return this._linkData?.nature || "-";
+    }
+
+    override hasData(): boolean {
+        return super.hasData() && this._linkData !== undefined;
+    }
+
+    metadataData(): MetadataData {
+        throw new Error("Method not implemented.");
+    }
+
+    fileData(): FileData {
+        throw new Error("Method not implemented.");
+    }
+
+    linkData(): LinkData {
+        if(this._linkData) {
+            return this._linkData;
+        } else {
+            throw new Error("Data not set");
+        }
+    }
+
+    override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): LocItem {
+        return new LinkItem(
+            {
+                ...this.commonData,
+                timestamp,
+                fees,
+            },
+            this._linkData,
+        );
+    }
 }
 
 export enum PublishStatus {
@@ -96,7 +326,7 @@ export function buildItemTableColumns(args: {
     let columns: Column<LocItem>[] = [
         {
             header: "Public description",
-            render: locItem => <Cell content={ locItem.nature || "-" } overflowing tooltipId={`${loc.id}-name-tooltip`}/>,
+            render: locItem => <Cell content={ locItem.title() } overflowing tooltipId={`${loc.id}-name-tooltip`}/>,
             renderDetails: locItem => renderDetails(loc, locItem, viewer),
             detailsExpanded: locItem => locItem.newItem || (locItem.template && (viewer !== "LegalOfficer" || (locItem.status !== "PUBLISHED" && locItem.status !== "ACKNOWLEDGED"))),
             hideExpand: locItem => locItem.template && viewer !== "LegalOfficer",
@@ -121,13 +351,12 @@ export function buildItemTableColumns(args: {
             render: locItem => <Cell content={
                 <>
                     <span className="item-type">{ locItem.type }</span> {
-                        locItem.type === 'Document' && locItem.name &&
+                        locItem.type === 'Document' &&
                         canViewFile(viewer, currentAddress, locItem, contributionMode) &&
-                        Hash.isValidHexHash(locItem.value || "") &&
                         <ViewFileButton
                             nodeOwner={ loc.ownerAddress }
-                            fileName={ locItem.name }
-                            downloader={ () => locState?.getFile(Hash.fromHex(locItem.value || "")) }
+                            fileName={ locItem.fileData().fileName }
+                            downloader={ () => locState?.getFile(locItem.fileData().hash) }
                         />
                     }
                 </> } />,
@@ -143,7 +372,7 @@ export function buildItemTableColumns(args: {
     if(loc.locType === "Collection" && viewer === "LegalOfficer") {
         columns.push({
             header: "Restricted Delivery?",
-            render: locItem => locItem.type === "Document" && locItem.value ? <RestrictedDeliveryCell hash={ Hash.fromHex(locItem.value) }/> : null,
+            render: locItem => locItem.type === "Document" && locItem.hasData() ? <RestrictedDeliveryCell hash={ locItem.fileData().hash }/> : null,
             width: "130px",
         });
     }
@@ -173,7 +402,7 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
                 locItem.type === 'Document' &&
                 <LocPrivateFileDetails
                     item={ locItem }
-                    documentClaimHistory={ loc?.locType === "Collection" && locItem.value && !locItem.template ? documentClaimHistory(viewer, loc, Hash.fromHex(locItem.value)) : undefined }
+                    documentClaimHistory={ loc?.locType === "Collection" && !locItem.template ? documentClaimHistory(viewer, loc, locItem.fileData().hash) : undefined }
                     otherFeesPaidByRequester={ loc?.requesterLocId === undefined }
                 />
             }
@@ -183,11 +412,7 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
 }
 
 function canViewFile(viewer: Viewer, address: string | undefined, item: LocItem, contributionMode?: ContributionMode): boolean {
-    return (contributionMode !== 'VerifiedIssuer' || item.submitter === address) && isSet(item) && (viewer === "User" || item.status !== "DRAFT");
-}
-
-function isSet(item: LocItem) {
-    return (!item.template || item.isSet === true);
+    return item.hasData() && (contributionMode !== 'VerifiedIssuer' || item.submitterOrThrow.address === address) && (viewer === "User" || item.status !== "DRAFT");
 }
 
 export function documentClaimHistory(viewer: Viewer, loc: LocData | null, hash: Hash) {
@@ -205,7 +430,7 @@ export function useDeleteMetadataCallback(mutateLocState: (mutator: (current: Lo
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteMetadata({
-                    nameHash: item.hash!,
+                    nameHash: item.metadataData().nameHash,
                 });
             } else {
                 return current;
@@ -219,7 +444,7 @@ export function useDeleteFileCallback(mutateLocState: (mutator: (current: LocReq
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteFile({
-                    hash: Hash.fromHex(item.value || ""),
+                    hash: item.fileData().hash,
                 });
             } else {
                 return current;
@@ -232,8 +457,9 @@ export function useDeleteLinkCallback(mutateLocState: (mutator: (current: LocReq
     return useCallback(async (item: LocItem) => {
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
+                // TODO use current.deleteLink(...)
                 return current.legalOfficer.deleteLink({
-                    target: item.target!,
+                    target: item.linkData().linkedLoc.id,
                 });
             } else {
                 return current;
@@ -243,13 +469,9 @@ export function useDeleteLinkCallback(mutateLocState: (mutator: (current: LocReq
 }
 
 export function canDelete(account: ValidAccountId | undefined, item: LocItem, viewer: Viewer, loc: LocData): boolean {
-    if (item.type === "Linked LOC") {
-        return viewer === "LegalOfficer" && item.status === "DRAFT";
-    } else {
-        return item.submitter?.address === account?.address && item.submitter?.type === account?.type
+    return item.submitter?.address === account?.address && item.submitter?.type === account?.type
             && (loc.status === "DRAFT" || loc.status === "OPEN")
             && (item.status === "DRAFT" || (item.status === "REVIEW_ACCEPTED" && item.submitter?.type === "Polkadot") || item.status === "REVIEW_REJECTED");
-    }
 }
 
 export function canAdd(viewer: Viewer, loc: LocData) {
@@ -289,11 +511,9 @@ export function canPublish(viewer: Viewer, loc: LocData, item: LocItem, contribu
 
     const submitterType = getSubmitterType(loc, item);
 
-    const publishedByOwner = submitterType === "Owner" || loc.requesterAddress === undefined || loc.requesterAddress.type !== "Polkadot" || item.type === "Linked LOC";
+    const publishedByOwner = submitterType === "Owner" || loc.requesterAddress === undefined || loc.requesterAddress.type !== "Polkadot";
 
-    const publishable =
-        item.status === "REVIEW_ACCEPTED" ||
-        (item.status === "DRAFT" && item.type === "Linked LOC");
+    const publishable = item.status === "REVIEW_ACCEPTED";
 
     return publishable
         && loc.status === "OPEN" && !loc.voidInfo
@@ -317,8 +537,8 @@ export function canAcknowledge(viewer: Viewer, loc: LocData, item: LocItem, cont
     return acknowledgeable
         && loc.status === "OPEN" && !loc.voidInfo
         && (
-            (submitterType === "VerifiedIssuer" && actorType === "VerifiedIssuer" && item.acknowledgedByVerifiedIssuer !== undefined && !item.acknowledgedByVerifiedIssuer) ||
-            (actorType === "Owner" && item.acknowledgedByOwner !== undefined && !item.acknowledgedByOwner)
+            (submitterType === "VerifiedIssuer" && actorType === "VerifiedIssuer" && item.acknowledgedByVerifiedIssuer !== undefined && !item.acknowledgedByVerifiedIssuer)
+            || (actorType === "Owner" && item.acknowledgedByOwner !== undefined && !item.acknowledgedByOwner)
         )
 }
 
@@ -328,11 +548,6 @@ export function canRequestReview(viewer: Viewer, loc: LocData, item: LocItem) {
 
 export function canReview(viewer: Viewer, loc: LocData, item: LocItem) {
     return viewer === "LegalOfficer" && item.status === "REVIEW_PENDING" && loc.status === "OPEN";
-}
-
-export interface LinkData {
-    linkedLoc: LocData;
-    linkDetailsPath: string;
 }
 
 export async function getLinkData(
@@ -367,6 +582,7 @@ export async function getLinkData(
     return {
         linkedLoc,
         linkDetailsPath,
+        nature: link.nature,
     };
 }
 
@@ -375,9 +591,12 @@ export function useRequestReviewCallback(mutateLocState: (mutator: (current: Loc
         mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 if(locItem.type === "Data") {
-                    return current.requestMetadataReview(locItem.hash!);
+                    return current.requestMetadataReview(locItem.metadataData().nameHash);
                 } else if(locItem.type === "Document") {
-                    return current.requestFileReview(locItem.hash!);
+                    return current.requestFileReview(locItem.fileData().hash);
+                // } // TODO: uncomment
+                // else if(locItem.type === "Linked LOC") {
+                //     return current.requestLinkReview(locItem.linkData().linkedLoc.id);
                 } else {
                     return current;
                 }
@@ -394,16 +613,22 @@ export function useReviewCallback(mutateLocState: (mutator: (current: LocRequest
             if(current instanceof EditableRequest) {
                 if(locItem.type === "Data") {
                     return current.legalOfficer.reviewMetadata({
-                        nameHash: locItem.hash!,
+                        nameHash: locItem.metadataData().nameHash,
                         decision,
                         rejectReason
                     });
                 } else if(locItem.type === "Document") {
                     return current.legalOfficer.reviewFile({
-                        hash: locItem.hash!,
+                        hash: locItem.fileData().hash,
                         decision,
                         rejectReason
                     });
+                // } else if(locItem.type === "Linked LOC") { // TODO: uncomment
+                //     return current.legalOfficer.reviewLink({
+                //         target: locItem.linkData().linkedLoc.id,
+                //         decision,
+                //         rejectReason
+                //     });
                 } else {
                     return current;
                 }

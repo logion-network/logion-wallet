@@ -33,7 +33,7 @@ export default function LocPublishLinkButton(props: Props) {
             publishMutator={ async (current, callback) => {
                 if(current instanceof OpenLoc) {
                     return current.legalOfficer.publishLink({
-                        target: props.locItem.target!,
+                        target: props.locItem.linkData().linkedLoc.id,
                         signer: signer!,
                         callback,
                     });
@@ -41,7 +41,7 @@ export default function LocPublishLinkButton(props: Props) {
                     return current;
                 }
             }}
-            feesEstimator={ () => estimateFees(props.locItem.target) }
+            feesEstimator={ () => estimateFees(props.locItem.linkData().linkedLoc.id) }
             itemType="Link"
         />
     )

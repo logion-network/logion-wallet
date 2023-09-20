@@ -37,18 +37,24 @@ export default function AcknowledgeButton(props: Props) {
             setFees(null);
             (async function() {
                 let fees: Fees;
-                if(props.locItem.type === "Data" && locState instanceof OpenLoc) {
-                    fees = await locState.legalOfficer.estimateFeesAcknowledgeMetadata({
-                        nameHash: props.locItem.hash!,
-                    })
-                } else if(props.locItem.type === "Document" && locState instanceof OpenLoc) {
-                    fees = await locState.legalOfficer.estimateFeesAcknowledgeFile({
-                        hash: props.locItem.hash!,
-                    })
-                } else {
-                    throw new Error("Unexpected type");
+                if(locState instanceof OpenLoc) {
+                    if(props.locItem.type === "Data") {
+                        fees = await locState.legalOfficer.estimateFeesAcknowledgeMetadata({
+                            nameHash: props.locItem.metadataData().nameHash,
+                        })
+                    } else if(props.locItem.type === "Document") {
+                        fees = await locState.legalOfficer.estimateFeesAcknowledgeFile({
+                            hash: props.locItem.fileData().hash,
+                        })
+                    // } else if(props.locItem.type === "Linked LOC") { // TODO: uncomment this
+                    //     fees = await locState.legalOfficer.estimateFeesAcknowledgeLink({
+                    //         hash: props.locItem.linkData().linkedLoc.id,
+                    //     })
+                    } else {
+                        throw new Error("Unexpected type");
+                    }
+                    setFees(fees);
                 }
-                setFees(fees);
             })();
         }
     }, [ fees, props.locItem, props.locId, locState ]);
@@ -68,16 +74,22 @@ export default function AcknowledgeButton(props: Props) {
                 if(signer && current instanceof OpenLoc) {
                     if(props.locItem.type === "Document") {
                         return current.legalOfficer.acknowledgeFile({
-                            hash: props.locItem.hash!,
+                            hash: props.locItem.fileData().hash,
                             signer,
                             callback,
                         });
                     } else if(props.locItem.type === "Data") {
                         return current.legalOfficer.acknowledgeMetadata({
-                            nameHash: props.locItem.hash!,
+                            nameHash: props.locItem.metadataData().nameHash,
                             signer,
                             callback,
                         });
+                    // } else if(props.locItem.type === "Linked LOC") { // TODO: uncomment this
+                    //     return current.legalOfficer.acknowledgeLink({
+                    //         nameHash: props.locItem.linkData().linkedLoc.id,
+                    //         signer,
+                    //         callback,
+                    //     });
                     } else {
                         throw new Error("Unexpected type");
                     }

@@ -94,7 +94,7 @@ exports[`LocPrivateFileDetails renders 1`] = `
       <LocItemDetail
         label="File size (bytes)"
       >
-        42
+        4
       </LocItemDetail>
       <LocItemDetail
         copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"

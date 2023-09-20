@@ -182,9 +182,9 @@ export function LocDetailsTabContent(props: ContentProps) {
                     setTemplateItems(items);
 
                     const customItems = locItems.filter(item =>
-                        (item.type === "Linked LOC" && !templateLinks.has(item.nature))
-                        || (item.type === "Data" && !templateItems.has(item.name))
-                        || (item.type === "Document" && !templateDocuments.has(item.nature))
+                        (item.type === "Linked LOC" && !templateLinks.has(item.linkData().nature))
+                        || (item.type === "Data" && !templateItems.has(item.metadataData().name))
+                        || (item.type === "Document" && !templateDocuments.has(item.fileData().nature))
                     );
                     setCustomItems(customItems);
                 })();
@@ -338,15 +338,18 @@ export function LocDetailsTabContent(props: ContentProps) {
             hideHeader={ templateItems.length > 0 }
         />
         <Row>
-            <Col xxl={ 5 } xl={ 4 }>
+            <Col xxl={ 7 } xl={ 6 }>
                 {
                     canAdd(viewer, loc) &&
                     <ButtonGroup align="left">
                         <LocPublicDataButton
-                            text="Add a public data"
+                            text="Add public data"
                         />
                         <LocPrivateFileButton
-                            text="Add a confidential document"
+                            text="Add a private document"
+                        />
+                        <LocLinkButton
+                            text="Link to an existing LOC"
                         />
                     </ButtonGroup>
                 }
@@ -354,12 +357,6 @@ export function LocDetailsTabContent(props: ContentProps) {
             {
                 viewer === "LegalOfficer" &&
                 <>
-                <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
-                    {
-                        !loc.voidInfo && loc.status === "OPEN" &&
-                        <LocLinkButton text="Link to an existing LOC"/>
-                    }
-                </Col>
                 <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
                     {
                         !loc.voidInfo &&
@@ -371,7 +368,7 @@ export function LocDetailsTabContent(props: ContentProps) {
             {
                 viewer === "User" &&
                 <>
-                <Col xxl={ 7 } xl={ 8 }>
+                <Col xxl={ 5 } xl={ 6 }>
                     {
                         loc.status === "DRAFT" && loc.iDenfy?.status !== "PENDING" &&
                         <ButtonGroup

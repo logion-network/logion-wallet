@@ -5,21 +5,62 @@ exports[`LocPublishPrivateFileButton renders 1`] = `
   feesEstimator={[Function]}
   itemType="Document"
   locItem={
-    Object {
-      "name": "file-name",
-      "nature": "file-nature",
-      "newItem": false,
-      "status": "DRAFT",
-      "submitter": Object {
-        "address": "file-submitter",
-        "equals": [Function],
-        "toKey": [Function],
-        "type": "Polkadot",
+    FileItem {
+      "_fileData": Object {
+        "fileName": "file-name",
+        "hash": Hash {
+          "_bytes": Uint8Array [
+            16,
+            166,
+            134,
+            101,
+            18,
+            250,
+            219,
+            147,
+            78,
+            189,
+            18,
+            135,
+            219,
+            28,
+            244,
+            31,
+            189,
+            103,
+            172,
+            239,
+            203,
+            80,
+            81,
+            203,
+            197,
+            4,
+            187,
+            36,
+            166,
+            224,
+            240,
+            40,
+          ],
+        },
+        "nature": "file-nature",
+        "size": 10n,
+        "storageFeePaidBy": "Requester",
       },
-      "template": false,
-      "timestamp": null,
-      "type": "Document",
-      "value": "file-value",
+      "commonData": Object {
+        "newItem": false,
+        "status": "DRAFT",
+        "submitter": Object {
+          "address": "file-submitter",
+          "equals": [Function],
+          "toKey": [Function],
+          "type": "Polkadot",
+        },
+        "template": false,
+        "timestamp": null,
+        "type": "Document",
+      },
     }
   }
   publishMutator={[Function]}

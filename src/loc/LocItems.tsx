@@ -68,7 +68,7 @@ export function LocItems(props: LocItemsProps) {
             <Button
                 variant="danger-flat"
                 onClick={ () => action(locItem) }
-                data-testid={ `remove-${ locItem.type }-${ locItem.name }` }
+                data-testid={ `remove-${ locItem.type }-${ locItem.title() }` }
             >
                 <Icon icon={ { id: 'trash' } } />
             </Button>
@@ -116,14 +116,14 @@ export function LocItems(props: LocItemsProps) {
 
         const acknowledge = canAcknowledge(viewer, loc, locItem, props.contributionMode);
 
-        if (locItem.status === "PUBLISHED" && locItem.type !== "Linked LOC" && !acknowledge) {
+        if (locItem.status === "PUBLISHED" && !acknowledge) {
             buttons.push(<StatusCell
                 key={ ++key }
                 icon={ { id: 'published' } }
                 text="Published"
                 color={ POLKADOT }
                 tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
-                tooltipId={ `published-${ locItem.type }-${ locItem.name }` }
+                tooltipId={ `published-${ locItem.type }-${ locItem.title() }` }
             />);
         }
 
@@ -166,7 +166,7 @@ export function LocItems(props: LocItemsProps) {
                     data={ locItems }
                     columns={ columns }
                     renderEmpty={ () => <EmptyTableMessage>No custom public data nor private documents</EmptyTableMessage> }
-                    rowStyle={ item => (item.type === "Document" && item.value === props.matchedHash?.toHex()) ? "matched" : "" }
+                    rowStyle={ item => (item.type === "Document" && item.hasData() && props.matchedHash && item.fileData().hash.equalTo(props.matchedHash)) ? "matched" : "" }
                     hideHeader={ props.hideHeader }
                 />
             </div>

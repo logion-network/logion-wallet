@@ -157,7 +157,7 @@ exports[`LOLocItems renders with single draft item 1`] = `
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
               >
-                -
+                Name
               </span>
             </div>
             <div
@@ -567,7 +567,7 @@ exports[`UserLocItems renders with single draft item 1`] = `
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
               >
-                -
+                Name
               </span>
             </div>
             <div
