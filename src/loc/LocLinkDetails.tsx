@@ -2,13 +2,13 @@ import { Col } from "../common/Grid";
 import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
-import { LocItem } from "./LocItem";
+import { LinkItem } from "./LocItem";
 import NewTabLink from "../common/NewTabLink";
 import CopyPasteButton from "../common/CopyPasteButton";
 import LocItemEstimatedFees from "./LocItemEstimatedFees";
 
 export interface Props {
-    item: LocItem;
+    item: LinkItem;
 }
 
 export default function LocLinkDetails(props: Props) {
@@ -16,15 +16,15 @@ export default function LocLinkDetails(props: Props) {
         <Col className="LocItemDetails" style={ { width: "100%" } }>
             <div className="frame">
                 <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
-                <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.linkData().nature : "-" }</LocItemDetail>
+                <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.data().nature : "-" }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
                     { props.item.submitter?.address || "-" }
                 </LocItemDetail>
                 <LocItemDetail label="Linked LOC" className="linked-loc">
-                    <NewTabLink href={ props.item.hasData() ? props.item.linkData().linkDetailsPath : undefined } iconId="loc-link">{ props.item.hasData() ? props.item.linkData().linkedLoc.id.toDecimalString() : undefined }</NewTabLink>
+                    <NewTabLink href={ props.item.hasData() ? props.item.data().linkDetailsPath : undefined } iconId="loc-link">{ props.item.hasData() ? props.item.data().linkedLoc.id.toDecimalString() : undefined }</NewTabLink>
                     {
                         props.item.hasData() &&
-                        <CopyPasteButton value={ props.item.linkData().linkedLoc.id.toDecimalString() } className="medium"/>
+                        <CopyPasteButton value={ props.item.data().linkedLoc.id.toDecimalString() } className="medium"/>
                     }
                 </LocItemDetail>
                 {

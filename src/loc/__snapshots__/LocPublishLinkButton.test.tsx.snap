@@ -6,7 +6,7 @@ exports[`LocPublishLinkButton renders 1`] = `
   itemType="Link"
   locItem={
     LinkItem {
-      "_linkData": Object {
+      "_data": Object {
         "linkDetailsPath": "",
         "linkedLoc": Object {
           "id": UUID {

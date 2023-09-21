@@ -3,7 +3,7 @@ import Button from "../common/Button";
 import { useState, useEffect } from "react";
 import ProcessStep from "../common/ProcessStep";
 import Alert from "../common/Alert";
-import { PublishProps, PublishState, PublishStatus } from "./LocItem";
+import { PublishProps, PublishState, PublishStatus, LinkItem, FileItem, MetadataItem } from "./LocItem";
 import Icon from "../common/Icon";
 import { useLocContext } from "./LocContext";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
@@ -70,15 +70,15 @@ export default function LocPublishButton(props: PublishProps) {
                 <p style={{ marginTop: "20px", marginBottom: "20px" }}>After processing and blockchain publication, these data will be definitely and publicly
                     available on the blockchain.</p>
 
-                { props.locItem.type === 'Data' && <LocPublicDataDetails item={ props.locItem } /> }
+                { props.locItem.type === 'Data' && <LocPublicDataDetails item={ props.locItem as MetadataItem } /> }
                 {
                     props.locItem.type === 'Document' &&
                     <LocPrivateFileDetails
-                        item={ props.locItem }
+                        item={ props.locItem as FileItem }
                         otherFeesPaidByRequester={ loc?.requesterLocId === undefined && loc?.sponsorshipId === undefined }
                     />
                 }
-                { props.locItem.type === 'Linked LOC' && <LocLinkDetails item={ props.locItem } /> }
+                { props.locItem.type === 'Linked LOC' && <LocLinkDetails item={ props.locItem as LinkItem } /> }
 
                 <LocItemEstimatedFees
                     fees={ fees }

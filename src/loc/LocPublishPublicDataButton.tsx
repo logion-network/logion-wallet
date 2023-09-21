@@ -1,7 +1,7 @@
 import { OpenLoc } from "@logion/client";
 import { UUID, Hash } from "@logion/node-api";
 
-import { LocItem } from "./LocItem";
+import { MetadataItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
@@ -9,7 +9,7 @@ import { useCallback } from "react";
 
 export interface Props {
     locId: UUID;
-    locItem: LocItem;
+    locItem: MetadataItem;
 }
 
 export default function LocPublishPublicDataButton(props: Props) {
@@ -35,7 +35,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                     && props.locItem.submitter) {
 
                     return current.publishMetadata({
-                        nameHash: props.locItem.metadataData().nameHash,
+                        nameHash: props.locItem.data().nameHash,
                         signer: signer!,
                         callback,
                     });
@@ -43,7 +43,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                     return current;
                 }
             }}
-            feesEstimator={ () => estimateFees(props.locItem.metadataData().nameHash) }
+            feesEstimator={ () => estimateFees(props.locItem.data().nameHash) }
             itemType="Public Data"
         />
     )

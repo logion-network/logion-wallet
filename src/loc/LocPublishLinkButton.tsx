@@ -1,7 +1,7 @@
 import { OpenLoc } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
-import { LocItem } from "./LocItem";
+import { LinkItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
@@ -9,7 +9,7 @@ import { useCallback } from "react";
 
 export interface Props {
     locId: UUID;
-    locItem: LocItem;
+    locItem: LinkItem;
 }
 
 export default function LocPublishLinkButton(props: Props) {
@@ -33,7 +33,7 @@ export default function LocPublishLinkButton(props: Props) {
             publishMutator={ async (current, callback) => {
                 if(current instanceof OpenLoc) {
                     return current.legalOfficer.publishLink({
-                        target: props.locItem.linkData().linkedLoc.id,
+                        target: props.locItem.data().linkedLoc.id,
                         signer: signer!,
                         callback,
                     });
@@ -41,7 +41,7 @@ export default function LocPublishLinkButton(props: Props) {
                     return current;
                 }
             }}
-            feesEstimator={ () => estimateFees(props.locItem.linkData().linkedLoc.id) }
+            feesEstimator={ () => estimateFees(props.locItem.data().linkedLoc.id) }
             itemType="Link"
         />
     )

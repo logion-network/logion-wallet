@@ -6,7 +6,7 @@ import Dialog from "../common/Dialog";
 import LocPublicDataForm, { FormValues } from "./LocPublicDataForm";
 import { useCommonContext } from "../common/CommonContext";
 import Icon from "../common/Icon";
-import { LocItem } from "./LocItem";
+import { MetadataItem, MetadataData } from "./LocItem";
 import { useLocContext } from "./LocContext";
 import { EditableRequest } from "@logion/client";
 import { Hash } from "@logion/node-api";
@@ -21,14 +21,14 @@ export function LocPublicDataButton(props: Props) {
     const { colorTheme } = useCommonContext();
     const [ visible, setVisible ] = useState(false);
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
-    const [ existingItem, setExistingItem ] = useState<LocItem | undefined>(undefined);
+    const [ existingItem, setExistingItem ] = useState<MetadataItem | undefined>(undefined);
 
     const submit = useCallback(async (formValues: FormValues) => {
         const nameHash = Hash.of(formValues.dataName);
-        const existingItem = locItems.find(item => item.type === "Data" && item.metadataData().nameHash.equalTo(nameHash));
+        const existingItem = locItems.find(item => item.type === "Data" && item.as<MetadataData>().nameHash.equalTo(nameHash));
         if (existingItem) {
             setVisible(false)
-            setExistingItem(existingItem)
+            setExistingItem(existingItem as MetadataItem)
         } else {
             await mutateLocState(async current => {
                 if(current instanceof EditableRequest) {
@@ -89,7 +89,7 @@ export function LocPublicDataButton(props: Props) {
                 ] }
             >
                 <p>A data with name</p>
-                <p>{ existingItem?.metadataData().name }</p>
+                <p>{ existingItem?.data().name }</p>
                 <p>already exists in this LOC.</p>
             </Dialog>
 

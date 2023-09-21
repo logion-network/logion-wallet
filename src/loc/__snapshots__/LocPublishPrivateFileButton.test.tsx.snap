@@ -6,7 +6,7 @@ exports[`LocPublishPrivateFileButton renders 1`] = `
   itemType="Document"
   locItem={
     FileItem {
-      "_fileData": Object {
+      "_data": Object {
         "fileName": "file-name",
         "hash": Hash {
           "_bytes": Uint8Array [

@@ -1,7 +1,7 @@
 import { OpenLoc } from "@logion/client";
 import { UUID, Hash } from "@logion/node-api";
 
-import { LocItem } from "./LocItem";
+import { FileItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
@@ -9,7 +9,7 @@ import { useCallback } from "react";
 
 export interface Props {
     locId: UUID;
-    locItem: LocItem;
+    locItem: FileItem;
 }
 
 export default function LocPublishPrivateFileButton(props: Props) {
@@ -34,7 +34,7 @@ export default function LocPublishPrivateFileButton(props: Props) {
                 if(current instanceof OpenLoc) {
 
                     return current.publishFile({
-                        hash: props.locItem.fileData().hash,
+                        hash: props.locItem.data().hash,
                         signer: signer!,
                         callback,
                     });
@@ -42,7 +42,7 @@ export default function LocPublishPrivateFileButton(props: Props) {
                     return current;
                 }
             }}
-            feesEstimator={ () => estimateFees(props.locItem.fileData().hash) }
+            feesEstimator={ () => estimateFees(props.locItem.data().hash) }
             itemType="Document"
         />
     )

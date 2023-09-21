@@ -4,7 +4,7 @@ import { clickByName, typeByLabel, uploadByTestId } from "src/tests";
 import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 import { EditableRequest, setExpectedFileHash } from "src/__mocks__/LogionClientMock";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
-import { FileItem } from "./LocItem";
+import { FileItem, FileData } from "./LocItem";
 import { setLocItems, setLocState } from "./__mocks__/LocContextMock";
 import { Hash } from "@logion/node-api";
 
@@ -69,8 +69,8 @@ async function testUploadsFile(component: React.ReactElement, addFile: jest.Mock
 
     await clickByName(content => /add a confidential document/i.test(content));
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Document Name", existingFileItem.fileData().fileName);
-    await typeByLabel("Document Public Description", existingFileItem.fileData().nature);
+    await typeByLabel("Document Name", existingFileItem.data().fileName);
+    await typeByLabel("Document Public Description", existingFileItem.data().nature);
     await uploadByTestId("FileSelectorButtonHiddenInput", file);
     await clickByName("Submit");
     await waitFor(() => expect(addFile).toBeCalled());
@@ -82,8 +82,8 @@ async function testDoesNothingOnCancel(component: React.ReactElement, addFile: j
 
     await clickByName(content => /add a confidential document/i.test(content));
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Document Name", existingFileItem.fileData().fileName);
-    await typeByLabel("Document Public Description", existingFileItem.fileData().nature);
+    await typeByLabel("Document Name", existingFileItem.data().fileName);
+    await typeByLabel("Document Public Description", existingFileItem.data().nature);
     await uploadByTestId("FileSelectorButtonHiddenInput", file);
     await clickByName("Cancel");
     expect(addFile).not.toBeCalled();
@@ -95,8 +95,8 @@ async function testDoesNotNothingIfFileExists(component: React.ReactElement, add
 
     await clickByName(content => /add a confidential document/i.test(content));
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Document Name", existingFileItem.fileData().fileName);
-    await typeByLabel("Document Public Description", existingFileItem.fileData().nature);
+    await typeByLabel("Document Name", existingFileItem.as<FileData>().fileName);
+    await typeByLabel("Document Public Description", existingFileItem.as<FileData>().nature);
     await uploadByTestId("FileSelectorButtonHiddenInput", file);
     await clickByName("Submit");
     await waitFor(() => expect(addFile).not.toBeCalled());
