@@ -31,12 +31,10 @@ export default function LocPublishPrivateFileButton(props: Props) {
         <LocPublishButton
             locItem={ props.locItem }
             publishMutator={ async (current, callback) => {
-                if(current instanceof OpenLoc
-                    && props.locItem.value
-                    && props.locItem.submitter) {
+                if(current instanceof OpenLoc) {
 
                     return current.publishFile({
-                        hash: props.locItem.hash!,
+                        hash: props.locItem.fileData().hash,
                         signer: signer!,
                         callback,
                     });
@@ -44,7 +42,7 @@ export default function LocPublishPrivateFileButton(props: Props) {
                     return current;
                 }
             }}
-            feesEstimator={ () => estimateFees(props.locItem.hash) }
+            feesEstimator={ () => estimateFees(props.locItem.fileData().hash) }
             itemType="Document"
         />
     )

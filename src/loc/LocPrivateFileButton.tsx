@@ -36,7 +36,7 @@ export function LocPrivateFileButton(props: Props) {
             setStatus('Hashing')
             const content = await HashOrContent.fromContentFinalized(file);
             const hash = content.contentHash;
-            const existingItem = locItems.find(item => item.type === "Document" && item.value === hash.toHex());
+            const existingItem = locItems.find(item => item.type === "Document" && item.fileData().hash.equalTo(hash));
             if (existingItem !== undefined) {
                 setStatus('Idle');
                 setExistingItem(existingItem);
@@ -138,7 +138,7 @@ export function LocPrivateFileButton(props: Props) {
                 <p>A document with hash</p>
                 <p>{ duplicateHash?.toHex() }</p>
                 <p>already exists in this LOC:</p>
-                <p>{ existingItem?.name }</p>
+                <p>{ existingItem?.fileData().nature }</p>
             </Dialog>
         </>
     )

@@ -162,7 +162,7 @@ function Reader() {
             <ul>
                 {
                     locItems.map((item, index) => <li key={ index }>
-                        <p>{ item.name }</p>
+                        <p>{ item.title() }</p>
                     </li>)
                 }
             </ul>
@@ -222,7 +222,7 @@ function ItemAdder() {
             <ul>
                 {
                     locItems.map((item, index) => <li key={ index }>
-                        <p>{ item.name }</p>
+                        <p>{ item.title() }</p>
                     </li>)
                 }
             </ul>
@@ -283,7 +283,7 @@ function ItemDeleter() {
                 }) as unknown as RealEditableRequest;
                 next = current.legalOfficer.deleteLink!({
                     locState: current as unknown as RealEditableRequest,
-                    target: locItems.find(item => item.nature === "New link")!.target!,
+                    target: locItems.find(item => item.type === "Linked LOC" && item.linkData().nature === "New link")!.linkData().linkedLoc.id,
                 }) as unknown as RealEditableRequest;
                 next = current.deleteMetadata!({
                     nameHash: Hash.of("New data"),
@@ -301,7 +301,7 @@ function ItemDeleter() {
             <ul>
                 {
                     locItems.filter(item => item.status === "DRAFT").map((item, index) => <li key={ index }>
-                        <p>{ item.name }</p>
+                        <p>{ item.title() }</p>
                     </li>)
                 }
             </ul>

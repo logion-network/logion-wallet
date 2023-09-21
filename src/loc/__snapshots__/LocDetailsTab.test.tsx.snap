@@ -366,15 +366,10 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
   />
   <Row>
     <Col
-      xl={4}
-      xxl={5}
+      xl={6}
+      xxl={7}
     />
     <React.Fragment>
-      <Col
-        className="link-button-container"
-        xl={4}
-        xxl={4}
-      />
       <Col
         className="close-button-container"
         xl={4}
@@ -619,13 +614,13 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
   />
   <Row>
     <Col
-      xl={4}
-      xxl={5}
+      xl={6}
+      xxl={7}
     />
     <React.Fragment>
       <Col
-        xl={8}
-        xxl={7}
+        xl={6}
+        xxl={5}
       />
     </React.Fragment>
   </Row>
@@ -856,30 +851,24 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
   />
   <Row>
     <Col
-      xl={4}
-      xxl={5}
+      xl={6}
+      xxl={7}
     >
       <ButtonGroup
         align="left"
       >
         <LocPublicDataButton
-          text="Add a public data"
+          text="Add public data"
         />
         <LocPrivateFileButton
-          text="Add a confidential document"
+          text="Add a private document"
+        />
+        <LocLinkButton
+          text="Link to an existing LOC"
         />
       </ButtonGroup>
     </Col>
     <React.Fragment>
-      <Col
-        className="link-button-container"
-        xl={4}
-        xxl={4}
-      >
-        <LocLinkButton
-          text="Link to an existing LOC"
-        />
-      </Col>
       <Col
         className="close-button-container"
         xl={4}
@@ -1116,24 +1105,27 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
   />
   <Row>
     <Col
-      xl={4}
-      xxl={5}
+      xl={6}
+      xxl={7}
     >
       <ButtonGroup
         align="left"
       >
         <LocPublicDataButton
-          text="Add a public data"
+          text="Add public data"
         />
         <LocPrivateFileButton
-          text="Add a confidential document"
+          text="Add a private document"
+        />
+        <LocLinkButton
+          text="Link to an existing LOC"
         />
       </ButtonGroup>
     </Col>
     <React.Fragment>
       <Col
-        xl={8}
-        xxl={7}
+        xl={6}
+        xxl={5}
       />
     </React.Fragment>
   </Row>
@@ -1364,30 +1356,24 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
   />
   <Row>
     <Col
-      xl={4}
-      xxl={5}
+      xl={6}
+      xxl={7}
     >
       <ButtonGroup
         align="left"
       >
         <LocPublicDataButton
-          text="Add a public data"
+          text="Add public data"
         />
         <LocPrivateFileButton
-          text="Add a confidential document"
+          text="Add a private document"
+        />
+        <LocLinkButton
+          text="Link to an existing LOC"
         />
       </ButtonGroup>
     </Col>
     <React.Fragment>
-      <Col
-        className="link-button-container"
-        xl={4}
-        xxl={4}
-      >
-        <LocLinkButton
-          text="Link to an existing LOC"
-        />
-      </Col>
       <Col
         className="close-button-container"
         xl={4}
@@ -1626,15 +1612,10 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
   />
   <Row>
     <Col
-      xl={4}
-      xxl={5}
+      xl={6}
+      xxl={7}
     />
     <React.Fragment>
-      <Col
-        className="link-button-container"
-        xl={4}
-        xxl={4}
-      />
       <Col
         className="close-button-container"
         xl={4}
@@ -1871,13 +1852,13 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
   />
   <Row>
     <Col
-      xl={4}
-      xxl={5}
+      xl={6}
+      xxl={7}
     />
     <React.Fragment>
       <Col
-        xl={8}
-        xxl={7}
+        xl={6}
+        xxl={5}
       />
     </React.Fragment>
   </Row>

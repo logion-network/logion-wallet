@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { LocData } from "@logion/client";
+import { LocData, ItemStatus } from "@logion/client";
 
 import { clickByName, expectNoDialogVisible } from '../tests';
 import { DEFAULT_LEGAL_OFFICER } from '../common/TestData';
@@ -8,6 +8,8 @@ import { setLocItems, setLocState } from './__mocks__/LocContextMock';
 import CloseLocButton from './CloseLocButton';
 import { OpenLoc } from 'src/__mocks__/LogionClientMock';
 import { mockSubmittableResult } from 'src/logion-chain/__mocks__/SignatureMock';
+import { LocItem, MetadataItem } from './LocItem';
+import { Hash } from '@logion/node-api';
 
 jest.mock("../logion-chain");
 jest.mock("./LocContext");
@@ -15,18 +17,7 @@ jest.mock("./LocContext");
 describe("CloseLocButton", () => {
 
     it("does not close with draft items", async () => {
-        setLocItems([
-            {
-                name: "Test",
-                newItem: false,
-                status: 'DRAFT',
-                submitter: DEFAULT_LEGAL_OFFICER,
-                timestamp: null,
-                type: 'Data',
-                value: "Test",
-                template: false,
-            }
-        ]);
+        setLocItems([ metadataItem("DRAFT") ]);
         let called = false;
         const closeLocMock = async (params: any) => {
             called = true;
@@ -49,18 +40,7 @@ describe("CloseLocButton", () => {
     })
 
     it("closes with all items recorded", async () => {
-        setLocItems([
-            {
-                name: "Test",
-                newItem: false,
-                status: 'ACKNOWLEDGED',
-                submitter: DEFAULT_LEGAL_OFFICER,
-                timestamp: null,
-                type: 'Data',
-                value: "Test",
-                template: false,
-            }
-        ]);
+        setLocItems([ metadataItem("ACKNOWLEDGED") ]);
         const locState = new OpenLoc();
         locState.data = () => ({
             locType: "Transaction",
@@ -84,18 +64,7 @@ describe("CloseLocButton", () => {
     })
 
     it("does not close on cancel", async () => {
-        setLocItems([
-            {
-                name: "Test",
-                newItem: false,
-                status: 'ACKNOWLEDGED',
-                submitter: DEFAULT_LEGAL_OFFICER,
-                timestamp: null,
-                type: 'Data',
-                value: "Test",
-                template: false,
-            }
-        ]);
+        setLocItems([ metadataItem("ACKNOWLEDGED") ]);
         const locState = new OpenLoc();
         locState.data = () => ({
             locType: "Transaction",
@@ -119,18 +88,7 @@ describe("CloseLocButton", () => {
     })
 
     it("shows message on error", async () => {
-        setLocItems([
-            {
-                name: "Test",
-                newItem: false,
-                status: 'ACKNOWLEDGED',
-                submitter: DEFAULT_LEGAL_OFFICER,
-                timestamp: null,
-                type: 'Data',
-                value: "Test",
-                template: false,
-            }
-        ]);
+        setLocItems([ metadataItem("ACKNOWLEDGED") ]);
         const locState = new OpenLoc();
         locState.data = () => ({
             locType: "Transaction",
@@ -151,3 +109,21 @@ describe("CloseLocButton", () => {
         await expectNoDialogVisible();
     })
 })
+
+function metadataItem(status: ItemStatus): LocItem {
+    return new MetadataItem(
+        {
+            newItem: false,
+            status,
+            submitter: DEFAULT_LEGAL_OFFICER,
+            timestamp: null,
+            type: 'Data',
+            template: false,
+        },
+        {
+            name: "Test",
+            value: "Test",
+            nameHash: Hash.of("Test"),
+        }
+    );
+}

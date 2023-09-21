@@ -123,14 +123,14 @@ export default function LocTemplateItems(props: Props) {
 
             const acknowledge = canAcknowledge(viewer, loc, item, props.contributionMode);
 
-            if(item.status === "PUBLISHED" && item.type !== "Linked LOC" && !acknowledge) {
+            if(item.status === "PUBLISHED" && !acknowledge) {
                 buttons.push(<StatusCell
                     key={++key}
                     icon={ { id: 'published' } }
                     text="Published"
                     color={ POLKADOT }
                     tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
-                    tooltipId={ `published-${item.type}-${item.name}` }
+                    tooltipId={ `published-${item.type}-${item.title()}` }
                 />);
             }
 
@@ -146,19 +146,19 @@ export default function LocTemplateItems(props: Props) {
                 buttons.push(<LocPublicDataButton
                     key={++key}
                     text="Set"
-                    dataName={ item.name }
+                    dataName={ item.hasData() ? item.metadataData().name : undefined }
                 />);
             } else if(item.type === "Document") {
                 buttons.push(<LocPrivateFileButton
                     key={++key}
                     text="Set"
-                    nature={ item.nature }
+                    nature={ item.hasData() ? item.fileData().nature : undefined }
                 />);
-            } else if(item.type === "Linked LOC" && viewer === "LegalOfficer") {
+            } else if(item.type === "Linked LOC") {
                 buttons.push(<LocLinkButton
                     key={++key}
                     text="Set"
-                    nature={ item.nature }
+                    nature={ item.hasData() ? item.linkData().nature : undefined }
                 />);
             }
         }

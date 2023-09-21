@@ -1,9 +1,9 @@
-import { Fees } from "@logion/node-api";
+import { Hash, Fees } from "@logion/node-api";
 import { render, waitFor, screen } from "@testing-library/react";
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName } from "../tests";
 import LocPublishButton from "./LocPublishButton";
-import { LocItem } from "./LocItem";
+import { MetadataItem } from "./LocItem";
 import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 jest.mock("./LocContext");
@@ -14,17 +14,21 @@ describe("LocPublishButton", () => {
 
     it("publishes to chain", async () => {
         // Given item to publish
-        const locItem: LocItem = {
-            name: "data-name",
-            type: "Data",
-            status: "DRAFT",
-            submitter: mockValidPolkadotAccountId("data-submitter"),
-            value: "data-value",
-            nature: "data-nature",
-            timestamp: null,
-            newItem: false,
-            template: false,
-        };
+        const locItem = new MetadataItem(
+            {
+                type: "Data",
+                status: "DRAFT",
+                submitter: mockValidPolkadotAccountId("data-submitter"),
+                timestamp: null,
+                newItem: false,
+                template: false,
+            },
+            {
+                name: "data-name",
+                nameHash: Hash.of("data-name"),
+                value: "data-value",
+            }
+        );
         const confirm = jest.fn();
         render(<LocPublishButton
             itemType="Public Data"

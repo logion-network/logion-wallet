@@ -12,6 +12,7 @@ import LocPrivateFileDetails from "../LocPrivateFileDetails";
 import { ContributionMode } from "../types";
 import { tokensRecordDocumentClaimHistoryPath as requesterTokensRecordDocumentClaimHistoryPath, issuerTokensRecordDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
 import { useLogionChain } from "src/logion-chain";
+import { FileItem } from "../LocItem";
 
 export interface Props {
     records: TokensRecord[];
@@ -44,18 +45,24 @@ export default function TokensRecordTable(props: Props) {
                         overflowing
                     />,
                     renderDetails: record => <LocPrivateFileDetails
-                        item={{
-                            name: record.files[0].name.validValue(),
-                            newItem: false,
-                            status: "PUBLISHED",
-                            submitter: api.queries.getValidAccountId(record.issuer, "Polkadot"),
-                            timestamp: record.addedOn,
-                            type: "Document",
-                            value: record.files[0].hash.toHex(),
-                            nature: record.description.validValue(),
-                            template: false,
-                            size: record.files[0].size,
-                        }}
+                        item={new FileItem(
+                            {
+                                
+                                newItem: false,
+                                status: "PUBLISHED",
+                                submitter: api.queries.getValidAccountId(record.issuer, "Polkadot"),
+                                timestamp: record.addedOn,
+                                type: "Document",
+                                template: false,
+                            },
+                            {
+                                fileName: record.files[0].name.validValue(),
+                                hash: record.files[0].hash,
+                                nature: record.description.validValue(),
+                                size: record.files[0].size,
+                                storageFeePaidBy: "Requester",
+                            }
+                        )}
                         documentClaimHistory={ documentClaimHistory(viewer, loc, record, props.contributionMode) }
                         fileName={record.files[0].name.validValue()}
                         fileType={record.files[0].contentType.validValue()}

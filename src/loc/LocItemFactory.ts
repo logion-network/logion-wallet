@@ -1,6 +1,6 @@
 import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees, toFeesClass } from "@logion/client";
-import { UUID, ValidAccountId, Hash } from "@logion/node-api";
-import { LinkData, LocItem } from "./LocItem";
+import { ValidAccountId } from "@logion/node-api";
+import { FileItem, LinkData, LinkItem, LocItem, MetadataItem } from "./LocItem";
 import { LocTemplateDocumentOrLink, LocTemplateMetadataItem } from "./Template";
 
 export interface ItemAndRefreshFlag {
@@ -12,230 +12,203 @@ export function createFileItem(file: MergedFile): ItemAndRefreshFlag {
     if (file.published) {
         return createPublishedFileLocItem(file)
     } else {
-        const locItem = createDraftFileLocItem(file, file);
+        const locItem = createDraftFileLocItem(file);
         return { locItem, refreshNeeded: false };
     }
 }
 
-export interface SimpleItem {
-    name: string;
-    submitter: ValidAccountId;
-    addedOn?: string;
-}
-
-export interface FileItem extends SimpleItem {
-    nature: string;
-    hash: Hash;
-    size: bigint;
-    fees?: ClientFees;
-    storageFeePaidBy?: string;
-}
-
 function createPublishedFileLocItem(parameters: MergedFile): ItemAndRefreshFlag {
-    return publish(createDraftFileLocItem(parameters, parameters), parameters.addedOn || null, parameters.fees, parameters.storageFeePaidBy)
+    return publish(createDraftFileLocItem(parameters), parameters.addedOn || null, parameters.fees, parameters.storageFeePaidBy);
 }
 
-export function createDraftFileLocItem(parameters: FileItem, locItem?: MergedFile): LocItem {
+function publish(locItem: LocItem, timestamp: string | null, fees?: ClientFees, storageFeePaidBy?: string): ItemAndRefreshFlag {
     return {
-        hash: parameters.hash,
-        name: parameters.name,
-        value: parameters.hash.toHex(),
-        nature: parameters.nature,
-        submitter: parameters.submitter,
-        timestamp: parameters.addedOn || null,
-        type: 'Document',
-        status: locItem?.status || "DRAFT",
-        newItem: locItem === undefined,
-        template: false,
-        size: parameters.size,
-        reviewedOn: locItem?.reviewedOn,
-        rejectReason: locItem?.rejectReason,
-        acknowledgedByOwner: locItem?.acknowledgedByOwner,
-        acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer,
+        locItem: locItem.publish(timestamp, toFeesClass(fees), storageFeePaidBy),
+        refreshNeeded: !locItem.timestamp
     };
 }
 
-export interface MetadataItem extends SimpleItem {
-    nameHash: Hash;
-    value: string;
+function createDraftFileLocItem(parameters: MergedFile): FileItem {
+    return new FileItem(
+        {
+            submitter: parameters.submitter,
+            timestamp: parameters.addedOn || null,
+            type: 'Document',
+            status: parameters.status || "DRAFT",
+            newItem: false,
+            template: false,
+            reviewedOn: parameters.reviewedOn,
+            rejectReason: parameters.rejectReason,
+            acknowledgedByOwner: parameters.acknowledgedByOwner,
+            acknowledgedByVerifiedIssuer: parameters.acknowledgedByVerifiedIssuer,
+        },
+        {
+            hash: parameters.hash,
+            fileName: parameters.name,
+            nature: parameters.nature,
+            size: parameters.size,
+            storageFeePaidBy: parameters.storageFeePaidBy || "",
+        }
+    );
 }
 
 export function createMetadataItem(dataItem: MergedMetadataItem): ItemAndRefreshFlag {
     if (dataItem.published) {
         return createPublishedMetadataLocItem(dataItem);
     } else {
-        const locItem = createDraftMetadataLocItem(dataItem, dataItem);
+        const locItem = createDraftMetadataLocItem(dataItem);
         return { locItem, refreshNeeded: false };
     }
-}
-
-export interface CreateLocMetadataItemParameters {
-    metadataItem: MetadataItem,
 }
 
 function createPublishedMetadataLocItem(parameters: MergedMetadataItem): ItemAndRefreshFlag {
-    return publish(createDraftMetadataLocItem(parameters, parameters), parameters.addedOn || null, parameters.fees)
+    return publish(createDraftMetadataLocItem(parameters), parameters.addedOn || null, parameters.fees)
 }
 
-export function createDraftMetadataLocItem(metadataItem: MetadataItem, locItem?: MergedMetadataItem): LocItem {
-    return {
-        hash: metadataItem.nameHash,
-        name: metadataItem.name,
-        nature: metadataItem.name,
-        value: metadataItem.value,
-        submitter: metadataItem.submitter,
-        timestamp: metadataItem.addedOn || null,
-        type: 'Data',
-        status: locItem?.status || "DRAFT",
-        newItem: locItem === undefined,
-        template: false,
-        reviewedOn: locItem?.reviewedOn,
-        rejectReason: locItem?.rejectReason,
-        acknowledgedByOwner: locItem?.acknowledgedByOwner,
-        acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer,
-    }
+function createDraftMetadataLocItem(locItem: MergedMetadataItem): LocItem {
+    return new MetadataItem(
+        {
+            submitter: locItem.submitter,
+            timestamp: locItem.addedOn || null,
+            type: 'Data',
+            status: locItem?.status || "DRAFT",
+            newItem: locItem === undefined,
+            template: false,
+            reviewedOn: locItem?.reviewedOn,
+            rejectReason: locItem?.rejectReason,
+            acknowledgedByOwner: locItem?.acknowledgedByOwner,
+            acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer,
+        },
+        {
+            name: locItem.name,
+            nameHash: locItem.nameHash,
+            value: locItem.value,
+        }
+    );
 }
 
-export interface SimpleLink {
-    target: string;
-    nature: string;
-    addedOn?: string;
-    published: boolean;
-    fees?: ClientFees;
-}
-
-export interface CreateLocLinkedLocItemParameters {
-    link: SimpleLink,
-    otherLocDescription: string,
-    submitter: ValidAccountId,
-    linkDetailsPath: string,
-}
-
-export function createLinkItem(parameters: CreateLocLinkedLocItemParameters): ItemAndRefreshFlag {
-    const { link, otherLocDescription, submitter, linkDetailsPath } = parameters;
-    if (link.published) {
-        return createPublishedLinkedLocItem({
-            link,
-            otherLocDescription,
-            submitter,
-            timestamp: link.addedOn!,
-            linkDetailsPath,
-        });
-    } else {
-        const locItem = createDraftLinkedLocItem({
-            link,
-            otherLocDescription,
-            submitter,
-            linkDetailsPath,
-        }, false);
+export function createLinkItem(submitter: ValidAccountId, linkItem: LinkData, locLink: MergedLink): ItemAndRefreshFlag {
+    // if (linkItem.published) { // TODO: uncomment this
+    //     return createPublishedLinkedLocItem(submitter, linkItem, locLink);
+    // } else {
+        const locItem = createDraftLinkedLocItem(submitter, linkItem, locLink);
         return { locItem, refreshNeeded: false };
-    }
+    // }
 }
 
-export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParameters, newItem: boolean): LocItem {
-    const { link, otherLocDescription, submitter, linkDetailsPath } = parameters;
-    const target = new UUID(link.target);
-    return {
-        name: otherLocDescription,
-        value: target.toDecimalString(),
-        submitter,
-        timestamp: parameters.link.addedOn || null,
-        type: 'Linked LOC',
-        status: 'DRAFT',
-        target,
-        nature: link.nature,
-        linkDetailsPath,
-        newItem,
-        template: false,
-    };
+export function createDraftLinkedLocItem(
+    submitter: ValidAccountId, // TODO: remove this
+    linkItem: LinkData,
+    locItem: MergedLink,
+): LocItem {
+    return new LinkItem(
+        {
+            // submitter: locItem.submitter, // TODO: uncomment this
+            submitter, // TODO: remove this
+            timestamp: locItem.addedOn || null,
+            type: 'Linked LOC',
+            // status: locItem?.status || "DRAFT", // TODO: uncomment this
+            status: "DRAFT", // TODO: remove this
+            newItem: locItem === undefined,
+            template: false,
+            // reviewedOn: locItem?.reviewedOn, // TODO: uncomment this
+            // rejectReason: locItem?.rejectReason, // TODO: uncomment this
+            // acknowledgedByOwner: locItem?.acknowledgedByOwner, // TODO: uncomment this
+            // acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer, // TODO: uncomment this
+        },
+        {
+            linkDetailsPath: linkItem.linkDetailsPath,
+            linkedLoc: linkItem.linkedLoc,
+            nature: linkItem.nature,
+        }
+    );
 }
 
-function publish(locItem: LocItem, timestamp: string | null, fees?: ClientFees, storageFeePaidBy?: string): ItemAndRefreshFlag {
-    const publishedLocItem: LocItem = {
-        ...locItem,
-        timestamp,
-        fees: toFeesClass(fees),
-        storageFeePaidBy,
-    };
-    return {
-        locItem: publishedLocItem,
-        refreshNeeded: !locItem.timestamp
-    };
+export function createPublishedLinkedLocItem( // TODO: do not export (used by createLinkItem only)
+    submitter: ValidAccountId, // TODO: remove this
+    linkItem: LinkData,
+    locItem: MergedLink,
+): ItemAndRefreshFlag {
+    return publish(createDraftLinkedLocItem(submitter, linkItem, locItem), null, undefined) // TODO: take addedOn and fees from locItem
 }
 
-interface Timestamp {
-    timestamp: string | null
+export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLink, locItem?: MergedFile): FileItem {
+    return new FileItem(
+        {
+            newItem: false,
+            status: locItem?.status || "DRAFT",
+            submitter: locItem?.submitter,
+            timestamp: locItem?.addedOn || null,
+            type: "Document",
+            template: true,
+            isSet: locItem !== undefined,
+            fees: toFeesClass(locItem?.fees),
+            reviewedOn: locItem?.reviewedOn,
+            rejectReason: locItem?.rejectReason,
+            acknowledgedByOwner: locItem?.acknowledgedByOwner,
+            acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer,
+        },
+        locItem ? {
+            fileName: locItem.name,
+            hash: locItem.hash,
+            nature: templateItem.publicDescription,
+            size: locItem.size,
+            storageFeePaidBy: locItem.storageFeePaidBy || "",
+        } : undefined,
+    );
 }
 
-function createPublishedLinkedLocItem(parameters: CreateLocLinkedLocItemParameters & Timestamp): ItemAndRefreshFlag {
-    const publishedItem = publish(createDraftLinkedLocItem(parameters, false), parameters.timestamp, parameters.link.fees);
-    publishedItem.locItem.status = "ACKNOWLEDGED";
-    return publishedItem;
-}
-
-export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLink, locItem?: MergedFile): LocItem {
-    return {
-        hash: locItem?.hash,
-        name: locItem?.name,
-        value: locItem?.hash.toHex(),
-        newItem: false,
-        status: locItem?.status || "DRAFT",
-        submitter: locItem?.submitter,
-        timestamp: locItem?.addedOn || null,
-        type: "Document",
-        template: true,
-        nature: templateItem.publicDescription,
-        isSet: locItem !== undefined,
-        size: locItem?.size,
-        fees: toFeesClass(locItem?.fees),
-        storageFeePaidBy: locItem?.storageFeePaidBy,
-        reviewedOn: locItem?.reviewedOn,
-        rejectReason: locItem?.rejectReason,
-        acknowledgedByOwner: locItem?.acknowledgedByOwner,
-        acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer,
-    }
-}
-
-export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem, locItem?: MergedMetadataItem): LocItem {
-    return {
-        hash: locItem?.nameHash,
-        name: templateItem.name,
-        nature: templateItem.name,
-        value: locItem?.value,
-        newItem: false,
-        status: locItem?.status || "DRAFT",
-        submitter: locItem?.submitter,
-        timestamp: locItem?.addedOn || null,
-        type: "Data",
-        template: true,
-        isSet: locItem !== undefined,
-        fees: toFeesClass(locItem?.fees),
-        reviewedOn: locItem?.reviewedOn,
-        rejectReason: locItem?.rejectReason,
-        acknowledgedByOwner: locItem?.acknowledgedByOwner,
-        acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer,
-    }
+export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem, locItem?: MergedMetadataItem): MetadataItem {
+    return new MetadataItem(
+        {
+            newItem: false,
+            status: locItem?.status || "DRAFT",
+            submitter: locItem?.submitter,
+            timestamp: locItem?.addedOn || null,
+            type: "Data",
+            template: true,
+            isSet: locItem !== undefined,
+            fees: toFeesClass(locItem?.fees),
+            reviewedOn: locItem?.reviewedOn,
+            rejectReason: locItem?.rejectReason,
+            acknowledgedByOwner: locItem?.acknowledgedByOwner,
+            acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer,
+        },
+        locItem ? {
+            nameHash: locItem.nameHash,
+            name: templateItem.name,
+            value: locItem.value,
+        } : undefined,
+    );
 }
 
 export function createLinkTemplateItem(
-    ownerAddress: ValidAccountId,
+    submitter: ValidAccountId, // TODO: remove this (will come from locItem)
     templateItem: LocTemplateDocumentOrLink,
     locItem?: MergedLink,
     linkData?: LinkData,
-): LocItem {
-    return {
-        name: linkData?.linkedLoc.description,
-        value: locItem?.target ? new UUID(locItem?.target).toDecimalString() : undefined,
-        newItem: false,
-        status: locItem && locItem.published ? "ACKNOWLEDGED" : "DRAFT",
-        submitter: locItem ? ownerAddress : undefined,
-        timestamp: locItem?.addedOn || null,
-        type: "Linked LOC",
-        template: true,
-        nature: templateItem.publicDescription,
-        isSet: locItem !== undefined,
-        linkDetailsPath: linkData?.linkDetailsPath,
-        target: linkData?.linkedLoc.id,
-        fees: toFeesClass(locItem?.fees),
-    }
+): LinkItem {
+    return new LinkItem(
+        {
+            newItem: false,
+            // status: locItem?.status || "DRAFT", // TODO: keep this
+            // submitter: locItem?.submitter, // TODO: keep this
+            status: locItem && locItem.published ? "ACKNOWLEDGED" : "DRAFT", // TODO: remove this
+            submitter, // TODO: remove this
+            timestamp: locItem?.addedOn || null,
+            type: "Linked LOC",
+            template: true,
+            isSet: locItem !== undefined,
+            fees: toFeesClass(locItem?.fees),
+            // reviewedOn: locItem?.reviewedOn, // TODO: uncomment this
+            // rejectReason: locItem?.rejectReason, // TODO: uncomment this
+            // acknowledgedByOwner: locItem?.acknowledgedByOwner, // TODO: uncomment this
+            // acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer, // TODO: uncomment this
+        },
+        (linkData && locItem) ? {
+            nature: templateItem.publicDescription,
+            linkDetailsPath: linkData.linkDetailsPath,
+            linkedLoc: linkData.linkedLoc,
+        } : undefined,
+    );
 }

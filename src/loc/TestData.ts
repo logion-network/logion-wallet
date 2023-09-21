@@ -14,7 +14,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
         status: loc.closed ? "CLOSED" : "OPEN",
         files: loc.files.map((locFile, index) => ({
             ...locFile,
-            nature: `Nature ${index}`,
+            nature: `File ${index}`,
             name: `File ${index}`,
             addedOn: "",
             published: false,

@@ -8,7 +8,7 @@ import { PalletLogionLocMetadataItemParams } from "@polkadot/types/lookup";
 import { clickByName, render } from "../tests";
 import { LocItems } from "./LocItems";
 import { buildLocRequest } from "./TestData";
-import { LocItem } from "./LocItem";
+import { FileItem, LinkItem, LocItem, MetadataItem } from "./LocItem";
 import React from "react";
 import { accounts, DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "src/logion-chain/__mocks__/LogionChainMock";
 import { Account } from "src/common/types/Accounts";
@@ -232,16 +232,21 @@ function givenMetadataItem(request: LocData, status: ItemStatus): LocItem[] {
         acknowledgedByOwner: status === "ACKNOWLEDGED",
         acknowledgedByVerifiedIssuer: false,
     });
-    return [{
-        name: "Name",
-        newItem: false,
-        status: status,
-        submitter: accounts!.current!.accountId,
-        timestamp: null,
-        type: "Data",
-        value: "Value",
-        template: false,
-    }];
+    return [new MetadataItem(
+        {
+            newItem: false,
+            status: status,
+            submitter: accounts!.current!.accountId,
+            timestamp: null,
+            type: "Data",
+            template: false,
+        },
+        {
+            name: "Name",
+            value: "Value",
+            nameHash: Hash.of("Name"),
+        }
+    )];
 }
 
 async function testDeletesDraftFileItem(component: React.ReactElement) {
@@ -269,17 +274,25 @@ function givenFileItem(request: LocData, status: ItemStatus): LocItem[] {
         status,
         acknowledgedByOwner: status === "ACKNOWLEDGED",
         acknowledgedByVerifiedIssuer: false,
+        storageFeePaidBy: "Requester",
     });
-    return [{
-        name: "Name",
-        newItem: false,
-        status: status,
-        submitter: accounts!.current!.accountId,
-        timestamp: null,
-        type: "Document",
-        value: "0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a",
-        template: false,
-    }];
+    return [new FileItem(
+        {
+            newItem: false,
+            status: status,
+            submitter: accounts!.current!.accountId,
+            timestamp: null,
+            type: "Document",
+            template: false,
+        },
+        {
+            fileName: "Name",
+            hash: Hash.fromHex("0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a"),
+            nature: "Some nature",
+            size: 42n,
+            storageFeePaidBy: "Requester",
+        }
+    )];
 }
 
 async function testDeletesDraftLinkItem(component: React.ReactElement) {
@@ -309,16 +322,21 @@ function givenLinkItem(request: LocData, status: ItemStatus): LocItem[] {
         target: targetId.toString(),
         published: status === "PUBLISHED",
     });
-    return [
+    return [new LinkItem(
         {
-            name: "Name",
             newItem: false,
             status: status,
             submitter: DEFAULT_LEGAL_OFFICER,
             timestamp: null,
             type: "Linked LOC",
-            value: targetId.toDecimalString(),
             template: false,
+        },
+        {
+            nature: "Some nature",
+            linkDetailsPath: "",
+            linkedLoc: {
+                id: targetId,
+            } as unknown as LocData,
         }
-    ];
+    )];
 }

@@ -36,7 +36,7 @@ export default function LocLinkExistingDialog(props: Props) {
             setError("locId", { type: "value", message: "LOC not found on chain" })
             return
         }
-        const alreadyLinked = locItems.find(item => item.type === 'Linked LOC' && item.target?.toString() === locId.toString())
+        const alreadyLinked = locItems.find(item => item.type === 'Linked LOC' && item.linkData().linkedLoc.id.toString() === locId.toString())
         if (alreadyLinked) {
             setError("locId", { type: "value", message: "LOC already linked" })
             return
@@ -44,6 +44,7 @@ export default function LocLinkExistingDialog(props: Props) {
 
         await mutateLocState(async current => {
             if(client && current instanceof EditableRequest) {
+                // TODO: use current.addLink(...)
                 return current.legalOfficer.addLink({
                     target: locId,
                     nature: props.nature ? props.nature : formValues.linkNature,

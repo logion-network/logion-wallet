@@ -10,7 +10,7 @@ export interface Props {
 
 export default function ReviewStatusCell(props: Props) {
 
-    if(props.locItem.type === "Linked LOC" || props.locItem.status === "DRAFT") {
+    if(props.locItem.status === "DRAFT") {
         return <Cell content="-" />;
     } else if(props.locItem.status === "REVIEW_PENDING") {
         return <Icon icon={{ id: "pending" }} height="40px" />;
@@ -18,7 +18,7 @@ export default function ReviewStatusCell(props: Props) {
         const iconId = props.locItem.status === "REVIEW_REJECTED" ? "ko" : "ok";
         return (
             <InlineTooltip
-                id={ `${ props.locItem.type }-${ props.locItem.name }` }
+                id={ `${ props.locItem.type }-${ props.locItem.title() }` }
                 text={ <>Reviewed by the legal officer: <InlineDateTime dateTime={ props.locItem.reviewedOn } /></> }
                 inline={ <Icon icon={{ id: iconId }} height="40px" /> }
             />

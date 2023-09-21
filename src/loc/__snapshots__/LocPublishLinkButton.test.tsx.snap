@@ -5,41 +5,46 @@ exports[`LocPublishLinkButton renders 1`] = `
   feesEstimator={[Function]}
   itemType="Link"
   locItem={
-    Object {
-      "name": "link-name",
-      "nature": "link-nature",
-      "newItem": false,
-      "status": "DRAFT",
-      "submitter": Object {
-        "address": "link-submitter",
-        "equals": [Function],
-        "toKey": [Function],
-        "type": "Polkadot",
+    LinkItem {
+      "_linkData": Object {
+        "linkDetailsPath": "",
+        "linkedLoc": Object {
+          "id": UUID {
+            "bytes": Uint8Array [
+              148,
+              206,
+              192,
+              109,
+              220,
+              164,
+              74,
+              98,
+              131,
+              244,
+              168,
+              44,
+              84,
+              37,
+              217,
+              78,
+            ],
+          },
+        },
+        "nature": "link-nature",
       },
-      "target": UUID {
-        "bytes": Uint8Array [
-          148,
-          206,
-          192,
-          109,
-          220,
-          164,
-          74,
-          98,
-          131,
-          244,
-          168,
-          44,
-          84,
-          37,
-          217,
-          78,
-        ],
+      "commonData": Object {
+        "newItem": false,
+        "status": "DRAFT",
+        "submitter": Object {
+          "address": "link-submitter",
+          "equals": [Function],
+          "toKey": [Function],
+          "type": "Polkadot",
+        },
+        "template": false,
+        "timestamp": null,
+        "type": "Linked LOC",
       },
-      "template": false,
-      "timestamp": null,
-      "type": "Linked LOC",
-      "value": "link-value",
     }
   }
   publishMutator={[Function]}
