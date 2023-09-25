@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LocLinkDetails renders 1`] = `
+<Col
+  className="LocItemDetails"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="frame"
+  >
+    <div
+      className="frame-title"
+    >
+      Data to be published
+    </div>
+    <LocItemDetail
+      label="Public Description"
+    >
+      Some nature
+    </LocItemDetail>
+    <LocItemDetail
+      copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+      label="Submitter ID"
+    >
+      5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+    </LocItemDetail>
+    <LocItemDetail
+      className="linked-loc"
+      label="Linked LOC"
+    >
+      <NewTabLink
+        href="https://path.to/20de6861-6236-4ae4-9796-5a60b5d0c43d"
+        iconId="loc-link"
+      >
+        43690102853837749952471838389588509757
+      </NewTabLink>
+      <CopyPasteButton
+        className="medium"
+        value="43690102853837749952471838389588509757"
+      />
+    </LocItemDetail>
+  </div>
+</Col>
+`;

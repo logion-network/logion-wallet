@@ -15,7 +15,14 @@ export default function LocLinkDetails(props: Props) {
     return (
         <Col className="LocItemDetails" style={ { width: "100%" } }>
             <div className="frame">
-                <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
+                {
+                    props.item.rejectReason &&
+                    <>
+                        <LocItemDetail label="Rejection reason">{ props.item.rejectReason || "-" }</LocItemDetail>
+                        <div className="separator"></div>
+                    </>
+                }
+                <div className="frame-title">{ props.item.isPublishedOrAcknowledged() ? "Published data" : "Data to be published" }</div>
                 <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.data().nature : "-" }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
                     { props.item.submitter?.address || "-" }

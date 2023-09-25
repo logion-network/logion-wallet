@@ -21,7 +21,7 @@ export default function LocPublicDataDetails(props: Props) {
                         <div className="separator"></div>
                     </>
                 }
-                <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
+                <div className="frame-title">{ props.item.isPublishedOrAcknowledged() ? "Published data" : "Data to be published" }</div>
                 <LocItemDetail label="Public name">{ props.item.hasData() ? props.item.data().name : "-" }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
                     { props.item.submitter?.address || "-" }

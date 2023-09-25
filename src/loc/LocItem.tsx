@@ -125,6 +125,10 @@ abstract class AbstractLocItem<T> implements CommonData {
         return this.commonData.acknowledgedByVerifiedIssuer;
     }
 
+    isPublishedOrAcknowledged(): boolean {
+        return this.commonData.status === "PUBLISHED" || this.commonData.status === "ACKNOWLEDGED"
+    }
+
     abstract title(): string;
 
     hasData(): boolean {

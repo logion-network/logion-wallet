@@ -26,7 +26,14 @@ export default function LocPrivateFileDetails(props: Props) {
         <>
             <Col className="LocItemDetails" style={{ width: leftPaneWidth }}>
                 <div className="frame">
-                    <div className="frame-title">{ props.item.status === "DRAFT" ? "Document related data to be published" : "Published document related data" }</div>
+                    {
+                        props.item.rejectReason &&
+                        <>
+                            <LocItemDetail label="Rejection reason">{ props.item.rejectReason || "-" }</LocItemDetail>
+                            <div className="separator"></div>
+                        </>
+                    }
+                    <div className="frame-title">{ props.item.isPublishedOrAcknowledged() ? "Published document related data" : "Document related data to be published" }</div>
                     <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.data().nature : null }</LocItemDetail>
                     {
                         props.fileName !== undefined &&
