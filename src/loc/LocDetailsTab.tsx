@@ -175,7 +175,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                                 templateLinks.add(link.nature);
                                 linkData = await getLinkData(accounts?.current?.accountId.address, locState.locsState(), link, detailsPath, client);
                             }
-                            items.push(createLinkTemplateItem(api.queries.getValidAccountId(loc.ownerAddress, "Polkadot"), linkTemplate, link, linkData));
+                            items.push(createLinkTemplateItem(linkTemplate, link, linkData));
                         }
                     }
 

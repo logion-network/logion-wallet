@@ -82,6 +82,8 @@ function givenRequest<T extends LocRequestState>(locId: string, loc: LegalOffice
         _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
         _locState.addFile = jest.fn().mockResolvedValue(_locState);
         _locState.deleteFile = jest.fn().mockResolvedValue( _locState);
+        _locState.addLink = jest.fn().mockResolvedValue(_locState);
+        _locState.deleteLink = jest.fn().mockResolvedValue( _locState);
     }
 
     if(linkedLocId && linkedLoc) {
@@ -212,7 +214,7 @@ function ItemAdder() {
                     name: "New file",
                     nature: "Some nature",
                 }) as unknown as RealEditableRequest;
-                next = await current.legalOfficer.addLink({
+                next = await current.addLink!({
                     target: _linkedLocData.id,
                     nature: "Some nature"
                 }) as unknown as RealEditableRequest;
@@ -245,7 +247,7 @@ function ItemAdder() {
 async function thenItemsAdded() {
     await waitFor(() => expect((_locState as OpenLoc).addMetadata).toBeCalled());
     expect((_locState as OpenLoc).addFile).toBeCalled();
-    expect((_locState as OpenLoc).legalOfficer.addLink).toBeCalled();
+    expect((_locState as OpenLoc).addLink).toBeCalled();
 }
 
 function givenDraftItems() {
@@ -279,7 +281,11 @@ function givenDraftItems() {
         addedOn: "",
         nature: "New link",
         target: _linkedLocData.id.toString(),
+        submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         published: false,
+        status: "DRAFT",
+        acknowledgedByOwner: false,
+        acknowledgedByVerifiedIssuer: false,
     })
 }
 
@@ -293,7 +299,7 @@ function ItemDeleter() {
                 next = current.deleteFile!({
                     hash: Hash.of("new-hash"),
                 }) as unknown as RealEditableRequest;
-                next = current.legalOfficer.deleteLink!({
+                next = current.deleteLink!({
                     locState: current as unknown as RealEditableRequest,
                     target: locItems.filter(item => item.type === "Linked LOC")
                         .map(item => item.as<LinkData>())
@@ -326,7 +332,7 @@ function ItemDeleter() {
 async function thenItemsDeleted() {
     await waitFor(() => expect((_locState as OpenLoc).deleteMetadata).toBeCalled());
     expect((_locState as OpenLoc).deleteFile).toBeCalled();
-    expect((_locState as OpenLoc).legalOfficer.deleteLink).toBeCalled();
+    expect((_locState as OpenLoc).deleteLink).toBeCalled();
 }
 
 function Voider() {

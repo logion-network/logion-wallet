@@ -152,7 +152,7 @@ const enum NextRefresh {
 }
 
 export function LocContextProvider(props: Props) {
-    const { api, accounts, client } = useLogionChain();
+    const { accounts, client } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locState, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
@@ -175,14 +175,12 @@ export function LocContextProvider(props: Props) {
                 const result = createFileItem(item);
                 locItems.push(result.locItem);
             });
-            const locOwner = loc!.ownerAddress;
             for (let i = 0; i < loc.links.length; ++i) {
                 const item = loc.links[i];
 
                 const linkData = await getLinkData(accounts?.current?.accountId.address, locState.locsState(), item, props.detailsPath, client);
                 if (linkData) {
                     const result = createLinkItem(
-                        api!.queries.getValidAccountId(locOwner, "Polkadot"), // TODO: remove this
                         linkData,
                         item
                     );
@@ -191,7 +189,7 @@ export function LocContextProvider(props: Props) {
             }
         }
         return locItems;
-    }, [ api, accounts, props, client ])
+    }, [ accounts, props, client ])
 
     const startRefresh = useCallback(() => {
         console.log("Start refreshing LOC");

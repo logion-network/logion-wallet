@@ -45,8 +45,7 @@ export default function LocLinkExistingDialog(props: Props) {
 
         await mutateLocState(async current => {
             if(client && current instanceof EditableRequest) {
-                // TODO: use current.addLink(...)
-                return current.legalOfficer.addLink({
+                return current.addLink({
                     target: locId,
                     nature: props.nature ? props.nature : formValues.linkNature,
                 });

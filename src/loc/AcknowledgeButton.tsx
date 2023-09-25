@@ -3,7 +3,7 @@ import { Fees, UUID } from "@logion/node-api";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Button, { Action } from "src/common/Button";
 import Icon from "src/common/Icon";
-import { LocItem, MetadataData, FileData } from "./LocItem";
+import { LocItem, MetadataData, FileData, LinkData } from "./LocItem";
 import Dialog from "src/common/Dialog";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import EstimatedFees from "./fees/EstimatedFees";
@@ -46,10 +46,10 @@ export default function AcknowledgeButton(props: Props) {
                         fees = await locState.legalOfficer.estimateFeesAcknowledgeFile({
                             hash: props.locItem.as<FileData>().hash,
                         })
-                    // } else if(props.locItem.type === "Linked LOC") { // TODO: uncomment this
-                    //     fees = await locState.legalOfficer.estimateFeesAcknowledgeLink({
-                    //         hash: props.locItem.as<LinkData>().linkedLoc.id,
-                    //     })
+                    } else if(props.locItem.type === "Linked LOC") {
+                        fees = await locState.legalOfficer.estimateFeesAcknowledgeLink({
+                            target: props.locItem.as<LinkData>().linkedLoc.id,
+                        })
                     } else {
                         throw new Error("Unexpected type");
                     }
@@ -84,12 +84,12 @@ export default function AcknowledgeButton(props: Props) {
                             signer,
                             callback,
                         });
-                    // } else if(props.locItem.type === "Linked LOC") { // TODO: uncomment this
-                    //     return current.legalOfficer.acknowledgeLink({
-                    //         nameHash: props.locItem.as<LinkData>().linkedLoc.id,
-                    //         signer,
-                    //         callback,
-                    //     });
+                    } else if(props.locItem.type === "Linked LOC") {
+                        return current.legalOfficer.acknowledgeLink({
+                            target: props.locItem.as<LinkData>().linkedLoc.id,
+                            signer,
+                            callback,
+                        });
                     } else {
                         throw new Error("Unexpected type");
                     }

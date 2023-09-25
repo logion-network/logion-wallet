@@ -69,7 +69,7 @@ export interface CommonData {
 
 abstract class AbstractLocItem<T> implements CommonData {
 
-    protected constructor(commonData: CommonData, data?: T) {
+    constructor(commonData: CommonData, data?: T) {
         this.commonData = commonData;
         this._data = data;
     }
@@ -158,10 +158,6 @@ export class MetadataItem extends AbstractLocItem<MetadataData> {
 
     static TYPE: LocItemType = "Data";
     
-    constructor(commonData: CommonData, metadataData?: MetadataData) {
-        super(commonData, metadataData);
-    }
-
     override title() {
         return this.data()?.name || "-";
     }
@@ -179,10 +175,6 @@ export class MetadataItem extends AbstractLocItem<MetadataData> {
 }
 
 export class FileItem extends AbstractLocItem<FileData> {
-
-    constructor(commonData: CommonData, fileData?: FileData) {
-        super(commonData, fileData);
-    }
 
     override title() {
         return this.data()?.nature || "-";
@@ -205,10 +197,6 @@ export class FileItem extends AbstractLocItem<FileData> {
 }
 
 export class LinkItem extends AbstractLocItem<LinkData> {
-
-    constructor(commonData: CommonData, linkData?: LinkData) {
-        super(commonData, linkData);
-    }
 
     override title() {
         return this.data()?.nature || "-";
@@ -400,8 +388,7 @@ export function useDeleteLinkCallback(mutateLocState: (mutator: (current: LocReq
     return useCallback(async (item: LocItem) => {
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
-                // TODO use current.deleteLink(...)
-                return current.legalOfficer.deleteLink({
+                return current.deleteLink({
                     target: item.as<LinkData>().linkedLoc.id,
                 });
             } else {
@@ -532,14 +519,13 @@ export async function getLinkData(
 export function useRequestReviewCallback(mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>) {
     return useCallback(async (locItem: LocItem) => {
         mutateLocState(async current => {
-            if(current instanceof EditableRequest) {
-                if(locItem.type === "Data") {
-                    return current.requestMetadataReview(locItem.as<MetadataData>().nameHash);
-                } else if(locItem.type === "Document") {
-                    return current.requestFileReview(locItem.as<FileData>().hash);
-                // } // TODO: uncomment
-                // else if(locItem.type === "Linked LOC") {
-                //     return current.requestLinkReview(locItem.as<LinkData>().linkedLoc.id);
+            if (current instanceof EditableRequest) {
+                if (locItem.type === "Data") {
+                    return current.requestMetadataReview({ nameHash: locItem.as<MetadataData>().nameHash });
+                } else if (locItem.type === "Document") {
+                    return current.requestFileReview({ hash: locItem.as<FileData>().hash });
+                } else if (locItem.type === "Linked LOC") {
+                    return current.requestLinkReview({ target: locItem.as<LinkData>().linkedLoc.id });
                 } else {
                     return current;
                 }
@@ -566,12 +552,12 @@ export function useReviewCallback(mutateLocState: (mutator: (current: LocRequest
                         decision,
                         rejectReason
                     });
-                // } else if(locItem.type === "Linked LOC") { // TODO: uncomment
-                //     return current.legalOfficer.reviewLink({
-                //         target: locItem.as<LinkData>().linkedLoc.id,
-                //         decision,
-                //         rejectReason
-                //     });
+                } else if(locItem.type === "Linked LOC") {
+                    return current.legalOfficer.reviewLink({
+                        target: locItem.as<LinkData>().linkedLoc.id,
+                        decision,
+                        rejectReason
+                    });
                 } else {
                     return current;
                 }

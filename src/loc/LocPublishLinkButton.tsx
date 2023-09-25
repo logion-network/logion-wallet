@@ -17,7 +17,7 @@ export default function LocPublishLinkButton(props: Props) {
     const { locState } = useLocContext();
     const estimateFees = useCallback((target: UUID | undefined) => {
         if (target && locState instanceof OpenLoc) {
-            return locState.legalOfficer.estimateFeesPublishLink({ target });
+            return locState.estimateFeesPublishLink({ target });
         } else {
             throw Error("Invalid type");
         }
@@ -32,7 +32,7 @@ export default function LocPublishLinkButton(props: Props) {
             locItem={ props.locItem }
             publishMutator={ async (current, callback) => {
                 if(current instanceof OpenLoc) {
-                    return current.legalOfficer.publishLink({
+                    return current.publishLink({
                         target: props.locItem.data().linkedLoc.id,
                         signer: signer!,
                         callback,
