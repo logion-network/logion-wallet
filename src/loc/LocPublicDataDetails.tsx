@@ -2,11 +2,11 @@ import { Col } from "../common/Grid";
 import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
-import { LocItem } from "./LocItem";
+import { MetadataItem } from "./LocItem";
 import LocItemEstimatedFees from "./LocItemEstimatedFees";
 
 export interface Props {
-    item: LocItem
+    item: MetadataItem
 }
 
 export default function LocPublicDataDetails(props: Props) {
@@ -21,12 +21,12 @@ export default function LocPublicDataDetails(props: Props) {
                         <div className="separator"></div>
                     </>
                 }
-                <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
-                <LocItemDetail label="Public name">{ props.item.hasData() ? props.item.metadataData().name : "-" }</LocItemDetail>
+                <div className="frame-title">{ props.item.isPublishedOrAcknowledged() ? "Published data" : "Data to be published" }</div>
+                <LocItemDetail label="Public name">{ props.item.hasData() ? props.item.data().name : "-" }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
                     { props.item.submitter?.address || "-" }
                 </LocItemDetail>
-                <LocItemDetail label="Public data"><pre>{ props.item.hasData() ? props.item.metadataData().value : "-" }</pre></LocItemDetail>
+                <LocItemDetail label="Public data"><pre>{ props.item.hasData() ? props.item.data().value : "-" }</pre></LocItemDetail>
                 {
                     props.item.fees &&
                     <>

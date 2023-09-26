@@ -121,13 +121,8 @@ export class EditableRequest extends LocRequestState {
     deleteMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
     addFile: jest.Mock<Promise<EditableRequest>> | undefined;
     deleteFile: jest.Mock<Promise<EditableRequest>> | undefined;
-    legalOfficer: {
-        addLink: any,
-        deleteLink: any,
-    } = {
-        addLink: jest.fn(),
-        deleteLink: jest.fn(),
-    };
+    addLink: jest.Mock<Promise<EditableRequest>> | undefined;
+    deleteLink: jest.Mock<Promise<EditableRequest>> | undefined;
 }
 
 export class DraftRequest extends EditableRequest {
@@ -152,17 +147,15 @@ export class OpenLoc extends EditableRequest {
     deleteMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
     addFile: jest.Mock<Promise<EditableRequest>> | undefined;
     deleteFile: jest.Mock<Promise<EditableRequest>> | undefined;
+    addLink: jest.Mock<Promise<EditableRequest>> | undefined;
+    deleteLink: jest.Mock<Promise<EditableRequest>> | undefined;
     requestSof: jest.Mock<Promise<EditableRequest>> | undefined;
     legalOfficer: {
-        addLink: any,
-        deleteLink: any,
         close: any,
         voidLoc: any,
         getVerifiedIssuers: () => Promise<VerifiedIssuerWithSelect[]>,
         setCollectionFileRestrictedDelivery: (params: any) => Promise<OpenLoc>,
     } = {
-        addLink: jest.fn(),
-        deleteLink: jest.fn(),
         close: jest.fn(),
         voidLoc: jest.fn(),
         getVerifiedIssuers: () => Promise.resolve(issuers),

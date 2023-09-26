@@ -2,9 +2,13 @@ import { AxiosInstance } from "axios";
 import { useCallback, useState } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { UUID, LegalOfficerCase, Hash } from '@logion/node-api';
-import { LocData } from "@logion/client";
+import {
+    LocData,
+    PublicApi,
+    EditableRequest as RealEditableRequest,
+    LocRequestState as RealLocRequestState
+} from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient.js';
-import { PublicApi, EditableRequest as RealEditableRequest, LocRequestState as RealLocRequestState } from "@logion/client";
 
 import { resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import { clickByName } from "../tests";
@@ -14,7 +18,15 @@ import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mocks__/LogionClientMock";
 import { useLogionChain } from "src/logion-chain";
 import ClientExtrinsicSubmitter, { Call } from "src/ClientExtrinsicSubmitter";
-import { mockValidPolkadotAccountId, api, CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from 'src/__mocks__/LogionMock';
+import {
+    mockValidPolkadotAccountId,
+    api,
+    CLOSED_IDENTITY_LOC,
+    CLOSED_IDENTITY_LOC_ID,
+    OPEN_IDENTITY_LOC,
+    OPEN_IDENTITY_LOC_ID
+} from 'src/__mocks__/LogionMock';
+import { LinkData } from "./LocItem";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../logion-chain");
@@ -70,6 +82,8 @@ function givenRequest<T extends LocRequestState>(locId: string, loc: LegalOffice
         _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
         _locState.addFile = jest.fn().mockResolvedValue(_locState);
         _locState.deleteFile = jest.fn().mockResolvedValue( _locState);
+        _locState.addLink = jest.fn().mockResolvedValue(_locState);
+        _locState.deleteLink = jest.fn().mockResolvedValue( _locState);
     }
 
     if(linkedLocId && linkedLoc) {
@@ -200,7 +214,7 @@ function ItemAdder() {
                     name: "New file",
                     nature: "Some nature",
                 }) as unknown as RealEditableRequest;
-                next = await current.legalOfficer.addLink({
+                next = await current.addLink!({
                     target: _linkedLocData.id,
                     nature: "Some nature"
                 }) as unknown as RealEditableRequest;
@@ -233,7 +247,7 @@ function ItemAdder() {
 async function thenItemsAdded() {
     await waitFor(() => expect((_locState as OpenLoc).addMetadata).toBeCalled());
     expect((_locState as OpenLoc).addFile).toBeCalled();
-    expect((_locState as OpenLoc).legalOfficer.addLink).toBeCalled();
+    expect((_locState as OpenLoc).addLink).toBeCalled();
 }
 
 function givenDraftItems() {
@@ -267,7 +281,11 @@ function givenDraftItems() {
         addedOn: "",
         nature: "New link",
         target: _linkedLocData.id.toString(),
+        submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         published: false,
+        status: "DRAFT",
+        acknowledgedByOwner: false,
+        acknowledgedByVerifiedIssuer: false,
     })
 }
 
@@ -281,9 +299,11 @@ function ItemDeleter() {
                 next = current.deleteFile!({
                     hash: Hash.of("new-hash"),
                 }) as unknown as RealEditableRequest;
-                next = current.legalOfficer.deleteLink!({
+                next = current.deleteLink!({
                     locState: current as unknown as RealEditableRequest,
-                    target: locItems.find(item => item.type === "Linked LOC" && item.linkData().nature === "New link")!.linkData().linkedLoc.id,
+                    target: locItems.filter(item => item.type === "Linked LOC")
+                        .map(item => item.as<LinkData>())
+                        .find(data => data.nature === "New link")!.linkedLoc.id,
                 }) as unknown as RealEditableRequest;
                 next = current.deleteMetadata!({
                     nameHash: Hash.of("New data"),
@@ -312,7 +332,7 @@ function ItemDeleter() {
 async function thenItemsDeleted() {
     await waitFor(() => expect((_locState as OpenLoc).deleteMetadata).toBeCalled());
     expect((_locState as OpenLoc).deleteFile).toBeCalled();
-    expect((_locState as OpenLoc).legalOfficer.deleteLink).toBeCalled();
+    expect((_locState as OpenLoc).deleteLink).toBeCalled();
 }
 
 function Voider() {

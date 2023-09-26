@@ -26,7 +26,11 @@ import {
     useRequestReviewCallback,
     canReview,
     canRequestReview,
-    canAcknowledge
+    canAcknowledge,
+    FileData,
+    MetadataItem,
+    LinkItem,
+    FileItem
 } from "./LocItem";
 import StatusCell from "src/common/StatusCell";
 import { POLKADOT } from "src/common/ColorTheme";
@@ -93,21 +97,21 @@ export function LocItems(props: LocItemsProps) {
 
         if(locItem.type === 'Data') {
             if(canPublish(viewer, loc!, locItem, props.contributionMode)) {
-                buttons.push(<LocPublishPublicDataButton key={++key} locItem={ locItem } locId={ locId } />);
+                buttons.push(<LocPublishPublicDataButton key={++key} locItem={ locItem as MetadataItem } locId={ locId } />);
             }
             if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
                 buttons.push(<DeleteButton key={++key} locItem={ locItem } action={ deleteMetadata } />);
             }
         } else if(locItem.type === 'Linked LOC') {
             if(canPublish(viewer, loc!, locItem, props.contributionMode)) {
-                buttons.push(<LocPublishLinkButton  key={++key}locItem={ locItem } locId={ locId } />);
+                buttons.push(<LocPublishLinkButton  key={++key} locItem={ locItem as LinkItem } locId={ locId } />);
             }
             if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
                 buttons.push(<DeleteButton key={++key} locItem={ locItem } action={ deleteLinkCallback } />);
             }
         } else if(locItem.type === 'Document') {
             if(canPublish(viewer, loc!, locItem, props.contributionMode)) {
-                buttons.push(<LocPublishPrivateFileButton key={++key} locItem={ locItem } locId={ locId } />);
+                buttons.push(<LocPublishPrivateFileButton key={++key} locItem={ locItem as FileItem } locId={ locId } />);
             }
             if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
                 buttons.push(<DeleteButton key={++key} locItem={ locItem } action={ deleteFile } />);
@@ -166,7 +170,7 @@ export function LocItems(props: LocItemsProps) {
                     data={ locItems }
                     columns={ columns }
                     renderEmpty={ () => <EmptyTableMessage>No custom public data nor private documents</EmptyTableMessage> }
-                    rowStyle={ item => (item.type === "Document" && item.hasData() && props.matchedHash && item.fileData().hash.equalTo(props.matchedHash)) ? "matched" : "" }
+                    rowStyle={ item => (item.type === "Document" && item.hasData() && props.matchedHash && item.as<FileData>().hash.equalTo(props.matchedHash)) ? "matched" : "" }
                     hideHeader={ props.hideHeader }
                 />
             </div>

@@ -20,7 +20,13 @@ import {
     useDeleteLinkCallback,
     useDeleteMetadataCallback,
     useRequestReviewCallback,
-    canAcknowledge
+    canAcknowledge,
+    MetadataData,
+    FileData,
+    LinkData,
+    LinkItem,
+    FileItem,
+    MetadataItem
 } from "./LocItem";
 import LocLinkButton from "./LocLinkButton";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
@@ -102,11 +108,11 @@ export default function LocTemplateItems(props: Props) {
 
             if(canPublish(viewer, loc, item, props.contributionMode)) {
                 if(item.type === "Data") {
-                    buttons.push(<LocPublishPublicDataButton key={++key} locItem={ item } locId={ locId } />);
+                    buttons.push(<LocPublishPublicDataButton key={++key} locItem={ item as MetadataItem } locId={ locId } />);
                 } else if(item.type === "Document") {
-                    buttons.push(<LocPublishPrivateFileButton key={++key} locItem={ item } locId={ locId } />);
+                    buttons.push(<LocPublishPrivateFileButton key={++key} locItem={ item as FileItem } locId={ locId } />);
                 } else if(item.type === "Linked LOC") {
-                    buttons.push(<LocPublishLinkButton key={++key} locItem={ item } locId={ locId } />);
+                    buttons.push(<LocPublishLinkButton key={++key} locItem={ item as LinkItem } locId={ locId } />);
                 }
             }
 
@@ -146,19 +152,19 @@ export default function LocTemplateItems(props: Props) {
                 buttons.push(<LocPublicDataButton
                     key={++key}
                     text="Set"
-                    dataName={ item.hasData() ? item.metadataData().name : undefined }
+                    dataName={ item.hasData() ? item.as<MetadataData>().name : undefined }
                 />);
             } else if(item.type === "Document") {
                 buttons.push(<LocPrivateFileButton
                     key={++key}
                     text="Set"
-                    nature={ item.hasData() ? item.fileData().nature : undefined }
+                    nature={ item.hasData() ? item.as<FileData>().nature : undefined }
                 />);
             } else if(item.type === "Linked LOC") {
                 buttons.push(<LocLinkButton
                     key={++key}
                     text="Set"
-                    nature={ item.hasData() ? item.linkData().nature : undefined }
+                    nature={ item.hasData() ? item.as<LinkData>().nature : undefined }
                 />);
             }
         }

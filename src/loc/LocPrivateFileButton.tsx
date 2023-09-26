@@ -6,7 +6,7 @@ import Button from "../common/Button";
 import Dialog from "../common/Dialog";
 import LocPrivateFileForm, { FormValues } from "./LocPrivateFileForm";
 import { useCommonContext } from "../common/CommonContext";
-import { LocItem } from "./LocItem";
+import { FileData, FileItem } from "./LocItem";
 import Icon from "../common/Icon";
 import { Row } from "../common/Grid";
 import { useLocContext } from "./LocContext";
@@ -26,7 +26,7 @@ export function LocPrivateFileButton(props: Props) {
     const [ status, setStatus ] = useState<Status>('Idle');
     const { control, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormValues>();
     const [ file, setFile ] = useState<File | null>(null);
-    const [ existingItem, setExistingItem ] = useState<LocItem | null>(null);
+    const [ existingItem, setExistingItem ] = useState<FileItem | null>(null);
     const [ duplicateHash, setDuplicateHash ] = useState<Hash | null>(null);
     const [ uploadError, setUploadError ] = useState<string>(" ")
 
@@ -36,10 +36,10 @@ export function LocPrivateFileButton(props: Props) {
             setStatus('Hashing')
             const content = await HashOrContent.fromContentFinalized(file);
             const hash = content.contentHash;
-            const existingItem = locItems.find(item => item.type === "Document" && item.fileData().hash.equalTo(hash));
+            const existingItem = locItems.find(item => item.type === "Document" && item.as<FileData>().hash.equalTo(hash));
             if (existingItem !== undefined) {
                 setStatus('Idle');
-                setExistingItem(existingItem);
+                setExistingItem(existingItem as FileItem);
                 setDuplicateHash(hash);
             } else {
                 setStatus('Uploading')
@@ -138,7 +138,7 @@ export function LocPrivateFileButton(props: Props) {
                 <p>A document with hash</p>
                 <p>{ duplicateHash?.toHex() }</p>
                 <p>already exists in this LOC:</p>
-                <p>{ existingItem?.fileData().nature }</p>
+                <p>{ existingItem?.data().nature }</p>
             </Dialog>
         </>
     )

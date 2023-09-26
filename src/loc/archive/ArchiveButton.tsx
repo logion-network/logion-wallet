@@ -18,7 +18,7 @@ interface TypedFileInfo extends FileInfo {
 }
 
 function documentToTypedFileInfo(locItem: FileItem, locState: LocRequestState): TypedFileInfo {
-    const fileData = locItem.fileData();
+    const fileData = locItem.data();
     return {
         fileName: fileData.fileName,
         downloader: () => locState.getFile(fileData.hash),
@@ -47,7 +47,7 @@ export default function ArchiveButton() {
         locItems
             .filter(locItem => locItem.type === 'Document')
             .filter(locItem => locItem.hasData())
-            .map(locItem => documentToTypedFileInfo(locItem, locState)));
+            .map(locItem => documentToTypedFileInfo(locItem as FileItem, locState)));
 
     return (
         <>

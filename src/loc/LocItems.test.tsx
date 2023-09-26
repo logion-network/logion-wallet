@@ -1,9 +1,6 @@
 import { UUID, Hash } from "@logion/node-api";
 import { ItemStatus, LocData } from "@logion/client";
 import { render as renderTesting, waitFor, screen } from "@testing-library/react";
-import { SubmittableExtrinsic } from "@polkadot/api-base/types";
-import { Compact, u128 } from "@polkadot/types-codec";
-import { PalletLogionLocMetadataItemParams } from "@polkadot/types/lookup";
 
 import { clickByName, render } from "../tests";
 import { LocItems } from "./LocItems";
@@ -16,8 +13,7 @@ import { DateTime } from "luxon";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
 import { setLocRequest, setLocState } from "./__mocks__/LocContextMock";
 import { EditableRequest } from "src/__mocks__/LogionClientMock";
-import { It, Mock } from "moq.ts";
-import { setupApiMock, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "src/__mocks__/LogionMock";
+import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "src/__mocks__/LogionMock";
 
 jest.mock("../common/CommonContext");
 jest.mock("../logion-chain");
@@ -178,14 +174,6 @@ function testRendersSingleDraftItem(component: React.ReactElement) {
 }
 
 async function testDeletesDraftMetadataItem(component: React.ReactElement) {
-    setupApiMock(api => {
-        const submittable = new Mock<SubmittableExtrinsic<"promise">>();
-        api.setup(instance => instance.polkadot.tx.logionLoc.addMetadata(It.IsAny(), It.IsAny())).returns(submittable.object());
-        const locId = new Mock<Compact<u128>>();
-        api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
-        const item = new Mock<PalletLogionLocMetadataItemParams>();
-        api.setup(instance => instance.adapters.toPalletLogionLocMetadataItem(It.IsAny())).returns(item.object());
-    });
     renderTesting(component);
     await clickByName(deleteButtonName);
     await waitFor(() => expect(_locState.deleteMetadata).toBeCalled());
@@ -194,14 +182,6 @@ async function testDeletesDraftMetadataItem(component: React.ReactElement) {
 const deleteButtonName = (content: string) => /trash/.test(content);
 
 function testCannotDeleteNonDraftMetadataItem(component: React.ReactElement) {
-    setupApiMock(api => {
-        const submittable = new Mock<SubmittableExtrinsic<"promise">>();
-        api.setup(instance => instance.polkadot.tx.logionLoc.addMetadata(It.IsAny(), It.IsAny())).returns(submittable.object());
-        const locId = new Mock<Compact<u128>>();
-        api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
-        const item = new Mock<PalletLogionLocMetadataItemParams>();
-        api.setup(instance => instance.adapters.toPalletLogionLocMetadataItem(It.IsAny())).returns(item.object());
-    });
     renderTesting(component);
     expect(screen.queryByRole("button", { name: deleteButtonName })).not.toBeInTheDocument();
 }
@@ -213,7 +193,7 @@ function givenOpenLoc() {
     _locState = new EditableRequest();
     _locState.deleteFile = jest.fn().mockResolvedValue(_locState);
     _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
-    _locState.legalOfficer.deleteLink = jest.fn().mockResolvedValue(_locState);
+    _locState.deleteLink = jest.fn().mockResolvedValue(_locState);
     setLocState(_locState);
     return request;
 }
@@ -296,15 +276,9 @@ function givenFileItem(request: LocData, status: ItemStatus): LocItem[] {
 }
 
 async function testDeletesDraftLinkItem(component: React.ReactElement) {
-    setupApiMock(api => {
-        const submittable = new Mock<SubmittableExtrinsic<"promise">>();
-        api.setup(instance => instance.polkadot.tx.logionLoc.addLink(It.IsAny(), It.IsAny())).returns(submittable.object());
-        const locId = new Mock<Compact<u128>>();
-        api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
-    });
     renderTesting(component);
     await clickByName(deleteButtonName);
-    await waitFor(() => expect(_locState.legalOfficer.deleteLink).toBeCalled());
+    await waitFor(() => expect(_locState.deleteLink).toBeCalled());
 }
 
 function testCannotDeleteNonDraftLinkItem(component: React.ReactElement) {
@@ -318,9 +292,13 @@ function givenLinkItem(request: LocData, status: ItemStatus): LocItem[] {
     const targetId = new UUID();
     request.links.push({
         addedOn: "2022-01-20T15:45:00.000",
+        submitter: accounts!.current!.accountId,
         nature: "Some nature",
         target: targetId.toString(),
         published: status === "PUBLISHED",
+        status,
+        acknowledgedByOwner: status === "ACKNOWLEDGED",
+        acknowledgedByVerifiedIssuer: false,
     });
     return [new LinkItem(
         {

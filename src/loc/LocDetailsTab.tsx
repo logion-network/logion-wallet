@@ -27,7 +27,7 @@ import { useLocContext } from "./LocContext";
 import { useNavigate } from "react-router-dom";
 import { getTemplate, LocTemplate } from "./Template";
 import LocTemplateItems from "./LocTemplateItems";
-import { canAdd, getLinkData, LinkData, LocItem } from "./LocItem";
+import { canAdd, getLinkData, LinkData, LocItem, MetadataData, FileData } from "./LocItem";
 import { createDocumentTemplateItem, createLinkTemplateItem, createMetadataTemplateItem } from "./LocItemFactory";
 import { useLogionChain } from "src/logion-chain";
 import { CollectionInfo } from "src/components/identity/CollectionInfo";
@@ -175,16 +175,16 @@ export function LocDetailsTabContent(props: ContentProps) {
                                 templateLinks.add(link.nature);
                                 linkData = await getLinkData(accounts?.current?.accountId.address, locState.locsState(), link, detailsPath, client);
                             }
-                            items.push(createLinkTemplateItem(api.queries.getValidAccountId(loc.ownerAddress, "Polkadot"), linkTemplate, link, linkData));
+                            items.push(createLinkTemplateItem(linkTemplate, link, linkData));
                         }
                     }
 
                     setTemplateItems(items);
 
                     const customItems = locItems.filter(item =>
-                        (item.type === "Linked LOC" && !templateLinks.has(item.linkData().nature))
-                        || (item.type === "Data" && !templateItems.has(item.metadataData().name))
-                        || (item.type === "Document" && !templateDocuments.has(item.fileData().nature))
+                        (item.type === "Linked LOC" && !templateLinks.has(item.as<LinkData>().nature))
+                        || (item.type === "Data" && !templateItems.has(item.as<MetadataData>().name))
+                        || (item.type === "Document" && !templateDocuments.has(item.as<FileData>().nature))
                     );
                     setCustomItems(customItems);
                 })();

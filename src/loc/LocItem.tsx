@@ -67,13 +67,15 @@ export interface CommonData {
     readonly acknowledgedByVerifiedIssuer?: boolean;
 }
 
-export abstract class LocItem implements CommonData {
+abstract class AbstractLocItem<T> implements CommonData {
 
-    constructor(commonData: CommonData) {
+    constructor(commonData: CommonData, data?: T) {
         this.commonData = commonData;
+        this._data = data;
     }
 
     protected commonData: CommonData;
+    private readonly _data?: T;
 
     get timestamp() {
         return this.commonData.timestamp;
@@ -123,19 +125,29 @@ export abstract class LocItem implements CommonData {
         return this.commonData.acknowledgedByVerifiedIssuer;
     }
 
-    abstract title(): string;
-
-    hasData() {
-        return this.commonData.submitter !== undefined;
+    isPublishedOrAcknowledged(): boolean {
+        return this.commonData.status === "PUBLISHED" || this.commonData.status === "ACKNOWLEDGED"
     }
 
-    abstract metadataData(): MetadataData;
+    abstract title(): string;
 
-    abstract fileData(): FileData;
+    hasData(): boolean {
+        return this.commonData.submitter !== undefined && this._data !== undefined;
+    }
 
-    abstract linkData(): LinkData;
+    data(): T {
+        if(this._data) {
+            return this._data;
+        } else {
+            throw new Error("Data not set");
+        }
+    }
 
-    abstract publish(timestamp: string | null, fees?: Fees, storageFeePaidBy?: string): LocItem;
+    as<U>(): U {
+        return this._data as U;
+    }
+
+    abstract publish(timestamp: string | null, fees?: Fees, storageFeePaidBy?: string): AbstractLocItem<T>;
 
     get submitterOrThrow() {
         if(this.commonData.submitter) {
@@ -146,89 +158,37 @@ export abstract class LocItem implements CommonData {
     }
 }
 
-export class MetadataItem extends LocItem {
+export class MetadataItem extends AbstractLocItem<MetadataData> {
 
-    constructor(commonData: CommonData, metadataData?: MetadataData) {
-        super(commonData);
-        this._metadataData = metadataData;
-    }
-
-    private _metadataData?: MetadataData;
-
+    static TYPE: LocItemType = "Data";
+    
     override title() {
-        return this._metadataData?.name || "-";
+        return this.data().name || "-";
     }
 
-    override hasData(): boolean {
-        return super.hasData() && this._metadataData !== undefined;
-    }
-
-    metadataData(): MetadataData {
-        if(this._metadataData) {
-            return this._metadataData;
-        } else {
-            throw new Error("Data not set");
-        }
-    }
-
-    fileData(): FileData {
-        throw new Error("Method not implemented.");
-    }
-
-    linkData(): LinkData {
-        throw new Error("Method not implemented.");
-    }
-
-    override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): LocItem {
+    override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): MetadataItem {
         return new MetadataItem(
             {
                 ...this.commonData,
                 timestamp,
                 fees,
             },
-            this._metadataData,
+            this.data(),
         );
     }
 }
 
-export class FileItem extends LocItem {
-
-    constructor(commonData: CommonData, fileData?: FileData) {
-        super(commonData);
-        this._fileData = fileData;
-    }
-
-    readonly _fileData?: FileData;
+export class FileItem extends AbstractLocItem<FileData> {
 
     override title() {
-        return this._fileData?.nature || "-";
+        return this.data().nature || "-";
     }
 
-    override hasData(): boolean {
-        return super.hasData() && this._fileData !== undefined;
-    }
-
-    metadataData(): MetadataData {
-        throw new Error("Method not implemented.");
-    }
-
-    fileData(): FileData {
-        if(this._fileData) {
-            return this._fileData;
-        } else {
-            throw new Error("Data not set");
-        }
-    }
-
-    linkData(): LinkData {
-        throw new Error("Method not implemented.");
-    }
-
-    override publish(timestamp: string | null, fees?: Fees, storageFeePaidBy?: string): LocItem {
-        const newFileData = this._fileData && storageFeePaidBy ? {
-            ...this._fileData,
+    override publish(timestamp: string | null, fees?: Fees, storageFeePaidBy?: string): FileItem {
+        const newFileData = this.data() && storageFeePaidBy ? {
+            ...this.data(),
             storageFeePaidBy,
-        } : this._fileData;
+        } : this.data();
         return new FileItem(
             {
                 ...this.commonData,
@@ -240,50 +200,25 @@ export class FileItem extends LocItem {
     }
 }
 
-export class LinkItem extends LocItem {
-
-    constructor(commonData: CommonData, linkData?: LinkData) {
-        super(commonData);
-        this._linkData = linkData;
-    }
-
-    readonly _linkData?: LinkData;
+export class LinkItem extends AbstractLocItem<LinkData> {
 
     override title() {
-        return this._linkData?.nature || "-";
+        return this.data().nature || "-";
     }
 
-    override hasData(): boolean {
-        return super.hasData() && this._linkData !== undefined;
-    }
-
-    metadataData(): MetadataData {
-        throw new Error("Method not implemented.");
-    }
-
-    fileData(): FileData {
-        throw new Error("Method not implemented.");
-    }
-
-    linkData(): LinkData {
-        if(this._linkData) {
-            return this._linkData;
-        } else {
-            throw new Error("Data not set");
-        }
-    }
-
-    override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): LocItem {
+    override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): LinkItem {
         return new LinkItem(
             {
                 ...this.commonData,
                 timestamp,
                 fees,
             },
-            this._linkData,
+            this.data(),
         );
     }
 }
+
+export type LocItem = LinkItem | MetadataItem | FileItem;
 
 export enum PublishStatus {
     NONE,
@@ -355,8 +290,8 @@ export function buildItemTableColumns(args: {
                         canViewFile(viewer, currentAddress, locItem, contributionMode) &&
                         <ViewFileButton
                             nodeOwner={ loc.ownerAddress }
-                            fileName={ locItem.fileData().fileName }
-                            downloader={ () => locState?.getFile(locItem.fileData().hash) }
+                            fileName={ locItem.as<FileData>().fileName }
+                            downloader={ () => locState?.getFile(locItem.as<FileData>().hash) }
                         />
                     }
                 </> } />,
@@ -372,7 +307,7 @@ export function buildItemTableColumns(args: {
     if(loc.locType === "Collection" && viewer === "LegalOfficer") {
         columns.push({
             header: "Restricted Delivery?",
-            render: locItem => locItem.type === "Document" && locItem.hasData() ? <RestrictedDeliveryCell hash={ locItem.fileData().hash }/> : null,
+            render: locItem => locItem.type === "Document" && locItem.hasData() ? <RestrictedDeliveryCell hash={ locItem.as<FileData>().hash }/> : null,
             width: "130px",
         });
     }
@@ -397,16 +332,16 @@ export function buildItemTableColumns(args: {
 function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewer): Child {
     return (
         <>
-            { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } /> }
+            { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem as MetadataItem } /> }
             {
                 locItem.type === 'Document' &&
                 <LocPrivateFileDetails
-                    item={ locItem }
-                    documentClaimHistory={ loc?.locType === "Collection" && !locItem.template ? documentClaimHistory(viewer, loc, locItem.fileData().hash) : undefined }
+                    item={ locItem as FileItem }
+                    documentClaimHistory={ loc?.locType === "Collection" && !locItem.template ? documentClaimHistory(viewer, loc, locItem.as<FileData>().hash) : undefined }
                     otherFeesPaidByRequester={ loc?.requesterLocId === undefined }
                 />
             }
-            { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } /> }
+            { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem as LinkItem } /> }
         </>
     )
 }
@@ -430,7 +365,7 @@ export function useDeleteMetadataCallback(mutateLocState: (mutator: (current: Lo
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteMetadata({
-                    nameHash: item.metadataData().nameHash,
+                    nameHash: item.as<MetadataData>().nameHash,
                 });
             } else {
                 return current;
@@ -444,7 +379,7 @@ export function useDeleteFileCallback(mutateLocState: (mutator: (current: LocReq
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteFile({
-                    hash: item.fileData().hash,
+                    hash: item.as<FileData>().hash,
                 });
             } else {
                 return current;
@@ -457,9 +392,8 @@ export function useDeleteLinkCallback(mutateLocState: (mutator: (current: LocReq
     return useCallback(async (item: LocItem) => {
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
-                // TODO use current.deleteLink(...)
-                return current.legalOfficer.deleteLink({
-                    target: item.linkData().linkedLoc.id,
+                return current.deleteLink({
+                    target: item.as<LinkData>().linkedLoc.id,
                 });
             } else {
                 return current;
@@ -589,14 +523,13 @@ export async function getLinkData(
 export function useRequestReviewCallback(mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>) {
     return useCallback(async (locItem: LocItem) => {
         mutateLocState(async current => {
-            if(current instanceof EditableRequest) {
-                if(locItem.type === "Data") {
-                    return current.requestMetadataReview(locItem.metadataData().nameHash);
-                } else if(locItem.type === "Document") {
-                    return current.requestFileReview(locItem.fileData().hash);
-                // } // TODO: uncomment
-                // else if(locItem.type === "Linked LOC") {
-                //     return current.requestLinkReview(locItem.linkData().linkedLoc.id);
+            if (current instanceof EditableRequest) {
+                if (locItem.type === "Data") {
+                    return current.requestMetadataReview({ nameHash: locItem.as<MetadataData>().nameHash });
+                } else if (locItem.type === "Document") {
+                    return current.requestFileReview({ hash: locItem.as<FileData>().hash });
+                } else if (locItem.type === "Linked LOC") {
+                    return current.requestLinkReview({ target: locItem.as<LinkData>().linkedLoc.id });
                 } else {
                     return current;
                 }
@@ -613,22 +546,22 @@ export function useReviewCallback(mutateLocState: (mutator: (current: LocRequest
             if(current instanceof EditableRequest) {
                 if(locItem.type === "Data") {
                     return current.legalOfficer.reviewMetadata({
-                        nameHash: locItem.metadataData().nameHash,
+                        nameHash: locItem.as<MetadataData>().nameHash,
                         decision,
                         rejectReason
                     });
                 } else if(locItem.type === "Document") {
                     return current.legalOfficer.reviewFile({
-                        hash: locItem.fileData().hash,
+                        hash: locItem.as<FileData>().hash,
                         decision,
                         rejectReason
                     });
-                // } else if(locItem.type === "Linked LOC") { // TODO: uncomment
-                //     return current.legalOfficer.reviewLink({
-                //         target: locItem.linkData().linkedLoc.id,
-                //         decision,
-                //         rejectReason
-                //     });
+                } else if(locItem.type === "Linked LOC") {
+                    return current.legalOfficer.reviewLink({
+                        target: locItem.as<LinkData>().linkedLoc.id,
+                        decision,
+                        rejectReason
+                    });
                 } else {
                     return current;
                 }

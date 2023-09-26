@@ -6,7 +6,7 @@ exports[`LocPublishPublicDataButton renders 1`] = `
   itemType="Public Data"
   locItem={
     MetadataItem {
-      "_metadataData": Object {
+      "_data": Object {
         "name": "data-name",
         "nameHash": Hash {
           "_bytes": Uint8Array [

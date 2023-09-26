@@ -39,6 +39,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
             addedOn: "",
             target: locFile.id.toString(),
             published: false,
+            status: "DRAFT",
         })),
         closed: false,
         verifiedIssuer: false,

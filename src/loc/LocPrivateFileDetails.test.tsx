@@ -3,16 +3,21 @@ import { TEST_WALLET_USER } from "../wallet-user/TestData";
 import LocPrivateFileDetails from "./LocPrivateFileDetails";
 import { CommonData, FileItem } from "./LocItem";
 import { Hash } from "@logion/node-api";
+import { ItemStatus } from "@logion/client";
+import { render, waitFor, screen } from "@testing-library/react";
 
 describe("LocPrivateFileDetails", () => {
 
-    const commonData: CommonData = {
-        timestamp: null,
-        type: "Document",
-        submitter: TEST_WALLET_USER,
-        status: "DRAFT",
-        newItem: false,
-        template: false,
+    function commonData(status: ItemStatus = "DRAFT", rejectReason?: string): CommonData {
+        return {
+            timestamp: null,
+            type: "Document",
+            submitter: TEST_WALLET_USER,
+            status,
+            rejectReason,
+            newItem: false,
+            template: false,
+        }
     };
 
     const regularFileData = {
@@ -23,7 +28,7 @@ describe("LocPrivateFileDetails", () => {
         storageFeePaidBy: "Requester",
     };
 
-    const regularFileItem = new FileItem(commonData, regularFileData);
+    const regularFileItem = new FileItem(commonData(), regularFileData);
 
     const zeroSizeFileData = {
         fileName: "a file",
@@ -33,7 +38,11 @@ describe("LocPrivateFileDetails", () => {
         storageFeePaidBy: "Requester",
     };
 
-    const zeroSizeFileItem = new FileItem(commonData, zeroSizeFileData);
+    const zeroSizeFileItem = new FileItem(commonData(), zeroSizeFileData);
+
+    function createItem(status: ItemStatus, rejectReason?: string): FileItem {
+        return new FileItem(commonData(status, rejectReason), regularFileData);
+    }
 
     it("renders", () => {
         const element = shallowRender(<LocPrivateFileDetails
@@ -52,4 +61,36 @@ describe("LocPrivateFileDetails", () => {
         />);
         expect(element).toMatchSnapshot();
     });
+
+    it("shows correct title when not published", async () => {
+        const item = createItem("REVIEW_ACCEPTED");
+        render(shallowRender(<LocPrivateFileDetails
+            item={ item }
+            documentClaimHistory=""
+            otherFeesPaidByRequester={ true }
+        />));
+        await waitFor(() => expect(screen.getByText("Document related data to be published")).toBeVisible());
+    });
+
+    it("shows correct title when published", async () => {
+        const item = createItem("ACKNOWLEDGED");
+        render(shallowRender(<LocPrivateFileDetails
+            item={ item }
+            documentClaimHistory=""
+            otherFeesPaidByRequester={ true }
+        />));
+        await waitFor(() => expect(screen.getByText("Published document related data")).toBeVisible());
+    });
+
+    it("shows reason when rejected", async () => {
+        const rejectReason = "Some reject reason";
+        const item = createItem("REVIEW_REJECTED", rejectReason);
+        render(shallowRender(<LocPrivateFileDetails
+            item={ item }
+            documentClaimHistory=""
+            otherFeesPaidByRequester={ true }
+        />));
+        await waitFor(() => expect(screen.getByText(rejectReason)).toBeVisible());
+    });
+
 });
