@@ -163,7 +163,7 @@ export class MetadataItem extends AbstractLocItem<MetadataData> {
     static TYPE: LocItemType = "Data";
     
     override title() {
-        return this.data()?.name || "-";
+        return this.data().name || "-";
     }
 
     override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): MetadataItem {
@@ -181,7 +181,7 @@ export class MetadataItem extends AbstractLocItem<MetadataData> {
 export class FileItem extends AbstractLocItem<FileData> {
 
     override title() {
-        return this.data()?.nature || "-";
+        return this.data().nature || "-";
     }
 
     override publish(timestamp: string | null, fees?: Fees, storageFeePaidBy?: string): FileItem {
@@ -203,7 +203,7 @@ export class FileItem extends AbstractLocItem<FileData> {
 export class LinkItem extends AbstractLocItem<LinkData> {
 
     override title() {
-        return this.data()?.nature || "-";
+        return this.data().nature || "-";
     }
 
     override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): LinkItem {
