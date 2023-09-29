@@ -142,6 +142,7 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
             rejectReason: locItem?.rejectReason,
             acknowledgedByOwner: locItem?.acknowledgedByOwner,
             acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer,
+            defaultTitle: templateItem.publicDescription,
         },
         locItem ? {
             fileName: locItem.name,
@@ -168,6 +169,7 @@ export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem
             rejectReason: locItem?.rejectReason,
             acknowledgedByOwner: locItem?.acknowledgedByOwner,
             acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer,
+            defaultTitle: templateItem.name,
         },
         locItem ? {
             nameHash: locItem.nameHash,
@@ -196,6 +198,7 @@ export function createLinkTemplateItem(
             rejectReason: locItem?.rejectReason,
             acknowledgedByOwner: locItem?.acknowledgedByOwner,
             acknowledgedByVerifiedIssuer: locItem?.acknowledgedByVerifiedIssuer,
+            defaultTitle: templateItem.publicDescription,
         },
         (linkData && locItem) ? {
             nature: templateItem.publicDescription,

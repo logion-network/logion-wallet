@@ -65,6 +65,7 @@ export interface CommonData {
     readonly rejectReason?: string;
     readonly acknowledgedByOwner?: boolean;
     readonly acknowledgedByVerifiedIssuer?: boolean;
+    readonly defaultTitle?: string;
 }
 
 abstract class AbstractLocItem<T> implements CommonData {
@@ -125,6 +126,10 @@ abstract class AbstractLocItem<T> implements CommonData {
         return this.commonData.acknowledgedByVerifiedIssuer;
     }
 
+    get defaultTitle(): string  {
+        return this.commonData.defaultTitle || this.commonData.type;
+    }
+
     isPublishedOrAcknowledged(): boolean {
         return this.commonData.status === "PUBLISHED" || this.commonData.status === "ACKNOWLEDGED"
     }
@@ -163,7 +168,11 @@ export class MetadataItem extends AbstractLocItem<MetadataData> {
     static TYPE: LocItemType = "Data";
     
     override title() {
-        return this.data().name || "-";
+        if (this.hasData()) {
+            return this.data().name || "-";
+        } else {
+            return this.defaultTitle;
+        }
     }
 
     override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): MetadataItem {
@@ -181,7 +190,11 @@ export class MetadataItem extends AbstractLocItem<MetadataData> {
 export class FileItem extends AbstractLocItem<FileData> {
 
     override title() {
-        return this.data().nature || "-";
+        if (this.hasData()) {
+            return this.data().nature || "-";
+        } else {
+            return this.defaultTitle
+        }
     }
 
     override publish(timestamp: string | null, fees?: Fees, storageFeePaidBy?: string): FileItem {
@@ -203,7 +216,11 @@ export class FileItem extends AbstractLocItem<FileData> {
 export class LinkItem extends AbstractLocItem<LinkData> {
 
     override title() {
-        return this.data().nature || "-";
+        if (this.hasData()) {
+            return this.data().nature || "-";
+        } else {
+            return this.defaultTitle;
+        }
     }
 
     override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): LinkItem {
