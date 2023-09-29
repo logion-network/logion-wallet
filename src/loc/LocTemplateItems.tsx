@@ -21,9 +21,6 @@ import {
     useDeleteMetadataCallback,
     useRequestReviewCallback,
     canAcknowledge,
-    MetadataData,
-    FileData,
-    LinkData,
     LinkItem,
     FileItem,
     MetadataItem
@@ -152,19 +149,19 @@ export default function LocTemplateItems(props: Props) {
                 buttons.push(<LocPublicDataButton
                     key={++key}
                     text="Set"
-                    dataName={ item.hasData() ? item.as<MetadataData>().name : undefined }
+                    dataName={ item.title() }
                 />);
             } else if(item.type === "Document") {
                 buttons.push(<LocPrivateFileButton
                     key={++key}
                     text="Set"
-                    nature={ item.hasData() ? item.as<FileData>().nature : undefined }
+                    nature={ item.title() }
                 />);
             } else if(item.type === "Linked LOC") {
                 buttons.push(<LocLinkButton
                     key={++key}
                     text="Set"
-                    nature={ item.hasData() ? item.as<LinkData>().nature : undefined }
+                    nature={ item.title() }
                 />);
             }
         }
