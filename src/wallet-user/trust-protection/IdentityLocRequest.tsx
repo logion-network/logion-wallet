@@ -86,7 +86,7 @@ export default function IdentityLocRequest(props: Props) {
         let draftRequest: DraftRequest;
         await mutateLocsState(async (locsState: LocsState) => {
             draftRequest = await locsState.requestIdentityLoc({
-                legalOfficer,
+                legalOfficerAddress: legalOfficer.address,
                 description: `KYC ${ userIdentity.firstName } ${ userIdentity.lastName } - ${ accounts.current?.accountId.toKey() }`,
                 userIdentity,
                 userPostalAddress,

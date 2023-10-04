@@ -70,7 +70,7 @@ export default function LocCreation(props: Props) {
         await mutateLocsState(async (locsState: LocsState) => {
             if(locType === "Transaction") {
                 draftRequest = await locsState!.requestTransactionLoc({
-                    legalOfficer: selectedLegalOfficer!,
+                    legalOfficerAddress: selectedLegalOfficer!.address,
                     description: formValues.description,
                     draft: true,
                     template: backendTemplate(selectedTemplateId),
@@ -78,7 +78,7 @@ export default function LocCreation(props: Props) {
                 }) as DraftRequest;
             } else if(locType === "Identity") {
                 draftRequest = await locsState!.requestIdentityLoc({
-                    legalOfficer: selectedLegalOfficer!,
+                    legalOfficerAddress: selectedLegalOfficer!.address,
                     description: formValues.description,
                     draft: true,
                     template: backendTemplate(selectedTemplateId),
@@ -98,7 +98,7 @@ export default function LocCreation(props: Props) {
                 }) as DraftRequest;
             } else if(locType === "Collection") {
                 draftRequest = await locsState!.requestCollectionLoc({
-                    legalOfficer: selectedLegalOfficer!,
+                    legalOfficerAddress: selectedLegalOfficer!.address,
                     description: formValues.description,
                     draft: true,
                     template: backendTemplate(selectedTemplateId),
