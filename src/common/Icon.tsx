@@ -1,9 +1,11 @@
 import { ColorThemeType, Icon as IconType } from './ColorTheme';
 import { useCommonContext } from './CommonContext';
 
+export type IconFileType = 'svg' | 'png';
+
 export interface Props {
     icon: IconType;
-    type?: 'svg' | 'png';
+    type?: IconFileType;
     height?: string;
     width?: string;
     colorThemeType?: ColorThemeType;

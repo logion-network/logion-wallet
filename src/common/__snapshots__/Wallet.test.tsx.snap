@@ -137,15 +137,9 @@ exports[`renders with all data 1`] = `
           <div
             className="gauge-title"
           >
-            <Icon
+            <CoinIcon
+              coinId="lgnt"
               height="72px"
-              icon={
-                Object {
-                  "id": "lgnt",
-                }
-              }
-              type="svg"
-              width="auto"
             />
             <span>
               Current 

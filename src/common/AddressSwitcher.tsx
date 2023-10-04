@@ -1,5 +1,5 @@
 import { ValidAccountId } from "@logion/node-api";
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import AccountAddress from './AccountAddress';
 import { useCommonContext } from './CommonContext';
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function AddressSwitcher() {
     const { logout, accounts, authenticate, selectAddress } = useLogionChain();
-    const { colorTheme } = useCommonContext();
+    const { colorTheme, balanceState } = useCommonContext();
     const [ confirm, setConfirm ] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -24,6 +24,14 @@ export default function AddressSwitcher() {
         await authenticate([ address ]);
         selectAddressCallback(address);
     }, [ authenticate, selectAddressCallback ]);
+
+    const balance = useMemo(() => {
+        if(balanceState && balanceState.balances.length > 0) {
+            return balanceState.balances[0];
+        } else {
+            return null;
+        }
+    }, [ balanceState ]);
 
     if(accounts === null || selectAddress === null || accounts.current === undefined) {
         return null;
@@ -40,7 +48,7 @@ export default function AddressSwitcher() {
                 <Dropdown.Toggle id="address-switcher-toggle">
                     <div className="address-data">
                         <AccountAddress
-                            hint="Click to select another address"
+                            balance={ balance }
                             account={ accounts.current }
                             disabled={ accounts.current.token === undefined }
                         />

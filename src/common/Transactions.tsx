@@ -8,7 +8,6 @@ import { Coin, CoinBalance } from '@logion/node-api';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
-import Icon from './Icon';
 import Table, { DateCell, EmptyTableMessage, Column } from './Table';
 
 import { useCommonContext } from './CommonContext';
@@ -25,6 +24,8 @@ import { WalletType } from "./Wallet";
 import VaultOutRequest from "../vault/VaultOutRequest";
 import VaultTransferRequests from './VaultTransferRequests';
 import TransactionType from './TransactionType';
+import CoinName from 'src/components/coin/CoinName';
+import CoinIcon from 'src/components/coin/CoinIcon';
 
 export interface Props {
     address: string,
@@ -180,9 +181,8 @@ function Content(props: ContentProps) {
                             fillHeight
                             title={
                                 <div className="gauge-title">
-                                    <Icon icon={ { id: balance.coin.iconId } } type={ balance.coin.iconType } height="72px"
-                                          width="auto" />
-                                    <span>Current { balance.coin.name } balance</span>
+                                    <CoinIcon coinId={ balance.coin.id } height="72px" />
+                                    <span>Current <CoinName coinId={ balance.coin.id }/> balance</span>
                                 </div>
                             }
                             className="gauge-container"
@@ -207,10 +207,10 @@ function TransactionsFrameTitle(props: { coin: Coin, vaultOutButton: boolean }) 
         <Row>
             <Col>
                 <span className="frame-title">
-                    Transaction history: <Icon
-                    icon={ { id: props.coin.iconId } }
-                    type={ props.coin.iconType }
-                /> { props.coin.name } ({ props.coin.symbol })
+                    Transaction history: <CoinIcon
+                        coinId={ props.coin.id }
+                        height="36px"
+                    /> <CoinName coinId={ props.coin.id }/> ({ props.coin.symbol })
                 </span>
             </Col>
             { props.vaultOutButton &&

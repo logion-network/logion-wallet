@@ -66,7 +66,6 @@ export interface SidebarColors extends BackgroundAndForegroundColors {
 
 export interface AccountAddressColors extends BackgroundAndForegroundColors {
     iconBackground: string,
-    hintColor: string,
     legalOfficerIcon: Icon,
 }
 
@@ -117,7 +116,6 @@ export const DEFAULT_COLOR_THEME: ColorTheme = {
     },
     accounts: {
         iconBackground: '#3b6cf4',
-        hintColor: rgbaToHex('#ffffff', 0.6),
         foreground: '#ffffff',
         background: '#0c163d',
         legalOfficerIcon: {
