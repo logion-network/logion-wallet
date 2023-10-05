@@ -113,10 +113,7 @@ exports[`renders with all data 1`] = `
                   },
                 },
                 "coin": Object {
-                  "iconId": "lgnt",
-                  "iconType": "svg",
                   "id": "lgnt",
-                  "name": "Logion",
                   "symbol": "LGNT",
                 },
                 "level": 0.1,
@@ -169,10 +166,7 @@ exports[`renders with all data 1`] = `
           }
           coin={
             Object {
-              "iconId": "lgnt",
-              "iconType": "svg",
               "id": "lgnt",
-              "name": "Logion",
               "symbol": "LGNT",
             }
           }

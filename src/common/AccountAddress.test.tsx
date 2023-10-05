@@ -11,10 +11,7 @@ test("renders", () => {
                 available: new Numbers.PrefixedNumber("2", Numbers.NONE),
                 balance: new Numbers.PrefixedNumber("2", Numbers.NONE),
                 coin: {
-                    iconId: "lgnt",
-                    iconType: "svg",
                     id: "lgnt",
-                    name: "LGNT",
                     symbol: "LGNT"
                 },
                 level: 1

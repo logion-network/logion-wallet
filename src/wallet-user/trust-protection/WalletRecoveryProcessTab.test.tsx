@@ -25,9 +25,6 @@ test("Recovered tokens can be transferred", async () => {
     const coinBalance: CoinBalance = {
         coin: {
             id: 'dot',
-            name: 'Polkadot',
-            iconId: 'dot',
-            iconType: 'png',
             symbol: 'DOT',
         },
         balance: new Numbers.PrefixedNumber("100", Numbers.MILLI),
