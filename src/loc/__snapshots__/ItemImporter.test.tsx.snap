@@ -8,7 +8,6 @@ exports[`ItemImporter renders 1`] = `
       "accounts": Object {
         "background": "#0c163d",
         "foreground": "#ffffff",
-        "hintColor": "#ffffff99",
         "iconBackground": "#3b6cf4",
         "legalOfficerIcon": Object {
           "category": "legal-officer",

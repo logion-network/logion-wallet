@@ -6,7 +6,9 @@ export let setColorTheme = jest.fn();
 
 export let refresh = jest.fn();
 
-export let balanceState: BalanceState | undefined = {} as BalanceState;
+export let balanceState: BalanceState | undefined = {
+    balances: [],
+} as unknown as BalanceState;
 
 export function setBalanceState(value: BalanceState | undefined) {
     balanceState = value;

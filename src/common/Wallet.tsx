@@ -8,7 +8,6 @@ import { useCommonContext } from './CommonContext';
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
 import Table, { Cell, DateCell, EmptyTableMessage, ActionCell } from './Table';
-import Icon from './Icon';
 import Button from './Button';
 import WalletGauge from './WalletGauge';
 import Loader from './Loader';
@@ -19,6 +18,8 @@ import { useResponsiveContext } from './Responsive';
 import { buildTransactionType } from "./TransactionType";
 import { Transaction } from '@logion/client/dist/TransactionClient.js';
 import { toPrefixedLgnt } from './AmountCell';
+import CoinIcon from 'src/components/coin/CoinIcon';
+import CoinName from 'src/components/coin/CoinName';
 
 export type WalletType = "Wallet" | "Vault"
 
@@ -83,7 +84,7 @@ export function Content(props: Props & { type: WalletType }) {
                         columns={[
                             {
                                 header: "",
-                                render: coinBalance => <Icon icon={{id: coinBalance.coin.iconId}} type={ coinBalance.coin.iconType } height="36px" width="auto" />,
+                                render: coinBalance => <CoinIcon coinId={ coinBalance.coin.id } height="36px" />,
                                 width: "70px",
                             },
                             {
@@ -137,8 +138,7 @@ export function Content(props: Props & { type: WalletType }) {
                         fillHeight
                         title={
                             <div className="gauge-title">
-                                <Icon icon={ { id: gaugeCoin.iconId } } type={ gaugeCoin.iconType } height="72px"
-                                      width="auto" />
+                                <CoinIcon coinId={ balances[0].coin.id } height="72px" />
                                 <span>Current { Currency.SYMBOL } balance</span>
                             </div>
                         }
@@ -167,7 +167,7 @@ export function AssetNameCell(props: AssetNameCellProps) {
 
     return (
         <div className="asset-name-cell">
-            <span className="name">{ props.balance.coin.name } ({ props.balance.balance.prefix.symbol }{ props.balance.coin.symbol })</span>
+            <span className="name"><CoinName coinId={ props.balance.coin.id }/> ({ props.balance.balance.prefix.symbol }{ props.balance.coin.symbol })</span>
         </div>
     );
 }

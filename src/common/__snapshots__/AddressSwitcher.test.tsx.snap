@@ -37,8 +37,8 @@ exports[`AddressSwitcher renders 1`] = `
               },
             }
           }
+          balance={null}
           disabled={false}
-          hint="Click to select another address"
         />
       </div>
     </DropdownToggle>

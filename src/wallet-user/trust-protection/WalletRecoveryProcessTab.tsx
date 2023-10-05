@@ -15,6 +15,7 @@ import IconTextRow from "../../common/IconTextRow";
 import { useLogionChain } from "../../logion-chain";
 import { useUserContext } from "../UserContext";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import CoinIcon from "src/components/coin/CoinIcon";
 
 interface Props {
     vaultFirst: boolean
@@ -72,9 +73,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
                                 columns={ [
                                     {
                                         header: "",
-                                        render: coinBalance => <Icon icon={ { id: coinBalance.coin.iconId } }
-                                                                     type={ coinBalance.coin.iconType } height="36px"
-                                                                     width="auto" />,
+                                        render: coinBalance => <CoinIcon coinId={ coinBalance.coin.id } height="36px" />,
                                         width: "70px",
                                     },
                                     {

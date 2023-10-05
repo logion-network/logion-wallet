@@ -22,7 +22,6 @@ export const LIGHT_MODE: ColorTheme = {
     },
     accounts: {
         iconBackground: '#3b6cf4',
-        hintColor: rgbaToHex('#000000', 0.6),
         foreground: '#000000',
         background: '#eff3fe',
         legalOfficerIcon: {

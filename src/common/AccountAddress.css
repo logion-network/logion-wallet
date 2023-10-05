@@ -34,12 +34,14 @@
     opacity: 0.5;
 }
 
-.AccountAddress .text .hint {
-    font-size: 0.7rem;
+.AccountAddress .text .balance {
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-transform: uppercase;
+}
+
+.AccountAddress .text .balance .symbol {
+    font-size: 0.7rem;
 }
 
 .AccountAddress .text .name {

@@ -1,3 +1,4 @@
+import { CoinBalance } from "@logion/node-api";
 import { CSSProperties } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -7,9 +8,10 @@ import { useCommonContext } from './CommonContext';
 import Icon from './Icon';
 
 import './AccountAddress.css';
+import { Spinner } from "react-bootstrap";
 
 export interface Props {
-    hint?: string;
+    balance?: CoinBalance | null;
     account: Account;
     disabled: boolean;
     login?: () => void;
@@ -44,20 +46,9 @@ export default function AccountAddress(props: Props) {
             <div
                 className="text"
                 style={{
-                    justifyContent: props.hint === undefined ? 'space-around' : 'space-between'
+                    justifyContent: props.balance === undefined ? 'space-around' : 'space-between'
                 }}
             >
-                {
-                    props.hint !== undefined &&
-                    <div
-                        className="hint"
-                        style={{
-                            color: colorTheme.accounts.hintColor,
-                        }}
-                    >
-                        { props.hint }
-                    </div>
-                }
                 <div
                     className="name"
                     style={{
@@ -84,6 +75,18 @@ export default function AccountAddress(props: Props) {
                       <span>{ props.account.accountId.address }</span>
                     </OverlayTrigger>
                 </div>
+                {
+                    props.balance !== undefined &&
+                    <div
+                        className="balance"
+                        style={{
+                            color: colorTheme.accounts.foreground,
+                        }}
+                    >
+                        <span className="amount">{ props.balance === null ? <Spinner size="sm"/> : props.balance.balance.coefficient.toFixedPrecision(2) }</span>{" "}
+                        <span className="symbol">{ (props.balance?.balance.prefix.symbol || "") + (props.balance?.coin.symbol || "LGNT") }</span>
+                    </div>
+                }
             </div>
             {
                 props.login !== undefined && props.account.token === undefined &&

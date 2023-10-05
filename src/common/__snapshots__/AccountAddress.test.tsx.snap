@@ -30,16 +30,6 @@ exports[`renders 1`] = `
     }
   >
     <div
-      className="hint"
-      style={
-        Object {
-          "color": "#ffffff99",
-        }
-      }
-    >
-      My hint
-    </div>
-    <div
       className="name"
       style={
         Object {
@@ -80,6 +70,26 @@ exports[`renders 1`] = `
           address1
         </span>
       </OverlayTrigger>
+    </div>
+    <div
+      className="balance"
+      style={
+        Object {
+          "color": "#ffffff",
+        }
+      }
+    >
+      <span
+        className="amount"
+      >
+        2.00
+      </span>
+       
+      <span
+        className="symbol"
+      >
+        LGNT
+      </span>
     </div>
   </div>
 </div>

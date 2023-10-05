@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CoinName renders DOT 1`] = `
+<span>
+  Polkadot
+</span>
+`;
+
+exports[`CoinName renders LGNT 1`] = `
+<span>
+  Logion Token
+</span>
+`;

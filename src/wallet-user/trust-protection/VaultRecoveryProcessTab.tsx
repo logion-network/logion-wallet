@@ -22,6 +22,7 @@ import { useUserContext } from "../UserContext";
 import { buildOptions } from "./SelectLegalOfficer";
 import "./VaultRecoveryProcessTab.css"
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "../../ClientExtrinsicSubmitter";
+import CoinIcon from "src/components/coin/CoinIcon";
 
 interface FormValues {
     legalOfficer: string | null;
@@ -141,9 +142,7 @@ export default function VaultRecoveryProcessTab() {
                     columns={ [
                         {
                             header: "",
-                            render: coinBalance => <Icon icon={ { id: coinBalance.coin.iconId } }
-                                                         type={ coinBalance.coin.iconType } height="36px"
-                                                         width="auto" />,
+                            render: coinBalance => <CoinIcon coinId={ coinBalance.coin.id } height="36px" />,
                             width: "70px",
                         },
                         {

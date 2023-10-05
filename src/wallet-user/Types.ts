@@ -14,7 +14,6 @@ export const DARK_MODE: ColorTheme = {
     },
     accounts: {
         iconBackground: '#3b6cf4',
-        hintColor: rgbaToHex('#ffffff', 0.6),
         foreground: '#ffffff',
         background: '#0c163d',
         legalOfficerIcon: {

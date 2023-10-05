@@ -49,7 +49,7 @@ describe("AddressSwitcher", () => {
             <AddressSwitcher />
         );
 
-        await userEvent.click(screen.getByText("Click to select another address"));
+        await userEvent.click(screen.getByText(AUTHENTICATED_ADDRESS.name));
         await waitFor(() => userEvent.click(screen.getByRole('button', {name:"login button"})));
 
         await waitFor(() => expect(authenticate).toBeCalledWith([ DEFAULT_LEGAL_OFFICER ]));
