@@ -103,6 +103,7 @@ export default function ImportItems() {
             setItemToSubmit(undefined);
 
             item.submitted = true;
+            setItems(items.slice());
             const signAndSubmit: Call = async (callback: CallCallback) => {
                 await collection.addCollectionItem({
                     signer: signer!,
@@ -121,7 +122,7 @@ export default function ImportItems() {
             newSubmitters[item.id!.toHex()] = signAndSubmit;
             setSubmitters(newSubmitters);
         }
-    }, [ submitters, signer, locState, itemToSubmit ]);
+    }, [ submitters, signer, locState, itemToSubmit, items ]);
 
     const submitNext = useCallback(async (submittedItem: Item, failed: boolean) => {
         if(failed) {
@@ -129,6 +130,7 @@ export default function ImportItems() {
         } else {
             submittedItem.success = true;
         }
+        setItems(items.slice());
         if(isBatchImport) {
             const nextItemIndex = getNextItem(items, currentItem);
             if(nextItemIndex < items.length) {
@@ -184,7 +186,7 @@ export default function ImportItems() {
             item.errorType = "upload";
             setUploading(false);
         }
-        setItems([ ...items ]);
+        setItems(items.slice());
     }, [ locState, items, setItems ]);
 
     return (
