@@ -28,7 +28,7 @@ Object {
               class="text-title"
             >
               Collection Item(s) recorded within this LOC: 
-              -
+              0
             </p>
             <p>
               All Collection Items created within this LOC - using the logion import tool and/or through the logion API by an external application - are governed by the public data and confidential documents recorded above.
@@ -90,6 +90,128 @@ Object {
             />
           </div>
         </div>
+        <div
+          class="PagedTable"
+        >
+          <div
+            class="controls"
+          >
+            <span
+              class="numbers"
+            >
+              1
+              -
+              0
+               of 
+              0
+            </span>
+            <span
+              class="control left light disabled"
+            >
+              <img
+                alt="left"
+                height="10px"
+                src="/assets/themes/light/left.svg"
+              />
+            </span>
+            <span
+              class="control right light disabled"
+            >
+              <img
+                alt="right"
+                height="10px"
+                src="/assets/themes/light/right.svg"
+              />
+            </span>
+          </div>
+          <div
+            class="Table"
+          >
+            <style>
+              
+            .Table .body .Row .Col.split-after::before {
+                background-color: #152665;
+            }
+            
+            </style>
+            <div
+              class="header"
+              style="color: rgb(255, 255, 255); background-color: rgb(12, 22, 61);"
+            >
+              <div
+                class="Row"
+              >
+                <div
+                  class="Col"
+                  style="text-align: left;"
+                >
+                  Collection Item ID
+                </div>
+                <div
+                  class="Col"
+                  style="text-align: center;"
+                >
+                  Timestamp
+                </div>
+                <div
+                  class="Col"
+                  style="width: 300px; text-align: center;"
+                >
+                  Certificate
+                </div>
+                <div
+                  class="Col"
+                  style="width: 400px; text-align: center;"
+                />
+              </div>
+            </div>
+            <div
+              class="body"
+            >
+              <div
+                class="Row empty-data"
+                style="color: rgb(255, 255, 255); background-color: rgb(21, 38, 101);"
+              >
+                <div
+                  class="empty-message"
+                >
+                  No page to display
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="controls"
+          >
+            <span
+              class="numbers"
+            >
+              1
+              -
+              0
+               of 
+              0
+            </span>
+            <span
+              class="control left light disabled"
+            >
+              <img
+                alt="left"
+                height="10px"
+                src="/assets/themes/light/left.svg"
+              />
+            </span>
+            <span
+              class="control right light disabled"
+            >
+              <img
+                alt="right"
+                height="10px"
+                src="/assets/themes/light/right.svg"
+              />
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </body>,
@@ -117,7 +239,7 @@ Object {
             class="text-title"
           >
             Collection Item(s) recorded within this LOC: 
-            -
+            0
           </p>
           <p>
             All Collection Items created within this LOC - using the logion import tool and/or through the logion API by an external application - are governed by the public data and confidential documents recorded above.
@@ -177,6 +299,128 @@ Object {
             class="Row CheckResultFeedback result-none"
             id="feedback-NONE"
           />
+        </div>
+      </div>
+      <div
+        class="PagedTable"
+      >
+        <div
+          class="controls"
+        >
+          <span
+            class="numbers"
+          >
+            1
+            -
+            0
+             of 
+            0
+          </span>
+          <span
+            class="control left light disabled"
+          >
+            <img
+              alt="left"
+              height="10px"
+              src="/assets/themes/light/left.svg"
+            />
+          </span>
+          <span
+            class="control right light disabled"
+          >
+            <img
+              alt="right"
+              height="10px"
+              src="/assets/themes/light/right.svg"
+            />
+          </span>
+        </div>
+        <div
+          class="Table"
+        >
+          <style>
+            
+            .Table .body .Row .Col.split-after::before {
+                background-color: #152665;
+            }
+            
+          </style>
+          <div
+            class="header"
+            style="color: rgb(255, 255, 255); background-color: rgb(12, 22, 61);"
+          >
+            <div
+              class="Row"
+            >
+              <div
+                class="Col"
+                style="text-align: left;"
+              >
+                Collection Item ID
+              </div>
+              <div
+                class="Col"
+                style="text-align: center;"
+              >
+                Timestamp
+              </div>
+              <div
+                class="Col"
+                style="width: 300px; text-align: center;"
+              >
+                Certificate
+              </div>
+              <div
+                class="Col"
+                style="width: 400px; text-align: center;"
+              />
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="Row empty-data"
+              style="color: rgb(255, 255, 255); background-color: rgb(21, 38, 101);"
+            >
+              <div
+                class="empty-message"
+              >
+                No page to display
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="controls"
+        >
+          <span
+            class="numbers"
+          >
+            1
+            -
+            0
+             of 
+            0
+          </span>
+          <span
+            class="control left light disabled"
+          >
+            <img
+              alt="left"
+              height="10px"
+              src="/assets/themes/light/left.svg"
+            />
+          </span>
+          <span
+            class="control right light disabled"
+          >
+            <img
+              alt="right"
+              height="10px"
+              src="/assets/themes/light/right.svg"
+            />
+          </span>
         </div>
       </div>
     </div>

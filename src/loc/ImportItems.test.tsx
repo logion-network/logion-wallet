@@ -28,9 +28,11 @@ describe("ImportItems", () => {
         await userEvent.click(importAllButton);
         await waitFor(() => expect(screen.getByRole("button", { name: "Proceed" })).toBeVisible());
         await clickByName("Proceed");
+        await waitFor(() => expect(screen.getByRole("button", { name: "Proceed" })).toBeVisible());
+        await clickByName("Proceed");
         await waitFor(() => expect(collection.addCollectionItem).toBeCalled());
 
-        await waitFor(() => expect(screen.getByAltText("ok")).toBeVisible());
+        await waitFor(() => expect(screen.getAllByRole("img", {name: "ok"}).length).toBe(2));
 
         await closeAndExpectRefresh();
     });
@@ -38,14 +40,14 @@ describe("ImportItems", () => {
     it("imports one CSV row", async () => {
         const collection = await uploadCsv();
 
-        await waitFor(() => expect(screen.getAllByRole("button", { name: /Import/ }).length).toBe(4));
+        await waitFor(() => expect(screen.getAllByRole("button", { name: /Import/ }).length).toBe(5));
         const importButton = screen.getAllByRole("button", { name: /Import/ })[2];
         await userEvent.click(importButton);
         await waitFor(() => expect(screen.getByRole("button", { name: "Proceed" })).toBeVisible());
         await clickByName("Proceed");
         await waitFor(() => expect(collection.addCollectionItem).toBeCalled());
 
-        await waitFor(() => expect(screen.getByText("Submission successful.")).toBeVisible());
+        await waitFor(() => expect(screen.getByRole("img", {name: "ok"})).toBeVisible());
 
         await closeAndExpectRefresh();
     });
@@ -65,7 +67,8 @@ async function uploadCsv(): Promise<any> {
 
     const collection = {
         addCollectionItem: jest.fn((params: AddCollectionItemParams) => {
-            params.callback!(mockSubmittableResult(true, "finalized"))
+            params.callback!(mockSubmittableResult(true, "finalized"));
+            return Promise.resolve();
         }),
         estimateFeesAddCollectionItem: jest.fn((params: EstimateFeesAddCollectionItemParams) => {
             return Promise.resolve(
@@ -90,7 +93,7 @@ async function uploadCsv(): Promise<any> {
 
     const file = new File([`ID,DESCRIPTION,TERMS_AND_CONDITIONS TYPE,TERMS_AND_CONDITIONS PARAMETERS
 0x50cc7f74edfff71f51fdbffed12067a16b563bb72cab9240cd72e56234ea5dc0,package.json,none,
-0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa,art-work.png,CC4.0,BY-NC-SA,`], "items.csv");
+0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa,art-work.png,none,`], "items.csv");
     await userEvent.upload(screen.getByTestId("FileSelectorButtonHiddenInput"), file, {applyAccept: false});
     return collection;
 }

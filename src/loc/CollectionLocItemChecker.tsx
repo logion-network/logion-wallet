@@ -60,9 +60,8 @@ export function UserCollectionLocItemChecker(props: Props) {
             viewer="User"
             collectionLoc={ collectionLoc }
             collectionItem={ collectionItem }
-            collectionSizeFunction={ () => collection.size() }
             collectionItemFunction={ collectionItemFunction }
-            axiosFactory={ () => client.buildAxios(client.legalOfficers.find(legalOfficer => legalOfficer.address === collectionLoc.ownerAddress)!) }
+            axiosFactory={ () => client.getLegalOfficer(collectionLoc.ownerAddress).buildAxiosToNode() }
             collectionItems={ collectionItems }
         />)
 }
@@ -84,7 +83,6 @@ export function LOCollectionLocItemChecker(props: Props) {
             viewer="LegalOfficer"
             collectionLoc={ collectionLoc }
             collectionItem={ collectionItem }
-            collectionSizeFunction={ () => api.queries.getCollectionSize(collectionLoc.id) }
             collectionItemFunction={ (actualId: Hash) => collection.getCollectionItem({ itemId: actualId }) }
             axiosFactory={ () => axios }
             collectionItems={ collectionItems }
@@ -93,7 +91,6 @@ export function LOCollectionLocItemChecker(props: Props) {
 
 interface LocalProps extends Props {
     viewer: Viewer;
-    collectionSizeFunction: () => Promise<number | undefined>
     collectionItemFunction: (actualId: Hash) => Promise<CollectionItem | undefined>
     axiosFactory: () => AxiosInstance
     collectionItems: CollectionItem[]
@@ -101,24 +98,16 @@ interface LocalProps extends Props {
 
 function CollectionLocItemChecker(props: LocalProps) {
 
-    const { collectionLoc, collectionSizeFunction, collectionItemFunction, collectionItems } = props;
+    const { collectionLoc, collectionItemFunction, collectionItems } = props;
     const navigate = useNavigate();
     const { colorTheme } = useCommonContext();
     const { accounts } = useLogionChain();
     const [ state, setState ] = useState<CheckResult>('NONE');
-    const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);
     const [ itemId, setItemId ] = useState<string>("");
     const [ item, setItem ] = useState<CollectionItem>();
     const [ managedCheck, setManagedCheck ] = useState<{ itemId: Hash, active: boolean }>();
     const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
     const { width } = useResponsiveContext();
-
-    useEffect(() => {
-        if (collectionSize === null) {
-            collectionSizeFunction()
-                .then(setCollectionSize)
-        }
-    }, [ collectionSizeFunction, collectionSize ])
 
     const checkData = useCallback(async () => {
         if (itemId) {
@@ -249,7 +238,7 @@ function CollectionLocItemChecker(props: LocalProps) {
             <IconTextRow
                 icon={ <Icon icon={ { id: "polkadot_collection" } } width="45px" /> }
                 text={ <>
-                    <p className="text-title">Collection Item(s) recorded within this LOC: { collectionSize ? collectionSize : "-" }</p>
+                    <p className="text-title">Collection Item(s) recorded within this LOC: { collectionItems.length }</p>
                     <p>All Collection Items created within this LOC - using the logion import tool and/or through the logion API by an
                         external application - are governed by the public data and confidential documents recorded above.</p>
                     <p>To check if a Collection Item is covered by this Collection LOC and get its online public
@@ -297,7 +286,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                 }
             />
             {
-                collectionSize !== null && collectionSize !== undefined && collectionSize <= LARGE_COLLECTION_SIZE &&
+                collectionItems.length <= LARGE_COLLECTION_SIZE &&
                 <PagedTable
                     fullSize={ collectionItems.length }
                     currentPage={ currentPage }
@@ -307,7 +296,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                 />
             }
             {
-                collectionSize !== null && collectionSize !== undefined && collectionSize > LARGE_COLLECTION_SIZE && item !== undefined &&
+                collectionItems.length > LARGE_COLLECTION_SIZE && item !== undefined &&
                 <Table
                     columns={ columns }
                     data={ [ item ] }
