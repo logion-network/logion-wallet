@@ -4,6 +4,7 @@ import LocItemDetail from "./LocItemDetail";
 import './LocItemDetails.css'
 import { MetadataItem } from "./LocItem";
 import LocItemEstimatedFees from "./LocItemEstimatedFees";
+import InlineHashString from "src/components/inlinehashstring/InlineHashString";
 
 export interface Props {
     item: MetadataItem
@@ -22,11 +23,11 @@ export default function LocPublicDataDetails(props: Props) {
                     </>
                 }
                 <div className="frame-title">{ props.item.isPublishedOrAcknowledged() ? "Published data" : "Data to be published" }</div>
-                <LocItemDetail label="Public name">{ props.item.hasData() ? props.item.data().name : "-" }</LocItemDetail>
+                <LocItemDetail label="Public name">{ props.item.hasData() ? <InlineHashString value={props.item.data().name}/> : "-" }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
                     { props.item.submitter?.address || "-" }
                 </LocItemDetail>
-                <LocItemDetail label="Public data"><pre>{ props.item.hasData() ? props.item.data().value : "-" }</pre></LocItemDetail>
+                <LocItemDetail label="Public data"><pre>{ props.item.hasData() ? <InlineHashString value={props.item.data().value}/> : "-" }</pre></LocItemDetail>
                 {
                     props.item.fees &&
                     <>

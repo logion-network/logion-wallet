@@ -10,6 +10,7 @@ import { MetadataItem, MetadataData } from "./LocItem";
 import { useLocContext } from "./LocContext";
 import { EditableRequest } from "@logion/client";
 import { Hash } from "@logion/node-api";
+import InlineHashString from "src/components/inlinehashstring/InlineHashString";
 
 export interface Props {
     text: string;
@@ -25,7 +26,7 @@ export function LocPublicDataButton(props: Props) {
 
     const submit = useCallback(async (formValues: FormValues) => {
         const nameHash = Hash.of(formValues.dataName);
-        const existingItem = locItems.find(item => item.type === "Data" && item.as<MetadataData>().nameHash.equalTo(nameHash));
+        const existingItem = locItems.find(item => item.type === "Data" && item.as<MetadataData>().name.hash.equalTo(nameHash));
         if (existingItem) {
             setVisible(false)
             setExistingItem(existingItem as MetadataItem)
@@ -89,7 +90,7 @@ export function LocPublicDataButton(props: Props) {
                 ] }
             >
                 <p>A data with name</p>
-                <p>{ existingItem?.data().name }</p>
+                <p>{ existingItem ? <InlineHashString value={existingItem.data().name}/> : "-" }</p>
                 <p>already exists in this LOC.</p>
             </Dialog>
 

@@ -8,6 +8,7 @@ import {
     PublicLoc,
     ItemStatus,
     ReviewResult,
+    HashString,
 } from "@logion/client";
 import { UUID, LocType, Fees, ValidAccountId, Hash } from "@logion/node-api";
 import { useCallback } from "react";
@@ -39,9 +40,8 @@ export interface LinkData {
 }
 
 export interface MetadataData {
-    readonly name?: string;
-    readonly nameHash: Hash;
-    readonly value: string;
+    readonly name: HashString;
+    readonly value: HashString;
 }
 
 export interface FileData {
@@ -169,7 +169,7 @@ export class MetadataItem extends AbstractLocItem<MetadataData> {
     
     override title() {
         if (this.hasData()) {
-            return this.data().name || "-";
+            return this.data().name.value || "-";
         } else {
             return this.defaultTitle;
         }
@@ -382,7 +382,7 @@ export function useDeleteMetadataCallback(mutateLocState: (mutator: (current: Lo
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteMetadata({
-                    nameHash: item.as<MetadataData>().nameHash,
+                    nameHash: item.as<MetadataData>().name.hash,
                 });
             } else {
                 return current;
@@ -533,7 +533,7 @@ export async function getLinkData(
     return {
         linkedLoc,
         linkDetailsPath,
-        nature: link.nature,
+        nature: link.nature.validValue(),
     };
 }
 
@@ -542,7 +542,7 @@ export function useRequestReviewCallback(mutateLocState: (mutator: (current: Loc
         mutateLocState(async current => {
             if (current instanceof EditableRequest) {
                 if (locItem.type === "Data") {
-                    return current.requestMetadataReview({ nameHash: locItem.as<MetadataData>().nameHash });
+                    return current.requestMetadataReview({ nameHash: locItem.as<MetadataData>().name.hash });
                 } else if (locItem.type === "Document") {
                     return current.requestFileReview({ hash: locItem.as<FileData>().hash });
                 } else if (locItem.type === "Linked LOC") {
@@ -563,7 +563,7 @@ export function useReviewCallback(mutateLocState: (mutator: (current: LocRequest
             if(current instanceof EditableRequest) {
                 if(locItem.type === "Data") {
                     return current.legalOfficer.reviewMetadata({
-                        nameHash: locItem.as<MetadataData>().nameHash,
+                        nameHash: locItem.as<MetadataData>().name.hash,
                         decision,
                         rejectReason
                     });

@@ -1,5 +1,5 @@
 import { UUID, Hash } from "@logion/node-api";
-import { ItemStatus, LocData } from "@logion/client";
+import { ItemStatus, LocData, HashString } from "@logion/client";
 import { render as renderTesting, waitFor, screen } from "@testing-library/react";
 
 import { clickByName, render } from "../tests";
@@ -202,11 +202,10 @@ let _locState: EditableRequest;
 
 function givenMetadataItem(request: LocData, status: ItemStatus): LocItem[] {
     request.metadata.push({
-        name: "Name",
-        nameHash: Hash.of("Name"),
+        name: HashString.fromValue("Name"),
         addedOn: "2022-01-20T15:45:00.000",
         submitter: accounts!.current!.accountId,
-        value: "Value",
+        value: HashString.fromValue("Value"),
         published: status === "PUBLISHED",
         status,
         acknowledgedByOwner: status === "ACKNOWLEDGED",
@@ -222,9 +221,8 @@ function givenMetadataItem(request: LocData, status: ItemStatus): LocItem[] {
             template: false,
         },
         {
-            name: "Name",
-            value: "Value",
-            nameHash: Hash.of("Name"),
+            name: HashString.fromValue("Name"),
+            value: HashString.fromValue("Value"),
         }
     )];
 }
@@ -245,7 +243,7 @@ function givenFileItem(request: LocData, status: ItemStatus): LocItem[] {
         name: "Name",
         addedOn: "2022-01-20T15:45:00.000",
         submitter: accounts!.current!.accountId,
-        nature: "Some nature",
+        nature: HashString.fromValue("Some nature"),
         hash: Hash.fromHex("0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a"),
         published: status === "PUBLISHED",
         restrictedDelivery: false,
@@ -293,7 +291,7 @@ function givenLinkItem(request: LocData, status: ItemStatus): LocItem[] {
     request.links.push({
         addedOn: "2022-01-20T15:45:00.000",
         submitter: accounts!.current!.accountId,
-        nature: "Some nature",
+        nature: HashString.fromValue("Some nature"),
         target: targetId.toString(),
         published: status === "PUBLISHED",
         status,

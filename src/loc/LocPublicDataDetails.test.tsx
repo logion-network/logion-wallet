@@ -1,4 +1,4 @@
-import { Hash } from "@logion/node-api";
+import { HashString } from "@logion/client";
 import { shallowRender } from "../tests";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 import LocPublicDataDetails from "./LocPublicDataDetails";
@@ -20,9 +20,8 @@ describe("LocPublicDataDetails", () => {
                 template: false,
             },
             {
-                name: "Data name",
-                nameHash: Hash.of("Data name"),
-                value: "Data value",
+                name: HashString.fromValue("Data name"),
+                value: HashString.fromValue("Data value"),
             }
         )
     }

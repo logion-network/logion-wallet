@@ -180,12 +180,12 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 locId: locData.id.toDecimalString(),
                 requester,
                 publicItems: locData.metadata.map(item => ({
-                    description: item.name,
-                    content: item.value,
+                    description: item.name.validValue(),
+                    content: item.value.validValue(),
                     timestamp: item.addedOn || "",
                 })),
                 privateItems: locData.files.map(item => ({
-                    publicDescription: item.nature,
+                    publicDescription: item.nature.validValue(),
                     privateDescription: item.name,
                     hash: item.hash.toHex(),
                     timestamp: item.addedOn || "",

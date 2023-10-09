@@ -20,7 +20,49 @@ exports[`LocPublicDataDetails renders 1`] = `
     <LocItemDetail
       label="Public name"
     >
-      Data name
+      <InlineHashString
+        value={
+          HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                121,
+                207,
+                59,
+                22,
+                82,
+                227,
+                97,
+                175,
+                52,
+                89,
+                104,
+                169,
+                16,
+                210,
+                84,
+                253,
+                46,
+                132,
+                113,
+                20,
+                114,
+                140,
+                183,
+                112,
+                152,
+                193,
+                72,
+                43,
+                133,
+                153,
+                210,
+                221,
+              ],
+            },
+            "value": "Data name",
+          }
+        }
+      />
     </LocItemDetail>
     <LocItemDetail
       copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
@@ -32,7 +74,49 @@ exports[`LocPublicDataDetails renders 1`] = `
       label="Public data"
     >
       <pre>
-        Data value
+        <InlineHashString
+          value={
+            HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  119,
+                  136,
+                  229,
+                  245,
+                  210,
+                  11,
+                  123,
+                  245,
+                  85,
+                  241,
+                  65,
+                  183,
+                  45,
+                  72,
+                  93,
+                  12,
+                  176,
+                  25,
+                  140,
+                  246,
+                  130,
+                  143,
+                  157,
+                  168,
+                  58,
+                  26,
+                  95,
+                  241,
+                  79,
+                  224,
+                  199,
+                  203,
+                ],
+              },
+              "value": "Data value",
+            }
+          }
+        />
       </pre>
     </LocItemDetail>
   </div>
