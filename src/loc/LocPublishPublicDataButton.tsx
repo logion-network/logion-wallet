@@ -35,7 +35,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                     && props.locItem.submitter) {
 
                     return current.publishMetadata({
-                        nameHash: props.locItem.data().nameHash,
+                        nameHash: props.locItem.data().name.hash,
                         signer: signer!,
                         callback,
                     });
@@ -43,7 +43,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                     return current;
                 }
             }}
-            feesEstimator={ () => estimateFees(props.locItem.data().nameHash) }
+            feesEstimator={ () => estimateFees(props.locItem.data().name.hash) }
             itemType="Public Data"
         />
     )

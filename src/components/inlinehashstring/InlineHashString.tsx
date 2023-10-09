@@ -5,5 +5,9 @@ export interface Props {
 }
 
 export default function InlineHashString(props: Props) {
-    return <>{ props.value.isValidValue() ? props.value.validValue() : props.value.hash.toHex() }</>;
+    return <>{ validValueOrHex(props.value) }</>;
+}
+
+export function validValueOrHex(hashString: HashString): string {
+    return hashString.isValidValue() ? hashString.validValue() : hashString.hash.toHex();
 }

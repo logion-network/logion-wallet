@@ -1,6 +1,7 @@
 jest.mock("./LocContext");
 jest.mock("src/logion-chain");
 
+import { HashString } from "@logion/client";
 import { UUID, Hash } from "@logion/node-api";
 import { MetadataItem } from "./LocItem";
 import { shallowRender } from "../tests";
@@ -20,9 +21,8 @@ describe("LocPublishPublicDataButton", () => {
             template: false,
         },
         {
-            name: "data-name",
-            value: "data-value",
-            nameHash: Hash.of("data-name"),
+            name: HashString.fromValue("data-name"),
+            value: HashString.fromValue("data-value"),
         }
     );
 

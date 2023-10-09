@@ -40,7 +40,7 @@ export default function AcknowledgeButton(props: Props) {
                 if(locState instanceof OpenLoc) {
                     if(props.locItem.type === "Data") {
                         fees = await locState.legalOfficer.estimateFeesAcknowledgeMetadata({
-                            nameHash: props.locItem.as<MetadataData>().nameHash,
+                            nameHash: props.locItem.as<MetadataData>().name.hash,
                         })
                     } else if(props.locItem.type === "Document") {
                         fees = await locState.legalOfficer.estimateFeesAcknowledgeFile({
@@ -80,7 +80,7 @@ export default function AcknowledgeButton(props: Props) {
                         });
                     } else if(props.locItem.type === "Data") {
                         return current.legalOfficer.acknowledgeMetadata({
-                            nameHash: props.locItem.as<MetadataData>().nameHash,
+                            nameHash: props.locItem.as<MetadataData>().name.hash,
                             signer,
                             callback,
                         });

@@ -44,6 +44,7 @@ import Authenticate from "./Authenticate";
 import TokensRecords from "./TokensRecords";
 import './Certificate.css'
 import CertificateTitle from "./CertificateTitle";
+import InlineHashString, { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 export default function Certificate() {
 
@@ -431,8 +432,8 @@ function MetadataItemCellRow(props: { items: MergedMetadataItem[], checkResult: 
     return (
         <Row>
             { props.items.map(
-                item => <CertificateCell key={ item.name } md={ 6 } label={ <ItemCellTitle text={ item.name } timestamp={ item.addedOn } /> } matched={ props.checkResult?.metadataItem?.value === item.value } >
-                    <pre>{ item.value }</pre>
+                item => <CertificateCell key={ item.name.hash.toHex() } md={ 6 } label={ <ItemCellTitle text={ validValueOrHex(item.name) } timestamp={ item.addedOn } /> } matched={ props.checkResult?.metadataItem?.value === item.value } >
+                    <pre>{ validValueOrHex(item.value) }</pre>
                 </CertificateCell>)
             }
         </Row>
@@ -454,7 +455,7 @@ function FileCellRow(props: { loc: LocData, files: MergedFile[], checkResult: Ch
         <Row>
             { props.files.map(
                 file => <CertificateCell key={ file.hash.toHex() } md={ 6 } label={ <ItemCellTitle
-                    text={ <span>Document Hash <span className="file-nature">({ file.nature })</span></span> }
+                    text={ <span>Document Hash <span className="file-nature">(<InlineHashString value={file.nature}/>)</span></span> }
                     timestamp={ file.addedOn } /> } matched={ props.checkResult?.file?.hash === file.hash }>
                     <p>{ file.hash.toHex() }</p>
                     {
@@ -465,7 +466,7 @@ function FileCellRow(props: { loc: LocData, files: MergedFile[], checkResult: Ch
                                 item={ props.item }
                                 file={{
                                     hash: file.hash,
-                                    name: file.nature,
+                                    name: validValueOrHex(file.nature),
                                     type: "Collection",
                                 }}
                                 owner={ props.loc.ownerAddress }
@@ -484,7 +485,7 @@ function LinkCellRow(props: { links: MergedLink[] }) {
         <Row>
             { props.links.map(
                 link =>
-                    <CertificateCell key={ link.target } md={ 6 } label={ <ItemCellTitle text={ <span>Linked LOC <span className="file-nature">({ link.nature })</span></span> } timestamp={ link.addedOn } /> }>
+                    <CertificateCell key={ link.target } md={ 6 } label={ <ItemCellTitle text={ <span>Linked LOC <span className="file-nature">(<InlineHashString value={link.nature}/>)</span></span> } timestamp={ link.addedOn } /> }>
                         <NewTabLink href={ fullCertificateUrl(new UUID(link.target)) } iconId="loc-link">{ new UUID(link.target).toDecimalString() }</NewTabLink>
                     </CertificateCell>)
             }

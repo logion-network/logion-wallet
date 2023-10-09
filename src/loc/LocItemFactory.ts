@@ -1,4 +1,4 @@
-import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees, toFeesClass } from "@logion/client";
+import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees, toFeesClass, HashString } from "@logion/client";
 import { FileItem, LinkData, LinkItem, LocItem, MetadataItem } from "./LocItem";
 import { LocTemplateDocumentOrLink, LocTemplateMetadataItem } from "./Template";
 
@@ -44,7 +44,7 @@ function createDraftFileLocItem(parameters: MergedFile): FileItem {
         {
             hash: parameters.hash,
             fileName: parameters.name,
-            nature: parameters.nature,
+            nature: parameters.nature.validValue(),
             size: parameters.size,
             storageFeePaidBy: parameters.storageFeePaidBy || "",
         }
@@ -80,7 +80,6 @@ function createDraftMetadataLocItem(locItem: MergedMetadataItem): LocItem {
         },
         {
             name: locItem.name,
-            nameHash: locItem.nameHash,
             value: locItem.value,
         }
     );
@@ -172,8 +171,7 @@ export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem
             defaultTitle: templateItem.name,
         },
         locItem ? {
-            nameHash: locItem.nameHash,
-            name: templateItem.name,
+            name: HashString.fromValue(templateItem.name),
             value: locItem.value,
         } : undefined,
     );

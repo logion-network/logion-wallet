@@ -6,12 +6,12 @@ import { TEST_WALLET_USER } from "../wallet-user/TestData";
 import { LocPublicDataButton } from "./LocPublicDataButton";
 import { MetadataItem, MetadataData } from "./LocItem";
 import { setLocItems, setLocState } from "./__mocks__/LocContextMock";
-import { Hash } from "@logion/node-api";
+import { HashString } from "@logion/client";
 
 jest.mock("./LocContext");
 jest.mock("./UserLocContext");
 
-const value = "Value";
+const value = HashString.fromValue("Value");
 const existingItem = new MetadataItem(
     {
         status: "DRAFT",
@@ -22,8 +22,7 @@ const existingItem = new MetadataItem(
         template: false,
     },
     {
-        name: "Name",
-        nameHash: Hash.of("Name"),
+        name: HashString.fromValue("Name"),
         value,
     }
 );
@@ -64,8 +63,8 @@ async function testAddsMetadata(component: React.ReactElement, addMetadata: jest
 
     await clickAdd();
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Public data name (No confidential or personal information)", existingItem.data().name || "");
-    await typeByLabel("Public data (No confidential or personal information)", existingItem.data().value);
+    await typeByLabel("Public data name (No confidential or personal information)", existingItem.data().name.validValue());
+    await typeByLabel("Public data (No confidential or personal information)", existingItem.data().value.validValue());
     await clickByName("Submit");
     await waitFor(() => expect(addMetadata).toBeCalled());
     await waitFor(() => expect(modal).not.toBeInTheDocument());
@@ -80,8 +79,8 @@ async function testDoesNothingOnCancel(component: React.ReactElement, addMetadat
 
     await clickAdd();
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Public data name (No confidential or personal information)", existingItem.data().name || "");
-    await typeByLabel("Public data (No confidential or personal information)", existingItem.data().value);
+    await typeByLabel("Public data name (No confidential or personal information)", existingItem.data().name.validValue());
+    await typeByLabel("Public data (No confidential or personal information)", existingItem.data().value.validValue());
     await clickByName("Cancel");
     expect(addMetadata).not.toBeCalled();
     await waitFor(() => expect(modal).not.toBeInTheDocument());
@@ -92,8 +91,8 @@ async function testDoesNotNothingIfItemExists(component: React.ReactElement, add
 
     await clickAdd();
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Public data name (No confidential or personal information)", existingItem.as<MetadataData>().name || "");
-    await typeByLabel("Public data (No confidential or personal information)", existingItem.as<MetadataData>().value);
+    await typeByLabel("Public data name (No confidential or personal information)", existingItem.as<MetadataData>().name.validValue());
+    await typeByLabel("Public data (No confidential or personal information)", existingItem.as<MetadataData>().value.validValue());
     await clickByName("Submit");
     await waitFor(() => expect(addMetadata).not.toBeCalled());
     await waitFor(() => expect(modal).not.toBeInTheDocument());

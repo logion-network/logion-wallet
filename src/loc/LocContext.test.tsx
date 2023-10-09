@@ -6,6 +6,7 @@ import {
     LocData,
     PublicApi,
     EditableRequest as RealEditableRequest,
+    HashString,
     LocRequestState as RealLocRequestState
 } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient.js';
@@ -251,13 +252,12 @@ async function thenItemsAdded() {
 }
 
 function givenDraftItems() {
-    const metadataName = "New data";
+    const metadataName = HashString.fromValue("New data");
     _locData.metadata.push({
         addedOn: "",
         name: metadataName,
-        nameHash: Hash.of(metadataName),
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
-        value: "Some value",
+        value: HashString.fromValue("Some value"),
         published: false,
         status: "DRAFT",
         acknowledgedByOwner: false,
@@ -268,7 +268,7 @@ function givenDraftItems() {
         addedOn: "",
         name: "New file",
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
-        nature: "Some nature",
+        nature: HashString.fromValue("Some nature"),
         published: false,
         restrictedDelivery: false,
         contentType: "text/plain",
@@ -279,7 +279,7 @@ function givenDraftItems() {
     })
     _locData.links.push({
         addedOn: "",
-        nature: "New link",
+        nature: HashString.fromValue("New link"),
         target: _linkedLocData.id.toString(),
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         published: false,

@@ -153,7 +153,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                     const templateLinks = new Set();
                     if(loc.status !== "CLOSED") {
                         for(const documentTemplate of theTemplate.documents) {
-                            const file = loc.files.find(item => item.nature === documentTemplate.publicDescription);
+                            const file = loc.files.find(item => item.nature.validValue() === documentTemplate.publicDescription);
                             if(file) {
                                 templateDocuments.add(file.nature);
                             }
@@ -161,7 +161,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                         }
 
                         for(const dataTemplate of theTemplate.metadata) {
-                            const data = loc.metadata.find(item => item.name === dataTemplate.name);
+                            const data = loc.metadata.find(item => item.name.validValue() === dataTemplate.name);
                             if(data) {
                                 templateItems.add(data.name);
                             }
@@ -169,7 +169,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                         }
 
                         for(const linkTemplate of theTemplate.links) {
-                            const link = loc.links.find(item => item.nature === linkTemplate.publicDescription);
+                            const link = loc.links.find(item => item.nature.validValue() === linkTemplate.publicDescription);
                             let linkData: LinkData | undefined;
                             if(link) {
                                 templateLinks.add(link.nature);

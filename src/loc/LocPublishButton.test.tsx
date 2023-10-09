@@ -5,6 +5,7 @@ import { clickByName } from "../tests";
 import LocPublishButton from "./LocPublishButton";
 import { MetadataItem } from "./LocItem";
 import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
+import { HashString } from "@logion/client";
 
 jest.mock("./LocContext");
 jest.unmock("@logion/client");
@@ -24,9 +25,8 @@ describe("LocPublishButton", () => {
                 template: false,
             },
             {
-                name: "data-name",
-                nameHash: Hash.of("data-name"),
-                value: "data-value",
+                name: HashString.fromValue("data-name"),
+                value: HashString.fromValue("data-value"),
             }
         );
         const confirm = jest.fn();

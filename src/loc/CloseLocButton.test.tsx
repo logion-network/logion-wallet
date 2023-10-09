@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { LocData, ItemStatus } from "@logion/client";
+import { LocData, ItemStatus, HashString } from "@logion/client";
 
 import { clickByName, expectNoDialogVisible } from '../tests';
 import { DEFAULT_LEGAL_OFFICER } from '../common/TestData';
@@ -9,7 +9,6 @@ import CloseLocButton from './CloseLocButton';
 import { OpenLoc } from 'src/__mocks__/LogionClientMock';
 import { mockSubmittableResult } from 'src/logion-chain/__mocks__/SignatureMock';
 import { LocItem, MetadataItem } from './LocItem';
-import { Hash } from '@logion/node-api';
 
 jest.mock("../logion-chain");
 jest.mock("./LocContext");
@@ -121,9 +120,8 @@ function metadataItem(status: ItemStatus): LocItem {
             template: false,
         },
         {
-            name: "Test",
-            value: "Test",
-            nameHash: Hash.of("Test"),
+            name: HashString.fromValue("Test"),
+            value: HashString.fromValue("Test"),
         }
     );
 }
