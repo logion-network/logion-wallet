@@ -28,13 +28,12 @@ export default function WalletRecoveryProcessTab(props: Props) {
     const [ signAndSubmit, setSignAndSubmit ] = useState<Call>();
     const [ signAndSubmitError, setSignAndSubmitError ] = useState<boolean>(false);
 
-    const recoverCoin = useCallback(async (amount: Numbers.PrefixedNumber) => {
+    const recoverCoin = useCallback(async () => {
         const signAndSubmit: Call = async (callback: CallCallback) => {
             await mutateRecoveredBalanceState(async (state: BalanceState) => {
-                return state.transfer({
+                return state.transferAll({
                     signer: signer!,
                     destination: accounts!.current!.accountId.address,
-                    amount,
                     callback,
                 });
             });
@@ -138,7 +137,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
                                     id: "transfer",
                                     buttonText: "Transfer",
                                     buttonVariant: "recovery",
-                                    callback: () => recoverCoin(amountToRecover),
+                                    callback: () => recoverCoin(),
                                     disabled: status !== Status.TRANSFERRING || signAndSubmit !== undefined,
                                 }
                             ] }
