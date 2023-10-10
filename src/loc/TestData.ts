@@ -1,4 +1,4 @@
-import { LegalOfficerCase, UUID, Hash } from "@logion/node-api";
+import { LegalOfficerCase, UUID } from "@logion/node-api";
 import { LocData, HashString } from "@logion/client";
 import { DateTime } from "luxon";
 
@@ -9,15 +9,15 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
         requesterLocId: loc.requesterLocId,
         description: "Description",
         locType: loc.locType,
-        createdOn: "",
-        decisionOn: "",
+        createdOn: DateTime.fromISO("2023-10-10T10:25:18.546+02:00"),
+        decisionOn: DateTime.fromISO("2023-10-10T10:25:18.546+02:00"),
         id: locId,
         status: loc.closed ? "CLOSED" : "OPEN",
         files: loc.files.map((locFile, index) => ({
             ...locFile,
             nature: HashString.fromValue(`File ${index}`),
             name: `File ${index}`,
-            addedOn: DateTime.now(),
+            addedOn: DateTime.fromISO("2023-10-10T10:25:18.546+02:00"),
             published: false,
             restrictedDelivery: false,
             contentType: "text/plain",
@@ -28,7 +28,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
             ...locFile,
             name: HashString.fromValue(`Data ${index}`),
             value: HashString.fromValue(`Value ${index}`),
-            addedOn: DateTime.now(),
+            addedOn: DateTime.fromISO("2023-10-10T10:25:18.546+02:00"),
             published: false,
             status: "DRAFT",
         })),
@@ -36,12 +36,11 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
             ...locFile,
             name: `Link ${index}`,
             nature: HashString.fromValue(`Nature ${index}`),
-            addedOn: DateTime.now(),
+            addedOn: DateTime.fromISO("2023-10-10T10:25:18.546+02:00"),
             target: locFile.id,
             published: false,
             status: "DRAFT",
         })),
-        closed: false,
         verifiedIssuer: false,
         issuers: [],
     };

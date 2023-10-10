@@ -98,13 +98,13 @@ export default function UserContextualizedLocDetails(props: Props) {
                     isReadOnly={ isReadOnly }
                     contributionMode={ props.contributionMode }
                 />
-                { loc.locType === 'Collection' && loc.closed &&
+                { loc.locType === 'Collection' && loc.status === "CLOSED" &&
                     <UserCollectionLocItemChecker
                         collectionLoc={ loc }
                         collectionItem={ collectionItem }
                     />
                 }
-                { loc.locType === 'Collection' && loc.closed && loc.voidInfo === undefined &&
+                { loc.locType === 'Collection' && loc.status === "CLOSED" && loc.voidInfo === undefined &&
                     <ItemImporter />
                 }
                 <SupersedesDisclaimer

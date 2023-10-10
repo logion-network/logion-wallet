@@ -5,9 +5,8 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
   contributionMode="Requester"
   loc={
     Object {
-      "closed": false,
-      "createdOn": "",
-      "decisionOn": "",
+      "createdOn": "2023-10-10T10:25:18.546+02:00",
+      "decisionOn": "2023-10-10T10:25:18.546+02:00",
       "description": "Description",
       "files": Array [],
       "id": UUID {
@@ -80,9 +79,8 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
     }
     loc={
       Object {
-        "closed": false,
-        "createdOn": "",
-        "decisionOn": "",
+        "createdOn": "2023-10-10T10:25:18.546+02:00",
+        "decisionOn": "2023-10-10T10:25:18.546+02:00",
         "description": "Description",
         "files": Array [],
         "id": UUID {
@@ -128,9 +126,8 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
     <VoidDisclaimer
       loc={
         Object {
-          "closed": false,
-          "createdOn": "",
-          "decisionOn": "",
+          "createdOn": "2023-10-10T10:25:18.546+02:00",
+          "decisionOn": "2023-10-10T10:25:18.546+02:00",
           "description": "Description",
           "files": Array [],
           "id": UUID {
@@ -175,9 +172,8 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
       isReadOnly={false}
       loc={
         Object {
-          "closed": false,
-          "createdOn": "",
-          "decisionOn": "",
+          "createdOn": "2023-10-10T10:25:18.546+02:00",
+          "decisionOn": "2023-10-10T10:25:18.546+02:00",
           "description": "Description",
           "files": Array [],
           "id": UUID {
@@ -221,9 +217,8 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
     <SupersedesDisclaimer
       loc={
         Object {
-          "closed": false,
-          "createdOn": "",
-          "decisionOn": "",
+          "createdOn": "2023-10-10T10:25:18.546+02:00",
+          "decisionOn": "2023-10-10T10:25:18.546+02:00",
           "description": "Description",
           "files": Array [],
           "id": UUID {
@@ -277,9 +272,8 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
   contributionMode="VerifiedIssuer"
   loc={
     Object {
-      "closed": false,
-      "createdOn": "",
-      "decisionOn": "",
+      "createdOn": "2023-10-10T10:25:18.546+02:00",
+      "decisionOn": "2023-10-10T10:25:18.546+02:00",
       "description": "Description",
       "files": Array [],
       "id": UUID {
@@ -353,9 +347,8 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
     }
     loc={
       Object {
-        "closed": false,
-        "createdOn": "",
-        "decisionOn": "",
+        "createdOn": "2023-10-10T10:25:18.546+02:00",
+        "decisionOn": "2023-10-10T10:25:18.546+02:00",
         "description": "Description",
         "files": Array [],
         "id": UUID {
@@ -401,9 +394,8 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
     <VoidDisclaimer
       loc={
         Object {
-          "closed": false,
-          "createdOn": "",
-          "decisionOn": "",
+          "createdOn": "2023-10-10T10:25:18.546+02:00",
+          "decisionOn": "2023-10-10T10:25:18.546+02:00",
           "description": "Description",
           "files": Array [],
           "id": UUID {
@@ -448,9 +440,8 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
       isReadOnly={false}
       loc={
         Object {
-          "closed": false,
-          "createdOn": "",
-          "decisionOn": "",
+          "createdOn": "2023-10-10T10:25:18.546+02:00",
+          "decisionOn": "2023-10-10T10:25:18.546+02:00",
           "description": "Description",
           "files": Array [],
           "id": UUID {
@@ -494,9 +485,8 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
     <SupersedesDisclaimer
       loc={
         Object {
-          "closed": false,
-          "createdOn": "",
-          "decisionOn": "",
+          "createdOn": "2023-10-10T10:25:18.546+02:00",
+          "decisionOn": "2023-10-10T10:25:18.546+02:00",
           "description": "Description",
           "files": Array [],
           "id": UUID {

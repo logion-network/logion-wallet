@@ -4,9 +4,8 @@ exports[`ContextualizedLocDetails renders 1`] = `
 <LocPane
   loc={
     Object {
-      "closed": false,
-      "createdOn": "",
-      "decisionOn": "",
+      "createdOn": "2023-10-10T10:25:18.546+02:00",
+      "decisionOn": "2023-10-10T10:25:18.546+02:00",
       "description": "Description",
       "files": Array [],
       "id": UUID {
@@ -49,9 +48,8 @@ exports[`ContextualizedLocDetails renders 1`] = `
   <LegalOfficerInstructions
     loc={
       Object {
-        "closed": false,
-        "createdOn": "",
-        "decisionOn": "",
+        "createdOn": "2023-10-10T10:25:18.546+02:00",
+        "decisionOn": "2023-10-10T10:25:18.546+02:00",
         "description": "Description",
         "files": Array [],
         "id": UUID {
@@ -106,9 +104,8 @@ exports[`ContextualizedLocDetails renders 1`] = `
     }
     loc={
       Object {
-        "closed": false,
-        "createdOn": "",
-        "decisionOn": "",
+        "createdOn": "2023-10-10T10:25:18.546+02:00",
+        "decisionOn": "2023-10-10T10:25:18.546+02:00",
         "description": "Description",
         "files": Array [],
         "id": UUID {
@@ -159,9 +156,8 @@ exports[`ContextualizedLocDetails renders 1`] = `
   <VoidDisclaimer
     loc={
       Object {
-        "closed": false,
-        "createdOn": "",
-        "decisionOn": "",
+        "createdOn": "2023-10-10T10:25:18.546+02:00",
+        "decisionOn": "2023-10-10T10:25:18.546+02:00",
         "description": "Description",
         "files": Array [],
         "id": UUID {
@@ -205,9 +201,8 @@ exports[`ContextualizedLocDetails renders 1`] = `
     isReadOnly={false}
     loc={
       Object {
-        "closed": false,
-        "createdOn": "",
-        "decisionOn": "",
+        "createdOn": "2023-10-10T10:25:18.546+02:00",
+        "decisionOn": "2023-10-10T10:25:18.546+02:00",
         "description": "Description",
         "files": Array [],
         "id": UUID {
@@ -251,9 +246,8 @@ exports[`ContextualizedLocDetails renders 1`] = `
   <SupersedesDisclaimer
     loc={
       Object {
-        "closed": false,
-        "createdOn": "",
-        "decisionOn": "",
+        "createdOn": "2023-10-10T10:25:18.546+02:00",
+        "decisionOn": "2023-10-10T10:25:18.546+02:00",
         "description": "Description",
         "files": Array [],
         "id": UUID {
@@ -301,9 +295,8 @@ exports[`ContextualizedLocDetails renders 1`] = `
   <VoidFrame
     loc={
       Object {
-        "closed": false,
-        "createdOn": "",
-        "decisionOn": "",
+        "createdOn": "2023-10-10T10:25:18.546+02:00",
+        "decisionOn": "2023-10-10T10:25:18.546+02:00",
         "description": "Description",
         "files": Array [],
         "id": UUID {

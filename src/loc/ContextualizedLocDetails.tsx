@@ -108,7 +108,7 @@ export default function ContextualizedLocDetails() {
                     noLocCreationPath={ locRequestsPath(loc.locType) }
                 />
             }
-            { loc.locType === 'Collection' && loc.closed &&
+            { loc.locType === 'Collection' && loc.status === "CLOSED" &&
                 <LOCollectionLocItemChecker
                     collectionLoc={ loc }
                     collectionItem={ collectionItem }

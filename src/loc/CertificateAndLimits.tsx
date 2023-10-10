@@ -89,8 +89,8 @@ export default function CertificateAndLimits(props: Props) {
                         <ButtonGroup
                             align="center"
                         >
-                            { props.loc.locType === 'Collection' && props.loc.closed && !props.loc.voidInfo && <TokensRecordButton contributionMode={props.contributionMode}/> }
-                            { props.loc.locType === 'Collection' && props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
+                            { props.loc.locType === 'Collection' && props.loc.status === "CLOSED" && !props.loc.voidInfo && <TokensRecordButton contributionMode={props.contributionMode}/> }
+                            { props.loc.locType === 'Collection' && props.loc.status === "CLOSED" && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
 
                             { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <IssuerSelectionButton/> }
                             { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <IssuerSelectionButton/> }
@@ -108,7 +108,7 @@ export default function CertificateAndLimits(props: Props) {
                 </Col>
             </Row>
             {
-                props.loc.locType === "Collection" && props.loc.closed && !props.loc.voidInfo &&
+                props.loc.locType === "Collection" && props.loc.status === "CLOSED" && !props.loc.voidInfo &&
                 <Dialog
                     className="CertificateAndLimits"
                     actions={[

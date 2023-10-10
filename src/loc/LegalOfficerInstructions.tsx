@@ -48,7 +48,7 @@ export default function LegalOfficerInstructions(props: Props) {
                         className="logion-loc-tip"
                     />
                     <div className="upper-action-bar">
-                        { loc.closed && loc.voidInfo === undefined &&
+                        { loc.status === "CLOSED" && loc.voidInfo === undefined &&
                             <Button
                                 onClick={ () => setCreateLoc(true) }
                                 slim={ true }

@@ -54,7 +54,7 @@ export default function LocDetailsTab(props: Props) {
     let locTabBorderColor = BLUE;
     if (loc.voidInfo !== undefined) {
         locTabBorderColor = RED;
-    } else if (loc.closed) {
+    } else if (loc.status === "CLOSED") {
         locTabBorderColor = POLKADOT;
     }
 

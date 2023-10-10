@@ -146,7 +146,7 @@ export function LocItems(props: LocItemsProps) {
         );
     }
 
-    if (props.isEmpty && !loc.closed) {
+    if (props.isEmpty && loc.status !== "CLOSED") {
         return (
             <div className="LocItems empty-loc">
                 <img alt="empty loc" src={ process.env.PUBLIC_URL + "/assets/empty-loc.svg" } />

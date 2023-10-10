@@ -376,7 +376,7 @@ function refreshNeeded(locData: LocData, items: LocItem[]): boolean {
             return true;
         }
     }
-    return (locData.closed && !locData.closedOn) || (locData.voidInfo !== undefined && !locData.voidInfo.voidedOn);
+    return (locData.status === "CLOSED" && !locData.closedOn) || (locData.voidInfo !== undefined && !locData.voidInfo.voidedOn);
 }
 
 function mustDispatchNewState(locState: LocRequestState, locItems: LocItem[], mustFetchCollectionItems: boolean): boolean {

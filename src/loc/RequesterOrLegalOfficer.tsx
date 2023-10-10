@@ -81,7 +81,7 @@ export default function RequesterOrLegalOfficer(props: Props) {
                 </LocItemDetail>
             }
             {
-                loc.closed && loc.voidInfo === undefined &&
+                loc.status === "CLOSED" && loc.voidInfo === undefined &&
                 <div className="closed-icon">
                     <Icon icon={ { id: "polkadot_shield" } } />
                 </div>
