@@ -203,7 +203,7 @@ let _locState: EditableRequest;
 function givenMetadataItem(request: LocData, status: ItemStatus): LocItem[] {
     request.metadata.push({
         name: HashString.fromValue("Name"),
-        addedOn: "2022-01-20T15:45:00.000",
+        addedOn: DateTime.fromISO("2022-01-20T15:45:00.000"),
         submitter: accounts!.current!.accountId,
         value: HashString.fromValue("Value"),
         published: status === "PUBLISHED",
@@ -241,7 +241,7 @@ function testCannotDeleteNonDraftFileItem(component: React.ReactElement) {
 function givenFileItem(request: LocData, status: ItemStatus): LocItem[] {
     request.files.push({
         name: "Name",
-        addedOn: "2022-01-20T15:45:00.000",
+        addedOn: DateTime.fromISO("2022-01-20T15:45:00.000"),
         submitter: accounts!.current!.accountId,
         nature: HashString.fromValue("Some nature"),
         hash: Hash.fromHex("0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a"),
@@ -289,10 +289,10 @@ function testCannotDeleteNonDraftLinkItem(component: React.ReactElement) {
 function givenLinkItem(request: LocData, status: ItemStatus): LocItem[] {
     const targetId = new UUID();
     request.links.push({
-        addedOn: "2022-01-20T15:45:00.000",
+        addedOn: DateTime.fromISO("2022-01-20T15:45:00.000"),
         submitter: accounts!.current!.accountId,
         nature: HashString.fromValue("Some nature"),
-        target: targetId.toString(),
+        target: targetId,
         published: status === "PUBLISHED",
         status,
         acknowledgedByOwner: status === "ACKNOWLEDGED",
