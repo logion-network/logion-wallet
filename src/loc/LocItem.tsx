@@ -30,6 +30,7 @@ import RestrictedDeliveryCell from "./RestricedDeliveryCell";
 import { ContributionMode } from "./types";
 import ReviewStatusCell from "./ReviewStatusCell";
 import HelpTooltip from "src/components/helptooltip/HelpTooltip";
+import { DateTime } from "luxon";
 
 export type LocItemType = 'Data' | 'Document' | 'Linked LOC';
 
@@ -53,7 +54,7 @@ export interface FileData {
 }
 
 export interface CommonData {
-    readonly timestamp: string | null;
+    readonly timestamp: DateTime | null;
     readonly type: LocItemType;
     readonly submitter?: ValidAccountId;
     readonly status: ItemStatus;
@@ -61,7 +62,7 @@ export interface CommonData {
     readonly template: boolean;
     readonly isSet?: boolean;
     readonly fees?: Fees;
-    readonly reviewedOn?: string;
+    readonly reviewedOn?: DateTime;
     readonly rejectReason?: string;
     readonly acknowledgedByOwner?: boolean;
     readonly acknowledgedByVerifiedIssuer?: boolean;
@@ -152,7 +153,7 @@ abstract class AbstractLocItem<T> implements CommonData {
         return this._data as U;
     }
 
-    abstract publish(timestamp: string | null, fees?: Fees, storageFeePaidBy?: string): AbstractLocItem<T>;
+    abstract publish(timestamp: DateTime | null, fees?: Fees, storageFeePaidBy?: string): AbstractLocItem<T>;
 
     get submitterOrThrow() {
         if(this.commonData.submitter) {
@@ -175,7 +176,7 @@ export class MetadataItem extends AbstractLocItem<MetadataData> {
         }
     }
 
-    override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): MetadataItem {
+    override publish(timestamp: DateTime | null, fees?: Fees, _storageFeePaidBy?: string): MetadataItem {
         return new MetadataItem(
             {
                 ...this.commonData,
@@ -197,7 +198,7 @@ export class FileItem extends AbstractLocItem<FileData> {
         }
     }
 
-    override publish(timestamp: string | null, fees?: Fees, storageFeePaidBy?: string): FileItem {
+    override publish(timestamp: DateTime | null, fees?: Fees, storageFeePaidBy?: string): FileItem {
         const newFileData = this.data() && storageFeePaidBy ? {
             ...this.data(),
             storageFeePaidBy,
@@ -223,7 +224,7 @@ export class LinkItem extends AbstractLocItem<LinkData> {
         }
     }
 
-    override publish(timestamp: string | null, fees?: Fees, _storageFeePaidBy?: string): LinkItem {
+    override publish(timestamp: DateTime | null, fees?: Fees, _storageFeePaidBy?: string): LinkItem {
         return new LinkItem(
             {
                 ...this.commonData,
@@ -509,7 +510,7 @@ export async function getLinkData(
     client: LogionClient,
 ): Promise<LinkData> {
     let linkedLoc: LocData | undefined;
-    const targetId = new UUID(link.target);
+    const targetId = link.target;
     let linkedLocState: LocRequestState | PublicLoc | undefined = locsState.findByIdOrUndefined(targetId);
     if (!linkedLocState) {
         linkedLocState = await client.public.findLocById({ locId: targetId });

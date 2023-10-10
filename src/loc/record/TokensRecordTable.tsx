@@ -1,4 +1,4 @@
-import { LocData, TokensRecord } from "@logion/client";
+import { LocData, TokensRecord, fromIsoString } from "@logion/client";
 import { useMemo, useState } from "react";
 import { useCommonContext, Viewer } from "src/common/CommonContext";
 import SubmitterName from "src/common/SubmitterName";
@@ -51,7 +51,7 @@ export default function TokensRecordTable(props: Props) {
                                 newItem: false,
                                 status: "PUBLISHED",
                                 submitter: api.queries.getValidAccountId(record.issuer, "Polkadot"),
-                                timestamp: record.addedOn,
+                                timestamp: fromIsoString(record.addedOn),
                                 type: "Document",
                                 template: false,
                             },

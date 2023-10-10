@@ -12,6 +12,7 @@ import Icon from './Icon';
 import CopyPasteButton from "./CopyPasteButton";
 import { TableColors } from './ColorTheme';
 import InlineDateTime from './InlineDateTime';
+import { DateTime } from 'luxon';
 
 
 export interface CellProps {
@@ -348,7 +349,7 @@ function ShowDetailsButton(props: ShowDetailsButtonProps) {
 }
 
 export interface DateTimeCellProps {
-    dateTime: string | null,
+    dateTime: DateTime | string | null,
     spinner?: boolean,
 }
 

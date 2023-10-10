@@ -1,15 +1,24 @@
 import { fromIsoString } from "@logion/client";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Child } from "./types/Helpers";
+import { DateTime } from "luxon";
 
 export interface Props {
-    dateTime?: string | null;
+    dateTime?: DateTime | string | null;
     separator?: Child;
     dateOnly?: boolean;
 }
 
-export function format(isoString: string): { date: string, time: string } {
-    const dateTime = fromIsoString(isoString);
+export function format(isoString: string | DateTime): { date: string, time: string } {
+    if(typeof isoString === "string") {
+        const dateTime = fromIsoString(isoString);
+        return formatDateTime(dateTime);
+    } else {
+        return formatDateTime(isoString);
+    }
+}
+
+export function formatDateTime(dateTime: DateTime): { date: string, time: string } {
     const date = dateTime.toLocaleString({}, { locale: "fr-FR" });
     const time = dateTime.toLocaleString({ hour: "numeric", minute: "numeric" }, { locale: "fr-FR" });
     return { date, time }

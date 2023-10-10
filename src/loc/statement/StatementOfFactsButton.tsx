@@ -182,13 +182,13 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 publicItems: locData.metadata.map(item => ({
                     description: item.name.validValue(),
                     content: item.value.validValue(),
-                    timestamp: item.addedOn || "",
+                    timestamp: item.addedOn?.toISO() || "",
                 })),
                 privateItems: locData.files.map(item => ({
                     publicDescription: item.nature.validValue(),
                     privateDescription: item.name,
                     hash: item.hash.toHex(),
-                    timestamp: item.addedOn || "",
+                    timestamp: item.addedOn?.toISO() || "",
                     deliveries: toSofDeliveries(item, collectionDeliveries),
                 })),
                 collectionItem: (props.item ? {

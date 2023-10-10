@@ -1,5 +1,6 @@
 import { LegalOfficerCase, UUID, Hash } from "@logion/node-api";
 import { LocData, HashString } from "@logion/client";
+import { DateTime } from "luxon";
 
 export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
     return {
@@ -16,7 +17,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
             ...locFile,
             nature: HashString.fromValue(`File ${index}`),
             name: `File ${index}`,
-            addedOn: "",
+            addedOn: DateTime.now(),
             published: false,
             restrictedDelivery: false,
             contentType: "text/plain",
@@ -27,7 +28,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
             ...locFile,
             name: HashString.fromValue(`Data ${index}`),
             value: HashString.fromValue(`Value ${index}`),
-            addedOn: "",
+            addedOn: DateTime.now(),
             published: false,
             status: "DRAFT",
         })),
@@ -35,8 +36,8 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
             ...locFile,
             name: `Link ${index}`,
             nature: HashString.fromValue(`Nature ${index}`),
-            addedOn: "",
-            target: locFile.id.toString(),
+            addedOn: DateTime.now(),
+            target: locFile.id,
             published: false,
             status: "DRAFT",
         })),

@@ -1,6 +1,7 @@
 import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees, toFeesClass, HashString } from "@logion/client";
 import { FileItem, LinkData, LinkItem, LocItem, MetadataItem } from "./LocItem";
 import { LocTemplateDocumentOrLink, LocTemplateMetadataItem } from "./Template";
+import { DateTime } from "luxon";
 
 export interface ItemAndRefreshFlag {
     locItem: LocItem,
@@ -20,7 +21,7 @@ function createPublishedFileLocItem(parameters: MergedFile): ItemAndRefreshFlag 
     return publish(createDraftFileLocItem(parameters), parameters.addedOn || null, parameters.fees, parameters.storageFeePaidBy);
 }
 
-function publish(locItem: LocItem, timestamp: string | null, fees?: ClientFees, storageFeePaidBy?: string): ItemAndRefreshFlag {
+function publish(locItem: LocItem, timestamp: DateTime | null, fees?: ClientFees, storageFeePaidBy?: string): ItemAndRefreshFlag {
     return {
         locItem: locItem.publish(timestamp, toFeesClass(fees), storageFeePaidBy),
         refreshNeeded: !locItem.timestamp

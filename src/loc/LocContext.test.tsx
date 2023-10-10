@@ -28,6 +28,7 @@ import {
     OPEN_IDENTITY_LOC_ID
 } from 'src/__mocks__/LogionMock';
 import { LinkData } from "./LocItem";
+import { DateTime } from "luxon";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../logion-chain");
@@ -254,7 +255,7 @@ async function thenItemsAdded() {
 function givenDraftItems() {
     const metadataName = HashString.fromValue("New data");
     _locData.metadata.push({
-        addedOn: "",
+        addedOn: DateTime.now(),
         name: metadataName,
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         value: HashString.fromValue("Some value"),
@@ -265,7 +266,7 @@ function givenDraftItems() {
     })
     _locData.files.push({
         hash: Hash.of("new-hash"),
-        addedOn: "",
+        addedOn: DateTime.now(),
         name: "New file",
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         nature: HashString.fromValue("Some nature"),
@@ -278,9 +279,9 @@ function givenDraftItems() {
         acknowledgedByVerifiedIssuer: false,
     })
     _locData.links.push({
-        addedOn: "",
+        addedOn: DateTime.now(),
         nature: HashString.fromValue("New link"),
-        target: _linkedLocData.id.toString(),
+        target: _linkedLocData.id,
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         published: false,
         status: "DRAFT",

@@ -45,6 +45,7 @@ import TokensRecords from "./TokensRecords";
 import './Certificate.css'
 import CertificateTitle from "./CertificateTitle";
 import InlineHashString, { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
+import { DateTime } from "luxon";
 
 export default function Certificate() {
 
@@ -440,7 +441,7 @@ function MetadataItemCellRow(props: { items: MergedMetadataItem[], checkResult: 
     )
 }
 
-function ItemCellTitle(props: { text: Children, timestamp: string | undefined }) {
+function ItemCellTitle(props: { text: Children, timestamp: DateTime | string | undefined }) {
     return (
         <span>
             <span>{ props.text }</span>
@@ -485,8 +486,8 @@ function LinkCellRow(props: { links: MergedLink[] }) {
         <Row>
             { props.links.map(
                 link =>
-                    <CertificateCell key={ link.target } md={ 6 } label={ <ItemCellTitle text={ <span>Linked LOC <span className="file-nature">(<InlineHashString value={link.nature}/>)</span></span> } timestamp={ link.addedOn } /> }>
-                        <NewTabLink href={ fullCertificateUrl(new UUID(link.target)) } iconId="loc-link">{ new UUID(link.target).toDecimalString() }</NewTabLink>
+                    <CertificateCell key={ link.target.toString() } md={ 6 } label={ <ItemCellTitle text={ <span>Linked LOC <span className="file-nature">(<InlineHashString value={link.nature}/>)</span></span> } timestamp={ link.addedOn } /> }>
+                        <NewTabLink href={ fullCertificateUrl(link.target) } iconId="loc-link">{ link.target.toDecimalString() }</NewTabLink>
                     </CertificateCell>)
             }
         </Row>
