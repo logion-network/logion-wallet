@@ -22,6 +22,7 @@ import {
 import { isTokenCompatibleWith } from "@logion/client/dist/Token.js";
 import { LegalOfficerClass } from "@logion/client/dist/Types.js";
 export { PendingVote, Votes } from "@logion/client/dist/Votes.js";
+export { toFeesClass } from "@logion/client/dist/Fees.js";
 
 export {
     LogionClient,

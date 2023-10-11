@@ -1,0 +1,2038 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomItemActions Links are read-only for issuer when acknowledged 1`] = `
+<ButtonGroup>
+  <StatusCell
+    color="#e6007a"
+    icon={
+      Object {
+        "id": "published",
+      }
+    }
+    text="Recorded"
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Links are read-only for owner when acknowledged 1`] = `
+<ButtonGroup>
+  <StatusCell
+    color="#e6007a"
+    icon={
+      Object {
+        "id": "published",
+      }
+    }
+    text="Recorded"
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Links are read-only for requester when published 1`] = `
+<ButtonGroup>
+  <StatusCell
+    color="#e6007a"
+    icon={
+      Object {
+        "id": "published",
+      }
+    }
+    text="Published"
+    tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
+    tooltipId="published-Linked LOC-Some nature"
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Links can be acknowledged by issuer when published 1`] = `
+<ButtonGroup>
+  <AcknowledgeButton
+    locItem={
+      LinkItem {
+        "_data": Object {
+          "linkDetailsPath": "",
+          "linkedLoc": Object {},
+          "nature": "Some nature",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "fees": undefined,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "PUBLISHED",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Linked LOC",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Links can be acknowledged by owner when published 1`] = `
+<ButtonGroup>
+  <AcknowledgeButton
+    locItem={
+      LinkItem {
+        "_data": Object {
+          "linkDetailsPath": "",
+          "linkedLoc": Object {},
+          "nature": "Some nature",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "fees": undefined,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "PUBLISHED",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Linked LOC",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Links can be published or deleted by requester when approved 1`] = `
+<ButtonGroup>
+  <PublishItemButton
+    item={
+      LinkItem {
+        "_data": Object {
+          "linkDetailsPath": "",
+          "linkedLoc": Object {},
+          "nature": "Some nature",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Linked LOC",
+        },
+      }
+    }
+  />
+  <DeleteButton
+    locItem={
+      LinkItem {
+        "_data": Object {
+          "linkDetailsPath": "",
+          "linkedLoc": Object {},
+          "nature": "Some nature",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Linked LOC",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Links can be published or deleted by requester when approved and submitted by issuer 1`] = `
+<ButtonGroup>
+  <PublishItemButton
+    item={
+      LinkItem {
+        "_data": Object {
+          "linkDetailsPath": "",
+          "linkedLoc": Object {},
+          "nature": "Some nature",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Linked LOC",
+        },
+      }
+    }
+  />
+  <DeleteButton
+    locItem={
+      LinkItem {
+        "_data": Object {
+          "linkDetailsPath": "",
+          "linkedLoc": Object {},
+          "nature": "Some nature",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Linked LOC",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Links can be reviewed by owner when submitted 1`] = `
+<ButtonGroup>
+  <ReviewItemButtons
+    locItem={
+      LinkItem {
+        "_data": Object {
+          "linkDetailsPath": "",
+          "linkedLoc": Object {},
+          "nature": "Some nature",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_PENDING",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Linked LOC",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Links can be submitted for review or deleted by issuer when draft 1`] = `
+<ButtonGroup>
+  <Button
+    onClick={[Function]}
+  >
+    Request review
+  </Button>
+  <DeleteButton
+    locItem={
+      LinkItem {
+        "_data": Object {
+          "linkDetailsPath": "",
+          "linkedLoc": Object {},
+          "nature": "Some nature",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "DRAFT",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Linked LOC",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Links can be submitted for review or deleted by requester when draft 1`] = `
+<ButtonGroup>
+  <Button
+    onClick={[Function]}
+  >
+    Request review
+  </Button>
+  <DeleteButton
+    locItem={
+      LinkItem {
+        "_data": Object {
+          "linkDetailsPath": "",
+          "linkedLoc": Object {},
+          "nature": "Some nature",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "DRAFT",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Linked LOC",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Private files are read-only for issuer when acknowledged 1`] = `
+<ButtonGroup>
+  <StatusCell
+    color="#e6007a"
+    icon={
+      Object {
+        "id": "published",
+      }
+    }
+    text="Recorded"
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Private files are read-only for owner when acknowledged 1`] = `
+<ButtonGroup>
+  <StatusCell
+    color="#e6007a"
+    icon={
+      Object {
+        "id": "published",
+      }
+    }
+    text="Recorded"
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Private files are read-only for requester when published 1`] = `
+<ButtonGroup>
+  <StatusCell
+    color="#e6007a"
+    icon={
+      Object {
+        "id": "published",
+      }
+    }
+    text="Published"
+    tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
+    tooltipId="published-Document-Some nature"
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Private files can be acknowledged by issuer when published 1`] = `
+<ButtonGroup>
+  <AcknowledgeButton
+    locItem={
+      FileItem {
+        "_data": Object {
+          "fileName": "test.txt",
+          "hash": Hash {
+            "_bytes": Uint8Array [
+              159,
+              134,
+              208,
+              129,
+              136,
+              76,
+              125,
+              101,
+              154,
+              47,
+              234,
+              160,
+              197,
+              90,
+              208,
+              21,
+              163,
+              191,
+              79,
+              27,
+              43,
+              11,
+              130,
+              44,
+              209,
+              93,
+              108,
+              21,
+              176,
+              240,
+              10,
+              8,
+            ],
+          },
+          "nature": "Some nature",
+          "size": 4n,
+          "storageFeePaidBy": "",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "fees": undefined,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "PUBLISHED",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Document",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Private files can be acknowledged by owner when published 1`] = `
+<ButtonGroup>
+  <AcknowledgeButton
+    locItem={
+      FileItem {
+        "_data": Object {
+          "fileName": "test.txt",
+          "hash": Hash {
+            "_bytes": Uint8Array [
+              159,
+              134,
+              208,
+              129,
+              136,
+              76,
+              125,
+              101,
+              154,
+              47,
+              234,
+              160,
+              197,
+              90,
+              208,
+              21,
+              163,
+              191,
+              79,
+              27,
+              43,
+              11,
+              130,
+              44,
+              209,
+              93,
+              108,
+              21,
+              176,
+              240,
+              10,
+              8,
+            ],
+          },
+          "nature": "Some nature",
+          "size": 4n,
+          "storageFeePaidBy": "",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "fees": undefined,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "PUBLISHED",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Document",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Private files can be published or deleted by requester when approved 1`] = `
+<ButtonGroup>
+  <PublishItemButton
+    item={
+      FileItem {
+        "_data": Object {
+          "fileName": "test.txt",
+          "hash": Hash {
+            "_bytes": Uint8Array [
+              159,
+              134,
+              208,
+              129,
+              136,
+              76,
+              125,
+              101,
+              154,
+              47,
+              234,
+              160,
+              197,
+              90,
+              208,
+              21,
+              163,
+              191,
+              79,
+              27,
+              43,
+              11,
+              130,
+              44,
+              209,
+              93,
+              108,
+              21,
+              176,
+              240,
+              10,
+              8,
+            ],
+          },
+          "nature": "Some nature",
+          "size": 4n,
+          "storageFeePaidBy": "",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Document",
+        },
+      }
+    }
+  />
+  <DeleteButton
+    locItem={
+      FileItem {
+        "_data": Object {
+          "fileName": "test.txt",
+          "hash": Hash {
+            "_bytes": Uint8Array [
+              159,
+              134,
+              208,
+              129,
+              136,
+              76,
+              125,
+              101,
+              154,
+              47,
+              234,
+              160,
+              197,
+              90,
+              208,
+              21,
+              163,
+              191,
+              79,
+              27,
+              43,
+              11,
+              130,
+              44,
+              209,
+              93,
+              108,
+              21,
+              176,
+              240,
+              10,
+              8,
+            ],
+          },
+          "nature": "Some nature",
+          "size": 4n,
+          "storageFeePaidBy": "",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Document",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Private files can be published or deleted by requester when approved and submitted by issuer 1`] = `
+<ButtonGroup>
+  <PublishItemButton
+    item={
+      FileItem {
+        "_data": Object {
+          "fileName": "test.txt",
+          "hash": Hash {
+            "_bytes": Uint8Array [
+              159,
+              134,
+              208,
+              129,
+              136,
+              76,
+              125,
+              101,
+              154,
+              47,
+              234,
+              160,
+              197,
+              90,
+              208,
+              21,
+              163,
+              191,
+              79,
+              27,
+              43,
+              11,
+              130,
+              44,
+              209,
+              93,
+              108,
+              21,
+              176,
+              240,
+              10,
+              8,
+            ],
+          },
+          "nature": "Some nature",
+          "size": 4n,
+          "storageFeePaidBy": "",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Document",
+        },
+      }
+    }
+  />
+  <DeleteButton
+    locItem={
+      FileItem {
+        "_data": Object {
+          "fileName": "test.txt",
+          "hash": Hash {
+            "_bytes": Uint8Array [
+              159,
+              134,
+              208,
+              129,
+              136,
+              76,
+              125,
+              101,
+              154,
+              47,
+              234,
+              160,
+              197,
+              90,
+              208,
+              21,
+              163,
+              191,
+              79,
+              27,
+              43,
+              11,
+              130,
+              44,
+              209,
+              93,
+              108,
+              21,
+              176,
+              240,
+              10,
+              8,
+            ],
+          },
+          "nature": "Some nature",
+          "size": 4n,
+          "storageFeePaidBy": "",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Document",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Private files can be reviewed by owner when submitted 1`] = `
+<ButtonGroup>
+  <ReviewItemButtons
+    locItem={
+      FileItem {
+        "_data": Object {
+          "fileName": "test.txt",
+          "hash": Hash {
+            "_bytes": Uint8Array [
+              159,
+              134,
+              208,
+              129,
+              136,
+              76,
+              125,
+              101,
+              154,
+              47,
+              234,
+              160,
+              197,
+              90,
+              208,
+              21,
+              163,
+              191,
+              79,
+              27,
+              43,
+              11,
+              130,
+              44,
+              209,
+              93,
+              108,
+              21,
+              176,
+              240,
+              10,
+              8,
+            ],
+          },
+          "nature": "Some nature",
+          "size": 4n,
+          "storageFeePaidBy": "",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_PENDING",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Document",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Private files can be submitted for review or deleted by issuer when draft 1`] = `
+<ButtonGroup>
+  <Button
+    onClick={[Function]}
+  >
+    Request review
+  </Button>
+  <DeleteButton
+    locItem={
+      FileItem {
+        "_data": Object {
+          "fileName": "test.txt",
+          "hash": Hash {
+            "_bytes": Uint8Array [
+              159,
+              134,
+              208,
+              129,
+              136,
+              76,
+              125,
+              101,
+              154,
+              47,
+              234,
+              160,
+              197,
+              90,
+              208,
+              21,
+              163,
+              191,
+              79,
+              27,
+              43,
+              11,
+              130,
+              44,
+              209,
+              93,
+              108,
+              21,
+              176,
+              240,
+              10,
+              8,
+            ],
+          },
+          "nature": "Some nature",
+          "size": 4n,
+          "storageFeePaidBy": "",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "DRAFT",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Document",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Private files can be submitted for review or deleted by requester when draft 1`] = `
+<ButtonGroup>
+  <Button
+    onClick={[Function]}
+  >
+    Request review
+  </Button>
+  <DeleteButton
+    locItem={
+      FileItem {
+        "_data": Object {
+          "fileName": "test.txt",
+          "hash": Hash {
+            "_bytes": Uint8Array [
+              159,
+              134,
+              208,
+              129,
+              136,
+              76,
+              125,
+              101,
+              154,
+              47,
+              234,
+              160,
+              197,
+              90,
+              208,
+              21,
+              163,
+              191,
+              79,
+              27,
+              43,
+              11,
+              130,
+              44,
+              209,
+              93,
+              108,
+              21,
+              176,
+              240,
+              10,
+              8,
+            ],
+          },
+          "nature": "Some nature",
+          "size": 4n,
+          "storageFeePaidBy": "",
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "DRAFT",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Document",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Public data are read-only for issuer when acknowledged 1`] = `
+<ButtonGroup>
+  <StatusCell
+    color="#e6007a"
+    icon={
+      Object {
+        "id": "published",
+      }
+    }
+    text="Recorded"
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Public data are read-only for owner when acknowledged 1`] = `
+<ButtonGroup>
+  <StatusCell
+    color="#e6007a"
+    icon={
+      Object {
+        "id": "published",
+      }
+    }
+    text="Recorded"
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Public data are read-only for requester when published 1`] = `
+<ButtonGroup>
+  <StatusCell
+    color="#e6007a"
+    icon={
+      Object {
+        "id": "published",
+      }
+    }
+    text="Published"
+    tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
+    tooltipId="published-Data-Name"
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Public data can be acknowledged by issuer when published 1`] = `
+<ButtonGroup>
+  <AcknowledgeButton
+    locItem={
+      MetadataItem {
+        "_data": Object {
+          "name": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                220,
+                209,
+                213,
+                34,
+                63,
+                115,
+                179,
+                169,
+                101,
+                192,
+                126,
+                63,
+                245,
+                219,
+                238,
+                62,
+                237,
+                207,
+                237,
+                184,
+                6,
+                104,
+                106,
+                5,
+                185,
+                179,
+                134,
+                138,
+                44,
+                61,
+                109,
+                80,
+              ],
+            },
+            "value": "Name",
+          },
+          "value": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                142,
+                55,
+                149,
+                61,
+                35,
+                218,
+                202,
+                95,
+                240,
+                27,
+                130,
+                130,
+                195,
+                63,
+                78,
+                10,
+                33,
+                82,
+                241,
+                209,
+                136,
+                95,
+                148,
+                192,
+                100,
+                24,
+                97,
+                126,
+                62,
+                225,
+                210,
+                78,
+              ],
+            },
+            "value": "Value",
+          },
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "fees": undefined,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "PUBLISHED",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Data",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Public data can be acknowledged by owner when published 1`] = `
+<ButtonGroup>
+  <AcknowledgeButton
+    locItem={
+      MetadataItem {
+        "_data": Object {
+          "name": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                220,
+                209,
+                213,
+                34,
+                63,
+                115,
+                179,
+                169,
+                101,
+                192,
+                126,
+                63,
+                245,
+                219,
+                238,
+                62,
+                237,
+                207,
+                237,
+                184,
+                6,
+                104,
+                106,
+                5,
+                185,
+                179,
+                134,
+                138,
+                44,
+                61,
+                109,
+                80,
+              ],
+            },
+            "value": "Name",
+          },
+          "value": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                142,
+                55,
+                149,
+                61,
+                35,
+                218,
+                202,
+                95,
+                240,
+                27,
+                130,
+                130,
+                195,
+                63,
+                78,
+                10,
+                33,
+                82,
+                241,
+                209,
+                136,
+                95,
+                148,
+                192,
+                100,
+                24,
+                97,
+                126,
+                62,
+                225,
+                210,
+                78,
+              ],
+            },
+            "value": "Value",
+          },
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "fees": undefined,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "PUBLISHED",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Data",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Public data can be published or deleted by requester when approved 1`] = `
+<ButtonGroup>
+  <PublishItemButton
+    item={
+      MetadataItem {
+        "_data": Object {
+          "name": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                220,
+                209,
+                213,
+                34,
+                63,
+                115,
+                179,
+                169,
+                101,
+                192,
+                126,
+                63,
+                245,
+                219,
+                238,
+                62,
+                237,
+                207,
+                237,
+                184,
+                6,
+                104,
+                106,
+                5,
+                185,
+                179,
+                134,
+                138,
+                44,
+                61,
+                109,
+                80,
+              ],
+            },
+            "value": "Name",
+          },
+          "value": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                142,
+                55,
+                149,
+                61,
+                35,
+                218,
+                202,
+                95,
+                240,
+                27,
+                130,
+                130,
+                195,
+                63,
+                78,
+                10,
+                33,
+                82,
+                241,
+                209,
+                136,
+                95,
+                148,
+                192,
+                100,
+                24,
+                97,
+                126,
+                62,
+                225,
+                210,
+                78,
+              ],
+            },
+            "value": "Value",
+          },
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Data",
+        },
+      }
+    }
+  />
+  <DeleteButton
+    locItem={
+      MetadataItem {
+        "_data": Object {
+          "name": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                220,
+                209,
+                213,
+                34,
+                63,
+                115,
+                179,
+                169,
+                101,
+                192,
+                126,
+                63,
+                245,
+                219,
+                238,
+                62,
+                237,
+                207,
+                237,
+                184,
+                6,
+                104,
+                106,
+                5,
+                185,
+                179,
+                134,
+                138,
+                44,
+                61,
+                109,
+                80,
+              ],
+            },
+            "value": "Name",
+          },
+          "value": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                142,
+                55,
+                149,
+                61,
+                35,
+                218,
+                202,
+                95,
+                240,
+                27,
+                130,
+                130,
+                195,
+                63,
+                78,
+                10,
+                33,
+                82,
+                241,
+                209,
+                136,
+                95,
+                148,
+                192,
+                100,
+                24,
+                97,
+                126,
+                62,
+                225,
+                210,
+                78,
+              ],
+            },
+            "value": "Value",
+          },
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Data",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Public data can be published or deleted by requester when approved and submitted by issuer 1`] = `
+<ButtonGroup>
+  <PublishItemButton
+    item={
+      MetadataItem {
+        "_data": Object {
+          "name": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                220,
+                209,
+                213,
+                34,
+                63,
+                115,
+                179,
+                169,
+                101,
+                192,
+                126,
+                63,
+                245,
+                219,
+                238,
+                62,
+                237,
+                207,
+                237,
+                184,
+                6,
+                104,
+                106,
+                5,
+                185,
+                179,
+                134,
+                138,
+                44,
+                61,
+                109,
+                80,
+              ],
+            },
+            "value": "Name",
+          },
+          "value": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                142,
+                55,
+                149,
+                61,
+                35,
+                218,
+                202,
+                95,
+                240,
+                27,
+                130,
+                130,
+                195,
+                63,
+                78,
+                10,
+                33,
+                82,
+                241,
+                209,
+                136,
+                95,
+                148,
+                192,
+                100,
+                24,
+                97,
+                126,
+                62,
+                225,
+                210,
+                78,
+              ],
+            },
+            "value": "Value",
+          },
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Data",
+        },
+      }
+    }
+  />
+  <DeleteButton
+    locItem={
+      MetadataItem {
+        "_data": Object {
+          "name": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                220,
+                209,
+                213,
+                34,
+                63,
+                115,
+                179,
+                169,
+                101,
+                192,
+                126,
+                63,
+                245,
+                219,
+                238,
+                62,
+                237,
+                207,
+                237,
+                184,
+                6,
+                104,
+                106,
+                5,
+                185,
+                179,
+                134,
+                138,
+                44,
+                61,
+                109,
+                80,
+              ],
+            },
+            "value": "Name",
+          },
+          "value": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                142,
+                55,
+                149,
+                61,
+                35,
+                218,
+                202,
+                95,
+                240,
+                27,
+                130,
+                130,
+                195,
+                63,
+                78,
+                10,
+                33,
+                82,
+                241,
+                209,
+                136,
+                95,
+                148,
+                192,
+                100,
+                24,
+                97,
+                126,
+                62,
+                225,
+                210,
+                78,
+              ],
+            },
+            "value": "Value",
+          },
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_ACCEPTED",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Data",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Public data can be reviewed by owner when submitted 1`] = `
+<ButtonGroup>
+  <ReviewItemButtons
+    locItem={
+      MetadataItem {
+        "_data": Object {
+          "name": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                220,
+                209,
+                213,
+                34,
+                63,
+                115,
+                179,
+                169,
+                101,
+                192,
+                126,
+                63,
+                245,
+                219,
+                238,
+                62,
+                237,
+                207,
+                237,
+                184,
+                6,
+                104,
+                106,
+                5,
+                185,
+                179,
+                134,
+                138,
+                44,
+                61,
+                109,
+                80,
+              ],
+            },
+            "value": "Name",
+          },
+          "value": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                142,
+                55,
+                149,
+                61,
+                35,
+                218,
+                202,
+                95,
+                240,
+                27,
+                130,
+                130,
+                195,
+                63,
+                78,
+                10,
+                33,
+                82,
+                241,
+                209,
+                136,
+                95,
+                148,
+                192,
+                100,
+                24,
+                97,
+                126,
+                62,
+                225,
+                210,
+                78,
+              ],
+            },
+            "value": "Value",
+          },
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "REVIEW_PENDING",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Data",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Public data can be submitted for review or deleted by issuer when draft 1`] = `
+<ButtonGroup>
+  <Button
+    onClick={[Function]}
+  >
+    Request review
+  </Button>
+  <DeleteButton
+    locItem={
+      MetadataItem {
+        "_data": Object {
+          "name": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                220,
+                209,
+                213,
+                34,
+                63,
+                115,
+                179,
+                169,
+                101,
+                192,
+                126,
+                63,
+                245,
+                219,
+                238,
+                62,
+                237,
+                207,
+                237,
+                184,
+                6,
+                104,
+                106,
+                5,
+                185,
+                179,
+                134,
+                138,
+                44,
+                61,
+                109,
+                80,
+              ],
+            },
+            "value": "Name",
+          },
+          "value": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                142,
+                55,
+                149,
+                61,
+                35,
+                218,
+                202,
+                95,
+                240,
+                27,
+                130,
+                130,
+                195,
+                63,
+                78,
+                10,
+                33,
+                82,
+                241,
+                209,
+                136,
+                95,
+                148,
+                192,
+                100,
+                24,
+                97,
+                126,
+                62,
+                225,
+                210,
+                78,
+              ],
+            },
+            "value": "Value",
+          },
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "DRAFT",
+          "submitter": Object {
+            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Data",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;
+
+exports[`CustomItemActions Public data can be submitted for review or deleted by requester when draft 1`] = `
+<ButtonGroup>
+  <Button
+    onClick={[Function]}
+  >
+    Request review
+  </Button>
+  <DeleteButton
+    locItem={
+      MetadataItem {
+        "_data": Object {
+          "name": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                220,
+                209,
+                213,
+                34,
+                63,
+                115,
+                179,
+                169,
+                101,
+                192,
+                126,
+                63,
+                245,
+                219,
+                238,
+                62,
+                237,
+                207,
+                237,
+                184,
+                6,
+                104,
+                106,
+                5,
+                185,
+                179,
+                134,
+                138,
+                44,
+                61,
+                109,
+                80,
+              ],
+            },
+            "value": "Name",
+          },
+          "value": HashString {
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                142,
+                55,
+                149,
+                61,
+                35,
+                218,
+                202,
+                95,
+                240,
+                27,
+                130,
+                130,
+                195,
+                63,
+                78,
+                10,
+                33,
+                82,
+                241,
+                209,
+                136,
+                95,
+                148,
+                192,
+                100,
+                24,
+                97,
+                126,
+                62,
+                225,
+                210,
+                78,
+              ],
+            },
+            "value": "Value",
+          },
+        },
+        "commonData": Object {
+          "acknowledgedByOwner": false,
+          "acknowledgedByVerifiedIssuer": false,
+          "newItem": false,
+          "rejectReason": undefined,
+          "reviewedOn": undefined,
+          "status": "DRAFT",
+          "submitter": Object {
+            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+            "equals": [Function],
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "template": false,
+          "timestamp": null,
+          "type": "Data",
+        },
+      }
+    }
+  />
+</ButtonGroup>
+`;

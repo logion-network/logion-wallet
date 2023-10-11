@@ -1,4 +1,4 @@
-import React, { CSSProperties } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 import { Children } from './types/Helpers';
 
@@ -25,7 +25,7 @@ export function Row(props: RowProps) {
 }
 
 export interface ColProps {
-    children: Children,
+    children: ReactNode,
     className?: string,
     style?: CSSProperties,
 }
