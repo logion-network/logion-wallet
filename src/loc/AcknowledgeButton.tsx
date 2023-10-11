@@ -1,5 +1,5 @@
 import { OpenLoc } from "@logion/client";
-import { Fees, UUID } from "@logion/node-api";
+import { Fees } from "@logion/node-api";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Button, { Action } from "src/common/Button";
 import Icon from "src/common/Icon";
@@ -13,7 +13,6 @@ import { useLogionChain } from "src/logion-chain";
 import "./AcknowledgeButton.css";
 
 export interface Props {
-    locId: UUID;
     locItem: LocItem;
 }
 
@@ -57,7 +56,7 @@ export default function AcknowledgeButton(props: Props) {
                 }
             })();
         }
-    }, [ fees, props.locItem, props.locId, locState ]);
+    }, [ fees, props.locItem, locState ]);
 
     const preview = useCallback(() => {
         setState(State.PREVIEW);

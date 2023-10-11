@@ -47,28 +47,6 @@ exports[`CustomItemActions Links are read-only for requester when published 1`] 
 exports[`CustomItemActions Links can be acknowledged by issuer when published 1`] = `
 <ButtonGroup>
   <AcknowledgeButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
     locItem={
       LinkItem {
         "_data": Object {
@@ -103,28 +81,6 @@ exports[`CustomItemActions Links can be acknowledged by issuer when published 1`
 exports[`CustomItemActions Links can be acknowledged by owner when published 1`] = `
 <ButtonGroup>
   <AcknowledgeButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
     locItem={
       LinkItem {
         "_data": Object {
@@ -158,30 +114,8 @@ exports[`CustomItemActions Links can be acknowledged by owner when published 1`]
 
 exports[`CustomItemActions Links can be published or deleted by requester when approved 1`] = `
 <ButtonGroup>
-  <LocPublishLinkButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
-    locItem={
+  <PublishItemButton
+    item={
       LinkItem {
         "_data": Object {
           "linkDetailsPath": "",
@@ -209,7 +143,6 @@ exports[`CustomItemActions Links can be published or deleted by requester when a
     }
   />
   <DeleteButton
-    action={[Function]}
     locItem={
       LinkItem {
         "_data": Object {
@@ -242,30 +175,8 @@ exports[`CustomItemActions Links can be published or deleted by requester when a
 
 exports[`CustomItemActions Links can be published or deleted by requester when approved and submitted by issuer 1`] = `
 <ButtonGroup>
-  <LocPublishLinkButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
-    locItem={
+  <PublishItemButton
+    item={
       LinkItem {
         "_data": Object {
           "linkDetailsPath": "",
@@ -293,7 +204,6 @@ exports[`CustomItemActions Links can be published or deleted by requester when a
     }
   />
   <DeleteButton
-    action={[Function]}
     locItem={
       LinkItem {
         "_data": Object {
@@ -365,7 +275,6 @@ exports[`CustomItemActions Links can be submitted for review or deleted by issue
     Request review
   </Button>
   <DeleteButton
-    action={[Function]}
     locItem={
       LinkItem {
         "_data": Object {
@@ -404,7 +313,6 @@ exports[`CustomItemActions Links can be submitted for review or deleted by reque
     Request review
   </Button>
   <DeleteButton
-    action={[Function]}
     locItem={
       LinkItem {
         "_data": Object {
@@ -482,28 +390,6 @@ exports[`CustomItemActions Private files are read-only for requester when publis
 exports[`CustomItemActions Private files can be acknowledged by issuer when published 1`] = `
 <ButtonGroup>
   <AcknowledgeButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
     locItem={
       FileItem {
         "_data": Object {
@@ -575,28 +461,6 @@ exports[`CustomItemActions Private files can be acknowledged by issuer when publ
 exports[`CustomItemActions Private files can be acknowledged by owner when published 1`] = `
 <ButtonGroup>
   <AcknowledgeButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
     locItem={
       FileItem {
         "_data": Object {
@@ -667,30 +531,8 @@ exports[`CustomItemActions Private files can be acknowledged by owner when publi
 
 exports[`CustomItemActions Private files can be published or deleted by requester when approved 1`] = `
 <ButtonGroup>
-  <LocPublishPrivateFileButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
-    locItem={
+  <PublishItemButton
+    item={
       FileItem {
         "_data": Object {
           "fileName": "test.txt",
@@ -755,7 +597,6 @@ exports[`CustomItemActions Private files can be published or deleted by requeste
     }
   />
   <DeleteButton
-    action={[Function]}
     locItem={
       FileItem {
         "_data": Object {
@@ -825,30 +666,8 @@ exports[`CustomItemActions Private files can be published or deleted by requeste
 
 exports[`CustomItemActions Private files can be published or deleted by requester when approved and submitted by issuer 1`] = `
 <ButtonGroup>
-  <LocPublishPrivateFileButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
-    locItem={
+  <PublishItemButton
+    item={
       FileItem {
         "_data": Object {
           "fileName": "test.txt",
@@ -913,7 +732,6 @@ exports[`CustomItemActions Private files can be published or deleted by requeste
     }
   />
   <DeleteButton
-    action={[Function]}
     locItem={
       FileItem {
         "_data": Object {
@@ -1059,7 +877,6 @@ exports[`CustomItemActions Private files can be submitted for review or deleted 
     Request review
   </Button>
   <DeleteButton
-    action={[Function]}
     locItem={
       FileItem {
         "_data": Object {
@@ -1135,7 +952,6 @@ exports[`CustomItemActions Private files can be submitted for review or deleted 
     Request review
   </Button>
   <DeleteButton
-    action={[Function]}
     locItem={
       FileItem {
         "_data": Object {
@@ -1250,28 +1066,6 @@ exports[`CustomItemActions Public data are read-only for requester when publishe
 exports[`CustomItemActions Public data can be acknowledged by issuer when published 1`] = `
 <ButtonGroup>
   <AcknowledgeButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
     locItem={
       MetadataItem {
         "_data": Object {
@@ -1381,28 +1175,6 @@ exports[`CustomItemActions Public data can be acknowledged by issuer when publis
 exports[`CustomItemActions Public data can be acknowledged by owner when published 1`] = `
 <ButtonGroup>
   <AcknowledgeButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
     locItem={
       MetadataItem {
         "_data": Object {
@@ -1511,30 +1283,8 @@ exports[`CustomItemActions Public data can be acknowledged by owner when publish
 
 exports[`CustomItemActions Public data can be published or deleted by requester when approved 1`] = `
 <ButtonGroup>
-  <LocPublishPublicDataButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
-    locItem={
+  <PublishItemButton
+    item={
       MetadataItem {
         "_data": Object {
           "name": HashString {
@@ -1637,7 +1387,6 @@ exports[`CustomItemActions Public data can be published or deleted by requester 
     }
   />
   <DeleteButton
-    action={[Function]}
     locItem={
       MetadataItem {
         "_data": Object {
@@ -1745,30 +1494,8 @@ exports[`CustomItemActions Public data can be published or deleted by requester 
 
 exports[`CustomItemActions Public data can be published or deleted by requester when approved and submitted by issuer 1`] = `
 <ButtonGroup>
-  <LocPublishPublicDataButton
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          195,
-          75,
-          129,
-          100,
-          156,
-          74,
-          65,
-          213,
-          146,
-          40,
-          55,
-          39,
-          61,
-          169,
-          116,
-          53,
-        ],
-      }
-    }
-    locItem={
+  <PublishItemButton
+    item={
       MetadataItem {
         "_data": Object {
           "name": HashString {
@@ -1871,7 +1598,6 @@ exports[`CustomItemActions Public data can be published or deleted by requester 
     }
   />
   <DeleteButton
-    action={[Function]}
     locItem={
       MetadataItem {
         "_data": Object {
@@ -2093,7 +1819,6 @@ exports[`CustomItemActions Public data can be submitted for review or deleted by
     Request review
   </Button>
   <DeleteButton
-    action={[Function]}
     locItem={
       MetadataItem {
         "_data": Object {
@@ -2207,7 +1932,6 @@ exports[`CustomItemActions Public data can be submitted for review or deleted by
     Request review
   </Button>
   <DeleteButton
-    action={[Function]}
     locItem={
       MetadataItem {
         "_data": Object {
