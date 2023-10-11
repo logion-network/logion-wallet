@@ -11,7 +11,7 @@ import {
     HashString,
 } from "@logion/client";
 import { UUID, LocType, Fees, ValidAccountId, Hash } from "@logion/node-api";
-import { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
 import { Viewer } from "src/common/CommonContext";
 import { isGrantedAccess } from "src/common/Model";
@@ -265,7 +265,7 @@ export function buildItemTableColumns(args: {
     currentAddress: string | undefined,
     contributionMode: ContributionMode | undefined,
     viewer: Viewer,
-    renderActions: (locItem: LocItem, locId: UUID) => Child,
+    renderActions: (locItem: LocItem) => ReactNode,
 }): Column<LocItem>[] {
     const {
         loc,
@@ -337,7 +337,7 @@ export function buildItemTableColumns(args: {
         },
         {
             header: "",
-            render: locItem => renderActions(locItem, loc.id),
+            render: locItem => renderActions(locItem),
             width: width({
                 onSmallScreen: viewer === "LegalOfficer" ? '345px' : '145px',
                 otherwise: '400px'

@@ -1,4 +1,4 @@
-import { CSSProperties, useState, useCallback, useEffect } from 'react';
+import { CSSProperties, useState, useCallback, useEffect, ReactNode } from 'react';
 import * as Css from 'csstype';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -84,7 +84,7 @@ export function EmptyTableMessage(props: EmptyTableMessageProps) {
 
 export interface Column<T> {
     header: Children,
-    render: (element: T) => Child,
+    render: (element: T) => ReactNode,
     width?: string,
     smallerText?: boolean,
     splitAfter?: boolean,
