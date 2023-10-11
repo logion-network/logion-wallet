@@ -351,7 +351,7 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
         dispatch({type: 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'});
 
         if(await isExtensionAvailable(config.APP_NAME)) {
-            const register = await enableExtensions(config.APP_NAME);
+            const register = await enableExtensions(config.APP_NAME, [ "polkadot-js", "subwallet-js" ]);
             dispatch({
                 type: 'EXTENSIONS_ENABLED',
                 signer: new ExtensionSigner(SIGN_AND_SEND_STRATEGY)
