@@ -2,7 +2,7 @@ import { shallowRender } from "../tests";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 import LocLinkDetails from "./LocLinkDetails";
 import { LinkItem } from "./LocItem";
-import { ItemStatus, LocData } from "@logion/client";
+import { HashString, ItemStatus, LocData } from "@logion/client";
 import { render, screen, waitFor } from '@testing-library/react';
 import { UUID } from "@logion/node-api";
 
@@ -25,7 +25,7 @@ describe("LocLinkDetails", () => {
                     id: linkedLocId
                 } as LocData,
                 linkDetailsPath: `https://path.to/${ linkedLocId.toString() }`,
-                nature: "Some nature"
+                nature: HashString.fromValue("Some nature"),
             }
         )
     }

@@ -34,7 +34,7 @@ export default function LocPrivateFileDetails(props: Props) {
                         </>
                     }
                     <div className="frame-title">{ props.item.isPublishedOrAcknowledged() ? "Published document related data" : "Document related data to be published" }</div>
-                    <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.data().nature : null }</LocItemDetail>
+                    <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.data().nature.validValue() : null }</LocItemDetail>
                     {
                         props.fileName !== undefined &&
                         <LocItemDetail label="File name">{ props.fileName }</LocItemDetail>

@@ -2,6 +2,7 @@ jest.mock("./LocContext");
 jest.mock("src/logion-chain");
 
 import { UUID, Hash } from "@logion/node-api";
+import { HashString } from "@logion/client";
 import { FileItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
@@ -22,7 +23,7 @@ describe("LocPublishPrivateFileButton", () => {
         {
             fileName: "file-name",
             hash: Hash.of("file-value"),
-            nature: "file-nature",
+            nature: HashString.fromValue("file-nature"),
             size: 10n,
             storageFeePaidBy: "Requester"
         }

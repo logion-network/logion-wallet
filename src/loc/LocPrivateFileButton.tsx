@@ -138,7 +138,7 @@ export function LocPrivateFileButton(props: Props) {
                 <p>A document with hash</p>
                 <p>{ duplicateHash?.toHex() }</p>
                 <p>already exists in this LOC:</p>
-                <p>{ existingItem?.data().nature }</p>
+                <p>{ existingItem?.data().nature.validValue() }</p>
             </Dialog>
         </>
     )
