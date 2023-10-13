@@ -48,12 +48,12 @@ test('Context automatically connects once accounts are injected', async () => {
     await waitFor(() => expectConnectedAndReadyState(result));
 });
 
-test("Context automatically listens to injected accounts", async () => {
+test("Context automatically retrieves injected accounts", async () => {
     let result = render(<InspectorInContext/>);
     await waitFor(() => expect(result.getByTestId("injectedAccountsConsumptionState")).toHaveTextContent("STARTED"));
 });
 
-test("Context detects injected accounts update", async () => {
+test("Context detects injected accounts", async () => {
     let result = render(<InspectorInContext/>);
     await waitFor(() => updateInjectedAccounts([ INJECTED_ACCOUNT ]));
     await waitFor(() => expect(result.getByTestId("injectedAccounts.length")).toHaveTextContent("1"));

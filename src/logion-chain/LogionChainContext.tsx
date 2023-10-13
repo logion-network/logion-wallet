@@ -9,7 +9,7 @@ import {
 } from '@logion/client';
 import {
     allMetamaskAccounts,
-    enableExtensions,
+    getAccounts,
     enableMetaMask,
     ExtensionSigner,
     InjectedAccount,
@@ -351,24 +351,22 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
         dispatch({type: 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'});
 
         if(await isExtensionAvailable(config.APP_NAME)) {
-            const register = await enableExtensions(config.APP_NAME, [ "polkadot-js", "subwallet-js" ]);
             dispatch({
                 type: 'EXTENSIONS_ENABLED',
                 signer: new ExtensionSigner(SIGN_AND_SEND_STRATEGY)
             });
-            register((injectedAccounts: InjectedAccount[]) => {
-                (async function() {
-                    let registeredLegalOfficers = new Set<string>();
-                    if(state.client) {
-                        registeredLegalOfficers = await buildLegalOfficersSet(state.client!, injectedAccounts);
-                    }
-                    dispatch({
-                        type: 'SET_INJECTED_ACCOUNTS',
-                        injectedAccounts,
-                        registeredLegalOfficers,
-                    });
-                })();
-            });
+            (async function() {
+                let registeredLegalOfficers = new Set<string>();
+                const injectedAccounts = await getAccounts(config.APP_NAME, [ "polkadot-js", "subwallet-js" ]);
+                if(state.client) {
+                    registeredLegalOfficers = await buildLegalOfficersSet(state.client!, injectedAccounts);
+                }
+                dispatch({
+                    type: 'SET_INJECTED_ACCOUNTS',
+                    injectedAccounts,
+                    registeredLegalOfficers,
+                });
+            })();
         } else {
             dispatch({
                 type: 'EXTENSIONS_ENABLED',

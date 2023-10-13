@@ -1,9 +1,8 @@
 export let _enabledApp: string | null = null;
 
-export function enableExtensions(appName: string, callback: (accounts: any[]) => void): Promise<(consumer: (accounts: any[]) => void) => void> {
+export function getAccounts(appName: string, _extensions?: string[]): Promise<any[]> {
     _enabledApp = appName;
-    _accountsCallback = callback;
-    return Promise.resolve(web3AccountsSubscribe);
+    return Promise.resolve(_accounts);
 }
 
 export function enabledApp(): string | null {
@@ -16,19 +15,10 @@ export function setWeb3Injected(value: boolean) {
     isWeb3Injected = value;
 }
 
-let _accountsCallback: ((accounts: any[]) => void) | null = null;
-
-export function web3AccountsSubscribe(callback: (accounts: any[]) => void): Promise<void> {
-    _accountsCallback = callback;
-    return Promise.resolve();
-}
-
-export function accountsCallback() {
-    return _accountsCallback;
-}
+let _accounts: any[] = [];
 
 export function updateInjectedAccounts(accounts: any[]) {
-    _accountsCallback!(accounts);
+    _accounts = accounts;
 }
 
 const extensions: Record<string, any> = {
@@ -43,7 +33,7 @@ export function web3FromAddress(signerId: string): Promise<any> {
 
 export function teardown() {
     _enabledApp = null;
-    _accountsCallback = null;
+    _accounts = [];
 }
 
 export function setSigner(signerId: string, signer: any) {

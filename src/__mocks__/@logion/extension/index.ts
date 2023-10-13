@@ -1,12 +1,12 @@
 import {
-    enableExtensions,
+    getAccounts,
     ExtensionSigner,
     isExtensionAvailable,
     enableMetaMask,
     allMetamaskAccounts,
 } from '../../LogionExtensionMock';
 export {
-    enableExtensions,
+    getAccounts,
     ExtensionSigner,
     isExtensionAvailable,
     enableMetaMask,
