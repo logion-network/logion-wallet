@@ -166,7 +166,7 @@ function linkItem(status: ItemStatus, submitter: ValidAccountId) {
     const data: LinkData = {
         linkDetailsPath: "",
         linkedLoc: {} as LocData,
-        nature: "Some nature"
+        nature: HashString.fromValue("Some nature"),
     };
     const link: MergedLink = {
         target: new UUID("2743b19c-3acf-4e96-bd04-c384d168fa41"),

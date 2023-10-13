@@ -58,7 +58,7 @@ export default function TokensRecordTable(props: Props) {
                             {
                                 fileName: record.files[0].name.validValue(),
                                 hash: record.files[0].hash,
-                                nature: record.description.validValue(),
+                                nature: record.description,
                                 size: record.files[0].size,
                                 storageFeePaidBy: "Requester",
                             }

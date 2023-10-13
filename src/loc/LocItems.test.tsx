@@ -266,7 +266,7 @@ function givenFileItem(request: LocData, status: ItemStatus): LocItem[] {
         {
             fileName: "Name",
             hash: Hash.fromHex("0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a"),
-            nature: "Some nature",
+            nature: HashString.fromValue("Some nature"),
             size: 42n,
             storageFeePaidBy: "Requester",
         }
@@ -308,7 +308,7 @@ function givenLinkItem(request: LocData, status: ItemStatus): LocItem[] {
             template: false,
         },
         {
-            nature: "Some nature",
+            nature: HashString.fromValue("Some nature"),
             linkDetailsPath: "",
             linkedLoc: {
                 id: targetId,

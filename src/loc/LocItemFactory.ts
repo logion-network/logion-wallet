@@ -45,7 +45,7 @@ function createDraftFileLocItem(parameters: MergedFile): FileItem {
         {
             hash: parameters.hash,
             fileName: parameters.name,
-            nature: parameters.nature.validValue(),
+            nature: parameters.nature,
             size: parameters.size,
             storageFeePaidBy: parameters.storageFeePaidBy || "",
         }
@@ -147,7 +147,7 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
         locItem ? {
             fileName: locItem.name,
             hash: locItem.hash,
-            nature: templateItem.publicDescription,
+            nature: HashString.fromValue(templateItem.publicDescription),
             size: locItem.size,
             storageFeePaidBy: locItem.storageFeePaidBy || "",
         } : undefined,
@@ -200,7 +200,7 @@ export function createLinkTemplateItem(
             defaultTitle: templateItem.publicDescription,
         },
         (linkData && locItem) ? {
-            nature: templateItem.publicDescription,
+            nature: HashString.fromValue(templateItem.publicDescription),
             linkDetailsPath: linkData.linkDetailsPath,
             linkedLoc: linkData.linkedLoc,
         } : undefined,

@@ -37,7 +37,7 @@ export type LocItemType = 'Data' | 'Document' | 'Linked LOC';
 export interface LinkData {
     readonly linkedLoc: LocData;
     readonly linkDetailsPath: string;
-    readonly nature: string;
+    readonly nature: HashString;
 }
 
 export interface MetadataData {
@@ -48,7 +48,7 @@ export interface MetadataData {
 export interface FileData {
     readonly hash: Hash;
     readonly fileName: string;
-    readonly nature: string;
+    readonly nature: HashString;
     readonly size: bigint;
     readonly storageFeePaidBy: string;
 }
@@ -192,7 +192,7 @@ export class FileItem extends AbstractLocItem<FileData> {
 
     override title() {
         if (this.hasData()) {
-            return this.data().nature || "-";
+            return this.data().nature.value || "-";
         } else {
             return this.defaultTitle
         }
@@ -218,7 +218,7 @@ export class LinkItem extends AbstractLocItem<LinkData> {
 
     override title() {
         if (this.hasData()) {
-            return this.data().nature || "-";
+            return this.data().nature.value || "-";
         } else {
             return this.defaultTitle;
         }
@@ -534,7 +534,7 @@ export async function getLinkData(
     return {
         linkedLoc,
         linkDetailsPath,
-        nature: link.nature.validValue(),
+        nature: link.nature,
     };
 }
 

@@ -304,7 +304,7 @@ function ItemDeleter() {
                     locState: current as unknown as RealEditableRequest,
                     target: locItems.filter(item => item.type === "Linked LOC")
                         .map(item => item.as<LinkData>())
-                        .find(data => data.nature === "New link")!.linkedLoc.id,
+                        .find(data => data.nature.value === "New link")!.linkedLoc.id,
                 }) as unknown as RealEditableRequest;
                 next = current.deleteMetadata!({
                     nameHash: Hash.of("New data"),

@@ -1,7 +1,7 @@
 jest.mock("./LocContext");
 jest.mock("src/logion-chain");
 
-import { LocData } from "@logion/client";
+import { LocData, HashString } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { LinkItem } from "./LocItem";
 import { shallowRender } from "../tests";
@@ -24,7 +24,7 @@ describe("LocPublishLinkButton", () => {
             linkedLoc: {
                 id: new UUID("94cec06d-dca4-4a62-83f4-a82c5425d94e")
             } as unknown as LocData,
-            nature: "link-nature",
+            nature: HashString.fromValue("link-nature"),
             linkDetailsPath: "",
         }
     );

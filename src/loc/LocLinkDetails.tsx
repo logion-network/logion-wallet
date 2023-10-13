@@ -23,7 +23,7 @@ export default function LocLinkDetails(props: Props) {
                     </>
                 }
                 <div className="frame-title">{ props.item.isPublishedOrAcknowledged() ? "Published data" : "Data to be published" }</div>
-                <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.data().nature : "-" }</LocItemDetail>
+                <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.data().nature.validValue() : "-" }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
                     { props.item.submitter?.address || "-" }
                 </LocItemDetail>
