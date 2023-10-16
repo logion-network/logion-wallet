@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { clickByName } from '../tests';
 import ImportItems from './ImportItems';
 import { setLocState, refresh } from "./__mocks__/UserLocContextMock";
-import { CollectionItem, Fees } from "@logion/node-api";
+import { CollectionItem, Fees, UUID } from "@logion/node-api";
 import { H256 } from "@logion/node-api/dist/types/interfaces";
 import { LogionClient, AddCollectionItemParams, EstimateFeesAddCollectionItemParams } from "@logion/client";
 import { mockSubmittableResult } from "../logion-chain/__mocks__/SignatureMock";
@@ -85,6 +85,7 @@ async function uploadCsv(): Promise<any> {
         data: () => ({
             requesterAddress: TEST_WALLET_USER,
             collectionCanUpload: false,
+            id: new UUID("6a7954ca-910d-48c5-857f-c3dca3f98e34"),
         }),
     };
     setLocState(collection);
