@@ -6,8 +6,11 @@ import {
     TermsAndConditionsElement,
     CreativeCommons,
 } from "@logion/client";
-import { Hash } from "@logion/node-api";
+import { Hash, UUID } from "@logion/node-api";
 import './ImportItemDetails.css';
+import QrCode from "src/components/qrcode/QrCode";
+import { fullCollectionItemCertificate } from "src/PublicPaths";
+import CopyPasteButton from "src/common/CopyPasteButton";
 
 export type ErrorType = 'validation' | 'chain' | 'upload';
 
@@ -39,7 +42,7 @@ function termsAncConditions(tc: TermsAndConditionsElement, locLabel: string) {
     )
 }
 
-export default function ImportItemDetails(props: { item: Item }) {
+export default function ImportItemDetails(props: { locId: UUID, item: Item }) {
     return (
         <div className="ImportItemDetails">
             {
@@ -74,19 +77,27 @@ export default function ImportItemDetails(props: { item: Item }) {
                     </ul>
                 </div>
             }
-            {
-                <div className="item-tcs">
-                    <p>Terms and Conditions:</p>
-                    { props.item.logionClassification && termsAncConditions(props.item.logionClassification, "LITC version LOC") }
-                    { props.item.specificLicense && termsAncConditions(props.item.specificLicense, "Specific License LOC") }
-                    { props.item.creativeCommons && termsAncConditions(props.item.creativeCommons, "CC Attribution LOC") }
-                    { props.item.logionClassification === undefined && props.item.specificLicense === undefined &&
-                        <ul>
-                            <li>None</li>
-                        </ul>
-                    }
-                </div>
-            }
+            <div className="item-tcs">
+                <p>Terms and Conditions:</p>
+                { props.item.logionClassification && termsAncConditions(props.item.logionClassification, "LITC version LOC") }
+                { props.item.specificLicense && termsAncConditions(props.item.specificLicense, "Specific License LOC") }
+                { props.item.creativeCommons && termsAncConditions(props.item.creativeCommons, "CC Attribution LOC") }
+                { props.item.logionClassification === undefined && props.item.specificLicense === undefined &&
+                    <ul>
+                        <li>None</li>
+                    </ul>
+                }
+            </div>
+            <div className="item-certificate">
+                <p>Certificate URL (only valid after successful import):</p>
+                <p className="url">{ fullCollectionItemCertificate(props.locId, props.item.id) } <CopyPasteButton value={ fullCollectionItemCertificate(props.locId, props.item.id) } /></p>
+                <p className="qr">
+                    <QrCode
+                        data={ fullCollectionItemCertificate(props.locId, props.item.id) }
+                        width="200px"
+                    />
+                </p>
+            </div>
         </div>
     );
 }

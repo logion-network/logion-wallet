@@ -18,6 +18,15 @@
 .ImportItemDetails .item-file,
 .ImportItemDetails .item-delivery,
 .ImportItemDetails .item-tcs,
-.ImportItemDetails .item-token {
+.ImportItemDetails .item-token,
+.ImportItemDetails .item-certificate {
     text-align: left;
+}
+
+.ImportItemDetails .item-certificate .url {
+    word-break: break-all;
+}
+
+.ImportItemDetails .item-certificate .qr {
+    text-align: center;
 }

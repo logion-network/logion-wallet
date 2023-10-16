@@ -17,7 +17,7 @@ import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 import Dialog from "../common/Dialog";
 import FileSelectorButton from "../common/FileSelectorButton";
 import Icon from "../common/Icon";
-import Table, { Cell, EmptyTableMessage } from "../common/Table";
+import Table, { Cell, CopyPasteCell, EmptyTableMessage } from "../common/Table";
 import { useCommonContext } from "../common/CommonContext";
 import Button from "../common/Button";
 import { useLogionChain } from "../logion-chain";
@@ -189,6 +189,9 @@ export default function ImportItems() {
         setItems(items.slice());
     }, [ locState, items, setItems ]);
 
+    if(!locState) {
+        return null;
+    }
     return (
         <div className="ImportItems">
             <FileSelectorButton
@@ -241,7 +244,7 @@ export default function ImportItems() {
                         columns={[
                             {
                                 header: "ID",
-                                render: item => <Cell content={ item.id?.toHex() || item.displayId } />,
+                                render: item => <CopyPasteCell content={ item.id?.toHex() || item.displayId } />,
                                 align: "left",
                                 width: width({
                                     onSmallScreen: "540px",
@@ -252,7 +255,7 @@ export default function ImportItems() {
                                 header: "Description",
                                 render: item => <Cell content={ item.description } overflowing tooltipId={`item-${item.id}-description`}/>,
                                 align: "left",
-                                renderDetails: item => <ImportItemDetails item={ item } />,
+                                renderDetails: item => <ImportItemDetails locId={ locState?.data().id } item={ item } />,
                                 detailsExpanded: item => item.error !== undefined,
                             },
                             {
