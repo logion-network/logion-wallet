@@ -9,6 +9,8 @@ import {
     ItemStatus,
     ReviewResult,
     HashString,
+    OpenLoc,
+    PendingRequest,
 } from "@logion/client";
 import { UUID, LocType, Fees, ValidAccountId, Hash } from "@logion/node-api";
 import { ReactNode, useCallback } from "react";
@@ -499,7 +501,7 @@ export function canRequestReview(viewer: Viewer, loc: LocData, item: LocItem) {
 }
 
 export function canReview(viewer: Viewer, loc: LocData, item: LocItem) {
-    return viewer === "LegalOfficer" && item.status === "REVIEW_PENDING" && loc.status === "OPEN";
+    return viewer === "LegalOfficer" && item.status === "REVIEW_PENDING" && (loc.status === "REVIEW_PENDING" || loc.status === "OPEN");
 }
 
 export async function getLinkData(
@@ -561,7 +563,7 @@ export function useRequestReviewCallback(mutateLocState: (mutator: (current: Loc
 export function useReviewCallback(mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>) {
     return useCallback(async (locItem: LocItem, decision: ReviewResult, rejectReason?: string) => {
         mutateLocState(async current => {
-            if(current instanceof EditableRequest) {
+            if(current instanceof OpenLoc || current instanceof PendingRequest) {
                 if(locItem.type === "Data") {
                     return current.legalOfficer.reviewMetadata({
                         nameHash: locItem.as<MetadataData>().name.hash,
