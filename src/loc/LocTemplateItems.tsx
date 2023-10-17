@@ -47,6 +47,6 @@ export default function LocTemplateItems(props: Props) {
     );
 
     function renderActions(item: LocItem) {
-        return <TemplateItemActions item={ item } />;
+        return <TemplateItemActions item={ item } contributionMode={ props.contributionMode } />;
     }
 }
