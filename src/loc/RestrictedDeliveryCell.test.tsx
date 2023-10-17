@@ -26,7 +26,8 @@ describe("RestrictedDeliveryCell", () => {
                 published: false,
                 restrictedDelivery: false,
                 submitter: DEFAULT_ADDRESS,
-            }]
+            }],
+            status: "OPEN",
         } as unknown as LocData);
         setLocState(openLoc);
         const result = shallowRender(<RestrictedDeliveryCell hash={hash}/>);
