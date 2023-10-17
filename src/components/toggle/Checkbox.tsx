@@ -19,6 +19,6 @@ export default function Checkbox(props: Props) {
         props.disabled ? "disabled" : undefined,
     );
     return (
-        <div role="checkbox" aria-checked={ props.checked } className={ className } onClick={() => props.setChecked && props.setChecked(!props.checked)}></div>
+        <div role="checkbox" aria-checked={ props.checked } className={ className } onClick={() => !props.disabled && props.setChecked && props.setChecked(!props.checked)}></div>
     );
 }

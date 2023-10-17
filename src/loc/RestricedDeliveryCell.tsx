@@ -49,6 +49,8 @@ export default function RestrictedDeliveryCell(props: Props) {
         return file?.restrictedDelivery || false;
     }, [ props.hash, loc ]);
 
+    const alwaysDisabled = useMemo(() => loc?.status !== "OPEN" && loc?.status !== "CLOSED", [ loc ]);
+
     return (
         <Cell content={
             <div className="RestrictedDeliveryCell checkbox-container">
@@ -66,7 +68,7 @@ export default function RestrictedDeliveryCell(props: Props) {
                             skin="Toggle black"
                             checked={checked}
                             setChecked={value => confirmCallback(value)}
-                            disabled={disabled}
+                            disabled={ alwaysDisabled || disabled }
                         />
                     </div>
                 </OverlayTrigger>
