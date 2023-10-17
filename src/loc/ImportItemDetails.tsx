@@ -11,6 +11,7 @@ import './ImportItemDetails.css';
 import QrCode from "src/components/qrcode/QrCode";
 import { fullCollectionItemCertificate } from "src/PublicPaths";
 import CopyPasteButton from "src/common/CopyPasteButton";
+import { Col, Row } from "react-bootstrap";
 
 export type ErrorType = 'validation' | 'chain' | 'upload';
 
@@ -49,54 +50,63 @@ export default function ImportItemDetails(props: { locId: UUID, item: Item }) {
                 props.item.error &&
                 <p className="error-message">{ props.item.error }</p>
             }
-            <div className="item-description">
-                <p>Item description:</p>
-                <pre>{ props.item.description }</pre>
-                {
-                    props.item.files.length > 0 &&
-                    <div className="item-file">
-                        <p>Attached file:</p>
-                        <ul>
-                            <li>Name: { props.item.files[0].name }</li>
-                            <li>Content type: { props.item.files[0].contentType.mimeType }</li>
-                            <li>Hash: { props.item.files[0].hashOrContent.contentHash.toHex() }</li>
-                            <li>Size: { props.item.files[0].size.toString() } bytes</li>
-                        </ul>
+            <Row>
+                <Col md={8}>
+                    <div className="item-description">
+                        <p>Item description:</p>
+                        <pre>{ props.item.description }</pre>
+                        {
+                            props.item.files.length > 0 &&
+                            <div className="item-file">
+                                <p>Attached file:</p>
+                                <ul>
+                                    <li>Name: { props.item.files[0].name }</li>
+                                    <li>Content type: { props.item.files[0].contentType.mimeType }</li>
+                                    <li>Hash: { props.item.files[0].hashOrContent.contentHash.toHex() }</li>
+                                    <li>Size: { props.item.files[0].size.toString() } bytes</li>
+                                </ul>
+                            </div>
+                        }
                     </div>
-                }
-            </div>
-            <p className="item-delivery">Restricted delivery: { props.item.restrictedDelivery ? "Yes" : "No" }</p>
-            {
-                props.item.token &&
-                <div className="item-token">
-                    <p>Underlying token:</p>
-                    <ul>
-                        <li>Type: { props.item.token.type }</li>
-                        <li>ID: { props.item.token.id }</li>
-                        <li>Issuance: { props.item.token.issuance.toString() || "0" }</li>
-                    </ul>
-                </div>
-            }
-            <div className="item-tcs">
-                <p>Terms and Conditions:</p>
-                { props.item.logionClassification && termsAncConditions(props.item.logionClassification, "LITC version LOC") }
-                { props.item.specificLicense && termsAncConditions(props.item.specificLicense, "Specific License LOC") }
-                { props.item.creativeCommons && termsAncConditions(props.item.creativeCommons, "CC Attribution LOC") }
-                { props.item.logionClassification === undefined && props.item.specificLicense === undefined &&
-                    <ul>
-                        <li>None</li>
-                    </ul>
-                }
-            </div>
+                    <p className="item-delivery">Restricted delivery: { props.item.restrictedDelivery ? "Yes" : "No" }</p>
+                    {
+                        props.item.token &&
+                        <div className="item-token">
+                            <p>Underlying token:</p>
+                            <ul>
+                                <li>Type: { props.item.token.type }</li>
+                                <li>ID: { props.item.token.id }</li>
+                                <li>Issuance: { props.item.token.issuance.toString() || "0" }</li>
+                            </ul>
+                        </div>
+                    }
+                    <div className="item-tcs">
+                        <p>Terms and Conditions:</p>
+                        { props.item.logionClassification && termsAncConditions(props.item.logionClassification, "LITC version LOC") }
+                        { props.item.specificLicense && termsAncConditions(props.item.specificLicense, "Specific License LOC") }
+                        { props.item.creativeCommons && termsAncConditions(props.item.creativeCommons, "CC Attribution LOC") }
+                        { props.item.logionClassification === undefined && props.item.specificLicense === undefined &&
+                            <ul>
+                                <li>None</li>
+                            </ul>
+                        }
+                    </div>
+                </Col>
+                <Col md={4}>
+                    <div className="item-certificate">
+                        <p>Certificate QR code (only valid after successful import):</p>
+                        <p className="qr">
+                            <QrCode
+                                data={ fullCollectionItemCertificate(props.locId, props.item.id) }
+                                width="200px"
+                            />
+                        </p>
+                    </div>
+                </Col>
+            </Row>
             <div className="item-certificate">
                 <p>Certificate URL (only valid after successful import):</p>
                 <p className="url">{ fullCollectionItemCertificate(props.locId, props.item.id) } <CopyPasteButton value={ fullCollectionItemCertificate(props.locId, props.item.id) } /></p>
-                <p className="qr">
-                    <QrCode
-                        data={ fullCollectionItemCertificate(props.locId, props.item.id) }
-                        width="200px"
-                    />
-                </p>
             </div>
         </div>
     );
