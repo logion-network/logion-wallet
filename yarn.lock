@@ -2976,15 +2976,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/client@npm:^0.33.0-1":
-  version: 0.33.0-1
-  resolution: "@logion/client@npm:0.33.0-1"
+"@logion/client@npm:^0.33.0-1, @logion/client@npm:^0.33.0-2":
+  version: 0.33.0-3
+  resolution: "@logion/client@npm:0.33.0-3"
   dependencies:
-    "@logion/node-api": ^0.23.0
+    "@logion/node-api": ^0.24.0-1
     axios: ^0.27.2
     luxon: ^3.0.1
     mime-db: ^1.52.0
-  checksum: ae1be23c6dd6e4174fc0dea43a79a7e2a0ad24f91ca0ef2b44b76630accdb92c6f60236ad92a1d605318638123e9c43a81025e9b797c90d85c4f6f8b728ee353
+  checksum: 4506ef15d5cfdeea7c7c1522a028f40eaf50363d02698d776faa708818754285df167a2db236bd35560eba051f46fb626cf4265cfc2ee81dbd36d415a089f2b7
   languageName: node
   linkType: hard
 
@@ -2998,14 +2998,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/extension@npm:^0.7.1-1":
-  version: 0.7.1-1
-  resolution: "@logion/extension@npm:0.7.1-1"
+"@logion/extension@npm:^0.7.1-2":
+  version: 0.7.1-2
+  resolution: "@logion/extension@npm:0.7.1-2"
   dependencies:
-    "@logion/client": ^0.33.0-1
+    "@logion/client": ^0.33.0-2
     "@polkadot/extension-compat-metamask": ^0.46.5
     "@polkadot/extension-dapp": ^0.46.5
-  checksum: 0cbcceec3fe8ed975b0bf7f2841e42bb9a4d1bdc08735149d18c4688790031535fededc0a48cd3dae88a9a2ac49c40dfbfdafa72afe2932ab6357cec035d268d
+  checksum: 6e06cb249ddc6d8d0b5ee751139e3fdfc4f80372133a2b8979df6666f80bb74d04af8aeb925adad0a1be7eee972c1c699afab2e56e1e4e237abf04cf5515981b
   languageName: node
   linkType: hard
 
@@ -3020,9 +3020,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/node-api@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "@logion/node-api@npm:0.23.0"
+"@logion/node-api@npm:^0.24.0-1":
+  version: 0.24.0-1
+  resolution: "@logion/node-api@npm:0.24.0-1"
   dependencies:
     "@polkadot/api": ^10.9.1
     "@polkadot/util": ^12.3.2
@@ -3030,7 +3030,7 @@ __metadata:
     "@types/uuid": ^9.0.2
     fast-sha256: ^1.3.0
     uuid: ^9.0.0
-  checksum: 08ab75ca86767daa6913423b9e2e598555ef3da86d60e8c24624b4e1b145a045973c06638966738effa1959587ae0d6955080e3c21c63aad1bda62345bacc71d
+  checksum: 7d065405d62ea72f9ccde312fbdb16c375bdaae201d34554be2c82d57515f1b9eaa1f132cd34baefe775b04a8481e1098ed78e3c3bec95cc79c3d1b34edbdbfa
   languageName: node
   linkType: hard
 
@@ -12562,7 +12562,7 @@ __metadata:
     "@craco/craco": ^6.4.5
     "@creativecommons/cc-assets": ^0.1.0
     "@logion/crossmint": ^0.1.27-1
-    "@logion/extension": ^0.7.1-1
+    "@logion/extension": ^0.7.1-2
     "@logion/multiversx": ^0.1.8-1
     "@multiversx/sdk-extension-provider": ^2.0.7
     "@popperjs/core": ^2.11.6
