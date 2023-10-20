@@ -21,7 +21,6 @@ import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsi
 
 import './CloseLocButton.css';
 import Checkbox from "src/components/toggle/Checkbox";
-import { LocItem } from "./LocItem";
 
 enum CloseStatus {
     NONE,
@@ -47,7 +46,7 @@ export default function CloseLocButton(props: Props) {
     const navigate = useNavigate();
     const { accounts, axiosFactory, api, signer } = useLogionChain();
     const { refreshRequests } = useLegalOfficerContext();
-    const { mutateLocState, locItems, loc, locState } = useLocContext();
+    const { mutateLocState,locItems, loc, locState } = useLocContext();
     const [ closeState, setCloseState ] = useState<CloseState>({ status: CloseStatus.NONE });
     const [ call, setCall ] = useState<Call>();
     const [ signAndSubmitVouch, setSignAndSubmitVouch ] = useState<SignAndSubmit>(null);
@@ -73,8 +72,12 @@ export default function CloseLocButton(props: Props) {
     }, [ mutateLocState, closeState, setCloseState, signer, autoAck ]);
 
     const canClose = useMemo(() => {
-        return locItems.length === 0 || locItems.findIndex(locItem => locItem.status !== "ACKNOWLEDGED") === -1;
-    }, [ locItems ]);
+        if(locState instanceof OpenLoc) {
+            return locState.legalOfficer.canClose(autoAck);
+        } else {
+            return false;
+        }
+    }, [ locState, autoAck ]);
 
     const alreadyVouched = useCallback(async (lost: string, rescuer: string, currentAddress: string) => {
         const activeRecovery = await api!.queries.getActiveRecovery(
@@ -136,18 +139,13 @@ export default function CloseLocButton(props: Props) {
         }
     }, [ closeState, setCloseState, accounts, axiosFactory, loc, navigate, props.protectionRequest, refreshRequests ]);
 
-    const isAcknowledgedByAtLeastVerifiedIssuer = useCallback((item: LocItem) => {
-        if(locState) {
-            return item.status === "ACKNOWLEDGED"
-                || (item.status === "PUBLISHED" && (item.acknowledgedByVerifiedIssuer || locState.isRequester(item.submitter) || locState.isOwner(item.submitter)));
+    const canAutoAck = useMemo(() => {
+        if(locState instanceof OpenLoc) {
+            return locItems.length > 0 && locState.legalOfficer.canAutoAck();
         } else {
             return false;
         }
-    }, [ locState ]);
-
-    const canAutoAck = useMemo(() => {
-        return locItems.length > 0 && locItems.find(item => !isAcknowledgedByAtLeastVerifiedIssuer(item)) === undefined;
-    }, [ locItems, isAcknowledgedByAtLeastVerifiedIssuer ]);
+    }, [ locItems, locState ]);
 
     if(!loc) {
         return null;
@@ -191,7 +189,7 @@ export default function CloseLocButton(props: Props) {
                         <Button
                             onClick={ () => setCloseState({ status: firstStatus }) }
                             className="close"
-                            disabled={ !canClose && (!canAutoAck || (canAutoAck && !autoAck)) }
+                            disabled={ !canClose }
                         >
                             <Icon icon={{ id: iconId }} height="19px" /><span className="text">{ closeButtonText }</span>
                         </Button>
