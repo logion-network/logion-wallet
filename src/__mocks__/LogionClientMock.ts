@@ -101,6 +101,12 @@ export class LocRequestState {
     getCurrentState() {
         return this;
     }
+    isRequester(account: any) {
+        return false;
+    }
+    isOwner(account: any) {
+        return false;
+    }
 }
 
 export class ClosedCollectionLoc extends LocRequestState {

@@ -2977,14 +2977,14 @@ __metadata:
   linkType: hard
 
 "@logion/client@npm:^0.33.0-1, @logion/client@npm:^0.33.0-2":
-  version: 0.33.0-3
-  resolution: "@logion/client@npm:0.33.0-3"
+  version: 0.33.0-4
+  resolution: "@logion/client@npm:0.33.0-4"
   dependencies:
     "@logion/node-api": ^0.24.0-1
     axios: ^0.27.2
     luxon: ^3.0.1
     mime-db: ^1.52.0
-  checksum: 4506ef15d5cfdeea7c7c1522a028f40eaf50363d02698d776faa708818754285df167a2db236bd35560eba051f46fb626cf4265cfc2ee81dbd36d415a089f2b7
+  checksum: 2f454eff7d24c02cb099395520b4fc0fe0ce8a725cd185c77afbae994defebf7425f98f327949e2261e6f7e84bb6e8fd8ef92301155bdc8a1950e99b323bfcb0
   languageName: node
   linkType: hard
 

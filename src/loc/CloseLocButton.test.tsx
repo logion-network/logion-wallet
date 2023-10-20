@@ -1,4 +1,5 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
 import { LocData, ItemStatus, HashString } from "@logion/client";
 
 import { clickByName, expectNoDialogVisible } from '../tests';
@@ -107,9 +108,63 @@ describe("CloseLocButton", () => {
         await clickByName("OK");
         await expectNoDialogVisible();
     })
+
+    it("closes with all items published by requester and auto-ack", async () => {
+        setLocItems([ metadataItem("PUBLISHED") ]);
+        const locState = new OpenLoc();
+        locState.data = () => ({
+            locType: "Transaction",
+            status: "OPEN",
+        } as LocData);
+        let called = false;
+        const closeLocMock = async (params: any) => {
+            called = true;
+            params.callback(mockSubmittableResult(true));
+            return params.locState;
+        };
+        locState.legalOfficer.close = closeLocMock;
+        locState.isRequester = () => true;
+        setLocState(locState);
+
+        render(<CloseLocButton />);
+        const ackAllToggle = screen.getByRole("checkbox");
+        await userEvent.click(ackAllToggle);
+        await clickByName(/Close LOC/);
+        await clickByName("Proceed");
+
+        await expectNoDialogVisible();
+        expect(called).toBe(true);
+    })
+
+    it("closes with all items acknowledged by verified issuer and auto-ack", async () => {
+        setLocItems([ metadataItem("PUBLISHED", true) ]);
+        const locState = new OpenLoc();
+        locState.data = () => ({
+            locType: "Transaction",
+            status: "OPEN",
+        } as LocData);
+        let called = false;
+        const closeLocMock = async (params: any) => {
+            called = true;
+            params.callback(mockSubmittableResult(true));
+            return params.locState;
+        };
+        locState.legalOfficer.close = closeLocMock;
+        locState.isRequester = () => false;
+        setLocState(locState);
+
+        render(<CloseLocButton />);
+        const ackAllToggle = screen.getByRole("checkbox");
+        await userEvent.click(ackAllToggle);
+        await clickByName(/Close LOC/);
+        await clickByName("Proceed");
+
+        await expectNoDialogVisible();
+        expect(called).toBe(true);
+    })
 })
 
-function metadataItem(status: ItemStatus): LocItem {
+function metadataItem(status: ItemStatus, acknowledgedByVerifiedIssuer?: boolean): LocItem {
     return new MetadataItem(
         {
             newItem: false,
@@ -118,6 +173,7 @@ function metadataItem(status: ItemStatus): LocItem {
             timestamp: null,
             type: 'Data',
             template: false,
+            acknowledgedByVerifiedIssuer,
         },
         {
             name: HashString.fromValue("Test"),

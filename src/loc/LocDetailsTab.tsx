@@ -357,7 +357,7 @@ export function LocDetailsTabContent(props: ContentProps) {
             {
                 viewer === "LegalOfficer" &&
                 <>
-                <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
+                <Col className="close-button-container" xxl={ 5 } xl={ 6 }>
                     {
                         !loc.voidInfo &&
                         <CloseLocButton protectionRequest={ protectionRequest } />
