@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ProtectionRequest, OpenLoc } from "@logion/client";
 import { Col, Row } from "react-bootstrap";
@@ -20,6 +20,7 @@ import { signAndSend } from "../logion-chain/Signature";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
 import './CloseLocButton.css';
+import Checkbox from "src/components/toggle/Checkbox";
 
 enum CloseStatus {
     NONE,
@@ -45,11 +46,11 @@ export default function CloseLocButton(props: Props) {
     const navigate = useNavigate();
     const { accounts, axiosFactory, api, signer } = useLogionChain();
     const { refreshRequests } = useLegalOfficerContext();
-    const { mutateLocState, locItems, loc } = useLocContext();
+    const { mutateLocState,locItems, loc, locState } = useLocContext();
     const [ closeState, setCloseState ] = useState<CloseState>({ status: CloseStatus.NONE });
     const [ call, setCall ] = useState<Call>();
-    const [ disabled, setDisabled ] = useState<boolean>(false);
     const [ signAndSubmitVouch, setSignAndSubmitVouch ] = useState<SignAndSubmit>(null);
+    const [ autoAck, setAutoAck ] = useState(false);
 
     useEffect(() => {
         if (closeState.status === CloseStatus.CLOSE_PENDING) {
@@ -58,6 +59,7 @@ export default function CloseLocButton(props: Props) {
                 mutateLocState(async current => {
                     if(signer && current instanceof OpenLoc) {
                         return current.legalOfficer.close({
+                            autoAck,
                             signer,
                             callback,
                         });
@@ -67,15 +69,15 @@ export default function CloseLocButton(props: Props) {
                 });
             setCall(() => call);
         }
-    }, [ mutateLocState, closeState, setCloseState, signer ]);
+    }, [ mutateLocState, closeState, setCloseState, signer, autoAck ]);
 
-    useEffect(() => {
-        if (locItems.findIndex(locItem => locItem.status !== "ACKNOWLEDGED") < 0) {
-            setDisabled(false)
+    const canClose = useMemo(() => {
+        if(locState instanceof OpenLoc) {
+            return locState.legalOfficer.canClose(autoAck);
         } else {
-            setDisabled(true)
+            return false;
         }
-    }, [ locItems, setDisabled ]);
+    }, [ locState, autoAck ]);
 
     const alreadyVouched = useCallback(async (lost: string, rescuer: string, currentAddress: string) => {
         const activeRecovery = await api!.queries.getActiveRecovery(
@@ -137,6 +139,14 @@ export default function CloseLocButton(props: Props) {
         }
     }, [ closeState, setCloseState, accounts, axiosFactory, loc, navigate, props.protectionRequest, refreshRequests ]);
 
+    const canAutoAck = useMemo(() => {
+        if(locState instanceof OpenLoc) {
+            return locItems.length > 0 && locState.legalOfficer.canAutoAck();
+        } else {
+            return false;
+        }
+    }, [ locItems, locState ]);
+
     if(!loc) {
         return null;
     }
@@ -165,13 +175,26 @@ export default function CloseLocButton(props: Props) {
         <div className="CloseLocButton">
             {
                 loc.status === "OPEN" &&
-                <Button
-                    onClick={ () => setCloseState({ status: firstStatus }) }
-                    className="close"
-                    disabled={ disabled }
-                >
-                    <Icon icon={{ id: iconId }} height="19px" /><span className="text">{ closeButtonText }</span>
-                </Button>
+                <div className="toggle-button-container">
+                    <div className="toggle-container">
+                        <p>Acknowledge all?</p>
+                        <Checkbox
+                            skin="Toggle black"
+                            checked={ autoAck }
+                            setChecked={ (value) => setAutoAck(value) }
+                            disabled={ !canAutoAck }
+                        />
+                    </div>
+                    <div className="button-container">
+                        <Button
+                            onClick={ () => setCloseState({ status: firstStatus }) }
+                            className="close"
+                            disabled={ !canClose }
+                        >
+                            <Icon icon={{ id: iconId }} height="19px" /><span className="text">{ closeButtonText }</span>
+                        </Button>
+                    </div>
+                </div>
             }
             <ProcessStep
                 active={ closeState.status === CloseStatus.ACCEPT }

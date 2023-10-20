@@ -2,3 +2,18 @@
     background-image: none;
     background-color: #152665;
 }
+
+.CloseLocButton .toggle-button-container {
+    display: flex;
+}
+
+.CloseLocButton .toggle-container {
+    display: flex;
+    padding-right: 20px;
+    padding-top: 7px;
+}
+
+.CloseLocButton .toggle-container p {
+    padding-right: 20px;
+    margin: 0;
+}

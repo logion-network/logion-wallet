@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { LocData, ItemStatus, HashString } from "@logion/client";
 
 import { clickByName, expectNoDialogVisible } from '../tests';
@@ -15,99 +15,82 @@ jest.mock("./LocContext");
 
 describe("CloseLocButton", () => {
 
-    it("does not close with draft items", async () => {
-        setLocItems([ metadataItem("DRAFT") ]);
-        let called = false;
-        const closeLocMock = async (params: any) => {
-            called = true;
-            params.callback(mockSubmittableResult(true));
-            return params.locState;
-        };
-        const locState = new OpenLoc();
-        locState.data = () => ({
-            locType: "Transaction",
-            status: "OPEN",
-        } as LocData);
-        locState.legalOfficer.close = closeLocMock;
-        setLocState(locState);
+    beforeEach(() => {
+        closeCalled = false;
+        closeLocMock = successCloseLocMock;
+    });
 
-        render(<CloseLocButton />);
+    it("does not close when not closeable", async () => {
+        renderGivenLoc(false, false);
+
         await clickByName(/Close LOC/);
 
         await expectNoDialogVisible();
-        expect(called).toBe(false);
+        expect(closeCalled).toBe(false);
     })
 
-    it("closes with all items recorded", async () => {
-        setLocItems([ metadataItem("ACKNOWLEDGED") ]);
-        const locState = new OpenLoc();
-        locState.data = () => ({
-            locType: "Transaction",
-            status: "OPEN",
-        } as LocData);
-        let called = false;
-        const closeLocMock = async (params: any) => {
-            called = true;
-            params.callback(mockSubmittableResult(true));
-            return params.locState;
-        };
-        locState.legalOfficer.close = closeLocMock;
-        setLocState(locState);
+    it("closes when closeable", async () => {
+        renderGivenLoc(true, false);
 
-        render(<CloseLocButton />);
         await clickByName(/Close LOC/);
         await clickByName("Proceed");
 
         await expectNoDialogVisible();
-        expect(called).toBe(true);
+        expect(closeCalled).toBe(true);
     })
 
-    it("does not close on cancel", async () => {
-        setLocItems([ metadataItem("ACKNOWLEDGED") ]);
-        const locState = new OpenLoc();
-        locState.data = () => ({
-            locType: "Transaction",
-            status: "OPEN",
-        } as LocData);
-        let called = false;
-        const closeLocMock = async (params: any) => {
-            called = true;
-            params.callback(mockSubmittableResult(true));
-            return params.locState;
-        };
-        locState.legalOfficer.close = closeLocMock;
-        setLocState(locState);
+    it("does not close on cancel and closeable", async () => {
+        renderGivenLoc(true, false);
 
-        render(<CloseLocButton />);
         await clickByName(/Close LOC/);
         await clickByName("Cancel");
 
         await expectNoDialogVisible();
-        expect(called).toBe(false);
+        expect(closeCalled).toBe(false);
     })
 
     it("shows message on error", async () => {
-        setLocItems([ metadataItem("ACKNOWLEDGED") ]);
-        const locState = new OpenLoc();
-        locState.data = () => ({
-            locType: "Transaction",
-            status: "OPEN",
-        } as LocData);
-        const closeLocMock = async (params: any) => {
-            params.callback(mockSubmittableResult(false, "Failed", true));
-            throw new Error();
-        };
-        locState.legalOfficer.close = closeLocMock;
-        setLocState(locState);
+        closeLocMock = failureCloseLocMock;
+        renderGivenLoc(true, false);
 
-        render(<CloseLocButton />);
         await clickByName(/Close LOC/);
         await clickByName("Proceed");
 
         await clickByName("OK");
         await expectNoDialogVisible();
     })
+
+    it("enables auto-ack toggle", async () => {
+        renderGivenLoc(false, true);
+
+        const ackAllToggle = screen.getByRole("checkbox");
+
+        expect(ackAllToggle).not.toHaveClass("disabled");
+    })
+
+    it("disables auto-ack toggle", async () => {
+        renderGivenLoc(true, false);
+
+        const ackAllToggle = screen.getByRole("checkbox");
+
+        expect(ackAllToggle).toHaveClass("disabled");
+    })
 })
+
+function renderGivenLoc(canClose: boolean, canAck: boolean) {
+    setLocItems([ metadataItem(canClose ? "ACKNOWLEDGED" : "PUBLISHED") ]);
+    const locState = new OpenLoc();
+    locState.data = () => ({
+        locType: "Transaction",
+        status: "OPEN",
+    } as LocData);
+    locState.legalOfficer.close = closeLocMock;
+    locState.legalOfficer.canClose = () => canClose;
+    locState.legalOfficer.canAutoAck = () => canAck;
+    setLocState(locState);
+
+    render(<CloseLocButton />);
+}
 
 function metadataItem(status: ItemStatus): LocItem {
     return new MetadataItem(
@@ -125,3 +108,19 @@ function metadataItem(status: ItemStatus): LocItem {
         }
     );
 }
+
+let closeCalled = false;
+
+const successCloseLocMock = async (params: any) => {
+    closeCalled = true;
+    params.callback(mockSubmittableResult(true));
+    return params.locState;
+};
+
+const failureCloseLocMock = async (params: any) => {
+    closeCalled = true;
+    params.callback(mockSubmittableResult(false, "Failed", true));
+    throw new Error();
+};
+
+let closeLocMock = successCloseLocMock;

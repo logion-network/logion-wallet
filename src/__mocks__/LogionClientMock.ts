@@ -101,6 +101,12 @@ export class LocRequestState {
     getCurrentState() {
         return this;
     }
+    isRequester(account: any) {
+        return false;
+    }
+    isOwner(account: any) {
+        return false;
+    }
 }
 
 export class ClosedCollectionLoc extends LocRequestState {
@@ -155,11 +161,15 @@ export class OpenLoc extends EditableRequest {
         voidLoc: any,
         getVerifiedIssuers: () => Promise<VerifiedIssuerWithSelect[]>,
         setCollectionFileRestrictedDelivery: (params: any) => Promise<OpenLoc>,
+        canClose: (autoAck: boolean) => boolean,
+        canAutoAck: () => boolean,
     } = {
         close: jest.fn(),
         voidLoc: jest.fn(),
         getVerifiedIssuers: () => Promise.resolve(issuers),
         setCollectionFileRestrictedDelivery: () => Promise.resolve(this),
+        canClose: () => true,
+        canAutoAck: () => true,
     };
 }
 
