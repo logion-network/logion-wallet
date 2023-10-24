@@ -278,6 +278,33 @@ exports[`LOLocItems renders with single draft item 1`] = `
                 >
                   Request review
                 </button>
+                <div
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
+                >
+                  <button
+                    className="Button btn btn-polkadot"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#e6007a",
+                        "color": "white",
+                      }
+                    }
+                    type="button"
+                  >
+                    <img
+                      alt="publish"
+                      height="20px"
+                      src="/assets/publish.svg"
+                    />
+                     Publish
+                  </button>
+                </div>
                 <button
                   className="Button btn btn-danger-flat"
                   data-testid="remove-Data-Name"
@@ -291,6 +318,32 @@ exports[`LOLocItems renders with single draft item 1`] = `
                     src="/assets/trash.svg"
                   />
                 </button>
+                <div
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
+                >
+                  <button
+                    className="Button btn btn-polkadot"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#e6007a",
+                        "color": "white",
+                      }
+                    }
+                    type="button"
+                  >
+                    <img
+                      alt="shield"
+                      src="/assets/shield.svg"
+                    />
+                     Acknowledge
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -690,6 +743,33 @@ exports[`UserLocItems renders with single draft item 1`] = `
                 >
                   Request review
                 </button>
+                <div
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
+                >
+                  <button
+                    className="Button btn btn-polkadot"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#e6007a",
+                        "color": "white",
+                      }
+                    }
+                    type="button"
+                  >
+                    <img
+                      alt="publish"
+                      height="20px"
+                      src="/assets/publish.svg"
+                    />
+                     Publish
+                  </button>
+                </div>
                 <button
                   className="Button btn btn-danger-flat"
                   data-testid="remove-Data-Name"
@@ -703,6 +783,32 @@ exports[`UserLocItems renders with single draft item 1`] = `
                     src="/assets/trash.svg"
                   />
                 </button>
+                <div
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
+                >
+                  <button
+                    className="Button btn btn-polkadot"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#e6007a",
+                        "color": "white",
+                      }
+                    }
+                    type="button"
+                  >
+                    <img
+                      alt="shield"
+                      src="/assets/shield.svg"
+                    />
+                     Acknowledge
+                  </button>
+                </div>
               </div>
             </div>
           </div>

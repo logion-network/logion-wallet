@@ -15,6 +15,7 @@ import { resetSubmitting } from "../../logion-chain/__mocks__/SignatureMock";
 import { TEST_WALLET_USER2 } from "../TestData";
 
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
+import { resetPersistenState } from "src/ClientExtrinsicSubmitter";
 
 test("renders", () => {
     const tree = shallowRender(<CreateProtectionRequestForm isRecovery={ false } />)
@@ -97,6 +98,7 @@ describe("CreateProtectionRequestForm", () => {
 
     it("should call submit when form is correctly filled for recovery and no recovery already in progress", async  () => {
         resetSubmitting();
+        resetPersistenState();
 
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 

@@ -1,5 +1,5 @@
 import { OpenLoc } from "@logion/client";
-import { UUID, Hash } from "@logion/node-api";
+import { UUID, Hash, Fees } from "@logion/node-api";
 
 import { FileItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
@@ -15,11 +15,11 @@ export interface Props {
 export default function LocPublishPrivateFileButton(props: Props) {
     const { signer, client } = useLogionChain();
     const { locState } = useLocContext();
-    const estimateFees = useCallback((hash: Hash | undefined) => {
+    const estimateFees = useCallback(async (hash: Hash | undefined) => {
         if (hash && locState instanceof OpenLoc) {
             return locState.estimateFeesPublishFile({ hash });
         } else {
-            throw Error("Invalid type");
+            return new Fees({ inclusionFee: 0n });
         }
     }, [ locState ])
 

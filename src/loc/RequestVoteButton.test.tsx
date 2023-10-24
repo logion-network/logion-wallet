@@ -30,7 +30,7 @@ describe("RequestVoteButton", () => {
         const locState = new ClosedLoc();
         setLocState(locState);
         locState.legalOfficer.requestVote = async (params: any) => {
-            params.callback(mockSubmittableResult(true, "ExtrinsicFailed", true));
+            params.callback(mockSubmittableResult(false, "ExtrinsicFailed", true));
             throw new Error();
         };
         render(<RequestVoteButton />);
