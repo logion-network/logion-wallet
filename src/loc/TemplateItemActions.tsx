@@ -13,6 +13,7 @@ import ButtonGroup from "src/common/ButtonGroup";
 import ClearItemButton from "./ClearItemButton";
 import PublishItemButton from "./PublishItemButton";
 import SetItemButton from "./SetItemButton";
+import BlockNone from "src/components/blocknone/BlockNone";
 
 export interface Props {
     item: LocItem;
@@ -40,9 +41,9 @@ export default function TemplateItemActions(props: Props) {
             { !item.isSet && canAddMemo && <SetItemButton item={ item } /> }
             { item.isSet && canRequestReviewMemo && <Button onClick={ () => requestReview(item) }>Request review</Button> }
             { item.isSet && canReviewMemo && <ReviewItemButtons locItem={ item }/> }            
-            { item.isSet && canPublishMemo && <PublishItemButton item={ item } /> }
+            <BlockNone show={ (item.isSet || false) && canPublishMemo }><PublishItemButton item={ item } /></BlockNone>
             { item.isSet && canDeleteMemo && <ClearItemButton item={ item } /> }
-            { item.isSet && canAcknowledgeMemo && <AcknowledgeButton locItem={ item } /> }
+            <BlockNone show={ (item.isSet || false) && canAcknowledgeMemo }><AcknowledgeButton locItem={ item } /></BlockNone>
             { item.isSet && item.status === "PUBLISHED" && !canAcknowledgeMemo && <StatusCell
                 icon={ { id: 'published' } }
                 text="Published"

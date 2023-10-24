@@ -1,6 +1,5 @@
 import { ISubmittableResult } from '@logion/client';
 import { useEffect, useState } from 'react';
-import { flushSync } from 'react-dom';
 
 import ExtrinsicSubmissionResult, { isSuccessful } from './ExtrinsicSubmissionResult';
 
@@ -16,53 +15,78 @@ export interface Props {
     slim?: boolean,
 }
 
+interface State {
+    result: ISubmittableResult | null;
+    error: any;
+    submitted: boolean;
+    notified: boolean;
+    callEnded: boolean;
+    call?: Call;
+    setState: (newState: State) => void;
+}
+
+const INITIAL_STATE: State = {
+    result: null,
+    error: null,
+    submitted: false,
+    notified: false,
+    callEnded: false,
+    setState: () => {},
+};
+
+let persistentState: State = INITIAL_STATE;
+
+function setPersistentState(stateUpdate: Partial<State>) {
+    persistentState = {
+        ...persistentState,
+        ...stateUpdate
+    };
+    persistentState.setState(persistentState);
+}
+
+export function resetPersistenState() {
+    persistentState = INITIAL_STATE;
+}
+
 export default function ClientExtrinsicSubmitter(props: Props) {
-    const [ result, setResult ] = useState<ISubmittableResult | null>(null);
-    const [ error, setError ] = useState<any>(null);
-    const [ submitted, setSubmitted ] = useState<boolean>(false);
-    const [ notified, setNotified ] = useState<boolean>(false);
-    const [ callEnded, setCallEnded ] = useState<boolean>(false);
+    const [ state, setState ] = useState<State>(persistentState);
+    if(setState !== persistentState.setState) {
+        persistentState.setState = setState;
+    }
 
     useEffect(() => {
-        if(!submitted && props.call !== undefined) {
-            flushSync(() => setSubmitted(true));
+        if(props.call !== undefined && (!state.submitted || (state.notified && props.call !== state.call))) {
+            setPersistentState({
+                ...INITIAL_STATE,
+                call: props.call,
+                submitted: true,
+                setState,
+            });
             (async function() {
-                setResult(null);
-                setError(null);
-                setCallEnded(false);
                 try {
-                    await props.call!((callbackResult: ISubmittableResult) => setResult(callbackResult));
-                    setCallEnded(true);
+                    await props.call!((callbackResult: ISubmittableResult) => setPersistentState({ result: callbackResult }));
+                    setPersistentState({ callEnded: true });
                 } catch(e) {
                     console.log(e);
-                    setError(e);
+                    setPersistentState({ callEnded: true, error: e});
                 }
             })();
         }
-    }, [ setResult, setError, props, submitted ]);
+    }, [ state, props ]);
 
     useEffect(() => {
-        if (result !== null && isSuccessful(result) && !notified && props.onSuccess && callEnded) {
-            setNotified(true);
+        if (state.result !== null && isSuccessful(state.result) && !state.notified && props.onSuccess && state.callEnded) {
+            setPersistentState({ notified: true });
             props.onSuccess();
         }
-    }, [ result, notified, setNotified, props, callEnded ]);
+    }, [ state, props ]);
 
     useEffect(() => {
-        if (error !== null && !notified && props.onError) {
-            setNotified(true);
-            props.onError!();
+        if (state.error !== null && !state.notified && props.onError) {
+            setPersistentState({ notified: true });
+            props.onError();
         }
-    }, [ notified, setNotified, props, error ]);
-
-    useEffect(() => {
-        if(submitted && props.call === undefined) {
-            setSubmitted(false);
-            setNotified(false);
-            setResult(null);
-            setError(null);
-        }
-    }, [ setResult, setError, props, submitted ]);
+    }, [ state, props ]);
 
     if(props.call === undefined) {
         return null;
@@ -70,8 +94,8 @@ export default function ClientExtrinsicSubmitter(props: Props) {
 
     return (
         <ExtrinsicSubmissionResult
-            result={result}
-            error={error}
+            result={state.result}
+            error={state.error}
             successMessage={ props.successMessage }
             slim={ props.slim }
         />

@@ -12,6 +12,7 @@ import { ContributionMode } from "./types";
 import { useLogionChain } from "src/logion-chain";
 import DeleteButton from "./DeleteButton";
 import PublishItemButton from "./PublishItemButton";
+import BlockNone from "src/components/blocknone/BlockNone";
 
 export interface Props {
     locItem: LocItem;
@@ -35,9 +36,9 @@ export default function CustomItemActions(props: Props) {
         <ButtonGroup>
             { canRequestReviewMemo && <Button onClick={ () => requestReview(locItem) }>Request review</Button> }
             { canReviewMemo && <ReviewItemButtons locItem={ locItem }/> }
-            { canPublishMemo && <PublishItemButton item={ locItem } /> }
+            <BlockNone show={ canPublishMemo }><PublishItemButton item={ locItem }/></BlockNone>
             { canDeleteMemo && <DeleteButton locItem={ locItem } /> }
-            { canAcknowledgeMemo && <AcknowledgeButton locItem={ locItem } /> }
+            <BlockNone show={ canAcknowledgeMemo }><AcknowledgeButton locItem={ locItem } /></BlockNone>
             { locItem.status === "PUBLISHED" && !canAcknowledgeMemo && <StatusCell
                 icon={ { id: 'published' } }
                 text="Published"
