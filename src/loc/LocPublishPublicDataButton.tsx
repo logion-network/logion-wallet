@@ -1,5 +1,5 @@
 import { OpenLoc } from "@logion/client";
-import { UUID, Hash } from "@logion/node-api";
+import { UUID, Hash, Fees } from "@logion/node-api";
 
 import { MetadataItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
@@ -13,19 +13,15 @@ export interface Props {
 }
 
 export default function LocPublishPublicDataButton(props: Props) {
-    const { signer, client } = useLogionChain();
+    const { signer } = useLogionChain();
     const { locState } = useLocContext();
-    const estimateFees = useCallback((nameHash: Hash | undefined) => {
+    const estimateFees = useCallback(async (nameHash: Hash | undefined) => {
         if (nameHash && locState instanceof OpenLoc) {
             return locState.estimateFeesPublishMetadata({ nameHash });
         } else {
-            throw Error("Invalid type");
+            return new Fees({ inclusionFee: 0n });
         }
-    }, [ locState ])
-
-    if(!client) {
-        return null;
-    }
+    }, [ locState ]);
 
     return (
         <LocPublishButton

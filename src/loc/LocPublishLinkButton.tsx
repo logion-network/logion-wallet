@@ -1,5 +1,5 @@
 import { OpenLoc } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { UUID, Fees } from "@logion/node-api";
 
 import { LinkItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
@@ -13,19 +13,15 @@ export interface Props {
 }
 
 export default function LocPublishLinkButton(props: Props) {
-    const { signer, client } = useLogionChain();
+    const { signer } = useLogionChain();
     const { locState } = useLocContext();
-    const estimateFees = useCallback((target: UUID | undefined) => {
+    const estimateFees = useCallback(async (target: UUID | undefined) => {
         if (target && locState instanceof OpenLoc) {
             return locState.estimateFeesPublishLink({ target });
         } else {
-            throw Error("Invalid type");
+            return new Fees({ inclusionFee: 0n });
         }
-    }, [ locState ])
-
-    if(!client) {
-        return null;
-    }
+    }, [ locState ]);
 
     return (
         <LocPublishButton

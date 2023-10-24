@@ -4,6 +4,152 @@ exports[`TemplateItemActions Links are read-only for issuer when acknowledged 1`
 <ButtonGroup
   className="actions"
 >
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <StatusCell
     color="#e6007a"
     icon={
@@ -20,6 +166,152 @@ exports[`TemplateItemActions Links are read-only for owner when acknowledged 1`]
 <ButtonGroup
   className="actions"
 >
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <StatusCell
     color="#e6007a"
     icon={
@@ -36,6 +328,152 @@ exports[`TemplateItemActions Links are read-only for requester when published 1`
 <ButtonGroup
   className="actions"
 >
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <StatusCell
     color="#e6007a"
     icon={
@@ -54,75 +492,152 @@ exports[`TemplateItemActions Links can be acknowledged by issuer when published 
 <ButtonGroup
   className="actions"
 >
-  <AcknowledgeButton
-    locItem={
-      LinkItem {
-        "_data": Object {
-          "linkDetailsPath": "",
-          "linkedLoc": Object {},
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
-                136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
-                160,
-                239,
-                240,
-                42,
-                115,
-                198,
-                222,
-                37,
-              ],
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
             },
-            "value": "Some public description",
           },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "PUBLISHED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Linked LOC",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
+  <BlockNone
+    show={true}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -130,75 +645,152 @@ exports[`TemplateItemActions Links can be acknowledged by owner when published 1
 <ButtonGroup
   className="actions"
 >
-  <AcknowledgeButton
-    locItem={
-      LinkItem {
-        "_data": Object {
-          "linkDetailsPath": "",
-          "linkedLoc": Object {},
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
-                136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
-                160,
-                239,
-                240,
-                42,
-                115,
-                198,
-                222,
-                37,
-              ],
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
             },
-            "value": "Some public description",
           },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "PUBLISHED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Linked LOC",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
+  <BlockNone
+    show={true}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -206,75 +798,79 @@ exports[`TemplateItemActions Links can be published or cleared by requester when
 <ButtonGroup
   className="actions"
 >
-  <PublishItemButton
-    item={
-      LinkItem {
-        "_data": Object {
-          "linkDetailsPath": "",
-          "linkedLoc": Object {},
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
-                136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
-                160,
-                239,
-                240,
-                42,
-                115,
-                198,
-                222,
-                37,
-              ],
+  <BlockNone
+    show={true}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
             },
-            "value": "Some public description",
           },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Linked LOC",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       LinkItem {
@@ -344,6 +940,79 @@ exports[`TemplateItemActions Links can be published or cleared by requester when
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -351,75 +1020,79 @@ exports[`TemplateItemActions Links can be published or cleared by requester when
 <ButtonGroup
   className="actions"
 >
-  <PublishItemButton
-    item={
-      LinkItem {
-        "_data": Object {
-          "linkDetailsPath": "",
-          "linkedLoc": Object {},
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
-                136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
-                160,
-                239,
-                240,
-                42,
-                115,
-                198,
-                222,
-                37,
-              ],
+  <BlockNone
+    show={true}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
             },
-            "value": "Some public description",
           },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Linked LOC",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       LinkItem {
@@ -489,6 +1162,79 @@ exports[`TemplateItemActions Links can be published or cleared by requester when
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -565,6 +1311,152 @@ exports[`TemplateItemActions Links can be reviewed by owner when submitted 1`] =
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_PENDING",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_PENDING",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -594,6 +1486,58 @@ exports[`TemplateItemActions Links can be set by requester when empty 1`] = `
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": undefined,
+          "commonData": Object {
+            "acknowledgedByOwner": undefined,
+            "acknowledgedByVerifiedIssuer": undefined,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": false,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": undefined,
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": undefined,
+          "commonData": Object {
+            "acknowledgedByOwner": undefined,
+            "acknowledgedByVerifiedIssuer": undefined,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": false,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": undefined,
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -606,6 +1550,79 @@ exports[`TemplateItemActions Links can be submitted for review or cleared by iss
   >
     Request review
   </Button>
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       LinkItem {
@@ -675,6 +1692,79 @@ exports[`TemplateItemActions Links can be submitted for review or cleared by iss
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -687,6 +1777,79 @@ exports[`TemplateItemActions Links can be submitted for review or cleared by req
   >
     Request review
   </Button>
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       LinkItem {
@@ -756,6 +1919,79 @@ exports[`TemplateItemActions Links can be submitted for review or cleared by req
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        LinkItem {
+          "_data": Object {
+            "linkDetailsPath": "",
+            "linkedLoc": Object {},
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Linked LOC",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -763,6 +1999,226 @@ exports[`TemplateItemActions Private files are read-only for issuer when acknowl
 <ButtonGroup
   className="actions"
 >
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <StatusCell
     color="#e6007a"
     icon={
@@ -779,6 +2235,226 @@ exports[`TemplateItemActions Private files are read-only for owner when acknowle
 <ButtonGroup
   className="actions"
 >
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <StatusCell
     color="#e6007a"
     icon={
@@ -795,6 +2471,226 @@ exports[`TemplateItemActions Private files are read-only for requester when publ
 <ButtonGroup
   className="actions"
 >
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <StatusCell
     color="#e6007a"
     icon={
@@ -813,112 +2709,226 @@ exports[`TemplateItemActions Private files can be acknowledged by issuer when pu
 <ButtonGroup
   className="actions"
 >
-  <AcknowledgeButton
-    locItem={
-      FileItem {
-        "_data": Object {
-          "fileName": "test.txt",
-          "hash": Hash {
-            "_bytes": Uint8Array [
-              159,
-              134,
-              208,
-              129,
-              136,
-              76,
-              125,
-              101,
-              154,
-              47,
-              234,
-              160,
-              197,
-              90,
-              208,
-              21,
-              163,
-              191,
-              79,
-              27,
-              43,
-              11,
-              130,
-              44,
-              209,
-              93,
-              108,
-              21,
-              176,
-              240,
-              10,
-              8,
-            ],
-          },
-          "nature": HashString {
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
             "hash": Hash {
               "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
+                159,
+                134,
+                208,
+                129,
                 136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
                 160,
-                239,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
                 240,
-                42,
-                115,
-                198,
-                222,
-                37,
+                10,
+                8,
               ],
             },
-            "value": "Some public description",
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
           },
-          "size": 4n,
-          "storageFeePaidBy": "",
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "PUBLISHED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Document",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
+  <BlockNone
+    show={true}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -926,112 +2936,226 @@ exports[`TemplateItemActions Private files can be acknowledged by owner when pub
 <ButtonGroup
   className="actions"
 >
-  <AcknowledgeButton
-    locItem={
-      FileItem {
-        "_data": Object {
-          "fileName": "test.txt",
-          "hash": Hash {
-            "_bytes": Uint8Array [
-              159,
-              134,
-              208,
-              129,
-              136,
-              76,
-              125,
-              101,
-              154,
-              47,
-              234,
-              160,
-              197,
-              90,
-              208,
-              21,
-              163,
-              191,
-              79,
-              27,
-              43,
-              11,
-              130,
-              44,
-              209,
-              93,
-              108,
-              21,
-              176,
-              240,
-              10,
-              8,
-            ],
-          },
-          "nature": HashString {
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
             "hash": Hash {
               "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
+                159,
+                134,
+                208,
+                129,
                 136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
                 160,
-                239,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
                 240,
-                42,
-                115,
-                198,
-                222,
-                37,
+                10,
+                8,
               ],
             },
-            "value": "Some public description",
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
           },
-          "size": 4n,
-          "storageFeePaidBy": "",
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "PUBLISHED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Document",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
+  <BlockNone
+    show={true}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -1039,112 +3163,116 @@ exports[`TemplateItemActions Private files can be published or cleared by reques
 <ButtonGroup
   className="actions"
 >
-  <PublishItemButton
-    item={
-      FileItem {
-        "_data": Object {
-          "fileName": "test.txt",
-          "hash": Hash {
-            "_bytes": Uint8Array [
-              159,
-              134,
-              208,
-              129,
-              136,
-              76,
-              125,
-              101,
-              154,
-              47,
-              234,
-              160,
-              197,
-              90,
-              208,
-              21,
-              163,
-              191,
-              79,
-              27,
-              43,
-              11,
-              130,
-              44,
-              209,
-              93,
-              108,
-              21,
-              176,
-              240,
-              10,
-              8,
-            ],
-          },
-          "nature": HashString {
+  <BlockNone
+    show={true}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
             "hash": Hash {
               "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
+                159,
+                134,
+                208,
+                129,
                 136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
                 160,
-                239,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
                 240,
-                42,
-                115,
-                198,
-                222,
-                37,
+                10,
+                8,
               ],
             },
-            "value": "Some public description",
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
           },
-          "size": 4n,
-          "storageFeePaidBy": "",
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Document",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       FileItem {
@@ -1251,6 +3379,116 @@ exports[`TemplateItemActions Private files can be published or cleared by reques
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -1258,112 +3496,116 @@ exports[`TemplateItemActions Private files can be published or cleared by reques
 <ButtonGroup
   className="actions"
 >
-  <PublishItemButton
-    item={
-      FileItem {
-        "_data": Object {
-          "fileName": "test.txt",
-          "hash": Hash {
-            "_bytes": Uint8Array [
-              159,
-              134,
-              208,
-              129,
-              136,
-              76,
-              125,
-              101,
-              154,
-              47,
-              234,
-              160,
-              197,
-              90,
-              208,
-              21,
-              163,
-              191,
-              79,
-              27,
-              43,
-              11,
-              130,
-              44,
-              209,
-              93,
-              108,
-              21,
-              176,
-              240,
-              10,
-              8,
-            ],
-          },
-          "nature": HashString {
+  <BlockNone
+    show={true}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
             "hash": Hash {
               "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
+                159,
+                134,
+                208,
+                129,
                 136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
                 160,
-                239,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
                 240,
-                42,
-                115,
-                198,
-                222,
-                37,
+                10,
+                8,
               ],
             },
-            "value": "Some public description",
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
           },
-          "size": 4n,
-          "storageFeePaidBy": "",
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Document",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       FileItem {
@@ -1470,6 +3712,116 @@ exports[`TemplateItemActions Private files can be published or cleared by reques
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -1583,6 +3935,226 @@ exports[`TemplateItemActions Private files can be reviewed by owner when submitt
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_PENDING",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_PENDING",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -1612,6 +4184,58 @@ exports[`TemplateItemActions Private files can be set by requester when empty 1`
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": undefined,
+          "commonData": Object {
+            "acknowledgedByOwner": undefined,
+            "acknowledgedByVerifiedIssuer": undefined,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": false,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": undefined,
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": undefined,
+          "commonData": Object {
+            "acknowledgedByOwner": undefined,
+            "acknowledgedByVerifiedIssuer": undefined,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": false,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": undefined,
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -1624,6 +4248,116 @@ exports[`TemplateItemActions Private files can be submitted for review or cleare
   >
     Request review
   </Button>
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       FileItem {
@@ -1730,6 +4464,116 @@ exports[`TemplateItemActions Private files can be submitted for review or cleare
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -1742,6 +4586,116 @@ exports[`TemplateItemActions Private files can be submitted for review or cleare
   >
     Request review
   </Button>
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       FileItem {
@@ -1848,6 +4802,116 @@ exports[`TemplateItemActions Private files can be submitted for review or cleare
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        FileItem {
+          "_data": Object {
+            "fileName": "test.txt",
+            "hash": Hash {
+              "_bytes": Uint8Array [
+                159,
+                134,
+                208,
+                129,
+                136,
+                76,
+                125,
+                101,
+                154,
+                47,
+                234,
+                160,
+                197,
+                90,
+                208,
+                21,
+                163,
+                191,
+                79,
+                27,
+                43,
+                11,
+                130,
+                44,
+                209,
+                93,
+                108,
+                21,
+                176,
+                240,
+                10,
+                8,
+              ],
+            },
+            "nature": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  217,
+                  232,
+                  225,
+                  74,
+                  175,
+                  17,
+                  182,
+                  147,
+                  168,
+                  136,
+                  141,
+                  117,
+                  173,
+                  107,
+                  215,
+                  75,
+                  169,
+                  221,
+                  71,
+                  112,
+                  94,
+                  212,
+                  243,
+                  176,
+                  160,
+                  239,
+                  240,
+                  42,
+                  115,
+                  198,
+                  222,
+                  37,
+                ],
+              },
+              "value": "Some public description",
+            },
+            "size": 4n,
+            "storageFeePaidBy": "",
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some public description",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Document",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -1855,6 +4919,226 @@ exports[`TemplateItemActions Public data are read-only for issuer when acknowled
 <ButtonGroup
   className="actions"
 >
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <StatusCell
     color="#e6007a"
     icon={
@@ -1871,6 +5155,226 @@ exports[`TemplateItemActions Public data are read-only for owner when acknowledg
 <ButtonGroup
   className="actions"
 >
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": true,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "ACKNOWLEDGED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <StatusCell
     color="#e6007a"
     icon={
@@ -1887,6 +5391,226 @@ exports[`TemplateItemActions Public data are read-only for requester when publis
 <ButtonGroup
   className="actions"
 >
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <StatusCell
     color="#e6007a"
     icon={
@@ -1905,112 +5629,226 @@ exports[`TemplateItemActions Public data can be acknowledged by issuer when publ
 <ButtonGroup
   className="actions"
 >
-  <AcknowledgeButton
-    locItem={
-      MetadataItem {
-        "_data": Object {
-          "name": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                216,
-                46,
-                177,
-                84,
-                242,
-                129,
-                39,
-                141,
-                139,
-                196,
-                158,
-                76,
-                23,
-                122,
-                109,
-                116,
-                22,
-                72,
-                181,
-                40,
-                63,
-                148,
-                119,
-                83,
-                214,
-                201,
-                125,
-                45,
-                97,
-                86,
-                192,
-                100,
-              ],
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
             },
-            "value": "Some template data",
-          },
-          "value": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                142,
-                55,
-                149,
-                61,
-                35,
-                218,
-                202,
-                95,
-                240,
-                27,
-                130,
-                130,
-                195,
-                63,
-                78,
-                10,
-                33,
-                82,
-                241,
-                209,
-                136,
-                95,
-                148,
-                192,
-                100,
-                24,
-                97,
-                126,
-                62,
-                225,
-                210,
-                78,
-              ],
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
             },
-            "value": "Value",
           },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some template data",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "PUBLISHED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Data",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
+  <BlockNone
+    show={true}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -2018,112 +5856,226 @@ exports[`TemplateItemActions Public data can be acknowledged by owner when publi
 <ButtonGroup
   className="actions"
 >
-  <AcknowledgeButton
-    locItem={
-      MetadataItem {
-        "_data": Object {
-          "name": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                216,
-                46,
-                177,
-                84,
-                242,
-                129,
-                39,
-                141,
-                139,
-                196,
-                158,
-                76,
-                23,
-                122,
-                109,
-                116,
-                22,
-                72,
-                181,
-                40,
-                63,
-                148,
-                119,
-                83,
-                214,
-                201,
-                125,
-                45,
-                97,
-                86,
-                192,
-                100,
-              ],
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
             },
-            "value": "Some template data",
-          },
-          "value": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                142,
-                55,
-                149,
-                61,
-                35,
-                218,
-                202,
-                95,
-                240,
-                27,
-                130,
-                130,
-                195,
-                63,
-                78,
-                10,
-                33,
-                82,
-                241,
-                209,
-                136,
-                95,
-                148,
-                192,
-                100,
-                24,
-                97,
-                126,
-                62,
-                225,
-                210,
-                78,
-              ],
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
             },
-            "value": "Value",
           },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some template data",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "PUBLISHED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Data",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
+  <BlockNone
+    show={true}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "PUBLISHED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -2131,112 +6083,116 @@ exports[`TemplateItemActions Public data can be published or cleared by requeste
 <ButtonGroup
   className="actions"
 >
-  <PublishItemButton
-    item={
-      MetadataItem {
-        "_data": Object {
-          "name": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                216,
-                46,
-                177,
-                84,
-                242,
-                129,
-                39,
-                141,
-                139,
-                196,
-                158,
-                76,
-                23,
-                122,
-                109,
-                116,
-                22,
-                72,
-                181,
-                40,
-                63,
-                148,
-                119,
-                83,
-                214,
-                201,
-                125,
-                45,
-                97,
-                86,
-                192,
-                100,
-              ],
+  <BlockNone
+    show={true}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
             },
-            "value": "Some template data",
-          },
-          "value": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                142,
-                55,
-                149,
-                61,
-                35,
-                218,
-                202,
-                95,
-                240,
-                27,
-                130,
-                130,
-                195,
-                63,
-                78,
-                10,
-                33,
-                82,
-                241,
-                209,
-                136,
-                95,
-                148,
-                192,
-                100,
-                24,
-                97,
-                126,
-                62,
-                225,
-                210,
-                78,
-              ],
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
             },
-            "value": "Value",
           },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some template data",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Data",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       MetadataItem {
@@ -2343,6 +6299,116 @@ exports[`TemplateItemActions Public data can be published or cleared by requeste
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -2350,112 +6416,116 @@ exports[`TemplateItemActions Public data can be published or cleared by requeste
 <ButtonGroup
   className="actions"
 >
-  <PublishItemButton
-    item={
-      MetadataItem {
-        "_data": Object {
-          "name": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                216,
-                46,
-                177,
-                84,
-                242,
-                129,
-                39,
-                141,
-                139,
-                196,
-                158,
-                76,
-                23,
-                122,
-                109,
-                116,
-                22,
-                72,
-                181,
-                40,
-                63,
-                148,
-                119,
-                83,
-                214,
-                201,
-                125,
-                45,
-                97,
-                86,
-                192,
-                100,
-              ],
+  <BlockNone
+    show={true}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
             },
-            "value": "Some template data",
-          },
-          "value": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                142,
-                55,
-                149,
-                61,
-                35,
-                218,
-                202,
-                95,
-                240,
-                27,
-                130,
-                130,
-                195,
-                63,
-                78,
-                10,
-                33,
-                82,
-                241,
-                209,
-                136,
-                95,
-                148,
-                192,
-                100,
-                24,
-                97,
-                126,
-                62,
-                225,
-                210,
-                78,
-              ],
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
             },
-            "value": "Value",
           },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some template data",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
           },
-          "template": true,
-          "timestamp": null,
-          "type": "Data",
-        },
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       MetadataItem {
@@ -2562,6 +6632,116 @@ exports[`TemplateItemActions Public data can be published or cleared by requeste
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_ACCEPTED",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -2675,6 +6855,226 @@ exports[`TemplateItemActions Public data can be reviewed by owner when submitted
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_PENDING",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "REVIEW_PENDING",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -2704,6 +7104,58 @@ exports[`TemplateItemActions Public data can be set by requester when empty 1`] 
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": undefined,
+          "commonData": Object {
+            "acknowledgedByOwner": undefined,
+            "acknowledgedByVerifiedIssuer": undefined,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": false,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": undefined,
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": undefined,
+          "commonData": Object {
+            "acknowledgedByOwner": undefined,
+            "acknowledgedByVerifiedIssuer": undefined,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": false,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": undefined,
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -2716,6 +7168,116 @@ exports[`TemplateItemActions Public data can be submitted for review or cleared 
   >
     Request review
   </Button>
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       MetadataItem {
@@ -2822,6 +7384,116 @@ exports[`TemplateItemActions Public data can be submitted for review or cleared 
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
 
@@ -2834,6 +7506,116 @@ exports[`TemplateItemActions Public data can be submitted for review or cleared 
   >
     Request review
   </Button>
+  <BlockNone
+    show={false}
+  >
+    <PublishItemButton
+      item={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
   <ClearItemButton
     item={
       MetadataItem {
@@ -2940,5 +7722,115 @@ exports[`TemplateItemActions Public data can be submitted for review or cleared 
       }
     }
   />
+  <BlockNone
+    show={false}
+  >
+    <AcknowledgeButton
+      locItem={
+        MetadataItem {
+          "_data": Object {
+            "name": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  216,
+                  46,
+                  177,
+                  84,
+                  242,
+                  129,
+                  39,
+                  141,
+                  139,
+                  196,
+                  158,
+                  76,
+                  23,
+                  122,
+                  109,
+                  116,
+                  22,
+                  72,
+                  181,
+                  40,
+                  63,
+                  148,
+                  119,
+                  83,
+                  214,
+                  201,
+                  125,
+                  45,
+                  97,
+                  86,
+                  192,
+                  100,
+                ],
+              },
+              "value": "Some template data",
+            },
+            "value": HashString {
+              "hash": Hash {
+                "_bytes": Uint8Array [
+                  142,
+                  55,
+                  149,
+                  61,
+                  35,
+                  218,
+                  202,
+                  95,
+                  240,
+                  27,
+                  130,
+                  130,
+                  195,
+                  63,
+                  78,
+                  10,
+                  33,
+                  82,
+                  241,
+                  209,
+                  136,
+                  95,
+                  148,
+                  192,
+                  100,
+                  24,
+                  97,
+                  126,
+                  62,
+                  225,
+                  210,
+                  78,
+                ],
+              },
+              "value": "Value",
+            },
+          },
+          "commonData": Object {
+            "acknowledgedByOwner": false,
+            "acknowledgedByVerifiedIssuer": false,
+            "defaultTitle": "Some template data",
+            "fees": undefined,
+            "isSet": true,
+            "newItem": false,
+            "rejectReason": undefined,
+            "reviewedOn": undefined,
+            "status": "DRAFT",
+            "submitter": Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "equals": [Function],
+              "toKey": [Function],
+              "type": "Polkadot",
+            },
+            "template": true,
+            "timestamp": null,
+            "type": "Data",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </ButtonGroup>
 `;
