@@ -111,8 +111,8 @@ export default function OpenLoc(props: Props) {
 
     const canAutoPublish = useMemo(() => {
         return locState?.data().metadata.find(item => item.status === "REVIEW_ACCEPTED") !== undefined
-            && locState?.data().files.find(item => item.status === "REVIEW_ACCEPTED") !== undefined
-            && locState?.data().links.find(item => item.status === "REVIEW_ACCEPTED") !== undefined;
+            || locState?.data().files.find(item => item.status === "REVIEW_ACCEPTED") !== undefined
+            || locState?.data().links.find(item => item.status === "REVIEW_ACCEPTED") !== undefined;
     }, [ locState ]);
 
     let title;
