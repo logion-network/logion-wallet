@@ -11,3 +11,18 @@
     font-size: 1.2rem;
     padding-top: 7px;
 }
+
+.OpenLoc .toggle-button-container {
+    display: flex;
+}
+
+.OpenLoc .toggle-container {
+    display: flex;
+    padding-right: 20px;
+    padding-top: 7px;
+}
+
+.OpenLoc .toggle-container p {
+    padding-right: 20px;
+    margin: 0;
+}

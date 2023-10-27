@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Fees } from '@logion/node-api';
 import { LocData } from '@logion/client';
 import { useLogionChain } from '../logion-chain';
@@ -14,6 +14,7 @@ import { AcceptedRequest } from "@logion/client/dist/Loc";
 import Button from 'src/common/Button';
 import PolkadotFrame from 'src/common/PolkadotFrame';
 import "./OpenLoc.css";
+import Checkbox from 'src/components/toggle/Checkbox';
 
 enum OpenStatus {
     NONE,
@@ -36,6 +37,7 @@ export default function OpenLoc(props: Props) {
     const [ error, setError ] = useState<boolean>(false);
     const [ limits, setLimits ] = useState<CollectionLimits>(DEFAULT_LIMITS);
     const [ fees, setFees ] = useState<Fees | undefined | null>();
+    const [ autoPublish, setAutoPublish ] = useState(false);
 
     useEffect(() => {
         if(fees === undefined && client) {
@@ -44,14 +46,17 @@ export default function OpenLoc(props: Props) {
                 if (locState instanceof AcceptedRequest) {
                     if (locState.data().locType === "Collection") {
                         const apiLimits = await limits.toApiLimits(client.logionApi)
-                        setFees(await locState.estimateFeesOpenCollection(apiLimits));
+                        setFees(await locState.estimateFeesOpenCollection({
+                            ...apiLimits,
+                            autoPublish,
+                        }));
                     } else {
-                        setFees(await locState.estimateFeesOpen());
+                        setFees(await locState.estimateFeesOpen(autoPublish));
                     }
                 }
             })();
         }
-    }, [ fees, client, props.loc, limits, locState ]);
+    }, [ fees, client, props.loc, limits, locState, autoPublish ]);
 
     // LOC creation
     useEffect(() => {
@@ -64,6 +69,7 @@ export default function OpenLoc(props: Props) {
                             return current.open({
                                 signer,
                                 callback,
+                                autoPublish
                             });
                         } else {
                             const apiLimits = await limits.toApiLimits(client.logionApi)
@@ -71,6 +77,7 @@ export default function OpenLoc(props: Props) {
                                 ...apiLimits,
                                 signer,
                                 callback,
+                                autoPublish
                             });
                         }
                     } else {
@@ -85,6 +92,7 @@ export default function OpenLoc(props: Props) {
         signer,
         limits,
         client,
+        autoPublish,
     ]);
 
     const resetFields = useCallback(() => {
@@ -100,6 +108,12 @@ export default function OpenLoc(props: Props) {
         close();
         refresh(false);
     }, [ refresh, close ]);
+
+    const canAutoPublish = useMemo(() => {
+        return locState?.data().metadata.find(item => item.status === "REVIEW_ACCEPTED") !== undefined
+            && locState?.data().files.find(item => item.status === "REVIEW_ACCEPTED") !== undefined
+            && locState?.data().links.find(item => item.status === "REVIEW_ACCEPTED") !== undefined;
+    }, [ locState ]);
 
     let title;
     if(props.loc.locType === 'Transaction') {
@@ -120,14 +134,25 @@ export default function OpenLoc(props: Props) {
                 <div className="text-container">
                     Do you want to create this LOC?
                 </div>
-                <div className="button-container">
-                    <Button
-                        onClick={ () => setAcceptState(OpenStatus.CREATE_LOC) }
-                        data-testid={ `accept-${ props.loc.id }` }
-                        variant="polkadot"
-                    >
-                        Create LOC
-                    </Button>
+                <div className="toggle-button-container">
+                    <div className="toggle-container">
+                        <p>Publish accepted?</p>
+                        <Checkbox
+                            skin="Toggle white"
+                            checked={ autoPublish }
+                            setChecked={ (value) => setAutoPublish(value) }
+                            disabled={ !canAutoPublish }
+                        />
+                    </div>
+                    <div className="button-container">
+                        <Button
+                            onClick={ () => setAcceptState(OpenStatus.CREATE_LOC) }
+                            data-testid={ `accept-${ props.loc.id }` }
+                            variant="polkadot"
+                        >
+                            Create LOC
+                        </Button>
+                    </div>
                 </div>
             </div>
             <ProcessStep
