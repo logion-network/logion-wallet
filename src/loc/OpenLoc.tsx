@@ -43,17 +43,17 @@ export default function OpenLoc(props: Props) {
         if(fees === undefined && client) {
             setFees(null);
             (async function() {
-                if (locState instanceof AcceptedRequest) {
-                    if (locState.data().locType === "Collection") {
-                        const apiLimits = await limits.toApiLimits(client.logionApi)
+            if (locState instanceof AcceptedRequest) {
+                if (locState.data().locType === "Collection") {
+                    const apiLimits = await limits.toApiLimits(client.logionApi)
                         setFees(await locState.estimateFeesOpenCollection({
-                            ...apiLimits,
-                            autoPublish,
+                        ...apiLimits,
+                        autoPublish,
                         }));
-                    } else {
-                        setFees(await locState.estimateFeesOpen(autoPublish));
-                    }
+                } else {
+                        setFees(await locState.estimateFeesOpen({ autoPublish }));
                 }
+            }
             })();
         }
     }, [ fees, client, props.loc, limits, locState, autoPublish ]);
@@ -140,7 +140,10 @@ export default function OpenLoc(props: Props) {
                         <Checkbox
                             skin="Toggle white"
                             checked={ autoPublish }
-                            setChecked={ (value) => setAutoPublish(value) }
+                            setChecked={ (value) => {
+                                setAutoPublish(value);
+                                setFees(undefined);
+                            }}
                             disabled={ !canAutoPublish }
                         />
                     </div>
