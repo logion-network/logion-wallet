@@ -40,20 +40,20 @@ export default function OpenLoc(props: Props) {
     const [ autoPublish, setAutoPublish ] = useState(false);
 
     useEffect(() => {
-        if(fees === undefined && client) {
+        if (fees === undefined && client) {
             setFees(null);
-            (async function() {
-            if (locState instanceof AcceptedRequest) {
-                if (locState.data().locType === "Collection") {
-                    const apiLimits = await limits.toApiLimits(client.logionApi)
+            (async function () {
+                if (locState instanceof AcceptedRequest) {
+                    if (locState.data().locType === "Collection") {
+                        const apiLimits = await limits.toApiLimits(client.logionApi)
                         setFees(await locState.estimateFeesOpenCollection({
-                        ...apiLimits,
-                        autoPublish,
+                            ...apiLimits,
+                            autoPublish,
                         }));
-                } else {
+                    } else {
                         setFees(await locState.estimateFeesOpen({ autoPublish }));
+                    }
                 }
-            }
             })();
         }
     }, [ fees, client, props.loc, limits, locState, autoPublish ]);
