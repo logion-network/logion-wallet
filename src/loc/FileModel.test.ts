@@ -1,4 +1,5 @@
 import { Token, HashOrContent } from "@logion/client";
+import { BrowserFile } from "@logion/client-browser";
 import { Hash } from "@logion/node-api"
 import { AxiosInstance } from "axios";
 import { DEFAULT_LEGAL_OFFICER, PATRICK } from "src/common/TestData";
@@ -108,7 +109,7 @@ describe("FileModel", () => {
             axios,
             legalOfficer,
             fileId,
-            file: HashOrContent.fromContent(file),
+            file: HashOrContent.fromContent(new BrowserFile(file)),
         });
 
         expect(axios.put).toBeCalledWith(

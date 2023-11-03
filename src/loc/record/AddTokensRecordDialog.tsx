@@ -11,6 +11,7 @@ import FormGroup from "src/common/FormGroup";
 import Icon from "src/common/Icon";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "../LocContext";
+import { BrowserFile } from "@logion/client-browser";
 
 export interface Props {
     show: boolean;
@@ -59,7 +60,7 @@ export default function AddTokensRecordDialog(props: Props) {
         setUploadError("")
         if (file) {
             setStatus('Hashing')
-            const content = await HashOrContent.fromContentFinalized(file);
+            const content = await HashOrContent.fromContentFinalized(new BrowserFile(file));
             const hash = content.contentHash;
             const existingRecord = props.records.find(record => record.id === hash);
             if (existingRecord !== undefined) {

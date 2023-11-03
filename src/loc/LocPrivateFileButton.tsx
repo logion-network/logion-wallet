@@ -12,6 +12,7 @@ import { Row } from "../common/Grid";
 import { useLocContext } from "./LocContext";
 import { EditableRequest, HashOrContent } from "@logion/client";
 import { Hash } from "@logion/node-api";
+import { BrowserFile } from "@logion/client-browser";
 
 type Status = 'Idle' | 'UploadDialog' | 'Hashing' | 'Uploading';
 
@@ -34,7 +35,7 @@ export function LocPrivateFileButton(props: Props) {
         setUploadError("")
         if (file) {
             setStatus('Hashing')
-            const content = await HashOrContent.fromContentFinalized(file);
+            const content = await HashOrContent.fromContentFinalized(new BrowserFile(file));
             const hash = content.contentHash;
             const existingItem = locItems.find(item => item.type === "Document" && item.as<FileData>().hash.equalTo(hash));
             if (existingItem !== undefined) {
