@@ -1,4 +1,5 @@
 import { HashOrContent } from "@logion/client";
+import { BrowserFile } from "@logion/client-browser";
 import Table, { ActionCell } from "../common/Table";
 import FileSelectorButton from "../common/FileSelectorButton";
 import { useCallback } from "react";
@@ -30,7 +31,7 @@ export function ValuesFiles() {
             await addLoFile({
                 axios: axiosFactory!(legalOfficer),
                 legalOfficer: legalOfficer!,
-                file: HashOrContent.fromContent(file),
+                file: HashOrContent.fromContent(new BrowserFile(file)),
                 fileId
             });
         } finally {

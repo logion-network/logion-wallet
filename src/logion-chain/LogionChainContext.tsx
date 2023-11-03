@@ -32,6 +32,7 @@ import {
 } from '../common/Storage';
 
 import { getEndpoints, NodeMetadata } from './Connection';
+import { BrowserAxiosFileUploader } from '@logion/client-browser';
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
@@ -407,7 +408,8 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 const peerId = await api.polkadot.rpc.system.localPeerId();
                 const logionClient = await LogionClient.create({
                     rpcEndpoints,
-                    directoryEndpoint: config.directory
+                    directoryEndpoint: config.directory,
+                    buildFileUploader: () => new BrowserAxiosFileUploader(),
                 });
 
                 let startupTokens: AccountTokens;

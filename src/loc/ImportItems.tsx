@@ -32,6 +32,7 @@ import Alert from "src/common/Alert";
 import { UUID } from "@logion/node-api";
 import config from "../config";
 import EstimatedFees from "./fees/EstimatedFees";
+import { BrowserFile } from "@logion/client-browser";
 
 type Submitters = Record<string, Call>;
 
@@ -174,7 +175,10 @@ export default function ImportItems() {
                     name: item.files[0].name,
                     contentType: item.files[0].contentType,
                     size: item.files[0].size,
-                    hashOrContent: new HashOrContent({ hash: item.files[0].hashOrContent.contentHash, content: file }),
+                    hashOrContent: new HashOrContent({
+                        hash: item.files[0].hashOrContent.contentHash,
+                        content: new BrowserFile(file),
+                    }),
                 }),
             });
             item.upload = false;
