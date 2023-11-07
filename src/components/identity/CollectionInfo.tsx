@@ -21,7 +21,15 @@ export function CollectionInfo(props: Props) {
                 <Col>
                     <Detail label="Value fee" value={ <span>
                         <AmountFormat amount={
-                            props.collection.valueFee ? toPrefixedLgnt(props.collection.valueFee.toString()) : Currency.nLgnt(0n)
+                            props.collection.fees.valueFee ? toPrefixedLgnt(props.collection.fees.valueFee.toString()) : Currency.nLgnt(0n)
+                        }/> { Currency.SYMBOL }</span> } />
+                    <Detail label="Collection item fee" value={ <span>
+                        <AmountFormat amount={
+                            props.collection.fees.collectionItemFee ? toPrefixedLgnt(props.collection.fees.collectionItemFee.toString()) : Currency.nLgnt(0n)
+                        }/> { Currency.SYMBOL }</span> } />
+                    <Detail label="Tokens record fee" value={ <span>
+                        <AmountFormat amount={
+                            props.collection.fees.tokensRecordFee ? toPrefixedLgnt(props.collection.fees.tokensRecordFee.toString()) : Currency.nLgnt(0n)
                         }/> { Currency.SYMBOL }</span> } />
                 </Col>
                 <Col>

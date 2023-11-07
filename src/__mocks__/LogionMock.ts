@@ -68,6 +68,8 @@ export const CLOSED_IDENTITY_LOC: LegalOfficerCase = {
     links: [],
     collectionCanUpload: false,
     valueFee: 0n,
+    collectionItemFee: 0n,
+    tokensRecordFee: 0n,
 }
 
 export const OPEN_IDENTITY_LOC_ID = "195914524858768213081425411950368569411";
@@ -82,6 +84,8 @@ export const OPEN_IDENTITY_LOC: LegalOfficerCase = {
     links: [],
     collectionCanUpload: false,
     valueFee: 0n,
+    collectionItemFee: 0n,
+    tokensRecordFee: 0n,
 }
 
 export const CLOSED_COLLECTION_LOC_ID = "195914524858768213081425411950368569411";
@@ -96,4 +100,6 @@ export const CLOSED_COLLECTION_LOC: LegalOfficerCase = {
     links: [],
     collectionCanUpload: false,
     valueFee: 100n,
+    collectionItemFee: 50n,
+    tokensRecordFee: 40n,
 }

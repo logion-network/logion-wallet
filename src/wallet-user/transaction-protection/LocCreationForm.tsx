@@ -15,6 +15,8 @@ export interface FormValues {
     description: string;
     legalOfficer: string;
     valueFee: Amount;
+    collectionItemFee: Amount;
+    tokensRecordFee: Amount;
     legalFee: Amount | undefined;
 }
 
@@ -101,6 +103,7 @@ export default function LocCreationForm(props: Props) {
 
             {
                 props.showValueFee &&
+                <>
                 <FormGroup
                     id="valueFee"
                     label="Value fee"
@@ -116,7 +119,6 @@ export default function LocCreationForm(props: Props) {
                                     isInvalid={ !!props.errors.valueFee?.message }
                                     value={ field.value }
                                     onChange={ field.onChange }
-                                    placeholder="The amount to transfer"
                                 />
                             )}
                         />
@@ -129,6 +131,57 @@ export default function LocCreationForm(props: Props) {
  can review them, otherwise your request may be rejected.`
                     }
                 />
+                <FormGroup
+                    id="collectionItemFee"
+                    label="Collection item fee"
+                    control={
+                        <Controller
+                            name="collectionItemFee"
+                            control={ props.control }
+                            rules={{
+                                validate: validateAmount
+                            }}
+                            render={ ({ field }) => (
+                                <AmountControl
+                                    isInvalid={ !!props.errors.collectionItemFee?.message }
+                                    value={ field.value }
+                                    onChange={ field.onChange }
+                                />
+                            )}
+                        />
+                    }
+                    feedback={ props.errors.collectionItemFee?.message }
+                    colors={ props.colors }
+                    help={
+                        `The collection item fee is calculated in function of the value fee. It is charged to the requester on every item creation.`
+                    }
+                />
+                <FormGroup
+                    id="tokensRecordFee"
+                    label="Tokens record fee"
+                    control={
+                        <Controller
+                            name="tokensRecordFee"
+                            control={ props.control }
+                            rules={{
+                                validate: validateAmount
+                            }}
+                            render={ ({ field }) => (
+                                <AmountControl
+                                    isInvalid={ !!props.errors.tokensRecordFee?.message }
+                                    value={ field.value }
+                                    onChange={ field.onChange }
+                                />
+                            )}
+                        />
+                    }
+                    feedback={ props.errors.tokensRecordFee?.message }
+                    colors={ props.colors }
+                    help={
+                        `The tokens record fee is calculated in function of the value fee. It is charged to the requester on every tokens record creation.`
+                    }
+                />
+                </>
             }
 
             <CollapsePane

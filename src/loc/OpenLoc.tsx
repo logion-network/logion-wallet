@@ -45,10 +45,17 @@ export default function OpenLoc(props: Props) {
             (async function () {
                 if (locState instanceof AcceptedRequest) {
                     if (locState.data().locType === "Collection") {
-                        const apiLimits = await limits.toApiLimits(client.logionApi)
+                        const apiLimits = await limits.toApiLimits(client.logionApi);
+                        const fees = locState.data().fees;
+                        if(fees.valueFee === undefined || fees.collectionItemFee === undefined || fees.tokensRecordFee === undefined) {
+                            throw new Error("Value or recurrent fees missing");
+                        }
                         setFees(await locState.estimateFeesOpenCollection({
                             ...apiLimits,
                             autoPublish,
+                            valueFee: fees.valueFee,
+                            collectionItemFee: fees.collectionItemFee,
+                            tokensRecordFee: fees.tokensRecordFee,
                         }));
                     } else {
                         setFees(await locState.estimateFeesOpen({ autoPublish }));

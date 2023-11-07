@@ -7,6 +7,12 @@ exports[`ContextualizedLocDetails renders 1`] = `
       "createdOn": "2023-10-10T08:25:18.546Z",
       "decisionOn": "2023-10-10T08:25:18.546Z",
       "description": "Description",
+      "fees": Object {
+        "collectionItemFee": 0n,
+        "legalFee": undefined,
+        "tokensRecordFee": 0n,
+        "valueFee": 0n,
+      },
       "files": Array [],
       "id": UUID {
         "bytes": Array [
@@ -51,6 +57,12 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "createdOn": "2023-10-10T08:25:18.546Z",
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
+        "fees": Object {
+          "collectionItemFee": 0n,
+          "legalFee": undefined,
+          "tokensRecordFee": 0n,
+          "valueFee": 0n,
+        },
         "files": Array [],
         "id": UUID {
           "bytes": Array [
@@ -107,6 +119,12 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "createdOn": "2023-10-10T08:25:18.546Z",
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
+        "fees": Object {
+          "collectionItemFee": 0n,
+          "legalFee": undefined,
+          "tokensRecordFee": 0n,
+          "valueFee": 0n,
+        },
         "files": Array [],
         "id": UUID {
           "bytes": Array [
@@ -159,6 +177,12 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "createdOn": "2023-10-10T08:25:18.546Z",
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
+        "fees": Object {
+          "collectionItemFee": 0n,
+          "legalFee": undefined,
+          "tokensRecordFee": 0n,
+          "valueFee": 0n,
+        },
         "files": Array [],
         "id": UUID {
           "bytes": Array [
@@ -204,6 +228,12 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "createdOn": "2023-10-10T08:25:18.546Z",
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
+        "fees": Object {
+          "collectionItemFee": 0n,
+          "legalFee": undefined,
+          "tokensRecordFee": 0n,
+          "valueFee": 0n,
+        },
         "files": Array [],
         "id": UUID {
           "bytes": Array [
@@ -249,6 +279,12 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "createdOn": "2023-10-10T08:25:18.546Z",
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
+        "fees": Object {
+          "collectionItemFee": 0n,
+          "legalFee": undefined,
+          "tokensRecordFee": 0n,
+          "valueFee": 0n,
+        },
         "files": Array [],
         "id": UUID {
           "bytes": Array [
@@ -298,6 +334,12 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "createdOn": "2023-10-10T08:25:18.546Z",
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
+        "fees": Object {
+          "collectionItemFee": 0n,
+          "legalFee": undefined,
+          "tokensRecordFee": 0n,
+          "valueFee": 0n,
+        },
         "files": Array [],
         "id": UUID {
           "bytes": Array [
