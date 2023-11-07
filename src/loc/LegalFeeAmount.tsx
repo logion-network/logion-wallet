@@ -18,8 +18,8 @@ export default function LegalFeeAmount(props: Props) {
         if(props.loc.requesterLocId) {
             return { value: 0n, custom: true };
         } else {
-            if(props.loc.legalFee !== undefined) {
-                return { value: props.loc.legalFee, custom: true };
+            if(props.loc.fees.legalFee !== undefined) {
+                return { value: props.loc.fees.legalFee, custom: true };
             } else {
                 return { value: Currency.toCanonicalAmount(Currency.nLgnt(DEFAULT_LEGAL_FEE)), custom: false };
             }

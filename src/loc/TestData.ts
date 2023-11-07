@@ -42,5 +42,11 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
         })),
         verifiedIssuer: false,
         issuers: [],
+        fees: {
+            valueFee: loc.valueFee,
+            legalFee: loc.legalFee,
+            collectionItemFee: loc.collectionItemFee,
+            tokensRecordFee: loc.tokensRecordFee,
+        }
     };
 }

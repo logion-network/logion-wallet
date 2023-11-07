@@ -40,6 +40,14 @@ export default function LocCreation(props: Props) {
                 unit: Numbers.NONE,
                 value: "0",
             },
+            collectionItemFee: {
+                unit: Numbers.NONE,
+                value: "0",
+            },
+            tokensRecordFee: {
+                unit: Numbers.NONE,
+                value: "0",
+            },
             legalFee: undefined,
         }
     });
@@ -103,6 +111,8 @@ export default function LocCreation(props: Props) {
                     draft: true,
                     template: backendTemplate(selectedTemplateId),
                     valueFee: Currency.toCanonicalAmount(new Numbers.PrefixedNumber(formValues.valueFee.value, formValues.valueFee.unit)),
+                    collectionItemFee: Currency.toCanonicalAmount(new Numbers.PrefixedNumber(formValues.collectionItemFee.value, formValues.collectionItemFee.unit)),
+                    tokensRecordFee: Currency.toCanonicalAmount(new Numbers.PrefixedNumber(formValues.tokensRecordFee.value, formValues.tokensRecordFee.unit)),
                     legalFee: formValues.legalFee ? Currency.toCanonicalAmount(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
                 }) as DraftRequest;
             } else {
