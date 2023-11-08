@@ -88,6 +88,30 @@ export default function EstimatedFees(props: Props) {
                             { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
+                    { props.fees.collectionItemFee !== undefined &&
+                        <tr>
+                            <td>Collection item fee</td>
+                            <td>
+                                <AmountFormat
+                                    amount={ Currency.toPrefixedNumberAmount(props.fees.collectionItemFee).convertTo(Numbers.NONE) }
+                                    decimals={4}
+                                />
+                            </td>
+                            { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
+                        </tr>
+                    }
+                    { props.fees.tokensRecordFee !== undefined &&
+                        <tr>
+                            <td>Tokens record fee</td>
+                            <td>
+                                <AmountFormat
+                                    amount={ Currency.toPrefixedNumberAmount(props.fees.tokensRecordFee).convertTo(Numbers.NONE) }
+                                    decimals={4}
+                                />
+                            </td>
+                            { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
+                        </tr>
+                    }
                     <tr>
                         <td>Total</td>
                         <td>
