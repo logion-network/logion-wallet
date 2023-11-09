@@ -68,6 +68,7 @@ export const CLOSED_IDENTITY_LOC: LegalOfficerCase = {
     links: [],
     collectionCanUpload: false,
     valueFee: 0n,
+    legalFee: 0n,
     collectionItemFee: 0n,
     tokensRecordFee: 0n,
 }
@@ -84,6 +85,7 @@ export const OPEN_IDENTITY_LOC: LegalOfficerCase = {
     links: [],
     collectionCanUpload: false,
     valueFee: 0n,
+    legalFee: 0n,
     collectionItemFee: 0n,
     tokensRecordFee: 0n,
 }
@@ -100,6 +102,7 @@ export const CLOSED_COLLECTION_LOC: LegalOfficerCase = {
     links: [],
     collectionCanUpload: false,
     valueFee: 100n,
+    legalFee: 200n,
     collectionItemFee: 50n,
     tokensRecordFee: 40n,
 }

@@ -9,7 +9,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
       "description": "Description",
       "fees": Object {
         "collectionItemFee": 0n,
-        "legalFee": undefined,
+        "legalFee": 0n,
         "tokensRecordFee": 0n,
         "valueFee": 0n,
       },
@@ -59,7 +59,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "description": "Description",
         "fees": Object {
           "collectionItemFee": 0n,
-          "legalFee": undefined,
+          "legalFee": 0n,
           "tokensRecordFee": 0n,
           "valueFee": 0n,
         },
@@ -121,7 +121,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "description": "Description",
         "fees": Object {
           "collectionItemFee": 0n,
-          "legalFee": undefined,
+          "legalFee": 0n,
           "tokensRecordFee": 0n,
           "valueFee": 0n,
         },
@@ -179,7 +179,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "description": "Description",
         "fees": Object {
           "collectionItemFee": 0n,
-          "legalFee": undefined,
+          "legalFee": 0n,
           "tokensRecordFee": 0n,
           "valueFee": 0n,
         },
@@ -230,7 +230,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "description": "Description",
         "fees": Object {
           "collectionItemFee": 0n,
-          "legalFee": undefined,
+          "legalFee": 0n,
           "tokensRecordFee": 0n,
           "valueFee": 0n,
         },
@@ -281,7 +281,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "description": "Description",
         "fees": Object {
           "collectionItemFee": 0n,
-          "legalFee": undefined,
+          "legalFee": 0n,
           "tokensRecordFee": 0n,
           "valueFee": 0n,
         },
@@ -336,7 +336,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "description": "Description",
         "fees": Object {
           "collectionItemFee": 0n,
-          "legalFee": undefined,
+          "legalFee": 0n,
           "tokensRecordFee": 0n,
           "valueFee": 0n,
         },
