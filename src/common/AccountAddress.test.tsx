@@ -9,7 +9,8 @@ test("renders", () => {
         <AccountAddress
             balance={{
                 available: new Numbers.PrefixedNumber("2", Numbers.NONE),
-                balance: new Numbers.PrefixedNumber("2", Numbers.NONE),
+                total: new Numbers.PrefixedNumber("2", Numbers.NONE),
+                reserved: new Numbers.PrefixedNumber("0", Numbers.NONE),
                 coin: {
                     id: "lgnt",
                     symbol: "LGNT"

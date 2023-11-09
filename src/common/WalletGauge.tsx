@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Form, Spinner, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
-import { BalanceState } from '@logion/client/dist/Balance.js';
-import { Numbers, Coin, Currency } from '@logion/node-api';
+import { BalanceState } from '@logion/client';
+import { Numbers, CoinBalance, Currency } from '@logion/node-api';
 
 import { useLogionChain } from '../logion-chain';
 import ClientExtrinsicSubmitter, { Call, CallCallback } from '../ClientExtrinsicSubmitter';
@@ -16,11 +16,10 @@ import Alert from './Alert';
 import TransactionConfirmation, { Status } from "./TransactionConfirmation";
 
 import './WalletGauge.css';
+import BalanceDetails from './BalanceDetails';
 
 export interface Props {
-    coin: Coin,
-    balance: Numbers.PrefixedNumber,
-    level: number,
+    balance: CoinBalance,
     type: 'arc' | 'linear',
     vaultAddress?: string,
     sendButton?: boolean
@@ -72,10 +71,14 @@ export default function WalletGauge(props: Props) {
             children={ (status, startTransferringCallback, cancelCallback, successCallback) => {
                 return <div className={ "WalletGauge " + props.type }>
                     <Gauge
-                        readingIntegerPart={ props.balance.coefficient.toInteger() }
-                        readingDecimalPart={ props.balance.coefficient.toFixedPrecisionDecimals(2) }
-                        unit={ props.balance.prefix.symbol + Currency.SYMBOL }
-                        level={ props.level }
+                        readingIntegerPart={ props.balance.available.coefficient.toInteger() }
+                        readingDecimalPart={ props.balance.available.coefficient.toFixedPrecisionDecimals(2) }
+                        unit={ props.balance.available.prefix.symbol + Currency.SYMBOL }
+                        level={ props.balance.level }
+                        type={ props.type }
+                    />
+                    <BalanceDetails
+                        balance={ props.balance }
                         type={ props.type }
                     />
                     { (sendButton === undefined || sendButton) &&

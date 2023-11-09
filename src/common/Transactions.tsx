@@ -156,10 +156,8 @@ function Content(props: ContentProps) {
                             title={ <BalanceFrameTitle coin={ balance.coin } /> }
                         >
                             <WalletGauge
-                                coin={ balance.coin }
-                                balance={ balance.balance }
+                                balance={ balance }
                                 type='linear'
-                                level={ balance.level }
                                 vaultAddress={ vaultAddress }
                             />
                         </Frame>
@@ -188,10 +186,8 @@ function Content(props: ContentProps) {
                             className="gauge-container"
                         >
                             <WalletGauge
-                                coin={ balance.coin }
-                                balance={ balance.balance }
+                                balance={ balance }
                                 type='arc'
-                                level={ balance.level }
                                 sendButton={ false }
                             />
                         </Frame>

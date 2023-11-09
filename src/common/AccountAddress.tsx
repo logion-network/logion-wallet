@@ -9,6 +9,7 @@ import Icon from './Icon';
 
 import './AccountAddress.css';
 import { Spinner } from "react-bootstrap";
+import InlineAmount from "src/components/inlineamount/InlineAmount";
 
 export interface Props {
     balance?: CoinBalance | null;
@@ -83,8 +84,23 @@ export default function AccountAddress(props: Props) {
                             color: colorTheme.accounts.foreground,
                         }}
                     >
-                        <span className="amount">{ props.balance === null ? <Spinner size="sm"/> : props.balance.balance.coefficient.toFixedPrecision(2) }</span>{" "}
-                        <span className="symbol">{ (props.balance?.balance.prefix.symbol || "") + (props.balance?.coin.symbol || "LGNT") }</span>
+                        {
+                            props.balance === null &&
+                            <Spinner size="sm"/>
+                        }
+                        {
+                            props.balance !== null &&
+                            <>
+                            <InlineAmount amount={ props.balance.available } coin={ props.balance.coin } />{" "}
+                            {
+                                !props.balance.reserved.coefficient.isZero() &&
+                                <span className="reserved">
+                                    +{" "}
+                                    <InlineAmount amount={ props.balance.reserved } coin={ props.balance.coin } />
+                                </span>
+                            }
+                            </>
+                        }
                     </div>
                 }
             </div>

@@ -27,8 +27,9 @@ test("Recovered tokens can be transferred", async () => {
             id: 'dot',
             symbol: 'DOT',
         },
-        balance: new Numbers.PrefixedNumber("100", Numbers.MILLI),
+        total: new Numbers.PrefixedNumber("100", Numbers.MILLI),
         available: new Numbers.PrefixedNumber("100", Numbers.MILLI),
+        reserved: new Numbers.PrefixedNumber("0", Numbers.NONE),
         level: 1
     }
 

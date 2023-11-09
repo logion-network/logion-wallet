@@ -79,17 +79,34 @@ exports[`renders 1`] = `
         }
       }
     >
-      <span
-        className="amount"
-      >
-        2.00
-      </span>
-       
-      <span
-        className="symbol"
-      >
-        LGNT
-      </span>
+      <React.Fragment>
+        <InlineAmount
+          amount={
+            PrefixedNumber {
+              "_prefix": Object {
+                "symbol": "",
+                "tenExponent": 0,
+              },
+              "_scientificNumber": ScientificNumber {
+                "_normalized": NormalizedNumber {
+                  "_decimalPart": "",
+                  "_integerPart": "2",
+                  "_negative": false,
+                  "_normalized": "2.",
+                },
+                "_tenExponent": 0,
+              },
+            }
+          }
+          coin={
+            Object {
+              "id": "lgnt",
+              "symbol": "LGNT",
+            }
+          }
+        />
+         
+      </React.Fragment>
     </div>
   </div>
 </div>

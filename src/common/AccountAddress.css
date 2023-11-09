@@ -40,8 +40,8 @@
     text-overflow: ellipsis;
 }
 
-.AccountAddress .text .balance .symbol {
-    font-size: 0.7rem;
+.AccountAddress .text .balance .reserved {
+    opacity: 0.5;
 }
 
 .AccountAddress .text .name {
