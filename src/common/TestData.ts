@@ -127,8 +127,9 @@ export const DEFAULT_COIN: Coin = {
 
 export const DEFAULT_COIN_BALANCE: CoinBalance = {
     coin: DEFAULT_COIN,
-    balance: new Numbers.PrefixedNumber("42", Numbers.ATTO),
+    total: new Numbers.PrefixedNumber("42", Numbers.ATTO),
     available: new Numbers.PrefixedNumber("42", Numbers.ATTO),
+    reserved: new Numbers.PrefixedNumber("0", Numbers.ATTO),
     level: 0.1,
 };
 

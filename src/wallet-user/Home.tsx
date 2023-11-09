@@ -120,9 +120,9 @@ export function Content() {
                             <Col>
                                 <div className="reading-container">
                                     <Reading
-                                        readingIntegerPart={ balanceState.balances[0].balance.coefficient.toInteger() }
-                                        readingDecimalPart={ balanceState.balances[0].balance.coefficient.toFixedPrecisionDecimals(2) }
-                                        unit={ balanceState.balances[0].balance.prefix.symbol + Currency.SYMBOL }
+                                        readingIntegerPart={ balanceState.balances[0].available.coefficient.toInteger() }
+                                        readingDecimalPart={ balanceState.balances[0].available.coefficient.toFixedPrecisionDecimals(2) }
+                                        unit={ balanceState.balances[0].available.prefix.symbol + Currency.SYMBOL }
                                         level={ balanceState.balances[0].level }
                                     />
                                     <Button

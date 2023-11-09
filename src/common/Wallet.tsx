@@ -63,7 +63,6 @@ export function Content(props: Props & { type: WalletType }) {
 
     const latestTransaction = transactions[0];
 
-    const gaugeCoin = balances[0].coin;
     return (
         <>
         {
@@ -98,7 +97,7 @@ export function Content(props: Props & { type: WalletType }) {
                             },
                             {
                                 header: "Balance",
-                                render: balance => <Cell content={ balance.balance.coefficient.toFixedPrecision(2) } />,
+                                render: balance => <Cell content={ balance.available.coefficient.toFixedPrecision(2) } />,
                                 width: width({
                                     onSmallScreen: "120px",
                                     otherwise: "140px"
@@ -115,7 +114,7 @@ export function Content(props: Props & { type: WalletType }) {
                             },
                             {
                                 header: "Last transaction amount",
-                                render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? toPrefixedLgnt(transactionAmount(latestTransaction)).convertTo(balance.balance.prefix).coefficient.toFixedPrecision(2) : '-' } />,
+                                render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? toPrefixedLgnt(transactionAmount(latestTransaction)).convertTo(balance.available.prefix).coefficient.toFixedPrecision(2) : '-' } />,
                                 align: 'right',
                             },
                             {
@@ -145,9 +144,7 @@ export function Content(props: Props & { type: WalletType }) {
                         className="gauge-container"
                     >
                         <WalletGauge
-                            coin={ gaugeCoin }
-                            balance={ balances[0].balance }
-                            level={ balances[0].level }
+                            balance={ balances[0] }
                             type='arc'
                             vaultAddress={ vaultAddress }
                         />
@@ -167,7 +164,7 @@ export function AssetNameCell(props: AssetNameCellProps) {
 
     return (
         <div className="asset-name-cell">
-            <span className="name"><CoinName coinId={ props.balance.coin.id }/> ({ props.balance.balance.prefix.symbol }{ props.balance.coin.symbol })</span>
+            <span className="name"><CoinName coinId={ props.balance.coin.id }/> ({ props.balance.available.prefix.symbol }{ props.balance.coin.symbol })</span>
         </div>
     );
 }

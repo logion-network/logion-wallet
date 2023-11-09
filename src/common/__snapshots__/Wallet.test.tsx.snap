@@ -97,7 +97,27 @@ exports[`renders with all data 1`] = `
                     "_tenExponent": -18,
                   },
                 },
-                "balance": PrefixedNumber {
+                "coin": Object {
+                  "id": "lgnt",
+                  "symbol": "LGNT",
+                },
+                "level": 0.1,
+                "reserved": PrefixedNumber {
+                  "_prefix": Object {
+                    "symbol": "a",
+                    "tenExponent": -18,
+                  },
+                  "_scientificNumber": ScientificNumber {
+                    "_normalized": NormalizedNumber {
+                      "_decimalPart": "",
+                      "_integerPart": "",
+                      "_negative": false,
+                      "_normalized": ".",
+                    },
+                    "_tenExponent": -18,
+                  },
+                },
+                "total": PrefixedNumber {
                   "_prefix": Object {
                     "symbol": "a",
                     "tenExponent": -18,
@@ -112,11 +132,6 @@ exports[`renders with all data 1`] = `
                     "_tenExponent": -18,
                   },
                 },
-                "coin": Object {
-                  "id": "lgnt",
-                  "symbol": "LGNT",
-                },
-                "level": 0.1,
               },
             ]
           }
@@ -148,29 +163,59 @@ exports[`renders with all data 1`] = `
       >
         <WalletGauge
           balance={
-            PrefixedNumber {
-              "_prefix": Object {
-                "symbol": "a",
-                "tenExponent": -18,
-              },
-              "_scientificNumber": ScientificNumber {
-                "_normalized": NormalizedNumber {
-                  "_decimalPart": "",
-                  "_integerPart": "42",
-                  "_negative": false,
-                  "_normalized": "42.",
-                },
-                "_tenExponent": -18,
-              },
-            }
-          }
-          coin={
             Object {
-              "id": "lgnt",
-              "symbol": "LGNT",
+              "available": PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "a",
+                  "tenExponent": -18,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "",
+                    "_integerPart": "42",
+                    "_negative": false,
+                    "_normalized": "42.",
+                  },
+                  "_tenExponent": -18,
+                },
+              },
+              "coin": Object {
+                "id": "lgnt",
+                "symbol": "LGNT",
+              },
+              "level": 0.1,
+              "reserved": PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "a",
+                  "tenExponent": -18,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "",
+                    "_integerPart": "",
+                    "_negative": false,
+                    "_normalized": ".",
+                  },
+                  "_tenExponent": -18,
+                },
+              },
+              "total": PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "a",
+                  "tenExponent": -18,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "",
+                    "_integerPart": "42",
+                    "_negative": false,
+                    "_normalized": "42.",
+                  },
+                  "_tenExponent": -18,
+                },
+              },
             }
           }
-          level={0.1}
           type="arc"
         />
       </Frame>
