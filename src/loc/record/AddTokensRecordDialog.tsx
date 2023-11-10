@@ -12,6 +12,8 @@ import Icon from "src/common/Icon";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "../LocContext";
 import { BrowserFile } from "@logion/client-browser";
+import EstimatedFees from "../fees/EstimatedFees";
+import { Fees } from "@logion/node-api";
 
 export interface Props {
     show: boolean;
@@ -25,17 +27,19 @@ interface FormValues {
     description: string;
 }
 
-type Status = 'Idle' | 'Hashing' | 'Uploading' | 'Error';
+type Status = 'Idle' | 'Hashing' | 'Confirming' | 'Uploading' | 'Error';
 
 export default function AddTokensRecordDialog(props: Props) {
     const { colorTheme } = useCommonContext();
-    const { mutateLocState } = useLocContext();
+    const { mutateLocState, locState } = useLocContext();
     const { signer } = useLogionChain();
-    const { control, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormValues>();
+    const { control, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm<FormValues>();
     const [ file, setFile ] = useState<File>();
     const [ uploadError, setUploadError ] = useState<string>();
     const [ status, setStatus ] = useState<Status>('Idle');
     const [ call, setCall ] = useState<Call>();
+    const [ fees, setFees ] = useState<Fees | null>(null);
+    const [ content, setContent ] = useState<HashOrContent>();
 
     const onFileSelected = useCallback((file: File) => {
         setFile(file);
@@ -52,53 +56,83 @@ export default function AddTokensRecordDialog(props: Props) {
         setCall(undefined);
         setStatus('Idle');
         setUploadError("");
+        setFees(null);
+        setContent(undefined);
         reset();
         props.hide();
     }, [ props, reset ]);
 
-    const submit = useCallback(async (formValues: FormValues) => {
+    const estimateFees = useCallback(async (formValues: FormValues) => {
         setUploadError("")
         if (file) {
             setStatus('Hashing')
-            const content = await HashOrContent.fromContentFinalized(new BrowserFile(file));
-            const hash = content.contentHash;
-            const existingRecord = props.records.find(record => record.id === hash);
-            if (existingRecord !== undefined) {
-                onError(`Record with ID ${hash} already exists`);
-            } else {
-                setStatus('Uploading')
-                try {
-                    const call: Call = async (callback: CallCallback) => await mutateLocState(async current => {
-                        if(signer && current instanceof ClosedCollectionLoc) {
-                            await current.addTokensRecord({
-                                recordId: hash,
-                                description: formValues.description,
-                                files: [
-                                    new ItemFileWithContent({
-                                        contentType: MimeType.from(formValues.contentType),
-                                        hashOrContent: content,
-                                        name: formValues.fileName,
-                                    }),
-                                ],
-                                signer,
-                                callback,
-                            });
-                            const currentLoc = current.getCurrentState() as ClosedCollectionLoc;
-                            return currentLoc.refresh();
-                        } else {
-                            return current;
-                        }
+            try {
+                const content = await HashOrContent.fromContentFinalized(new BrowserFile(file));
+                setContent(content);
+                const hash = content.contentHash;
+                const existingRecord = props.records.find(record => record.id.toHex() === hash.toHex());
+                if (existingRecord !== undefined) {
+                    onError(`Record with ID ${hash.toHex()} already exists`);
+                } else {
+                    const collection = locState as ClosedCollectionLoc;
+                    const fees = await collection.estimateFeesAddTokensRecord({
+                        recordId: hash,
+                        description: formValues.description,
+                        files: [
+                            new ItemFileWithContent({
+                                contentType: MimeType.from(formValues.contentType),
+                                hashOrContent: content,
+                                name: formValues.fileName,
+                            }),
+                        ],
                     });
-                    setCall(() => call);
-                } catch (error: any) {
-                    const errorMessage = error?.response?.data?.errorMessage;
-                    onError(`${ error }: ${ errorMessage }`);
+                    setFees(fees);
+                    setStatus('Confirming');
                 }
+            } catch (error: any) {
+                const errorMessage = error?.response?.data?.errorMessage;
+                onError(`${ error }: ${ errorMessage }`);
             }
         }
-    }, [ file, mutateLocState, onError, props.records, signer ]);
+    }, [ file, locState, onError, props.records ]);
 
-    return (
+    const submit = useCallback(async () => {
+        setUploadError("")
+        if (content) {
+            const hash = content.contentHash;
+            setStatus('Uploading')
+            try {
+                const call: Call = async (callback: CallCallback) => await mutateLocState(async current => {
+                    if (signer && current instanceof ClosedCollectionLoc) {
+                        const formValues = getValues();
+                        await current.addTokensRecord({
+                            recordId: hash,
+                            description: formValues.description,
+                            files: [
+                                new ItemFileWithContent({
+                                    contentType: MimeType.from(formValues.contentType),
+                                    hashOrContent: content,
+                                    name: formValues.fileName,
+                                }),
+                            ],
+                            signer,
+                            callback,
+                        });
+                        const currentLoc = current.getCurrentState() as ClosedCollectionLoc;
+                        return currentLoc.refresh();
+                    } else {
+                        return current;
+                    }
+                });
+                setCall(() => call);
+            } catch (error: any) {
+                const errorMessage = error?.response?.data?.errorMessage;
+                onError(`${ error }: ${ errorMessage }`);
+            }
+        }
+    }, [ mutateLocState, onError, signer, getValues, content ]);
+
+    return (<>
         <Dialog
             show={ props.show }
             size="lg"
@@ -118,7 +152,7 @@ export default function AddTokensRecordDialog(props: Props) {
                     type: "submit",
                 }
             ]}
-            onSubmit={handleSubmit(submit)}
+            onSubmit={handleSubmit(estimateFees)}
         >
             <h3>Add a tokens record</h3>
             <Icon icon={{id: "big-warning"}} type="png" height="50px"/>
@@ -222,5 +256,31 @@ export default function AddTokensRecordDialog(props: Props) {
                 onSuccess={clear}
             />
         </Dialog>
-    );
+
+        <Dialog
+            actions={[
+                {
+                    id: "cancel",
+                    buttonText: "Cancel",
+                    callback: () => setStatus('Idle'),
+                    buttonVariant: "secondary",
+                },
+                {
+                    id: "proceed",
+                    buttonText: "Proceed",
+                    callback: submit,
+                    buttonVariant: "polkadot",
+                }
+            ]}
+            show={ status === 'Confirming' }
+            size="lg"
+        >
+            <h3>Tokens Record Creation Fees</h3>
+            <EstimatedFees
+                fees={ fees }
+                centered={ true }
+                hideTitle={ true }
+            />
+        </Dialog>
+    </>);
 }
