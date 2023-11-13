@@ -8,10 +8,10 @@ import { TEST_WALLET_USER } from "../wallet-user/TestData";
 
 import LocCreationDialog from "./LocCreationDialog";
 import { setAuthenticatedUser } from "src/common/__mocks__/ModelMock";
-import { LocData, OpenLoc, OpenLocParams, BlockchainSubmissionParams, LocsState, LogionClient } from "@logion/client";
+import { LocData, OpenLoc, OpenLocParams, BlockchainSubmissionParams, LogionClient } from "@logion/client";
 import { mockSubmittableResult } from "../logion-chain/__mocks__/SignatureMock";
 import { setLocsState } from "../legal-officer/__mocks__/LegalOfficerContextMock";
-import { setClientMock } from "../logion-chain/__mocks__/LogionChainMock";
+import { SUCCESSFUL_SUBMISSION, setClientMock, setExtrinsicSubmissionState } from "../logion-chain/__mocks__/LogionChainMock";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../common/CommonContext");
@@ -49,6 +49,7 @@ async function createsWithUserIdentity(locType: LocType, requesterIdentityLoc: s
     };
     mockLegalOfficerCreateLoc(requestFragment.requesterLocId || undefined);
 
+    setExtrinsicSubmissionState(SUCCESSFUL_SUBMISSION);
     render(<LocCreationDialog
         exit={ exit }
         hasLinkNature={ false }
@@ -88,6 +89,7 @@ async function createsWithoutUserIdentity(locType: LocType, requesterIdentityLoc
     };
     mockLegalOfficerCreateLoc(requestFragment.requesterLocId || undefined);
 
+    setExtrinsicSubmissionState(SUCCESSFUL_SUBMISSION);
     render(<LocCreationDialog
         exit={ exit }
         hasLinkNature={ false }

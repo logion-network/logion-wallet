@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import {
-    SignedTransaction,
-} from './logion-chain/Signature';
+import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
+import { useLogionChain } from './logion-chain';
+import { SignAndSubmit } from './logion-chain/LogionChainContext';
 
-import ExtrinsicSubmissionResult, { isSuccessful } from './ExtrinsicSubmissionResult';
-import { flushSync } from 'react-dom';
-
-export type SignAndSubmit = ((setResult: React.Dispatch<React.SetStateAction<SignedTransaction | null>>, setError: React.Dispatch<React.SetStateAction<any>>) => void) | null;
+export type { SignAndSubmit };
 
 export interface Props {
     id: string,
@@ -19,45 +16,30 @@ export interface Props {
 }
 
 export default function ExtrinsicSubmitter(props: Props) {
-    const [ result, setResult ] = useState<SignedTransaction | null>(null);
-    const [ error, setError ] = useState<any>(null);
-    const [ submitted, setSubmitted ] = useState<boolean>(false);
-    const [ notified, setNotified ] = useState<boolean>(false);
+    const { extrinsicSubmissionState, submitSignAndSubmit, resetSubmissionState } = useLogionChain();
+    const [ notified, setNotified ] = useState(false);
 
     useEffect(() => {
-        if(!submitted && props.signAndSubmit !== null) {
-            flushSync(() => setSubmitted(true));
-            const signAndSubmit = props.signAndSubmit;
-            (async function() {
-                setResult(null);
-                setError(null);
-                signAndSubmit(setResult, setError);
-            })();
+        if(props.signAndSubmit !== null && !notified && extrinsicSubmissionState.canSubmit()) {
+            submitSignAndSubmit(props.signAndSubmit);
         }
-    }, [ setResult, setError, props, submitted ]);
+    }, [ extrinsicSubmissionState, props, submitSignAndSubmit, notified ]);
 
     useEffect(() => {
-        if (result !== null && isSuccessful(result) && !notified) {
+        if (extrinsicSubmissionState.isSuccessful() && !notified && props.onSuccess) {
             setNotified(true);
+            resetSubmissionState();
             props.onSuccess(props.id);
         }
-    }, [ result, notified, setNotified, props ]);
+    }, [ extrinsicSubmissionState, props, notified, resetSubmissionState ]);
 
     useEffect(() => {
-        if (error !== null && !notified) {
+        if (extrinsicSubmissionState.isError() && !notified && props.onError) {
             setNotified(true);
+            resetSubmissionState();
             props.onError(props.id);
         }
-    }, [ notified, setNotified, props, error ]);
-
-    useEffect(() => {
-        if(submitted && props.signAndSubmit === null) {
-            setSubmitted(false);
-            setNotified(false);
-            setResult(null);
-            setError(null);
-        }
-    }, [ setResult, setError, props, submitted ]);
+    }, [ extrinsicSubmissionState, props, notified, resetSubmissionState ]);
 
     if(props.signAndSubmit === null) {
         return null;
@@ -65,8 +47,8 @@ export default function ExtrinsicSubmitter(props: Props) {
 
     return (
         <ExtrinsicSubmissionResult
-            result={result}
-            error={error}
+            result={extrinsicSubmissionState.result}
+            error={extrinsicSubmissionState.error}
             successMessage={ props.successMessage }
             slim={ props.slim }
         />

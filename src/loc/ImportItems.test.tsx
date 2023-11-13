@@ -7,7 +7,7 @@ import { CollectionItem, Fees, UUID } from "@logion/node-api";
 import { H256 } from "@logion/node-api/dist/types/interfaces";
 import { LogionClient, AddCollectionItemParams, EstimateFeesAddCollectionItemParams } from "@logion/client";
 import { mockSubmittableResult } from "../logion-chain/__mocks__/SignatureMock";
-import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
+import { SUCCESSFUL_SUBMISSION, setClientMock, setExtrinsicSubmissionState } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { It, Mock } from 'moq.ts';
 import { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { Compact, u128 } from "@polkadot/types-codec";
@@ -21,6 +21,7 @@ jest.mock("./UserLocContext");
 describe("ImportItems", () => {
 
     it("imports all CSV", async () => {
+        setExtrinsicSubmissionState(SUCCESSFUL_SUBMISSION);
         const collection = await uploadCsv();
 
         await waitFor(() => screen.getAllByRole("button", { name: /Import all/ }));
@@ -38,6 +39,7 @@ describe("ImportItems", () => {
     });
 
     it("imports one CSV row", async () => {
+        setExtrinsicSubmissionState(SUCCESSFUL_SUBMISSION);
         const collection = await uploadCsv();
 
         await waitFor(() => expect(screen.getAllByRole("button", { name: /Import/ }).length).toBe(5));

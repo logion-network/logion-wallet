@@ -8,6 +8,7 @@ import Accounts, { Account } from 'src/common/types/Accounts';
 import { LogionClient } from '@logion/client/dist/LogionClient.js';
 import { LogionClient as LogionClientMock } from '../../__mocks__/LogionClientMock';
 import { api } from "src/__mocks__/LogionMock";
+import { Call } from "../LogionChainContext";
 
 export const LogionChainContextProvider = (props: any) => null;
 
@@ -89,6 +90,56 @@ let signer = {
     signAndSend,
 };
 
+export const NO_SUBMISSION: unknown = {
+    canSubmit: () => true,
+    isSuccessful: () => false,
+    isError: () => false,
+    error: null,
+    result: null,
+};
+
+let extrinsicSubmissionState: unknown = NO_SUBMISSION;
+
+export const SUCCESSFUL_SUBMISSION: unknown = {
+    canSubmit: () => true,
+    isSuccessful: () => true,
+    isError: () => false,
+    error: null,
+    result: {
+        status: {
+            isFinalized: true,
+        }
+    },
+};
+
+export const FAILED_SUBMISSION: unknown = {
+    canSubmit: () => false,
+    isSuccessful: () => false,
+    isError: () => true,
+    error: "error",
+    result: {
+        status: {
+            isFinalized: false,
+        }
+    },
+};
+
+export const PENDING_SUBMISSION: unknown = {
+    canSubmit: () => false,
+    isSuccessful: () => false,
+    isError: () => false,
+    error: null,
+    result: {
+        status: {
+            isFinalized: false,
+        }
+    },
+};
+
+export function setExtrinsicSubmissionState(state: unknown) {
+    extrinsicSubmissionState = state;
+}
+
 export function useLogionChain() {
     if(context) {
         return context;
@@ -113,7 +164,11 @@ export function useLogionChain() {
                 [DEFAULT_LEGAL_OFFICER.address]: {
                     iDenfy: false,
                 }
-            }
+            },
+            extrinsicSubmissionState,
+            resetSubmissionState: () => {},
+            submitSignAndSubmit: () => {},
+            submitCall: (call: Call) => call(() => {}),
         };
     }
 }

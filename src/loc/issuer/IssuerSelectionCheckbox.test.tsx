@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 import { VerifiedIssuerWithSelect } from "@logion/client";
 
 jest.mock("../LocContext");
+jest.mock("../../logion-chain");
 
 describe("IssuerSelectionCheckbox", () => {
 

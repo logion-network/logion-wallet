@@ -9,6 +9,7 @@ import CloseLocButton from './CloseLocButton';
 import { OpenLoc } from 'src/__mocks__/LogionClientMock';
 import { mockSubmittableResult } from 'src/logion-chain/__mocks__/SignatureMock';
 import { LocItem, MetadataItem } from './LocItem';
+import { FAILED_SUBMISSION, SUCCESSFUL_SUBMISSION, setExtrinsicSubmissionState } from 'src/logion-chain/__mocks__/LogionChainMock';
 
 jest.mock("../logion-chain");
 jest.mock("./LocContext");
@@ -30,6 +31,7 @@ describe("CloseLocButton", () => {
     })
 
     it("closes when closeable", async () => {
+        setExtrinsicSubmissionState(SUCCESSFUL_SUBMISSION);
         renderGivenLoc(true, false);
 
         await clickByName(/Close LOC/);
@@ -51,6 +53,7 @@ describe("CloseLocButton", () => {
 
     it("shows message on error", async () => {
         closeLocMock = failureCloseLocMock;
+        setExtrinsicSubmissionState(FAILED_SUBMISSION);
         renderGivenLoc(true, false);
 
         await clickByName(/Close LOC/);

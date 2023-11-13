@@ -98,15 +98,12 @@ export default function VoidLocButton() {
                     /> }
                     colors={ colorTheme.dialog }
                 />
-                {
-                    call !== undefined &&
-                    <ClientExtrinsicSubmitter
-                        call={ call }
-                        successMessage="LOC successfully voided"
-                        onSuccess={ () => setVisible(false) }
-                        onError={ () => setSubmissionFailed(true) }
-                    />
-                }
+                <ClientExtrinsicSubmitter
+                    call={ call }
+                    successMessage="LOC successfully voided"
+                    onSuccess={ clearAndClose }
+                    onError={ () => setSubmissionFailed(true) }
+                />
             </DangerDialog>
         </>
     );
