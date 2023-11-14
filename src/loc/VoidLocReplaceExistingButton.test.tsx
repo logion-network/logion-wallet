@@ -45,7 +45,7 @@ describe("VoidLocReplaceExistingButton", () => {
         await userEvent.click(button);
 
         await waitFor(() => expectSubmitting());
-        expect(called).toBe(true);
+        await waitFor(() => expect(called).toBe(true));
     });
 
     it("closes dialog on success", async () => {
