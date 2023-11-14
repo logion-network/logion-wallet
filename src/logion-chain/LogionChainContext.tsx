@@ -5,7 +5,8 @@ import {
     LogionClient,
     DefaultSignAndSendStrategy,
     Token,
-    RawSigner
+    RawSigner,
+    ISubmittableResult,
 } from '@logion/client';
 import {
     allMetamaskAccounts,
@@ -38,7 +39,108 @@ type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
 export const SIGN_AND_SEND_STRATEGY = new DefaultSignAndSendStrategy();
 
+export function isSuccessful(result: ISubmittableResult): boolean {
+    return !result.dispatchError && SIGN_AND_SEND_STRATEGY.canUnsub(result);
+}
+
 export type AxiosFactory = (legalOfficerAddress: string | undefined, token?: Token) => AxiosInstance;
+
+export type CallCallback = (result: ISubmittableResult) => void;
+
+export type Call = (callback: CallCallback) => Promise<void>;
+
+export type SignAndSubmit = ((setResult: (result: ISubmittableResult | null) => void, setError: (error: unknown) => void) => void) | null;
+
+export class ExtrinsicSubmissionState {
+
+    constructor() {
+        this._result = null;
+        this._error = null;
+        this._submitted = false;
+        this._callEnded = false;
+    }
+
+    private _result: ISubmittableResult | null;
+    private _error: any;
+    private _submitted: boolean;
+    private _callEnded: boolean;
+
+    canSubmit() {
+        return !this.submitted || this.callEnded;
+    }
+
+    get submitted() {
+        return this._submitted;
+    }
+
+    get callEnded() {
+        return this._callEnded;
+    }
+
+    get result() {
+        return this._result;
+    }
+
+    get error() {
+        return this._error;
+    }
+
+    submit() {
+        if(!this.canSubmit()) {
+            throw new Error("Cannot submit new call");
+        }
+        const state = new ExtrinsicSubmissionState();
+        state._result = null;
+        state._error = null;
+        state._submitted = true;
+        state._callEnded = false;
+        return state;
+    }
+
+    withResult(result: ISubmittableResult) {
+        if(this._callEnded) {
+            throw new Error("Call already ended");
+        }
+        const state = new ExtrinsicSubmissionState();
+        state._result = result;
+        state._error = this._error;
+        state._submitted = this._submitted;
+        state._callEnded = this._callEnded;
+        return state;
+    }
+
+    end(error: unknown) {
+        if(this._callEnded) {
+            throw new Error("Call already ended");
+        }
+        const state = new ExtrinsicSubmissionState();
+        state._result = this._result;
+        state._error = error;
+        state._submitted = this._submitted;
+        state._callEnded = true;
+        return state;
+    }
+
+    isSuccessful(): boolean {
+        return this.callEnded && this.error === null;
+    }
+
+    isError(): boolean {
+        return this.callEnded && this.error !== null;
+    }
+
+    resetAndKeepResult() {
+        if(!this._callEnded) {
+            throw new Error("Call not yet ended");
+        }
+        const state = new ExtrinsicSubmissionState();
+        state._result = this._result;
+        state._error = this._error;
+        state._submitted = false;
+        state._callEnded = false;
+        return state;
+    }
+}
 
 export interface LogionChainContextType {
     api: LogionNodeApiClass | null,
@@ -62,6 +164,10 @@ export interface LogionChainContextType {
     saveOfficer?: (legalOfficer: LegalOfficer) => Promise<void>,
     reconnect: () => void,
     tryEnableMetaMask: () => Promise<void>,
+    extrinsicSubmissionState: ExtrinsicSubmissionState;
+    submitCall: (call: Call) => Promise<void>;
+    submitSignAndSubmit: (signAndSubmit: SignAndSubmit) => void;
+    resetSubmissionState: () => void;
 }
 
 export interface FullLogionChainContextType extends LogionChainContextType {
@@ -91,6 +197,10 @@ const initState = (): FullLogionChainContextType => ({
     authenticateAddress: (_: ValidAccountId) => Promise.reject(),
     reconnect: () => {},
     tryEnableMetaMask: async () => {},
+    extrinsicSubmissionState: new ExtrinsicSubmissionState(),
+    submitCall: () => Promise.reject(),
+    submitSignAndSubmit: () => {},
+    resetSubmissionState: () => {},
 });
 
 type ActionType = 'SET_SELECT_ADDRESS'
@@ -113,6 +223,13 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'RECONNECT'
     | 'SET_RECONNECT'
     | 'SET_TRY_ENABLE_METAMASK'
+    | 'SET_SUBMIT_CALL'
+    | 'SUBMIT_EXTRINSIC'
+    | 'SET_SUBMITTABLE_RESULT'
+    | 'SET_SUBMISSION_ENDED'
+    | 'SET_SUBMIT_SIGN_AND_SUBMIT'
+    | 'SET_RESET_SUBMISSION_STATE'
+    | 'RESET_SUBMISSION_STATE'
 ;
 
 interface Action {
@@ -136,6 +253,11 @@ interface Action {
     registeredLegalOfficers?: Set<string>;
     reconnect?: () => void;
     tryEnableMetaMask?: () => Promise<void>;
+    submitCall?: (call: Call) => Promise<void>;
+    result?: ISubmittableResult | null;
+    extrinsicSubmissionError?: unknown;
+    submitSignAndSubmit?: (signAndSubmit: SignAndSubmit) => void;
+    resetSubmissionState?: () => void;
 }
 
 function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
@@ -160,6 +282,7 @@ function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
 }
 
 const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionChainContextType, action: Action): FullLogionChainContextType => {
+    console.log(action.type)
     switch (action.type) {
         case 'CONNECT_INIT':
             return { ...state, connecting: true };
@@ -309,6 +432,45 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             return {
                 ...state,
                 tryEnableMetaMask: action.tryEnableMetaMask!,
+            };
+        case 'SET_SUBMIT_CALL':
+            return {
+                ...state,
+                submitCall: action.submitCall!,
+            };
+        case 'SUBMIT_EXTRINSIC':
+            if(state.extrinsicSubmissionState.canSubmit()) {
+                return {
+                    ...state,
+                    extrinsicSubmissionState: state.extrinsicSubmissionState.submit(),
+                };
+            } else {
+                return state;
+            }
+        case 'SET_SUBMITTABLE_RESULT':
+            return {
+                ...state,
+                extrinsicSubmissionState: state.extrinsicSubmissionState.withResult(action.result!),
+            };
+        case 'SET_SUBMISSION_ENDED':
+            return {
+                ...state,
+                extrinsicSubmissionState: state.extrinsicSubmissionState.end(action.error || null),
+            };
+        case 'SET_SUBMIT_SIGN_AND_SUBMIT':
+            return {
+                ...state,
+                submitSignAndSubmit: action.submitSignAndSubmit!,
+            };
+        case 'SET_RESET_SUBMISSION_STATE':
+            return {
+                ...state,
+                resetSubmissionState: action.resetSubmissionState!,
+            };
+        case 'RESET_SUBMISSION_STATE':
+            return {
+                ...state,
+                extrinsicSubmissionState: state.extrinsicSubmissionState.resetAndKeepResult(),
             };
         default:
             /* istanbul ignore next */
@@ -600,6 +762,79 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
             });
         }
     }, [ state.tryEnableMetaMask, tryEnableMetaMask ]);
+
+    const submitCall = useCallback(async (call: Call) => {
+        if(state.extrinsicSubmissionState.canSubmit()) {
+            dispatch({
+                type: 'SUBMIT_EXTRINSIC',
+            });
+            (async function() {
+                try {
+                    await call((callbackResult: ISubmittableResult) => dispatch({
+                        type: 'SET_SUBMITTABLE_RESULT',
+                        result: callbackResult,
+                    }));
+                    dispatch({ type: 'SET_SUBMISSION_ENDED' });
+                } catch(e) {
+                    console.log(e);
+                    dispatch({
+                        type: 'SET_SUBMISSION_ENDED',
+                        extrinsicSubmissionError: e,
+                    });
+                }
+            })();
+        }
+    }, [ state.extrinsicSubmissionState ]);
+
+    useEffect(() => {
+        if(state.submitCall !== submitCall) {
+            dispatch({
+                type: 'SET_SUBMIT_CALL',
+                submitCall,
+            });
+        }
+    }, [ state.submitCall, submitCall ]);
+
+    const submitSignAndSubmit = useCallback((signAndSubmit: SignAndSubmit) => {
+        if(signAndSubmit && state.extrinsicSubmissionState.canSubmit()) {
+            dispatch({
+                type: 'SUBMIT_EXTRINSIC',
+            });
+            signAndSubmit(
+                (result) => {
+                    if(result !== null) {
+                        dispatch({ type: "SET_SUBMITTABLE_RESULT", result });
+                        if(!result.dispatchError && SIGN_AND_SEND_STRATEGY.canUnsub(result)) {
+                            dispatch({ type: "SET_SUBMISSION_ENDED" });
+                        }
+                    }
+                },
+                (extrinsicSubmissionError) => dispatch({ type: "SET_SUBMISSION_ENDED", extrinsicSubmissionError }),
+            );
+        }
+    }, [ state.extrinsicSubmissionState ]);
+
+    useEffect(() => {
+        if(state.submitSignAndSubmit !== submitSignAndSubmit) {
+            dispatch({
+                type: 'SET_SUBMIT_SIGN_AND_SUBMIT',
+                submitSignAndSubmit,
+            });
+        }
+    }, [ state.submitSignAndSubmit, submitSignAndSubmit ]);
+
+    const resetSubmissionState = useCallback(() => {
+        dispatch({ type: 'RESET_SUBMISSION_STATE' });
+    }, [ ]);
+
+    useEffect(() => {
+        if(state.resetSubmissionState !== resetSubmissionState) {
+            dispatch({
+                type: 'SET_RESET_SUBMISSION_STATE',
+                resetSubmissionState,
+            });
+        }
+    }, [ state.resetSubmissionState, resetSubmissionState ]);
 
     return <LogionChainContext.Provider value={state}>
         {props.children}

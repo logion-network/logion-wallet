@@ -20,7 +20,8 @@ import {
 } from './TestData';
 import { DEFAULT_SHARED_STATE, setProtectionState, activateProtection } from '../__mocks__/UserContextMock';
 import { AcceptedProtection, ActiveProtection, ClaimedRecovery, PendingProtection, PendingRecovery } from '@logion/client';
-import { GUILLAUME, PATRICK, twoLegalOfficers } from 'src/common/TestData';
+import { twoLegalOfficers } from 'src/common/TestData';
+import { SUCCESSFUL_SUBMISSION, setExtrinsicSubmissionState } from 'src/logion-chain/__mocks__/LogionChainMock';
 
 describe("ProtectionRecoveryRequest", () => {
 
@@ -84,7 +85,7 @@ describe("ProtectionRecoveryRequest", () => {
         expect(tree).toMatchSnapshot();
     });
 
-    it("Activation of accepted protection request", async () => {
+    it("activates accepted protection request", async () => {
         const state = new AcceptedProtection({
             ...DEFAULT_SHARED_STATE,
             acceptedProtectionRequests: ACCEPTED_PROTECTION_REQUESTS,
@@ -95,12 +96,13 @@ describe("ProtectionRecoveryRequest", () => {
             selectedLegalOfficers: twoLegalOfficers
         });
         setProtectionState(state);
+        setExtrinsicSubmissionState(SUCCESSFUL_SUBMISSION);
         render(<ProtectionRecoveryRequest type='accepted' />);
 
         const activateButton = screen.getByRole('button', {name: "Activate"});
         await userEvent.click(activateButton);
 
-        await waitFor(() => expect(activateProtection).toBeCalled());
+        await waitFor(() => expect(screen.getByText("Protection successfully activated.")).toBeInTheDocument());
     });
 
     it("protection request", () => {

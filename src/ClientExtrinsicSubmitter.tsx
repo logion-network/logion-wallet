@@ -1,11 +1,10 @@
-import { ISubmittableResult } from '@logion/client';
 import { useEffect, useState } from 'react';
 
-import ExtrinsicSubmissionResult, { isSuccessful } from './ExtrinsicSubmissionResult';
+import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
+import { useLogionChain } from './logion-chain';
+import { Call, CallCallback } from './logion-chain/LogionChainContext';
 
-export type CallCallback = (result: ISubmittableResult) => void;
-
-export type Call = (callback: CallCallback) => Promise<void>;
+export type { Call, CallCallback };
 
 export interface Props {
     successMessage?: string | JSX.Element,
@@ -15,78 +14,31 @@ export interface Props {
     slim?: boolean,
 }
 
-interface State {
-    result: ISubmittableResult | null;
-    error: any;
-    submitted: boolean;
-    notified: boolean;
-    callEnded: boolean;
-    call?: Call;
-    setState: (newState: State) => void;
-}
-
-const INITIAL_STATE: State = {
-    result: null,
-    error: null,
-    submitted: false,
-    notified: false,
-    callEnded: false,
-    setState: () => {},
-};
-
-let persistentState: State = INITIAL_STATE;
-
-function setPersistentState(stateUpdate: Partial<State>) {
-    persistentState = {
-        ...persistentState,
-        ...stateUpdate
-    };
-    persistentState.setState(persistentState);
-}
-
-export function resetPersistenState() {
-    persistentState = INITIAL_STATE;
-}
-
 export default function ClientExtrinsicSubmitter(props: Props) {
-    const [ state, setState ] = useState<State>(persistentState);
-    if(setState !== persistentState.setState) {
-        persistentState.setState = setState;
-    }
+    const { extrinsicSubmissionState, submitCall, resetSubmissionState } = useLogionChain();
+    const [ notified, setNotified ] = useState(false);
 
     useEffect(() => {
-        if(props.call !== undefined && (!state.submitted || (state.notified && props.call !== state.call))) {
-            setPersistentState({
-                ...INITIAL_STATE,
-                call: props.call,
-                submitted: true,
-                setState,
-            });
-            (async function() {
-                try {
-                    await props.call!((callbackResult: ISubmittableResult) => setPersistentState({ result: callbackResult }));
-                    setPersistentState({ callEnded: true });
-                } catch(e) {
-                    console.log(e);
-                    setPersistentState({ callEnded: true, error: e});
-                }
-            })();
+        if(props.call !== undefined && extrinsicSubmissionState.canSubmit()) {
+            submitCall(props.call);
         }
-    }, [ state, props ]);
+    }, [ extrinsicSubmissionState, submitCall, props ]);
 
     useEffect(() => {
-        if (state.result !== null && isSuccessful(state.result) && !state.notified && props.onSuccess && state.callEnded) {
-            setPersistentState({ notified: true });
+        if (extrinsicSubmissionState.isSuccessful() && !notified && props.onSuccess) {
+            setNotified(true);
+            resetSubmissionState();
             props.onSuccess();
         }
-    }, [ state, props ]);
+    }, [ extrinsicSubmissionState, props, notified, resetSubmissionState ]);
 
     useEffect(() => {
-        if (state.error !== null && !state.notified && props.onError) {
-            setPersistentState({ notified: true });
+        if (extrinsicSubmissionState.isError() && !notified && props.onError) {
+            setNotified(true);
+            resetSubmissionState();
             props.onError();
         }
-    }, [ state, props ]);
+    }, [ extrinsicSubmissionState, props, notified, resetSubmissionState ]);
 
     if(props.call === undefined) {
         return null;
@@ -94,8 +46,8 @@ export default function ClientExtrinsicSubmitter(props: Props) {
 
     return (
         <ExtrinsicSubmissionResult
-            result={state.result}
-            error={state.error}
+            result={extrinsicSubmissionState.result}
+            error={extrinsicSubmissionState.error}
             successMessage={ props.successMessage }
             slim={ props.slim }
         />
