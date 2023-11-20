@@ -95,5 +95,58 @@ exports[`DashboardCertificate renders item 1`] = `
       }
     />
   </PolkadotFrame>
+  <div
+    className="frame-container"
+  >
+    <Frame
+      border="2px solid #3B6CF4"
+      title={
+        <FrameTitle
+          text="Statement of Facts"
+        />
+      }
+    >
+      <StatementOfFactsRequestButton
+        itemId={
+          Hash {
+            "_bytes": Uint8Array [
+              154,
+              174,
+              187,
+              189,
+              63,
+              143,
+              230,
+              81,
+              184,
+              126,
+              131,
+              99,
+              4,
+              85,
+              167,
+              10,
+              67,
+              150,
+              76,
+              105,
+              145,
+              7,
+              123,
+              180,
+              80,
+              191,
+              26,
+              62,
+              210,
+              210,
+              92,
+              204,
+            ],
+          }
+        }
+      />
+    </Frame>
+  </div>
 </LocPane>
 `;

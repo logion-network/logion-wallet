@@ -149,19 +149,25 @@ Object {
                 </div>
                 <div
                   class="Col"
-                  style="text-align: center;"
+                  style="text-align: left;"
+                >
+                  Description
+                </div>
+                <div
+                  class="Col"
+                  style="width: 200px; text-align: center;"
                 >
                   Timestamp
                 </div>
                 <div
                   class="Col"
-                  style="width: 300px; text-align: center;"
+                  style="width: 160px; text-align: center;"
                 >
                   Certificate
                 </div>
                 <div
                   class="Col"
-                  style="width: 400px; text-align: center;"
+                  style="width: 100px; text-align: center;"
                 />
               </div>
             </div>
@@ -360,19 +366,25 @@ Object {
               </div>
               <div
                 class="Col"
-                style="text-align: center;"
+                style="text-align: left;"
+              >
+                Description
+              </div>
+              <div
+                class="Col"
+                style="width: 200px; text-align: center;"
               >
                 Timestamp
               </div>
               <div
                 class="Col"
-                style="width: 300px; text-align: center;"
+                style="width: 160px; text-align: center;"
               >
                 Certificate
               </div>
               <div
                 class="Col"
-                style="width: 400px; text-align: center;"
+                style="width: 100px; text-align: center;"
               />
             </div>
           </div>

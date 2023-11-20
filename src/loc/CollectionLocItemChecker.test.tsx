@@ -8,7 +8,7 @@ jest.mock("src/legal-officer/LegalOfficerContext");
 
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { LocData } from "@logion/client";
+import { LocData, HashString } from "@logion/client";
 import { UUID, Hash } from "@logion/node-api";
 
 import { LOCollectionLocItemChecker, UserCollectionLocItemChecker, Props } from "./CollectionLocItemChecker";
@@ -71,6 +71,7 @@ const locId = new UUID("d97c99fd-9bcc-4f92-b9ea-b6be93abbbcd");
 const itemId = toItemId("test")!;
 const item = {
     id: itemId,
+    description: HashString.fromValue("description"),
     files: [],
     termsAndConditions: [],
 } as unknown as CollectionItem;

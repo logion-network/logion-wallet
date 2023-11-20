@@ -8,6 +8,11 @@
     margin-left: 25px;
 }
 
+.ButtonGroup.narrow .Button,
+.ButtonGroup.narrow .Button-container {
+    margin-left: 5px;
+}
+
 .ButtonGroup .Button:first-child,
 .ButtonGroup .Button-container:first-child {
     margin-left: 0;
