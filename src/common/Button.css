@@ -120,3 +120,7 @@
 .Button.btn.btn-polkadot:hover {
     opacity: 0.8;
 }
+
+.Button.btn-none:disabled {
+    border: none;
+}

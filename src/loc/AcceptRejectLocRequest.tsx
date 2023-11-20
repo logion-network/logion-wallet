@@ -57,6 +57,12 @@ export default function AcceptRejectLocRequest(props: Props) {
         `Do you accept this request and create the related ${ props.loc.locType } LOC?`
     , [ isAccept, props.loc ]);
 
+    const cannotAccept = useMemo(() => {
+        return props.loc.metadata.find(item => item.status !== "REVIEW_ACCEPTED") !== undefined
+            || props.loc.files.find(item => item.status !== "REVIEW_ACCEPTED") !== undefined
+            || props.loc.links.find(item => item.status !== "REVIEW_ACCEPTED") !== undefined;
+    }, [ props.loc ]);
+
     return (
         <PolkadotFrame
             className="AcceptRejectLocRequest"
@@ -76,6 +82,7 @@ export default function AcceptRejectLocRequest(props: Props) {
                             onClick={() => setRequestToAccept(props.loc)}
                             data-testid={`accept-${props.loc.id}`}
                             variant="none"
+                            disabled={ cannotAccept }
                         >
                             <Icon icon={{id: "ok"}} height='40px' />
                         </Button>
