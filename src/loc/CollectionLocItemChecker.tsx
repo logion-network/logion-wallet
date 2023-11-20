@@ -16,14 +16,12 @@ import CopyPasteButton from "../common/CopyPasteButton";
 import { fullCollectionItemCertificate } from "../PublicPaths";
 
 import "./CollectionLocItemChecker.css"
-import StatementOfFactsButton from "./statement/StatementOfFactsButton";
 import { toItemId } from './types';
-import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import { useUserLocContext } from "./UserLocContext";
 import { useLocContext } from "./LocContext";
 import { useLegalOfficerContext } from "src/legal-officer/LegalOfficerContext";
 import PagedTable, { getPage, Page } from "src/components/pagedtable/PagedTable";
-import Table, { ActionCell, Column, DateTimeCell, EmptyTableMessage } from "src/common/Table";
+import Table, { ActionCell, Cell, Column, DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import ButtonGroup from "src/common/ButtonGroup";
 import { useNavigate } from "react-router-dom";
 import { dashboardCertificateRelativePath } from "src/RootPaths";
@@ -180,8 +178,17 @@ function CollectionLocItemChecker(props: LocalProps) {
             align: "left",
         },
         {
+            header: "Description",
+            render: item => <Cell content={ item.description.validValue() } overflowing tooltipId={ `description-${ item.id.toHex() }` } />,
+            align: "left",
+        },
+        {
             header: "Timestamp",
             render: item => <DateTimeCell dateTime={ item.addedOn } />,
+            width: width({
+                onSmallScreen: "120px",
+                otherwise: "200px",
+            }),
         },
         {
             header: "Certificate",
@@ -197,8 +204,8 @@ function CollectionLocItemChecker(props: LocalProps) {
                 </ActionCell>
             ),
             width: width({
-                onSmallScreen: "100px",
-                otherwise: "300px",
+                onSmallScreen: "140px",
+                otherwise: "160px",
             }),
         },
         {
@@ -211,25 +218,10 @@ function CollectionLocItemChecker(props: LocalProps) {
                         >
                             View
                         </Button>
-                        {
-                            (props.viewer === 'LegalOfficer' &&
-                                <StatementOfFactsButton
-                                    item={ item }
-                                />
-                            ) ||
-                            (props.viewer === 'User' &&
-                                <StatementOfFactsRequestButton
-                                    itemId={ item.id }
-                                />
-                            )
-                        }
                     </ButtonGroup>
                 </ActionCell>
             ),
-            width: width({
-                onSmallScreen: "360px",
-                otherwise: "400px",
-            }),
+            width: "100px",
         },
     ];
 

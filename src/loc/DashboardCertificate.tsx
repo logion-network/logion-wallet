@@ -16,6 +16,9 @@ import FrameTitle from "src/components/frametitle/FrameTitle";
 
 import "./DashboardCertificate.css";
 import CheckFileFrame from "../components/checkfileframe/CheckFileFrame";
+import StatementOfFactsButton from "./statement/StatementOfFactsButton";
+import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
+import Frame from "src/common/Frame";
 
 export default function DashboardCertificate() {
     const itemId = useParams<"itemId">().itemId;
@@ -27,7 +30,7 @@ export default function DashboardCertificate() {
     const collectionItem = useMemo(() => collectionItems.find(item => item.id.toHex() === itemId), [ itemId, collectionItems ]);
     const [ deliveries, setDeliveries ] = useState<ItemDeliveriesResponse>();
     const { axiosFactory } = useLogionChain();
-    const { colorTheme } = useCommonContext();
+    const { colorTheme, viewer } = useCommonContext();
     const [ checkCertifiedCopyResult, setCheckCertifiedCopyResult ] = useState<CheckCertifiedCopyResult>();
     const [ checkHashResult, setCheckHashResult ] = useState<CheckHashResult>();
 
@@ -113,6 +116,27 @@ export default function DashboardCertificate() {
                 }
                 </>
             }
+            <div className="frame-container">
+                <Frame
+                    title={
+                        <FrameTitle text="Statement of Facts"/>
+                    }
+                    border="2px solid #3B6CF4"
+                >
+                    {
+                        (viewer === 'LegalOfficer' &&
+                            <StatementOfFactsButton
+                                item={ collectionItem }
+                            />
+                        ) ||
+                        (viewer === 'User' &&
+                            <StatementOfFactsRequestButton
+                                itemId={ collectionItem.id }
+                            />
+                        )
+                    }
+                </Frame>
+            </div>
         </LocPane>
     );
 }
