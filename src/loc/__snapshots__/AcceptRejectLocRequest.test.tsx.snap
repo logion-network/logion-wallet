@@ -30,6 +30,7 @@ exports[`AcceptRejectLocRequest renders pending requests 1`] = `
         </Button>
         <Button
           data-testid="accept-556f4128-4fc3-4fdc-a543-74e6230911c4"
+          disabled={false}
           onClick={[Function]}
           variant="none"
         >
