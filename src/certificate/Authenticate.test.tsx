@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { clickByName, shallowRender } from '../tests';
 import { UUID, Hash } from "@logion/node-api";
 import { HashString, ClientToken } from "@logion/client";

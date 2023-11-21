@@ -1,4 +1,4 @@
-import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/connect";
+import { BlockchainTypes, CrossmintEVMWalletAdapter, CrossmintEnvironment } from "@crossmint/connect";
 import { Token, LogionClient, CollectionItem } from "@logion/client";
 import { CrossmintSigner } from "@logion/crossmint";
 import { allMetamaskAccounts, enableMetaMask } from "@logion/extension";
@@ -283,6 +283,7 @@ async function authenticateWithCrossmint(context: LogionChainContextType): Promi
     const crossmint = new CrossmintEVMWalletAdapter({
         apiKey: config.crossmintApiKey,
         chain: BlockchainTypes.ETHEREUM,
+        environment: config.crossmintApiKey.startsWith("sk_test") ? CrossmintEnvironment.STAGING : CrossmintEnvironment.PROD,
     });
 
     const address = await crossmint.connect();

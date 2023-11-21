@@ -8,3 +8,8 @@ export class CrossmintEVMWalletAdapter {
         return "0xb21edd3dc671484F34075B038a68A76F6362F980";
     }
 }
+
+export enum CrossmintEnvironment {
+    STAGING,
+    PROD
+}
