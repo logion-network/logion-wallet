@@ -2,6 +2,7 @@ import {
     useLogionChain,
     LogionChainContextProvider,
     AxiosFactory,
+    CallCallback,
 } from './LogionChainContext';
 
 export {
@@ -10,4 +11,5 @@ export {
 };
 export type {
     AxiosFactory,
+    CallCallback,
 };
