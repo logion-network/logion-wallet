@@ -110,6 +110,8 @@ export const SUCCESSFUL_SUBMISSION: unknown = {
             isFinalized: true,
         }
     },
+    callEnded: true,
+    submitted: true,
 };
 
 export const FAILED_SUBMISSION: unknown = {
@@ -122,6 +124,8 @@ export const FAILED_SUBMISSION: unknown = {
             isFinalized: false,
         }
     },
+    callEnded: true,
+    submitted: true,
 };
 
 export const PENDING_SUBMISSION: unknown = {
@@ -169,6 +173,7 @@ export function useLogionChain() {
             resetSubmissionState: () => {},
             submitSignAndSubmit: () => {},
             submitCall: (call: Call) => call(() => {}),
+            clearSubmissionState: () => {},
         };
     }
 }

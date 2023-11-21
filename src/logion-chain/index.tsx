@@ -3,6 +3,7 @@ import {
     LogionChainContextProvider,
     AxiosFactory,
     CallCallback,
+    SignAndSubmit,
 } from './LogionChainContext';
 
 export {
@@ -12,4 +13,5 @@ export {
 export type {
     AxiosFactory,
     CallCallback,
+    SignAndSubmit,
 };

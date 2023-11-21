@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ProtectionRequest, OpenLoc } from "@logion/client";
 import { Col, Row } from "react-bootstrap";
@@ -6,7 +6,6 @@ import { Col, Row } from "react-bootstrap";
 import Button from "../common/Button";
 import ProcessStep from "../common/ProcessStep";
 import Alert from "../common/Alert";
-import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 
 import { useLocContext } from "./LocContext";
 import Icon from "../common/Icon";
@@ -15,22 +14,18 @@ import { acceptProtectionRequest } from "./Model";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { PROTECTION_REQUESTS_PATH, RECOVERY_REQUESTS_PATH } from "../legal-officer/LegalOfficerPaths";
 import StaticLabelValue from "../common/StaticLabelValue";
-import { useLogionChain } from "../logion-chain";
+import { useLogionChain, CallCallback, SignAndSubmit } from "../logion-chain";
 import { signAndSend } from "../logion-chain/Signature";
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 import './CloseLocButton.css';
 import Checkbox from "src/components/toggle/Checkbox";
 
 enum CloseStatus {
     NONE,
-    START,
     ACCEPT,
     CLOSE_PENDING,
     CLOSING,
-    ERROR,
-    VOUCHING,
-    ACCEPTING,
     DONE
 }
 
@@ -44,100 +39,116 @@ export interface Props {
 
 export default function CloseLocButton(props: Props) {
     const navigate = useNavigate();
-    const { accounts, axiosFactory, api, signer } = useLogionChain();
+    const { accounts, axiosFactory, api, signer, submitCall, extrinsicSubmissionState, clearSubmissionState, submitSignAndSubmit } = useLogionChain();
     const { refreshRequests } = useLegalOfficerContext();
     const { mutateLocState,locItems, loc, locState } = useLocContext();
     const [ closeState, setCloseState ] = useState<CloseState>({ status: CloseStatus.NONE });
-    const [ call, setCall ] = useState<Call>();
-    const [ signAndSubmitVouch, setSignAndSubmitVouch ] = useState<SignAndSubmit>(null);
     const [ autoAck, setAutoAck ] = useState(false);
 
-    useEffect(() => {
-        if (closeState.status === CloseStatus.CLOSE_PENDING) {
-            setCloseState({ status: CloseStatus.CLOSING });
-            const call: Call = async (callback: CallCallback) =>
-                mutateLocState(async current => {
-                    if(signer && current instanceof OpenLoc) {
-                        return current.legalOfficer.close({
-                            autoAck,
-                            signer,
-                            callback,
-                        });
-                    } else {
-                        return current;
-                    }
-                });
-            setCall(() => call);
-        }
-    }, [ mutateLocState, closeState, setCloseState, signer, autoAck ]);
+    const closeCall = useMemo(() => {
+        return async (callback: CallCallback) =>
+            mutateLocState(async current => {
+                if(signer && current instanceof OpenLoc) {
+                    return current.legalOfficer.close({
+                        autoAck,
+                        signer,
+                        callback,
+                    });
+                } else {
+                    return current;
+                }
+            });
+    }, [ mutateLocState, autoAck, signer ]);
 
-    const canClose = useMemo(() => {
-        if(locState instanceof OpenLoc) {
-            return locState.legalOfficer.canClose(autoAck);
-        } else {
-            return false;
+    const close = useCallback(() => {
+        setCloseState({ status: CloseStatus.CLOSING });
+        submitCall(closeCall);
+    }, [ closeCall, submitCall ]);
+
+    const clear = useCallback(() => {
+        clearSubmissionState();
+        setCloseState({ status: CloseStatus.NONE });
+    }, [ clearSubmissionState]);
+
+    const accept = useCallback(async () => {
+        if (loc) {
+            clear();
+
+            const currentAddress = accounts!.current!.accountId.address;
+            await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
+                requestId: props.protectionRequest!.id,
+                locId: loc.id,
+            });
+            refreshRequests!(false);
+
+            if(props.protectionRequest?.isRecovery) {
+                navigate({pathname: RECOVERY_REQUESTS_PATH, search: "?tab=history"});
+            } else {
+                navigate({pathname: PROTECTION_REQUESTS_PATH, search: "?tab=history"});
+            }
         }
-    }, [ locState, autoAck ]);
+    }, [ loc, clear, accounts, axiosFactory, navigate, props.protectionRequest, refreshRequests ]);
 
     const alreadyVouched = useCallback(async (lost: string, rescuer: string, currentAddress: string) => {
         const activeRecovery = await api!.queries.getActiveRecovery(
             lost,
             rescuer
         );
-
         return !!(activeRecovery && activeRecovery.legalOfficers.find(lo => lo === currentAddress));
-
     }, [ api ]);
 
-    const onCloseSuccess = useCallback(async () => {
-        if(props.protectionRequest && !props.protectionRequest.isRecovery) {
-            setCloseState({ status: CloseStatus.ACCEPTING });
-        } else if(props.protectionRequest && props.protectionRequest.isRecovery) {
+    const vouchRecovery: SignAndSubmit = useMemo(() => {
+        const currentAddress = accounts!.current!.accountId.address;
+        if(props.protectionRequest && props.protectionRequest.isRecovery && currentAddress) {
+            const lost = props.protectionRequest.addressToRecover!;
+            const rescuer = props.protectionRequest.requesterAddress;
 
-            const lost = props.protectionRequest!.addressToRecover!;
-            const rescuer = props.protectionRequest!.requesterAddress;
-            const currentAddress = accounts!.current!.accountId.address;
+            return (callback, errorCallback) => signAndSend({
+                signerId: currentAddress,
+                callback,
+                errorCallback,
+                submittable: api!.polkadot.tx.recovery.vouchRecovery(
+                    lost,
+                    rescuer,
+                ),
+            });
+        } else {
+            return null;
+        }
+    }, [ props.protectionRequest, accounts, api ]);
 
-            if (await alreadyVouched(lost, rescuer, currentAddress)) {
-                setCloseState({ status: CloseStatus.ACCEPTING });
+    const clearAcceptOrVouch = useCallback(async () => {
+        if(extrinsicSubmissionState.error || !props.protectionRequest) {
+            clear();
+        } else if(props.protectionRequest) {
+            if(props.protectionRequest.isRecovery) {
+                const lost = props.protectionRequest.addressToRecover!;
+                const rescuer = props.protectionRequest.requesterAddress;
+                const currentAddress = accounts!.current!.accountId.address;
+
+                if (await alreadyVouched(lost, rescuer, currentAddress)) {
+                    await accept();
+                } else {
+                    clearSubmissionState();
+                    submitSignAndSubmit(vouchRecovery);
+                }
             } else {
-                setCloseState({ status: CloseStatus.VOUCHING });
-
-                const signAndSubmit: SignAndSubmit = (callback, errorCallback) => signAndSend({
-                    signerId: currentAddress,
-                    callback,
-                    errorCallback,
-                    submittable: api!.polkadot.tx.recovery.vouchRecovery(
-                        lost,
-                        rescuer,
-                    ),
-                });
-                setSignAndSubmitVouch(() => signAndSubmit);
+                await accept();
             }
         } else {
-            setCloseState({ status: CloseStatus.NONE });
+            throw new Error("Unexpected");
         }
-    }, [ props.protectionRequest, accounts, api, alreadyVouched ]);
-
-    useEffect(() => {
-        if (closeState.status === CloseStatus.ACCEPTING && loc) {
-            setCloseState({ status: CloseStatus.NONE });
-            (async function() {
-                const currentAddress = accounts!.current!.accountId.address;
-                await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
-                    requestId: props.protectionRequest!.id,
-                    locId: loc.id,
-                });
-                refreshRequests!(false);
-
-                if(props.protectionRequest?.isRecovery) {
-                    navigate({pathname: RECOVERY_REQUESTS_PATH, search: "?tab=history"});
-                } else {
-                    navigate({pathname: PROTECTION_REQUESTS_PATH, search: "?tab=history"});
-                }
-            })();
-        }
-    }, [ closeState, setCloseState, accounts, axiosFactory, loc, navigate, props.protectionRequest, refreshRequests ]);
+    }, [
+        props.protectionRequest,
+        accounts,
+        alreadyVouched,
+        accept,
+        clearSubmissionState,
+        submitSignAndSubmit,
+        vouchRecovery,
+        clear,
+        extrinsicSubmissionState.error,
+    ]);
 
     const canAutoAck = useMemo(() => {
         if(locState instanceof OpenLoc) {
@@ -146,6 +157,14 @@ export default function CloseLocButton(props: Props) {
             return false;
         }
     }, [ locItems, locState ]);
+
+    const canClose = useMemo(() => {
+        if(locState instanceof OpenLoc) {
+            return locState.legalOfficer.canClose(autoAck);
+        } else {
+            return false;
+        }
+    }, [ locState, autoAck ]);
 
     if(!loc) {
         return null;
@@ -167,7 +186,7 @@ export default function CloseLocButton(props: Props) {
         }
     } else {
         closeButtonText = "Close LOC";
-        firstStatus = CloseStatus.START;
+        firstStatus = CloseStatus.CLOSE_PENDING;
         iconId = "lock";
     }
 
@@ -301,7 +320,7 @@ export default function CloseLocButton(props: Props) {
                 <p>I executed my due diligence and accept to be the legal officer of this user:</p>
             </ProcessStep>
             <ProcessStep
-                active={ closeState.status === CloseStatus.START || closeState.status === CloseStatus.CLOSE_PENDING }
+                active={ closeState.status === CloseStatus.CLOSE_PENDING }
                 title={ locType !== "Identity" ? "Close this Case (1/2)" : "Close this Identity Case (1/2)" }
                 nextSteps={[
                     {
@@ -315,8 +334,8 @@ export default function CloseLocButton(props: Props) {
                         id: 'proceed',
                         buttonText: 'Proceed',
                         buttonVariant: 'polkadot',
-                        mayProceed: closeState.status === CloseStatus.START,
-                        callback: () => setCloseState({ status: CloseStatus.CLOSE_PENDING })
+                        mayProceed: true,
+                        callback: close,
                     }
                 ]}
             >
@@ -341,44 +360,18 @@ export default function CloseLocButton(props: Props) {
             <ProcessStep
                 active={ closeState.status === CloseStatus.CLOSING }
                 title="Close this Case (2/2)"
-                nextSteps={[]}
-                hasSideEffect
-            >
-                <ClientExtrinsicSubmitter
-                    call={ call }
-                    onSuccess={ onCloseSuccess }
-                    onError={ () => setCloseState({ status: CloseStatus.ERROR }) }
-                />
-            </ProcessStep>
-            <ProcessStep
-                active={ closeState.status === CloseStatus.ERROR }
-                title="Close this Case (2/2)"
-                nextSteps={[
+                nextSteps={ extrinsicSubmissionState.callEnded ? [
                     {
-                        id: 'ok',
-                        buttonText: 'OK',
-                        buttonVariant: 'primary',
+                        buttonText: "Close",
+                        buttonVariant: "primary",
+                        id: "close",
                         mayProceed: true,
-                        callback: () => setCloseState({ status: CloseStatus.NONE })
+                        callback: clearAcceptOrVouch,
                     }
-                ]}
+                ] : [] }
+                hasSideEffect={ !extrinsicSubmissionState.callEnded }
             >
-                <Alert variant="danger">
-                    Could not close LOC.
-                </Alert>
-            </ProcessStep>
-            <ProcessStep
-                active={ closeState.status === CloseStatus.VOUCHING }
-                title="Vouching"
-                nextSteps={[]}
-                hasSideEffect
-            >
-                <ExtrinsicSubmitter
-                    id="publishMetadata"
-                    signAndSubmit={ signAndSubmitVouch }
-                    onSuccess={ () => setCloseState({ status: CloseStatus.ACCEPTING }) }
-                    onError={ () => setCloseState({ status: CloseStatus.ERROR }) }
-                />
+                <ExtrinsicSubmissionStateView />
             </ProcessStep>
         </div>
     )

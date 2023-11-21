@@ -1,4 +1,4 @@
-import { useLogionChain } from './logion-chain/LogionChainContext';
+import { useLogionChain } from './logion-chain';
 import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
 
 export interface Props {
