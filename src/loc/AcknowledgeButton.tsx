@@ -5,31 +5,22 @@ import Button, { Action } from "src/common/Button";
 import Icon from "src/common/Icon";
 import { LocItem, MetadataData, FileData, LinkData } from "./LocItem";
 import Dialog from "src/common/Dialog";
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import EstimatedFees from "./fees/EstimatedFees";
 import { useLocContext } from "./LocContext";
 import Alert from "src/common/Alert";
-import { useLogionChain } from "src/logion-chain";
+import { useLogionChain, CallCallback } from "src/logion-chain";
 import "./AcknowledgeButton.css";
+import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 export interface Props {
     locItem: LocItem;
 }
 
-enum State {
-    INIT,
-    PREVIEW,
-    ACKNOWLEDGING,
-    ACKNOWLEDGED,
-    ERROR,
-}
-
 export default function AcknowledgeButton(props: Props) {
-    const [ state, setState ] = useState(State.INIT);
+    const [ showDialog, setShowDialog ] = useState(false);
     const [ fees, setFees ] = useState<Fees | undefined | null>();
-    const [ call, setCall ] = useState<Call>();
     const { mutateLocState, locState } = useLocContext();
-    const { signer } = useLogionChain();
+    const { signer, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
 
     useEffect(() => {
         if(fees === undefined) {
@@ -59,65 +50,61 @@ export default function AcknowledgeButton(props: Props) {
     }, [ fees, props.locItem, locState ]);
 
     const preview = useCallback(() => {
-        setState(State.PREVIEW);
+        setShowDialog(true);
     }, []);
 
     const close = useCallback(() => {
-        setState(State.INIT);
-    }, []);
+        setShowDialog(false);
+        clearSubmissionState();
+    }, [ clearSubmissionState ]);
 
-    const acknowledge = useCallback(async () => {
-        setState(State.ACKNOWLEDGING);
-        const call = async (callback: CallCallback) =>
+    const call = useMemo(() => {
+        return async (callback: CallCallback) =>
             mutateLocState(async current => {
-                if(signer && current instanceof OpenLoc) {
-                    if(props.locItem.type === "Document") {
-                        return current.legalOfficer.acknowledgeFile({
-                            hash: props.locItem.as<FileData>().hash,
-                            signer,
-                            callback,
-                        });
-                    } else if(props.locItem.type === "Data") {
-                        return current.legalOfficer.acknowledgeMetadata({
-                            nameHash: props.locItem.as<MetadataData>().name.hash,
-                            signer,
-                            callback,
-                        });
-                    } else if(props.locItem.type === "Linked LOC") {
-                        return current.legalOfficer.acknowledgeLink({
-                            target: props.locItem.as<LinkData>().linkedLoc.id,
-                            signer,
-                            callback,
-                        });
-                    } else {
-                        throw new Error("Unexpected type");
-                    }
+            if(signer && current instanceof OpenLoc) {
+                if(props.locItem.type === "Document") {
+                    return current.legalOfficer.acknowledgeFile({
+                        hash: props.locItem.as<FileData>().hash,
+                        signer,
+                        callback,
+                    });
+                } else if(props.locItem.type === "Data") {
+                    return current.legalOfficer.acknowledgeMetadata({
+                        nameHash: props.locItem.as<MetadataData>().name.hash,
+                        signer,
+                        callback,
+                    });
+                } else if(props.locItem.type === "Linked LOC") {
+                    return current.legalOfficer.acknowledgeLink({
+                        target: props.locItem.as<LinkData>().linkedLoc.id,
+                        signer,
+                        callback,
+                    });
                 } else {
-                    return current;
+                    throw new Error("Unexpected type");
                 }
-            });
-        setCall(() => call);
-    }, [ mutateLocState, signer, props.locItem ]);
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState, props.locItem, signer ]);
 
     const actions = useMemo(() => {
         const actions: Action[] = [];
-        if(state === State.PREVIEW || state === State.ERROR) {
+        if(!extrinsicSubmissionState.submitted) {
             actions.push({
                 id: "cancel",
                 buttonText: "Cancel",
                 buttonVariant: "secondary",
                 callback: close,
             });
-        }
-        if(state === State.PREVIEW) {
             actions.push({
                 id: "proceed",
                 buttonText: "Proceed",
                 buttonVariant: "polkadot",
-                callback: acknowledge,
+                callback: () => submitCall(call),
             });
-        }
-        if(state === State.ACKNOWLEDGED) {
+        } else if(extrinsicSubmissionState.callEnded) {
             actions.push({
                 id: "close",
                 buttonText: "Close",
@@ -126,7 +113,7 @@ export default function AcknowledgeButton(props: Props) {
             });
         }
         return actions;
-    }, [ state, close, acknowledge ]);
+    }, [ close, submitCall, extrinsicSubmissionState, call ]);
 
     return (
         <>
@@ -137,7 +124,7 @@ export default function AcknowledgeButton(props: Props) {
                 <Icon icon={{ id: "shield" }} /> Acknowledge
             </Button>
             <Dialog
-                show={ state !== State.INIT }
+                show={ showDialog }
                 actions={ actions }
                 size="lg"
                 className="AcknowledgeButton"
@@ -152,11 +139,8 @@ export default function AcknowledgeButton(props: Props) {
                     centered={ true }
                 />
                 <div className="submitter-container">
-                    <ClientExtrinsicSubmitter
-                        call={ call }
+                    <ExtrinsicSubmissionStateView
                         successMessage="Successfully acknowledged"
-                        onSuccess={ () => setState(State.ACKNOWLEDGED) }
-                        onError={ () => setState(State.ERROR) }
                     />
                 </div>
             </Dialog>

@@ -168,6 +168,7 @@ export interface LogionChainContextType {
     submitCall: (call: Call) => Promise<void>;
     submitSignAndSubmit: (signAndSubmit: SignAndSubmit) => void;
     resetSubmissionState: () => void;
+    clearSubmissionState: () => void;
 }
 
 export interface FullLogionChainContextType extends LogionChainContextType {
@@ -201,6 +202,7 @@ const initState = (): FullLogionChainContextType => ({
     submitCall: () => Promise.reject(),
     submitSignAndSubmit: () => {},
     resetSubmissionState: () => {},
+    clearSubmissionState: () => {},
 });
 
 type ActionType = 'SET_SELECT_ADDRESS'
@@ -230,6 +232,8 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'SET_SUBMIT_SIGN_AND_SUBMIT'
     | 'SET_RESET_SUBMISSION_STATE'
     | 'RESET_SUBMISSION_STATE'
+    | 'SET_CLEAR_SUBMISSION_STATE'
+    | 'CLEAR_SUBMISSION_STATE'
 ;
 
 interface Action {
@@ -258,6 +262,7 @@ interface Action {
     extrinsicSubmissionError?: unknown;
     submitSignAndSubmit?: (signAndSubmit: SignAndSubmit) => void;
     resetSubmissionState?: () => void;
+    clearSubmissionState?: () => void;
 }
 
 function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
@@ -455,7 +460,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
         case 'SET_SUBMISSION_ENDED':
             return {
                 ...state,
-                extrinsicSubmissionState: state.extrinsicSubmissionState.end(action.error || null),
+                extrinsicSubmissionState: state.extrinsicSubmissionState.end(action.extrinsicSubmissionError || null),
             };
         case 'SET_SUBMIT_SIGN_AND_SUBMIT':
             return {
@@ -471,6 +476,16 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             return {
                 ...state,
                 extrinsicSubmissionState: state.extrinsicSubmissionState.resetAndKeepResult(),
+            };
+        case 'SET_CLEAR_SUBMISSION_STATE':
+            return {
+                ...state,
+                clearSubmissionState: action.clearSubmissionState!,
+            };
+        case 'CLEAR_SUBMISSION_STATE':
+            return {
+                ...state,
+                extrinsicSubmissionState: new ExtrinsicSubmissionState(),
             };
         default:
             /* istanbul ignore next */
@@ -835,6 +850,19 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
             });
         }
     }, [ state.resetSubmissionState, resetSubmissionState ]);
+
+    const clearSubmissionState = useCallback(() => {
+        dispatch({ type: 'CLEAR_SUBMISSION_STATE' });
+    }, [ ]);
+
+    useEffect(() => {
+        if(state.clearSubmissionState !== clearSubmissionState) {
+            dispatch({
+                type: 'SET_CLEAR_SUBMISSION_STATE',
+                clearSubmissionState,
+            });
+        }
+    }, [ state.clearSubmissionState, clearSubmissionState ]);
 
     return <LogionChainContext.Provider value={state}>
         {props.children}
