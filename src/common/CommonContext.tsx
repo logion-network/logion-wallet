@@ -34,6 +34,9 @@ export interface CommonContext {
     viewer: Viewer;
     setViewer: ((viewer: Viewer) => void) | null;
     backendConfig: ((legalOfficerAddress: string | undefined) => BackendConfig);
+    expectNewTransactionState: ExpectNewTransactionState;
+    expectNewTransaction: () => void;
+    stopExpectNewTransaction: () => void;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -49,6 +52,18 @@ const DEFAULT_BACKEND_CONFIG: BackendConfig = {
     }
 };
 
+export enum ExpectNewTransactionStatus {
+    IDLE,
+    WAITING_NEW_TRANSACTION,
+    DONE
+}
+
+export interface ExpectNewTransactionState {
+    status: ExpectNewTransactionStatus;
+    minExpectedTransactions?: number;
+    refreshCount: number;
+}
+
 function initialContextValue(): FullCommonContext {
     return {
         dataAddress: null,
@@ -62,6 +77,12 @@ function initialContextValue(): FullCommonContext {
         viewer: "User",
         setViewer: null,
         backendConfig: () => DEFAULT_BACKEND_CONFIG,
+        expectNewTransactionState: {
+            status: ExpectNewTransactionStatus.IDLE,
+            refreshCount: 0,
+        },
+        expectNewTransaction: () => {},
+        stopExpectNewTransaction: () => {},
     }
 }
 
@@ -81,6 +102,10 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'MUTATE_BALANCE_STATE'
     | 'SET_SET_VIEWER'
     | 'SET_VIEWER'
+    | 'EXPECT_NEW_TRANSACTION'
+    | 'SET_EXPECT_NEW_TRANSACTION'
+    | 'STOP_EXPECT_NEW_TRANSACTION'
+    | 'SET_STOP_EXPECT_NEW_TRANSACTION'
 ;
 
 interface Action {
@@ -101,7 +126,12 @@ interface Action {
     viewer?: Viewer;
     setViewer?: (viewer: Viewer) => void;
     backendConfig?: ((legalOfficerAddress: string | undefined) => BackendConfig);
+    expectNewTransaction?: () => void;
+    stopExpectNewTransaction?: () => void;
 }
+
+const MAX_REFRESH_COUNT = 12;
+const REFRESH_PERIOD_MS = 3000;
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
     switch (action.type) {
@@ -116,6 +146,16 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             if(action.dataAddress === state.dataAddress) {
                 const nodesUp = action.nodesUp !== undefined ? action.nodesUp : state.nodesUp;
                 const nodesDown = action.nodesDown !== undefined ? action.nodesDown : state.nodesDown;
+                const expectNewTransactionState = buildNextExpectNewTransactionState(state.expectNewTransactionState, state.balanceState);
+                if(expectNewTransactionState.status === ExpectNewTransactionStatus.WAITING_NEW_TRANSACTION) {
+                    console.log(`Scheduling retry #${expectNewTransactionState.refreshCount} (${state.balanceState!.transactions?.length} < ${state.expectNewTransactionState.minExpectedTransactions!})...`);
+                    window.setTimeout(() => {
+                        console.log(`Try #${ expectNewTransactionState.refreshCount }...`);
+                        state.refresh(false);
+                    }, REFRESH_PERIOD_MS);
+                } else {
+                    console.log(`Stopped polling after ${state.expectNewTransactionState.refreshCount} retries  (${state.balanceState?.transactions.length} >= ${state.expectNewTransactionState.minExpectedTransactions!})`);
+                }
                 return {
                     ...state,
                     balanceState: action.balanceState,
@@ -123,6 +163,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     backendConfig: action.backendConfig!,
                     nodesUp,
                     nodesDown,
+                    expectNewTransactionState,
                 };
             } else {
                 return state;
@@ -162,9 +203,68 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 viewer: action.viewer!,
             };
+        case 'SET_EXPECT_NEW_TRANSACTION':
+            return {
+                ...state,
+                expectNewTransaction: action.expectNewTransaction!,
+            }
+        case 'EXPECT_NEW_TRANSACTION':
+            if(state.expectNewTransactionState.status === ExpectNewTransactionStatus.IDLE || state.expectNewTransactionState.status === ExpectNewTransactionStatus.DONE) {
+                window.setTimeout(() => {
+                    console.log(`Try #1...`);
+                    state.refresh(false);
+                }, REFRESH_PERIOD_MS);
+                return {
+                    ...state,
+                    expectNewTransactionState: {
+                        status: ExpectNewTransactionStatus.WAITING_NEW_TRANSACTION,
+                        minExpectedTransactions: state.balanceState ? state.balanceState.transactions.length + 1 : 1,
+                        refreshCount: 1,
+                    },
+                }
+            } else {
+                return state;
+            }
+        case 'SET_STOP_EXPECT_NEW_TRANSACTION':
+            return {
+                ...state,
+                stopExpectNewTransaction: action.stopExpectNewTransaction!,
+            };
+        case 'STOP_EXPECT_NEW_TRANSACTION':
+            return {
+                ...state,
+                expectNewTransactionState: {
+                    status: ExpectNewTransactionStatus.IDLE,
+                    minExpectedTransactions: undefined,
+                    refreshCount: 0,
+                },
+            };
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
+    }
+}
+
+function buildNextExpectNewTransactionState(current: ExpectNewTransactionState, balanceState?: BalanceState): ExpectNewTransactionState {
+    if(current.status === ExpectNewTransactionStatus.WAITING_NEW_TRANSACTION) {
+        if(balanceState
+            && (balanceState.transactions.length >= current.minExpectedTransactions!
+                || current.refreshCount >= MAX_REFRESH_COUNT)) {
+            return {
+                status: ExpectNewTransactionStatus.DONE,
+                minExpectedTransactions: undefined,
+                refreshCount: 0,
+            };
+        } else {
+            const refreshCount = current.refreshCount + 1;
+            return {
+                status: ExpectNewTransactionStatus.WAITING_NEW_TRANSACTION,
+                refreshCount,
+                minExpectedTransactions: current.minExpectedTransactions,
+            };
+        }
+    } else {
+        return current;
     }
 }
 
@@ -295,6 +395,32 @@ export function CommonContextProvider(props: Props) {
             });
         }
     }, [ contextValue ]);
+
+    const expectNewTransaction = useCallback(() => {
+        dispatch({ type: "EXPECT_NEW_TRANSACTION" });
+    }, [ ]);
+
+    useEffect(() => {
+        if(contextValue.expectNewTransaction !== expectNewTransaction) {
+            dispatch({
+                type: "SET_EXPECT_NEW_TRANSACTION",
+                expectNewTransaction,
+            })
+        }
+    }, [ contextValue.expectNewTransaction, expectNewTransaction ]);
+
+    const stopExpectNewTransaction = useCallback(() => {
+        dispatch({ type: "STOP_EXPECT_NEW_TRANSACTION" });
+    }, [ ]);
+
+    useEffect(() => {
+        if(contextValue.stopExpectNewTransaction !== stopExpectNewTransaction) {
+            dispatch({
+                type: "SET_STOP_EXPECT_NEW_TRANSACTION",
+                stopExpectNewTransaction,
+            })
+        }
+    }, [ contextValue.stopExpectNewTransaction, stopExpectNewTransaction ]);
 
     return (
         <CommonContextObject.Provider value={contextValue}>
