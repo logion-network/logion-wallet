@@ -7,7 +7,6 @@ import { setLocItems, setLocState } from './__mocks__/LocContextMock';
 
 import CloseLocButton from './CloseLocButton';
 import { OpenLoc } from 'src/__mocks__/LogionClientMock';
-import { mockSubmittableResult } from 'src/logion-chain/__mocks__/SignatureMock';
 import { LocItem, MetadataItem } from './LocItem';
 import { FAILED_SUBMISSION, SUCCESSFUL_SUBMISSION, setExtrinsicSubmissionState } from 'src/logion-chain/__mocks__/LogionChainMock';
 
@@ -36,6 +35,7 @@ describe("CloseLocButton", () => {
 
         await clickByName(/Close LOC/);
         await clickByName("Proceed");
+        await clickByName("Close");
 
         await expectNoDialogVisible();
         expect(closeCalled).toBe(true);
@@ -59,8 +59,9 @@ describe("CloseLocButton", () => {
         await clickByName(/Close LOC/);
         await clickByName("Proceed");
 
-        await clickByName("OK");
+        await clickByName("Close");
         await expectNoDialogVisible();
+        expect(closeCalled).toBe(true);
     })
 
     it("enables auto-ack toggle", async () => {
@@ -116,14 +117,11 @@ let closeCalled = false;
 
 const successCloseLocMock = async (params: any) => {
     closeCalled = true;
-    params.callback(mockSubmittableResult(true));
     return params.locState;
 };
 
-const failureCloseLocMock = async (params: any) => {
+const failureCloseLocMock = async () => {
     closeCalled = true;
-    params.callback(mockSubmittableResult(false, "Failed", true));
-    throw new Error();
 };
 
 let closeLocMock = successCloseLocMock;
