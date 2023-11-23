@@ -3,7 +3,6 @@ import { Fees } from '@logion/node-api';
 import { LocData } from '@logion/client';
 import { useLogionChain } from '../logion-chain';
 import { useCommonContext } from '../common/CommonContext';
-import ClientExtrinsicSubmitter, { Call } from '../ClientExtrinsicSubmitter';
 import ProcessStep from '../common/ProcessStep';
 import CollectionLocMessage from '../loc/CollectionLocMessage';
 import CollectionLimitsForm, { CollectionLimits, DEFAULT_LIMITS } from '../loc/CollectionLimitsForm';
@@ -15,13 +14,13 @@ import Button from 'src/common/Button';
 import PolkadotFrame from 'src/common/PolkadotFrame';
 import "./OpenLoc.css";
 import Checkbox from 'src/components/toggle/Checkbox';
+import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';
 
 enum OpenStatus {
     NONE,
     CREATE_LOC,
-    LOC_CREATION_PENDING,
     CREATING_LOC,
-    OPENED,
+    CREATED_OR_ERROR,
 }
 
 export interface Props {
@@ -29,12 +28,10 @@ export interface Props {
 }
 
 export default function OpenLoc(props: Props) {
-    const { signer, client } = useLogionChain();
+    const { signer, client, submitCall } = useLogionChain();
     const { refresh, colorTheme } = useCommonContext();
     const { mutateLocState, locState } = useLocContext();
     const [ acceptState, setAcceptState ] = useState<OpenStatus>(OpenStatus.NONE);
-    const [ call, setCall ] = useState<Call>();
-    const [ error, setError ] = useState<boolean>(false);
     const [ limits, setLimits ] = useState<CollectionLimits>(DEFAULT_LIMITS);
     const [ fees, setFees ] = useState<Fees | undefined | null>();
     const [ autoPublish, setAutoPublish ] = useState(false);
@@ -65,41 +62,48 @@ export default function OpenLoc(props: Props) {
         }
     }, [ fees, client, props.loc, limits, locState, autoPublish ]);
 
-    // LOC creation
-    useEffect(() => {
-        if(acceptState === OpenStatus.LOC_CREATION_PENDING) {
-            setAcceptState(OpenStatus.CREATING_LOC);
-            setCall(() => async (callback: CallCallback) =>
-                await mutateLocState(async current => {
-                    if(client && signer && current instanceof AcceptedRequest) {
-                        if(current.data().locType !== "Collection") {
-                            return current.open({
-                                signer,
-                                callback,
-                                autoPublish
-                            });
-                        } else {
-                            const apiLimits = await limits.toApiLimits(client.logionApi)
-                            return current.openCollection({
-                                ...apiLimits,
-                                signer,
-                                callback,
-                                autoPublish
-                            });
-                        }
+    const openLoc = useMemo(() => {
+        return async (callback: CallCallback) =>
+            await mutateLocState(async current => {
+                if(client && signer && current instanceof AcceptedRequest) {
+                    if(current.data().locType !== "Collection") {
+                        return current.open({
+                            signer,
+                            callback,
+                            autoPublish
+                        });
                     } else {
-                        return current;
+                        const apiLimits = await limits.toApiLimits(client.logionApi)
+                        return current.openCollection({
+                            ...apiLimits,
+                            signer,
+                            callback,
+                            autoPublish
+                        });
                     }
-                })
-            );
+                } else {
+                    return current;
+                }
+            });
+    }, [
+        mutateLocState,
+        client,
+        signer,
+        autoPublish,
+        limits,
+    ]);
+
+    // LOC creation
+    const openLocCallback = useCallback(async () => {
+        setAcceptState(OpenStatus.CREATING_LOC);
+        try {
+            await submitCall(openLoc);
+        } finally {
+            setAcceptState(OpenStatus.CREATED_OR_ERROR);
         }
     }, [
-        acceptState,
-        mutateLocState,
-        signer,
-        limits,
-        client,
-        autoPublish,
+        submitCall,
+        openLoc,
     ]);
 
     const resetFields = useCallback(() => {
@@ -181,7 +185,7 @@ export default function OpenLoc(props: Props) {
                         buttonText: 'Proceed',
                         buttonVariant: 'polkadot',
                         mayProceed: acceptState === OpenStatus.CREATE_LOC && (props.loc.locType !== 'Collection' || limits.areValid()),
-                        callback: () => setAcceptState(OpenStatus.LOC_CREATION_PENDING),
+                        callback: openLocCallback,
                     }
                 ]}
             >
@@ -219,23 +223,20 @@ export default function OpenLoc(props: Props) {
             </ProcessStep>
             <ProcessStep
                 active={ acceptState === OpenStatus.CREATING_LOC
-                    || acceptState === OpenStatus.OPENED }
+                    || acceptState === OpenStatus.CREATED_OR_ERROR }
                 title="Creating LOC"
                 nextSteps={[
                     {
                         id: 'close',
                         buttonText: 'Close',
                         buttonVariant: 'primary',
-                        mayProceed: acceptState === OpenStatus.OPENED || error,
+                        mayProceed: acceptState === OpenStatus.CREATED_OR_ERROR,
                         callback: closeAndRefresh,
                     }
                 ]}
             >
-                <ClientExtrinsicSubmitter
-                    call={ call }
+                <ExtrinsicSubmissionStateView
                     successMessage="LOC successfully created."
-                    onSuccess={ () => setAcceptState(OpenStatus.OPENED) }
-                    onError={ () => setError(true) }
                 />
             </ProcessStep>
         </PolkadotFrame>
