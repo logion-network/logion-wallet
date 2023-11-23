@@ -25,8 +25,7 @@ enum CloseStatus {
     NONE,
     ACCEPT,
     CLOSE_PENDING,
-    CLOSING,
-    DONE
+    CLOSING
 }
 
 interface CloseState {
@@ -60,9 +59,11 @@ export default function CloseLocButton(props: Props) {
             });
     }, [ mutateLocState, autoAck, signer ]);
 
-    const close = useCallback(() => {
+    const close = useCallback(async () => {
         setCloseState({ status: CloseStatus.CLOSING });
-        submitCall(closeCall);
+        try {
+            await submitCall(closeCall);
+        } catch(e) {}
     }, [ closeCall, submitCall ]);
 
     const clear = useCallback(() => {

@@ -6,7 +6,6 @@ import { setLocState, refresh } from "./__mocks__/UserLocContextMock";
 import { CollectionItem, Fees, UUID } from "@logion/node-api";
 import { H256 } from "@logion/node-api/dist/types/interfaces";
 import { LogionClient, AddCollectionItemParams, EstimateFeesAddCollectionItemParams } from "@logion/client";
-import { mockSubmittableResult } from "../logion-chain/__mocks__/SignatureMock";
 import { SUCCESSFUL_SUBMISSION, setClientMock, setExtrinsicSubmissionState } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { It, Mock } from 'moq.ts';
 import { SubmittableExtrinsic } from '@polkadot/api/promise/types';
@@ -14,7 +13,6 @@ import { Compact, u128 } from "@polkadot/types-codec";
 import { TEST_WALLET_USER } from 'src/wallet-user/TestData';
 
 jest.mock("../common/CommonContext");
-jest.mock("../logion-chain/Signature");
 jest.mock("../logion-chain");
 jest.mock("./UserLocContext");
 
@@ -29,9 +27,7 @@ describe("ImportItems", () => {
         await userEvent.click(importAllButton);
         await waitFor(() => expect(screen.getByRole("button", { name: "Proceed" })).toBeVisible());
         await clickByName("Proceed");
-        await waitFor(() => expect(screen.getByRole("button", { name: "Proceed" })).toBeVisible());
-        await clickByName("Proceed");
-        await waitFor(() => expect(collection.addCollectionItem).toBeCalled());
+        await waitFor(() => expect(collection.addCollectionItem).toBeCalledTimes(2));
 
         await waitFor(() => expect(screen.getAllByRole("img", {name: "ok"}).length).toBe(2));
 
@@ -69,7 +65,6 @@ async function uploadCsv(): Promise<any> {
 
     const collection = {
         addCollectionItem: jest.fn((params: AddCollectionItemParams) => {
-            params.callback!(mockSubmittableResult(true, "finalized"));
             return Promise.resolve();
         }),
         estimateFeesAddCollectionItem: jest.fn((params: EstimateFeesAddCollectionItemParams) => {

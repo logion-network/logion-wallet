@@ -1,7 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { clickByName } from "src/tests";
 import RequestVoteButton from "./RequestVoteButton";
-import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { ClosedLoc } from "src/__mocks__/@logion/client";
 import { setLocState } from "./__mocks__/LocContextMock";
 import { FAILED_SUBMISSION, NO_SUBMISSION, SUCCESSFUL_SUBMISSION, setExtrinsicSubmissionState } from "src/logion-chain/__mocks__/LogionChainMock";
@@ -16,7 +15,6 @@ describe("RequestVoteButton", () => {
         const locState = new ClosedLoc();
         setLocState(locState);
         locState.legalOfficer.requestVote = async (params: any) => {
-            params.callback(mockSubmittableResult(true));
             return VOTE_ID;
         };
         setExtrinsicSubmissionState(NO_SUBMISSION);
@@ -30,7 +28,6 @@ describe("RequestVoteButton", () => {
         const locState = new ClosedLoc();
         setLocState(locState);
         locState.legalOfficer.requestVote = async (params: any) => {
-            params.callback(mockSubmittableResult(true));
             return VOTE_ID;
         };
         setExtrinsicSubmissionState(SUCCESSFUL_SUBMISSION);
@@ -44,10 +41,7 @@ describe("RequestVoteButton", () => {
     it("shows error on failure", async () => {
         const locState = new ClosedLoc();
         setLocState(locState);
-        locState.legalOfficer.requestVote = async (params: any) => {
-            params.callback(mockSubmittableResult(false, "ExtrinsicFailed", true));
-            throw new Error();
-        };
+        locState.legalOfficer.requestVote = async () => {};
         setExtrinsicSubmissionState(FAILED_SUBMISSION);
         render(<RequestVoteButton />);
         await clickByName((_, element) => /Request a vote/.test(element.textContent || ""));

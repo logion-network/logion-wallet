@@ -10,7 +10,7 @@ import {
     CreativeCommons,
 } from "@logion/client";
 import { Fees, Hash } from '@logion/node-api';
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 
 import Dialog from "../common/Dialog";
@@ -25,28 +25,24 @@ import { useUserLocContext } from "./UserLocContext";
 import ImportItemDetails, { ErrorType, Item } from "./ImportItemDetails";
 
 import './ImportItems.css';
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsicSubmitter";
 import { CsvItem, readItemsCsv } from "./ImportCsvReader";
 import Alert from "src/common/Alert";
 import { UUID } from "@logion/node-api";
 import config from "../config";
 import EstimatedFees from "./fees/EstimatedFees";
 import { BrowserFile } from "@logion/client-browser";
-
-type Submitters = Record<string, Call>;
+import { Call, CallBatch, CallCallback } from "src/logion-chain/LogionChainContext";
+import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 export default function ImportItems() {
     const { width } = useResponsiveContext();
-    const { signer } = useLogionChain();
+    const { signer, submitCallBatch, extrinsicSubmissionState, clearSubmissionState } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { refresh, locState } = useUserLocContext();
 
     const [ showImportItems, setShowImportItems ] = useState(false);
     const [ items, setItems ] = useState<Item[]>([]);
     const [ csvReadError, setCsvReadError ] = useState<string>("");
-    const [ submitters, setSubmitters ] = useState<Submitters>({});
-    const [ currentItem, setCurrentItem ] = useState(0);
-    const [ isBatchImport, setIsBatchImport ] = useState(false);
     const [ uploading, setUploading ] = useState(false);
     const [ fees, setFees ] = useState<Fees | null>(null);
     const [ itemToSubmit, setItemToSubmit ] = useState<Item>();
@@ -54,7 +50,7 @@ export default function ImportItems() {
     const readCsvFile = useCallback(async (file: File) => {
         const collection = locState as ClosedCollectionLoc;
         const acceptsUpload = collectionAcceptsUpload(collection);
-        setSubmitters({});
+        clearSubmissionState();
 
         const result = await readItemsCsv(file);
         if("items" in result) {
@@ -74,95 +70,132 @@ export default function ImportItems() {
             setCsvReadError(result.error);
         }
         setShowImportItems(true);
-    }, [ setSubmitters, locState ]);
+    }, [ clearSubmissionState, locState ]);
+
+    const itemFees = useCallback(async (item: Item) => {
+        const collection = locState as ClosedCollectionLoc;
+        return await collection.estimateFeesAddCollectionItem({
+            itemId: item.id!,
+            itemDescription: item.description,
+            itemFiles: item.files,
+            restrictedDelivery: item.restrictedDelivery,
+            itemToken: item.token,
+            logionClassification: item.logionClassification,
+            specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
+            creativeCommons: item.creativeCommons,
+        });
+    }, [ locState ]);
 
     const submitItem = useCallback(async (item: Item) => {
         if (locState) {
             setItemToSubmit(item);
-            const collection = locState as ClosedCollectionLoc;
-            const fees = await collection.estimateFeesAddCollectionItem({
-                itemId: item.id!,
-                itemDescription: item.description,
-                itemFiles: item.files,
-                restrictedDelivery: item.restrictedDelivery,
-                itemToken: item.token,
-                logionClassification: item.logionClassification,
-                specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
-                creativeCommons: item.creativeCommons,
-            })
+            const fees = await itemFees(item);
             setFees(fees);
         }
-    }, [ locState ]);
-
-    const doSubmitItem = useCallback(async () => {
-        if(itemToSubmit) {
-            setFees(null);
-
-            const collection = locState as ClosedCollectionLoc;
-            const item = itemToSubmit;
-            setItemToSubmit(undefined);
-
-            item.submitted = true;
-            setItems(items.slice());
-            const signAndSubmit: Call = async (callback: CallCallback) => {
-                await collection.addCollectionItem({
-                    signer: signer!,
-                    itemId: item.id!,
-                    itemDescription: item.description,
-                    itemFiles: item.files,
-                    restrictedDelivery: item.restrictedDelivery,
-                    itemToken: item.token,
-                    logionClassification: item.logionClassification,
-                    specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
-                    creativeCommons: item.creativeCommons,
-                    callback,
-                })
-            }
-            const newSubmitters = { ...submitters };
-            newSubmitters[item.id!.toHex()] = signAndSubmit;
-            setSubmitters(newSubmitters);
-        }
-    }, [ submitters, signer, locState, itemToSubmit, items ]);
-
-    const submitNext = useCallback(async (submittedItem: Item, failed: boolean) => {
-        if(failed) {
-            submittedItem.failed = true;
-        } else {
-            submittedItem.success = true;
-        }
-        setItems(items.slice());
-        if(isBatchImport) {
-            const nextItemIndex = getNextItem(items, currentItem);
-            if(nextItemIndex < items.length) {
-                setCurrentItem(nextItemIndex);
-                await submitItem(items[nextItemIndex]);
-            } else {
-                setIsBatchImport(false);
-            }
-        }
-    }, [ isBatchImport, currentItem, items, setCurrentItem, submitItem, setIsBatchImport ]);
+    }, [ locState, itemFees ]);
 
     const cancelSubmission = useCallback(() => {
-        setIsBatchImport(false);
         setFees(null);
         setItemToSubmit(undefined);
-    }, []);
+        clearSubmissionState();
+    }, [ clearSubmissionState ]);
 
     const close = useCallback(() => {
         setShowImportItems(false);
-        setIsBatchImport(false);
         setItems([]);
         refresh();
-    }, [ setShowImportItems, setIsBatchImport, refresh ]);
+        clearSubmissionState();
+    }, [ setShowImportItems, refresh, clearSubmissionState ]);
+
+    const callMap = useMemo(() => {
+        const collection = locState as ClosedCollectionLoc;
+        const map: Record<string, Call> = {};
+        items.forEach(item => {
+            if(!item.submitted && item.id) {
+                map[item.id.toHex()] = async (callback: CallCallback) => {
+                    await collection.addCollectionItem({
+                        signer: signer!,
+                        itemId: item.id!,
+                        itemDescription: item.description,
+                        itemFiles: item.files,
+                        restrictedDelivery: item.restrictedDelivery,
+                        itemToken: item.token,
+                        logionClassification: item.logionClassification,
+                        specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
+                        creativeCommons: item.creativeCommons,
+                        callback,
+                    })
+                };
+            }
+        });
+        return map;
+    }, [ items, locState, signer ]);
+
+    const callBatch = useMemo(() => {
+        return new CallBatch(Object.keys(callMap).map(submissionId => ({
+            submissionId,
+            call: callMap[submissionId],
+        })));
+    }, [ callMap ]);
+
+    const doSubmitItem = useCallback(async () => {
+        setFees(null);
+        if(itemToSubmit && itemToSubmit.id) {
+            const submissionId = itemToSubmit.id.toHex();
+            const errors = await submitCallBatch(CallBatch.fromSingleWithId(submissionId, callMap[submissionId]));
+            setItems(items.map(item => {
+                if(item === itemToSubmit) {
+                    const error = errors[submissionId];
+                    return {
+                        ...item,
+                        submitted: true,
+                        errorType: error ? "chain" : undefined,
+                        error: error ? String(error) : undefined,
+                        success: !error,
+                    };
+                } else {
+                    return item;
+                }
+            }));
+        } else {
+            const errors = await submitCallBatch(callBatch);
+            setItems(items.map(item => {
+                if(item.id && item.id.toHex() in callMap) {
+                    const submissionId = item.id.toHex();
+                    const error = errors[submissionId];
+                    return {
+                        ...item,
+                        submitted: true,
+                        errorType: submissionId in errors ? "chain" : undefined,
+                        error: error ? String(error) : undefined,
+                        success: !error,
+                    };
+                } else {
+                    return item;
+                }
+            }));
+        }
+        clearSubmissionState();
+    }, [ itemToSubmit, callBatch, callMap, items, submitCallBatch, clearSubmissionState ]);
+
+    const batchFees = useCallback(async () => {
+        let total = new Fees({ inclusionFee: 0n });
+        for(const itemId of Object.keys(callMap)) {
+            const item = items.find(item => item.id?.toHex() === itemId);
+            if(item) {
+                const fees = await itemFees(item);
+                total = addFees(total, fees);
+            }
+        }
+        return total;
+    }, [ callMap, itemFees, items ]);
 
     const importAll = useCallback(async () => {
         if(items.length > 0) {
-            setIsBatchImport(true);
-            const firstItemIndex = getFirstItem(items);
-            setCurrentItem(firstItemIndex);
-            await submitItem(items[firstItemIndex]);
+            setItemToSubmit(undefined);
+            setFees(await batchFees());
         }
-    }, [ setIsBatchImport, setCurrentItem, submitItem, items ]);
+    }, [ setItemToSubmit, items, batchFees ]);
 
     const uploadItemFile = useCallback(async (item: Item, file: File) => {
         setUploading(true);
@@ -207,7 +240,7 @@ export default function ImportItems() {
                         buttonText: "Close",
                         callback: close,
                         buttonVariant: "primary",
-                        disabled: isBatchImport
+                        disabled: extrinsicSubmissionState.inProgress,
                     }
                 ]}
                 show={ showImportItems }
@@ -233,7 +266,7 @@ export default function ImportItems() {
                         <Button
                             variant="polkadot"
                             onClick={ importAll }
-                            disabled={ getNotSubmitted(items) === 0 || isBatchImport }
+                            disabled={ extrinsicSubmissionState.inProgress }
                         >
                             <Icon icon={{id: "import_items"}} height="23px" /> Import all
                         </Button>
@@ -262,7 +295,7 @@ export default function ImportItems() {
                                 render: item => (
                                     <>
                                         {
-                                            (!item.submitted && !item.error) &&
+                                            item.id && (!item.submitted && !item.error) && !extrinsicSubmissionState.inProgress &&
                                             <Button
                                                 variant="polkadot"
                                                 onClick={ () => submitItem(item) }
@@ -271,12 +304,10 @@ export default function ImportItems() {
                                             </Button>
                                         }
                                         {
-                                            (item.submitted && !item.success && submitters[item.id?.toHex() || ""] !== undefined && submitters[item.id?.toHex() || ""] !== null) &&
+                                            item.id && extrinsicSubmissionState.isInProgress(item.id.toHex()) &&
                                             <Cell content={
-                                                <ClientExtrinsicSubmitter
-                                                    call={ submitters[item.id?.toHex() || ""] || null }
-                                                    onError={ () => submitNext(item, true) }
-                                                    onSuccess={ () => submitNext(item, false) }
+                                                <ExtrinsicSubmissionStateView
+                                                    submissionId={ item.id.toHex() }
                                                     slim
                                                 />
                                             } />
@@ -338,7 +369,7 @@ export default function ImportItems() {
                         <Button
                             variant="polkadot"
                             onClick={ importAll }
-                            disabled={ getNotSubmitted(items) === 0 || isBatchImport }
+                            disabled={ getNotSubmitted(items) === 0 || extrinsicSubmissionState.inProgress }
                         >
                             <Icon icon={{id: "import_items"}} height="23px" /> Import all
                         </Button>
@@ -380,19 +411,6 @@ export default function ImportItems() {
             </Dialog>
         </div>
     );
-}
-
-function getFirstItem(items: Item[]): number {
-    return getNextItem(items, -1);
-}
-
-
-function getNextItem(items: Item[], current: number): number {
-    let next = current + 1;
-    while(next < items.length && (items[next].error || items[next].submitted)) {
-        ++next;
-    }
-    return next;
 }
 
 function getNotSubmitted(items: Item[]): number {
@@ -540,5 +558,36 @@ function validateTermsAndConditions(csvItem: CsvItem): TCValidationResult {
         return { tcError: `Invalid TERM_AND_CONDITIONS type: '${ csvItem.termsAndConditionsType }'` };
     } catch (error) {
         return { tcError: "" + error }
+    }
+}
+
+function addFees(total: Fees, term: Fees): Fees {
+    const inclusionFee = total.inclusionFee + term.inclusionFee;
+    const storageFee = addFeesTerms(total.storageFee, term.storageFee);
+    const legalFee = addFeesTerms(total.legalFee, term.legalFee);
+    const certificateFee = addFeesTerms(total.certificateFee, term.certificateFee);
+    const valueFee = addFeesTerms(total.valueFee, term.valueFee);
+    const collectionItemFee = addFeesTerms(total.collectionItemFee, term.collectionItemFee);
+    const tokensRecordFee = addFeesTerms(total.tokensRecordFee, term.tokensRecordFee);
+    return new Fees({
+        inclusionFee,
+        storageFee,
+        legalFee,
+        certificateFee,
+        valueFee,
+        collectionItemFee,
+        tokensRecordFee,
+    });
+}
+
+function addFeesTerms(term1?: bigint, term2?: bigint): bigint | undefined {
+    if(term1 !== undefined && term2 !== undefined) {
+        return term1 + term2;
+    } else if(term1 !== undefined && term2 === undefined) {
+        return term1;
+    } else if(term1 === undefined && term2 !== undefined) {
+        return term2;
+    } else {
+        return undefined;
     }
 }
