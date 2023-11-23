@@ -764,7 +764,7 @@ exports[`CustomItemActions Links can be acknowledged by owner when published 1`]
 </ButtonGroup>
 `;
 
-exports[`CustomItemActions Links can be published or deleted by requester when approved 1`] = `
+exports[`CustomItemActions Links can be published by requester when approved 1`] = `
 <ButtonGroup>
   <BlockNone
     show={true}
@@ -836,72 +836,6 @@ exports[`CustomItemActions Links can be published or deleted by requester when a
       }
     />
   </BlockNone>
-  <DeleteButton
-    locItem={
-      LinkItem {
-        "_data": Object {
-          "linkDetailsPath": "",
-          "linkedLoc": Object {},
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                248,
-                84,
-                85,
-                231,
-                249,
-                38,
-                156,
-                24,
-                176,
-                66,
-                206,
-                213,
-                35,
-                149,
-                50,
-                79,
-                120,
-                212,
-                130,
-                80,
-                32,
-                73,
-                200,
-                4,
-                86,
-                88,
-                16,
-                84,
-                250,
-                156,
-                184,
-                82,
-              ],
-            },
-            "value": "Some nature",
-          },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": false,
-          "timestamp": null,
-          "type": "Linked LOC",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
@@ -975,7 +909,7 @@ exports[`CustomItemActions Links can be published or deleted by requester when a
 </ButtonGroup>
 `;
 
-exports[`CustomItemActions Links can be published or deleted by requester when approved and submitted by issuer 1`] = `
+exports[`CustomItemActions Links can be published by requester when approved and submitted by issuer 1`] = `
 <ButtonGroup>
   <BlockNone
     show={true}
@@ -1047,72 +981,6 @@ exports[`CustomItemActions Links can be published or deleted by requester when a
       }
     />
   </BlockNone>
-  <DeleteButton
-    locItem={
-      LinkItem {
-        "_data": Object {
-          "linkDetailsPath": "",
-          "linkedLoc": Object {},
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                248,
-                84,
-                85,
-                231,
-                249,
-                38,
-                156,
-                24,
-                176,
-                66,
-                206,
-                213,
-                35,
-                149,
-                50,
-                79,
-                120,
-                212,
-                130,
-                80,
-                32,
-                73,
-                200,
-                4,
-                86,
-                88,
-                16,
-                84,
-                250,
-                156,
-                184,
-                82,
-              ],
-            },
-            "value": "Some nature",
-          },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": false,
-          "timestamp": null,
-          "type": "Linked LOC",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
@@ -2963,7 +2831,7 @@ exports[`CustomItemActions Private files can be acknowledged by owner when publi
 </ButtonGroup>
 `;
 
-exports[`CustomItemActions Private files can be published or deleted by requester when approved 1`] = `
+exports[`CustomItemActions Private files can be published by requester when approved 1`] = `
 <ButtonGroup>
   <BlockNone
     show={true}
@@ -3072,109 +2940,6 @@ exports[`CustomItemActions Private files can be published or deleted by requeste
       }
     />
   </BlockNone>
-  <DeleteButton
-    locItem={
-      FileItem {
-        "_data": Object {
-          "fileName": "test.txt",
-          "hash": Hash {
-            "_bytes": Uint8Array [
-              159,
-              134,
-              208,
-              129,
-              136,
-              76,
-              125,
-              101,
-              154,
-              47,
-              234,
-              160,
-              197,
-              90,
-              208,
-              21,
-              163,
-              191,
-              79,
-              27,
-              43,
-              11,
-              130,
-              44,
-              209,
-              93,
-              108,
-              21,
-              176,
-              240,
-              10,
-              8,
-            ],
-          },
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                248,
-                84,
-                85,
-                231,
-                249,
-                38,
-                156,
-                24,
-                176,
-                66,
-                206,
-                213,
-                35,
-                149,
-                50,
-                79,
-                120,
-                212,
-                130,
-                80,
-                32,
-                73,
-                200,
-                4,
-                86,
-                88,
-                16,
-                84,
-                250,
-                156,
-                184,
-                82,
-              ],
-            },
-            "value": "Some nature",
-          },
-          "size": 4n,
-          "storageFeePaidBy": "",
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": false,
-          "timestamp": null,
-          "type": "Document",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
@@ -3285,7 +3050,7 @@ exports[`CustomItemActions Private files can be published or deleted by requeste
 </ButtonGroup>
 `;
 
-exports[`CustomItemActions Private files can be published or deleted by requester when approved and submitted by issuer 1`] = `
+exports[`CustomItemActions Private files can be published by requester when approved and submitted by issuer 1`] = `
 <ButtonGroup>
   <BlockNone
     show={true}
@@ -3394,109 +3159,6 @@ exports[`CustomItemActions Private files can be published or deleted by requeste
       }
     />
   </BlockNone>
-  <DeleteButton
-    locItem={
-      FileItem {
-        "_data": Object {
-          "fileName": "test.txt",
-          "hash": Hash {
-            "_bytes": Uint8Array [
-              159,
-              134,
-              208,
-              129,
-              136,
-              76,
-              125,
-              101,
-              154,
-              47,
-              234,
-              160,
-              197,
-              90,
-              208,
-              21,
-              163,
-              191,
-              79,
-              27,
-              43,
-              11,
-              130,
-              44,
-              209,
-              93,
-              108,
-              21,
-              176,
-              240,
-              10,
-              8,
-            ],
-          },
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                248,
-                84,
-                85,
-                231,
-                249,
-                38,
-                156,
-                24,
-                176,
-                66,
-                206,
-                213,
-                35,
-                149,
-                50,
-                79,
-                120,
-                212,
-                130,
-                80,
-                32,
-                73,
-                200,
-                4,
-                86,
-                88,
-                16,
-                84,
-                250,
-                156,
-                184,
-                82,
-              ],
-            },
-            "value": "Some nature",
-          },
-          "size": 4n,
-          "storageFeePaidBy": "",
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": false,
-          "timestamp": null,
-          "type": "Document",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
@@ -5717,7 +5379,7 @@ exports[`CustomItemActions Public data can be acknowledged by owner when publish
 </ButtonGroup>
 `;
 
-exports[`CustomItemActions Public data can be published or deleted by requester when approved 1`] = `
+exports[`CustomItemActions Public data can be published by requester when approved 1`] = `
 <ButtonGroup>
   <BlockNone
     show={true}
@@ -5826,109 +5488,6 @@ exports[`CustomItemActions Public data can be published or deleted by requester 
       }
     />
   </BlockNone>
-  <DeleteButton
-    locItem={
-      MetadataItem {
-        "_data": Object {
-          "name": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                220,
-                209,
-                213,
-                34,
-                63,
-                115,
-                179,
-                169,
-                101,
-                192,
-                126,
-                63,
-                245,
-                219,
-                238,
-                62,
-                237,
-                207,
-                237,
-                184,
-                6,
-                104,
-                106,
-                5,
-                185,
-                179,
-                134,
-                138,
-                44,
-                61,
-                109,
-                80,
-              ],
-            },
-            "value": "Name",
-          },
-          "value": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                142,
-                55,
-                149,
-                61,
-                35,
-                218,
-                202,
-                95,
-                240,
-                27,
-                130,
-                130,
-                195,
-                63,
-                78,
-                10,
-                33,
-                82,
-                241,
-                209,
-                136,
-                95,
-                148,
-                192,
-                100,
-                24,
-                97,
-                126,
-                62,
-                225,
-                210,
-                78,
-              ],
-            },
-            "value": "Value",
-          },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": false,
-          "timestamp": null,
-          "type": "Data",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
@@ -6039,7 +5598,7 @@ exports[`CustomItemActions Public data can be published or deleted by requester 
 </ButtonGroup>
 `;
 
-exports[`CustomItemActions Public data can be published or deleted by requester when approved and submitted by issuer 1`] = `
+exports[`CustomItemActions Public data can be published by requester when approved and submitted by issuer 1`] = `
 <ButtonGroup>
   <BlockNone
     show={true}
@@ -6148,109 +5707,6 @@ exports[`CustomItemActions Public data can be published or deleted by requester 
       }
     />
   </BlockNone>
-  <DeleteButton
-    locItem={
-      MetadataItem {
-        "_data": Object {
-          "name": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                220,
-                209,
-                213,
-                34,
-                63,
-                115,
-                179,
-                169,
-                101,
-                192,
-                126,
-                63,
-                245,
-                219,
-                238,
-                62,
-                237,
-                207,
-                237,
-                184,
-                6,
-                104,
-                106,
-                5,
-                185,
-                179,
-                134,
-                138,
-                44,
-                61,
-                109,
-                80,
-              ],
-            },
-            "value": "Name",
-          },
-          "value": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                142,
-                55,
-                149,
-                61,
-                35,
-                218,
-                202,
-                95,
-                240,
-                27,
-                130,
-                130,
-                195,
-                63,
-                78,
-                10,
-                33,
-                82,
-                241,
-                209,
-                136,
-                95,
-                148,
-                192,
-                100,
-                24,
-                97,
-                126,
-                62,
-                225,
-                210,
-                78,
-              ],
-            },
-            "value": "Value",
-          },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": false,
-          "timestamp": null,
-          "type": "Data",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
