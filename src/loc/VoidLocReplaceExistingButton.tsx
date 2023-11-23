@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { OpenLoc, ClosedLoc, ClosedCollectionLoc } from "@logion/client";
 import { UUID } from "@logion/node-api";
@@ -8,60 +8,68 @@ import { useCommonContext } from "../common/CommonContext";
 import DangerDialog from "../common/DangerDialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import ExtrinsicSubmissionStateView from "../ExtrinsicSubmissionStateView";
 import { useLocContext } from "./LocContext";
-import { useLogionChain } from "../logion-chain";
+import { useLogionChain, CallCallback } from "src/logion-chain";
 
 export default function VoidLocReplaceExistingButton() {
     const { colorTheme } = useCommonContext();
-    const { api, signer } = useLogionChain();
+    const { api, signer, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const [ visible, setVisible ] = useState(false);
     const { loc: locData, mutateLocState } = useLocContext();
-    const [ call, setCall ] = useState<Call>();
     const [ reason, setReason ] = useState<string>("");
     const [ replacerLocId, setReplacerLocId ] = useState<string>("");
     const [ replacerLocIdError, setReplacerLocIdError ] = useState<string | undefined>(undefined);
 
-    const checkAndVoid = useCallback(async () => {
-        const locId = UUID.fromDecimalString(replacerLocId);
-        if (!locId) {
-            setReplacerLocIdError("Invalid LOC ID");
-        } else {
-            if(replacerLocId === locData?.id.toDecimalString()) {
-                setReplacerLocIdError("Cannot be replaced by itself");
+    const call = useMemo(() => {
+        return async (callback: CallCallback) => {
+            const locId = UUID.fromDecimalString(replacerLocId);
+            if (!locId) {
+                setReplacerLocIdError("Invalid LOC ID");
             } else {
-            const replacerLoc = await api!.queries.getLegalOfficerCase(locId);
-            if (!replacerLoc) {
-                setReplacerLocIdError("LOC not found on chain");
-            } else if(replacerLoc.voidInfo !== undefined) {
-                setReplacerLocIdError("Cannot be replaced by a VOID LOC");
-            } else if(replacerLoc.locType !== locData?.locType) {
-                setReplacerLocIdError(`Cannot be replaced by a LOC of type: ${replacerLoc.locType}`);
-            } else {
-                setReplacerLocIdError(undefined);
-                setCall(() => (callback: CallCallback) => mutateLocState(async current => {
-                    if(signer && (current instanceof OpenLoc || current instanceof ClosedLoc || current instanceof ClosedCollectionLoc)) {
-                        return current.legalOfficer.voidLoc({
-                            reason,
-                            replacer: locId,
-                            signer,
-                            callback,
-                        });
+                if (replacerLocId === locData?.id.toDecimalString()) {
+                    setReplacerLocIdError("Cannot be replaced by itself");
+                } else {
+                    const replacerLoc = await api!.queries.getLegalOfficerCase(locId);
+                    if (!replacerLoc) {
+                        setReplacerLocIdError("LOC not found on chain");
+                    } else if (replacerLoc.voidInfo !== undefined) {
+                        setReplacerLocIdError("Cannot be replaced by a VOID LOC");
+                    } else if (replacerLoc.locType !== locData?.locType) {
+                        setReplacerLocIdError(`Cannot be replaced by a LOC of type: ${ replacerLoc.locType }`);
                     } else {
-                        return current;
+                        setReplacerLocIdError(undefined);
+                        await mutateLocState(async current => {
+                            if (signer && (current instanceof OpenLoc || current instanceof ClosedLoc || current instanceof ClosedCollectionLoc)) {
+                                return current.legalOfficer.voidLoc({
+                                    reason,
+                                    replacer: locId,
+                                    signer,
+                                    callback,
+                                });
+                            } else {
+                                return current;
+                            }
+                        });
                     }
-                }));
+                }
             }
-        }
         }
     }, [ replacerLocId, api, reason, locData, mutateLocState, signer ]);
 
     const clearAndClose = useCallback(() => {
+        clearSubmissionState();
         setReason("");
         setReplacerLocId("");
         setReplacerLocIdError(undefined);
         setVisible(false);
-    }, [ setReason, setReplacerLocId, setReplacerLocIdError, setVisible ]);
+    }, [ clearSubmissionState, setReason, setReplacerLocId, setReplacerLocIdError, setVisible ]);
+
+    useEffect(() => {
+        if (extrinsicSubmissionState.isSuccessful()) {
+            clearAndClose();
+        }
+    }, [ extrinsicSubmissionState, clearAndClose]);
 
     if(locData === null) {
         return null;
@@ -84,7 +92,8 @@ export default function VoidLocReplaceExistingButton() {
                         id: "void",
                         buttonText: "Void and replace by an EXISTING LOC",
                         buttonVariant: "danger",
-                        callback: checkAndVoid
+                        callback: () => submitCall(call),
+                        disabled: extrinsicSubmissionState.submitted
                     }
                 ]}
             >
@@ -120,12 +129,8 @@ export default function VoidLocReplaceExistingButton() {
                     feedback={ replacerLocIdError }
                 />
                 {
-                    call !== undefined &&
-                    <ClientExtrinsicSubmitter
-                        call={ call }
+                    <ExtrinsicSubmissionStateView
                         successMessage="LOC successfully voided"
-                        onSuccess={ () => setVisible(false) }
-                        onError={ () => {} }
                     />
                 }
             </DangerDialog>

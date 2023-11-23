@@ -76,14 +76,12 @@ describe("VoidLocReplaceExistingButton", () => {
         await waitFor(() => expect(dialog).not.toBeVisible());
     });
 
-    it("does not void LOC on cancel", async () => {
-        let called = false;
+    it("disappears on cancel", async () => {
         const dialog = await renderAndOpenDialog();
 
         await clickByName("Cancel");
 
         await waitFor(() => expect(dialog!).not.toBeVisible());
-        expect(called).toBe(false);
     });
 })
 

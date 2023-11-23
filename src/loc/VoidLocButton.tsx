@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { OpenLoc, ClosedLoc, ClosedCollectionLoc } from "@logion/client";
 
@@ -8,37 +8,42 @@ import DangerDialog from "../common/DangerDialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
 import { useLocContext } from "./LocContext";
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
-import { useLogionChain } from "src/logion-chain";
+import ExtrinsicSubmissionStateView from "../ExtrinsicSubmissionStateView";
+import { useLogionChain, CallCallback } from "src/logion-chain";
 
 export default function VoidLocButton() {
     const { colorTheme } = useCommonContext();
     const [ visible, setVisible ] = useState(false);
     const { mutateLocState, loc: locData } = useLocContext();
-    const [ call, setCall ] = useState<Call>();
-    const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
-    const { signer } = useLogionChain();
+    const { signer, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const [ reason, setReason ] = useState<string>("");
 
-    const voidLocCallback = useCallback((callback: CallCallback) => {
-        return mutateLocState(async current => {
-            if(signer && (current instanceof OpenLoc || current instanceof ClosedLoc || current instanceof ClosedCollectionLoc)) {
-                return current.legalOfficer.voidLoc({
-                    reason,
-                    signer,
-                    callback,
-                });
-            } else {
-                return current;
-            }
-        });
+    const call = useMemo(() => {
+        return async (callback: CallCallback) =>
+            mutateLocState(async current => {
+                if (signer && (current instanceof OpenLoc || current instanceof ClosedLoc || current instanceof ClosedCollectionLoc)) {
+                    return current.legalOfficer.voidLoc({
+                        reason,
+                        signer,
+                        callback,
+                    });
+                } else {
+                    return current;
+                }
+            });
     }, [ signer, mutateLocState, reason ]);
 
     const clearAndClose = useCallback(() => {
-        setCall(undefined);
-        setSubmissionFailed(false);
-        setVisible(false)
-    }, [  ]);
+        clearSubmissionState();
+        setReason("");
+        setVisible(false);
+    }, [ clearSubmissionState ]);
+
+    useEffect(() => {
+        if (extrinsicSubmissionState.isSuccessful()) {
+            clearAndClose();
+        }
+    }, [ extrinsicSubmissionState, clearAndClose]);
 
     return (
         <>
@@ -52,14 +57,14 @@ export default function VoidLocButton() {
                         buttonText: "Cancel",
                         buttonVariant: "danger-outline",
                         callback: clearAndClose,
-                        disabled: call !== undefined && !submissionFailed
+                        disabled: extrinsicSubmissionState.submitted && !extrinsicSubmissionState.callEnded
                     },
                     {
                         id: "void",
                         buttonText: "Void LOC",
                         buttonVariant: "danger",
-                        callback: () => { setSubmissionFailed(false); setCall(() => voidLocCallback); },
-                        disabled: call !== undefined
+                        callback: () => submitCall(call),
+                        disabled: extrinsicSubmissionState.submitted
                     }
                 ]}
             >
@@ -98,11 +103,8 @@ export default function VoidLocButton() {
                     /> }
                     colors={ colorTheme.dialog }
                 />
-                <ClientExtrinsicSubmitter
-                    call={ call }
+                <ExtrinsicSubmissionStateView
                     successMessage="LOC successfully voided"
-                    onSuccess={ clearAndClose }
-                    onError={ () => setSubmissionFailed(true) }
                 />
             </DangerDialog>
         </>

@@ -43,7 +43,7 @@ describe("VoidLocButton", () => {
         await waitFor(() => expectSubmitting());
     });
 
-    it("shows success LOC", async () => {
+    it("closes dialog on success", async () => {
         setExtrinsicSubmissionState(SUCCESSFUL_SUBMISSION);
         const dialog = await renderAndOpenDialog();
 
@@ -54,14 +54,12 @@ describe("VoidLocButton", () => {
         await waitFor(() => expect(dialog!).not.toBeVisible());
     });
 
-    it("does not void LOC on cancel", async () => {
-        let called = false;
+    it("disappears on cancel", async () => {
         const dialog = await renderAndOpenDialog();
 
         await clickByName("Cancel");
 
         await waitFor(() => expect(dialog!).not.toBeVisible());
-        expect(called).toBe(false);
     });
 })
 
