@@ -1,4 +1,4 @@
-import { HashOrContent, TokensRecord, ClosedCollectionLoc, ItemFileWithContent, MimeType } from "@logion/client";
+import { HashOrContent, TokensRecord, ClosedCollectionLoc } from "@logion/client";
 import { useCallback, useState } from "react";
 import { Form, Spinner } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
@@ -67,7 +67,7 @@ export default function AddTokensRecordDialog(props: Props) {
         if (file) {
             setStatus('Hashing')
             try {
-                const content = await HashOrContent.fromContentFinalized(new BrowserFile(file));
+                const content = await HashOrContent.fromContentFinalized(new BrowserFile(file, formValues.fileName));
                 setContent(content);
                 const hash = content.contentHash;
                 const existingRecord = props.records.find(record => record.id.toHex() === hash.toHex());
@@ -78,13 +78,7 @@ export default function AddTokensRecordDialog(props: Props) {
                     const fees = await collection.estimateFeesAddTokensRecord({
                         recordId: hash,
                         description: formValues.description,
-                        files: [
-                            new ItemFileWithContent({
-                                contentType: MimeType.from(formValues.contentType),
-                                hashOrContent: content,
-                                name: formValues.fileName,
-                            }),
-                        ],
+                        files: [ content ],
                     });
                     setFees(fees);
                     setStatus('Confirming');
@@ -108,13 +102,7 @@ export default function AddTokensRecordDialog(props: Props) {
                         await current.addTokensRecord({
                             recordId: hash,
                             description: formValues.description,
-                            files: [
-                                new ItemFileWithContent({
-                                    contentType: MimeType.from(formValues.contentType),
-                                    hashOrContent: content,
-                                    name: formValues.fileName,
-                                }),
-                            ],
+                            files: [ content ],
                             signer,
                             callback,
                         });

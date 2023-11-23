@@ -1,10 +1,10 @@
 import {
-    ItemFileWithContent,
     ItemTokenWithRestrictedType,
     SpecificLicense,
     LogionClassification,
     TermsAndConditionsElement,
     CreativeCommons,
+    HashOrContent,
 } from "@logion/client";
 import { Hash, UUID } from "@logion/node-api";
 import './ImportItemDetails.css';
@@ -19,7 +19,7 @@ export interface Item {
     id?: Hash;
     displayId: string;
     description: string;
-    files: ItemFileWithContent[];
+    files: HashOrContent[];
     restrictedDelivery: boolean;
     token?: ItemTokenWithRestrictedType;
     error?: string;
@@ -61,8 +61,8 @@ export default function ImportItemDetails(props: { locId: UUID, item: Item }) {
                                 <p>Attached file:</p>
                                 <ul>
                                     <li>Name: { props.item.files[0].name }</li>
-                                    <li>Content type: { props.item.files[0].contentType.mimeType }</li>
-                                    <li>Hash: { props.item.files[0].hashOrContent.contentHash.toHex() }</li>
+                                    <li>Content type: { props.item.files[0].mimeType.mimeType }</li>
+                                    <li>Hash: { props.item.files[0].contentHash.toHex() }</li>
                                     <li>Size: { props.item.files[0].size.toString() } bytes</li>
                                 </ul>
                             </div>

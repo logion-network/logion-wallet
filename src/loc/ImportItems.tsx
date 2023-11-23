@@ -1,7 +1,6 @@
 import {
     ClosedCollectionLoc,
     UploadableCollectionItem,
-    ItemFileWithContent,
     HashOrContent,
     MimeType,
     ItemTokenWithRestrictedType,
@@ -169,17 +168,13 @@ export default function ImportItems() {
         setUploading(true);
         const collection = locState as ClosedCollectionLoc;
         try {
+            const itemFile = await HashOrContent.fromContentFinalized(new BrowserFile(file, item.files[0].name));
+            if(itemFile.size !== item.files[0].size || !itemFile.contentHash.equalTo(item.files[0].contentHash)) {
+                throw new Error("File does not match size and/or hash in CSV file");
+            }
             await collection.uploadCollectionItemFile({
                 itemId: item.id!,
-                itemFile: new ItemFileWithContent({
-                    name: item.files[0].name,
-                    contentType: item.files[0].contentType,
-                    size: item.files[0].size,
-                    hashOrContent: new HashOrContent({
-                        hash: item.files[0].hashOrContent.contentHash,
-                        content: new BrowserFile(file),
-                    }),
-                }),
+                itemFile,
             });
             item.upload = false;
             item.error = undefined;
@@ -296,7 +291,7 @@ export default function ImportItems() {
                                                         buttonText="Upload file"
                                                         onFileSelected={ file => uploadItemFile(item, file) }
                                                         onlyButton={ true }
-                                                        accept={ item.files[0].contentType.mimeType }
+                                                        accept={ item.files[0].mimeType.mimeType }
                                                     />
                                                 }
                                                 {
@@ -446,15 +441,15 @@ function toItems(csvItems: CsvItem[], collectionAcceptsUpload: boolean): Item[] 
             let error: string | undefined = undefined;
             let errorType: ErrorType | undefined = undefined;
 
-            let files: ItemFileWithContent[] = [];
+            let files: HashOrContent[] = [];
             if("fileName" in csvItem) {
                 files = [
-                    new ItemFileWithContent({
+                    HashOrContent.fromDescription({
+                        hash: csvItem.fileHash,
+                        mimeType: MimeType.from(csvItem.fileContentType),
                         name: csvItem.fileName,
-                        contentType: MimeType.from(csvItem.fileContentType),
                         size: BigInt(csvItem.fileSize),
-                        hashOrContent: HashOrContent.fromHash(csvItem.fileHash),
-                    })
+                    }),
                 ];
             }
 

@@ -109,7 +109,7 @@ describe("FileModel", () => {
             axios,
             legalOfficer,
             fileId,
-            file: HashOrContent.fromContent(new BrowserFile(file)),
+            file: HashOrContent.fromContent(new BrowserFile(file, file.name)),
         });
 
         expect(axios.put).toBeCalledWith(

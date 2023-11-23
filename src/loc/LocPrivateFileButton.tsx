@@ -35,7 +35,7 @@ export function LocPrivateFileButton(props: Props) {
         setUploadError("")
         if (file) {
             setStatus('Hashing')
-            const content = await HashOrContent.fromContentFinalized(new BrowserFile(file));
+            const content = await HashOrContent.fromContentFinalized(new BrowserFile(file, formValues.fileName));
             const hash = content.contentHash;
             const existingItem = locItems.find(item => item.type === "Document" && item.as<FileData>().hash.equalTo(hash));
             if (existingItem !== undefined) {
@@ -49,7 +49,6 @@ export function LocPrivateFileButton(props: Props) {
                         if(current instanceof EditableRequest) {
                             return current.addFile({
                                 file: content,
-                                fileName: formValues.fileName,
                                 nature: props.nature ? props.nature : formValues.nature,
                             });
                         } else {

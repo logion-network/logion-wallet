@@ -31,7 +31,7 @@ export function ValuesFiles() {
             await addLoFile({
                 axios: axiosFactory!(legalOfficer),
                 legalOfficer: legalOfficer!,
-                file: HashOrContent.fromContent(new BrowserFile(file)),
+                file: HashOrContent.fromContent(new BrowserFile(file, file.name)),
                 fileId
             });
         } finally {
