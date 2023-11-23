@@ -425,7 +425,7 @@ export function useDeleteLinkCallback(mutateLocState: (mutator: (current: LocReq
 export function canDelete(account: ValidAccountId | undefined, item: LocItem, viewer: Viewer, loc: LocData): boolean {
     return item.submitter?.address === account?.address && item.submitter?.type === account?.type
             && (loc.status === "DRAFT" || loc.status === "OPEN")
-            && (item.status === "DRAFT" || (item.status === "REVIEW_ACCEPTED" && item.submitter?.type === "Polkadot") || item.status === "REVIEW_REJECTED");
+            && (item.status === "DRAFT" || item.status === "REVIEW_REJECTED");
 }
 
 export function canAdd(viewer: Viewer, loc: LocData) {

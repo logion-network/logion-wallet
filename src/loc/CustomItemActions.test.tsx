@@ -36,7 +36,7 @@ function tests(itemFactory: (status: ItemStatus, submitter: ValidAccountId) => I
         renderAndExpectMatchWith(itemFactory("REVIEW_PENDING", REQUESTER), undefined);
     });
 
-    it("can be published or deleted by requester when approved", () => {
+    it("can be published by requester when approved", () => {
         asRequester();
         givenOpenLoc();
         renderAndExpectMatchWith(itemFactory("REVIEW_ACCEPTED", REQUESTER), "Requester");
@@ -72,7 +72,7 @@ function tests(itemFactory: (status: ItemStatus, submitter: ValidAccountId) => I
         renderAndExpectMatchWith(itemFactory("DRAFT", ISSUER), "VerifiedIssuer");
     });
 
-    it("can be published or deleted by requester when approved and submitted by issuer", () => {
+    it("can be published by requester when approved and submitted by issuer", () => {
         asIssuer();
         givenOpenLoc();
         renderAndExpectMatchWith(itemFactory("REVIEW_ACCEPTED", ISSUER), "Requester");

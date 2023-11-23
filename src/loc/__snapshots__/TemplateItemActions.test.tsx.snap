@@ -794,7 +794,7 @@ exports[`TemplateItemActions Links can be acknowledged by owner when published 1
 </ButtonGroup>
 `;
 
-exports[`TemplateItemActions Links can be published or cleared by requester when approved 1`] = `
+exports[`TemplateItemActions Links can be published by requester when approved 1`] = `
 <ButtonGroup
   className="actions"
 >
@@ -871,75 +871,6 @@ exports[`TemplateItemActions Links can be published or cleared by requester when
       }
     />
   </BlockNone>
-  <ClearItemButton
-    item={
-      LinkItem {
-        "_data": Object {
-          "linkDetailsPath": "",
-          "linkedLoc": Object {},
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
-                136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
-                160,
-                239,
-                240,
-                42,
-                115,
-                198,
-                222,
-                37,
-              ],
-            },
-            "value": "Some public description",
-          },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": true,
-          "timestamp": null,
-          "type": "Linked LOC",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
@@ -1016,7 +947,7 @@ exports[`TemplateItemActions Links can be published or cleared by requester when
 </ButtonGroup>
 `;
 
-exports[`TemplateItemActions Links can be published or cleared by requester when approved and submitted by issuer 1`] = `
+exports[`TemplateItemActions Links can be published by requester when approved and submitted by issuer 1`] = `
 <ButtonGroup
   className="actions"
 >
@@ -1093,75 +1024,6 @@ exports[`TemplateItemActions Links can be published or cleared by requester when
       }
     />
   </BlockNone>
-  <ClearItemButton
-    item={
-      LinkItem {
-        "_data": Object {
-          "linkDetailsPath": "",
-          "linkedLoc": Object {},
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
-                136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
-                160,
-                239,
-                240,
-                42,
-                115,
-                198,
-                222,
-                37,
-              ],
-            },
-            "value": "Some public description",
-          },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": true,
-          "timestamp": null,
-          "type": "Linked LOC",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
@@ -3159,7 +3021,7 @@ exports[`TemplateItemActions Private files can be acknowledged by owner when pub
 </ButtonGroup>
 `;
 
-exports[`TemplateItemActions Private files can be published or cleared by requester when approved 1`] = `
+exports[`TemplateItemActions Private files can be published by requester when approved 1`] = `
 <ButtonGroup
   className="actions"
 >
@@ -3273,112 +3135,6 @@ exports[`TemplateItemActions Private files can be published or cleared by reques
       }
     />
   </BlockNone>
-  <ClearItemButton
-    item={
-      FileItem {
-        "_data": Object {
-          "fileName": "test.txt",
-          "hash": Hash {
-            "_bytes": Uint8Array [
-              159,
-              134,
-              208,
-              129,
-              136,
-              76,
-              125,
-              101,
-              154,
-              47,
-              234,
-              160,
-              197,
-              90,
-              208,
-              21,
-              163,
-              191,
-              79,
-              27,
-              43,
-              11,
-              130,
-              44,
-              209,
-              93,
-              108,
-              21,
-              176,
-              240,
-              10,
-              8,
-            ],
-          },
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
-                136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
-                160,
-                239,
-                240,
-                42,
-                115,
-                198,
-                222,
-                37,
-              ],
-            },
-            "value": "Some public description",
-          },
-          "size": 4n,
-          "storageFeePaidBy": "",
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": true,
-          "timestamp": null,
-          "type": "Document",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
@@ -3492,7 +3248,7 @@ exports[`TemplateItemActions Private files can be published or cleared by reques
 </ButtonGroup>
 `;
 
-exports[`TemplateItemActions Private files can be published or cleared by requester when approved and submitted by issuer 1`] = `
+exports[`TemplateItemActions Private files can be published by requester when approved and submitted by issuer 1`] = `
 <ButtonGroup
   className="actions"
 >
@@ -3606,112 +3362,6 @@ exports[`TemplateItemActions Private files can be published or cleared by reques
       }
     />
   </BlockNone>
-  <ClearItemButton
-    item={
-      FileItem {
-        "_data": Object {
-          "fileName": "test.txt",
-          "hash": Hash {
-            "_bytes": Uint8Array [
-              159,
-              134,
-              208,
-              129,
-              136,
-              76,
-              125,
-              101,
-              154,
-              47,
-              234,
-              160,
-              197,
-              90,
-              208,
-              21,
-              163,
-              191,
-              79,
-              27,
-              43,
-              11,
-              130,
-              44,
-              209,
-              93,
-              108,
-              21,
-              176,
-              240,
-              10,
-              8,
-            ],
-          },
-          "nature": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                217,
-                232,
-                225,
-                74,
-                175,
-                17,
-                182,
-                147,
-                168,
-                136,
-                141,
-                117,
-                173,
-                107,
-                215,
-                75,
-                169,
-                221,
-                71,
-                112,
-                94,
-                212,
-                243,
-                176,
-                160,
-                239,
-                240,
-                42,
-                115,
-                198,
-                222,
-                37,
-              ],
-            },
-            "value": "Some public description",
-          },
-          "size": 4n,
-          "storageFeePaidBy": "",
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some public description",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": true,
-          "timestamp": null,
-          "type": "Document",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
@@ -6079,7 +5729,7 @@ exports[`TemplateItemActions Public data can be acknowledged by owner when publi
 </ButtonGroup>
 `;
 
-exports[`TemplateItemActions Public data can be published or cleared by requester when approved 1`] = `
+exports[`TemplateItemActions Public data can be published by requester when approved 1`] = `
 <ButtonGroup
   className="actions"
 >
@@ -6193,112 +5843,6 @@ exports[`TemplateItemActions Public data can be published or cleared by requeste
       }
     />
   </BlockNone>
-  <ClearItemButton
-    item={
-      MetadataItem {
-        "_data": Object {
-          "name": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                216,
-                46,
-                177,
-                84,
-                242,
-                129,
-                39,
-                141,
-                139,
-                196,
-                158,
-                76,
-                23,
-                122,
-                109,
-                116,
-                22,
-                72,
-                181,
-                40,
-                63,
-                148,
-                119,
-                83,
-                214,
-                201,
-                125,
-                45,
-                97,
-                86,
-                192,
-                100,
-              ],
-            },
-            "value": "Some template data",
-          },
-          "value": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                142,
-                55,
-                149,
-                61,
-                35,
-                218,
-                202,
-                95,
-                240,
-                27,
-                130,
-                130,
-                195,
-                63,
-                78,
-                10,
-                33,
-                82,
-                241,
-                209,
-                136,
-                95,
-                148,
-                192,
-                100,
-                24,
-                97,
-                126,
-                62,
-                225,
-                210,
-                78,
-              ],
-            },
-            "value": "Value",
-          },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some template data",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": true,
-          "timestamp": null,
-          "type": "Data",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
@@ -6412,7 +5956,7 @@ exports[`TemplateItemActions Public data can be published or cleared by requeste
 </ButtonGroup>
 `;
 
-exports[`TemplateItemActions Public data can be published or cleared by requester when approved and submitted by issuer 1`] = `
+exports[`TemplateItemActions Public data can be published by requester when approved and submitted by issuer 1`] = `
 <ButtonGroup
   className="actions"
 >
@@ -6526,112 +6070,6 @@ exports[`TemplateItemActions Public data can be published or cleared by requeste
       }
     />
   </BlockNone>
-  <ClearItemButton
-    item={
-      MetadataItem {
-        "_data": Object {
-          "name": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                216,
-                46,
-                177,
-                84,
-                242,
-                129,
-                39,
-                141,
-                139,
-                196,
-                158,
-                76,
-                23,
-                122,
-                109,
-                116,
-                22,
-                72,
-                181,
-                40,
-                63,
-                148,
-                119,
-                83,
-                214,
-                201,
-                125,
-                45,
-                97,
-                86,
-                192,
-                100,
-              ],
-            },
-            "value": "Some template data",
-          },
-          "value": HashString {
-            "hash": Hash {
-              "_bytes": Uint8Array [
-                142,
-                55,
-                149,
-                61,
-                35,
-                218,
-                202,
-                95,
-                240,
-                27,
-                130,
-                130,
-                195,
-                63,
-                78,
-                10,
-                33,
-                82,
-                241,
-                209,
-                136,
-                95,
-                148,
-                192,
-                100,
-                24,
-                97,
-                126,
-                62,
-                225,
-                210,
-                78,
-              ],
-            },
-            "value": "Value",
-          },
-        },
-        "commonData": Object {
-          "acknowledgedByOwner": false,
-          "acknowledgedByVerifiedIssuer": false,
-          "defaultTitle": "Some template data",
-          "fees": undefined,
-          "isSet": true,
-          "newItem": false,
-          "rejectReason": undefined,
-          "reviewedOn": undefined,
-          "status": "REVIEW_ACCEPTED",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "template": true,
-          "timestamp": null,
-          "type": "Data",
-        },
-      }
-    }
-  />
   <BlockNone
     show={false}
   >
