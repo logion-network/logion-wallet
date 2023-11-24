@@ -51,93 +51,183 @@ export type Call = (callback: CallCallback) => Promise<void>;
 
 export type SignAndSubmit = ((setResult: (result: ISubmittableResult | null) => void, setError: (error: unknown) => void) => void) | null;
 
+export type CallBatchJobs = { submissionId: string, call: Call }[];
+
+export class CallBatch {
+
+    static readonly DEFAULT_SUBMISSION_ID = "__DEFAULT__";
+
+    static fromSingle(call: Call) {
+        return CallBatch.fromSingleWithId(CallBatch.DEFAULT_SUBMISSION_ID, call);
+    }
+
+    static fromSingleWithId(submissionId: string, call: Call) {
+        return new CallBatch([ { submissionId, call } ]);
+    }
+
+    constructor(jobs: CallBatchJobs) {
+        this.ensureIdUnicity(jobs);
+        this.jobs = jobs;
+    }
+
+    private ensureIdUnicity(jobs: CallBatchJobs) {
+        const set = new Set();
+        jobs.forEach(job => set.add(job.submissionId));
+        if(set.size !== jobs.length) {
+            throw new Error("Unicity constraint on submission IDs is not met");
+        }
+    }
+
+    readonly jobs: CallBatchJobs;
+};
+
 export class ExtrinsicSubmissionState {
 
     constructor() {
-        this._result = null;
-        this._error = null;
-        this._submitted = false;
-        this._callEnded = false;
+        this._result = {};
+        this._error = {};
+        this._submitted = {};
+        this._callEnded = {};
+        this._submissions = 0;
     }
 
-    private _result: ISubmittableResult | null;
-    private _error: any;
-    private _submitted: boolean;
-    private _callEnded: boolean;
+    private _result: Record<string, ISubmittableResult | null>;
+    private _error: Record<string, any>;
+    private _submitted: Record<string, boolean>;
+    private _callEnded: Record<string, boolean>;
+    private _submissions: number;
 
     canSubmit() {
         return !this.submitted || this.callEnded;
     }
 
     get submitted() {
-        return this._submitted;
+        return Object.keys(this._submitted).length > 0;
     }
 
-    get callEnded() {
-        return this._callEnded;
+    get callEnded() { // All submissions completed
+        return Object.keys(this._callEnded).length === this._submissions;
     }
 
-    get result() {
-        return this._result;
+    get inProgress() {
+        return this.submitted && !this.callEnded;
     }
 
-    get error() {
-        return this._error;
+    get result() { // Convenience property for single job submissions
+        return this.getResult();
     }
 
-    submit() {
+    getResult(submissionId?: string) {
+        return this._result[submissionId || CallBatch.DEFAULT_SUBMISSION_ID] || null;
+    }
+
+    get error() { // Convenience property for single job submissions
+        return this.getError();
+    }
+
+    getError(submissionId?: string) {
+        return this._error[submissionId || CallBatch.DEFAULT_SUBMISSION_ID] || null;
+    }
+
+    isInProgress(submissionId?: string) {
+        return this.isSubmitted(submissionId) && !this.hasEnded(submissionId);
+    }
+
+    isSubmitted(submissionId?: string) {
+        return this._submitted[submissionId || CallBatch.DEFAULT_SUBMISSION_ID] || false;
+    }
+
+    hasEnded(submissionId?: string) {
+        return this._callEnded[submissionId || CallBatch.DEFAULT_SUBMISSION_ID] || false;
+    }
+
+    submit(submissions: number) {
+        if(!submissions) {
+            throw new Error("Cannot submit nothing");
+        }
         if(!this.canSubmit()) {
             throw new Error("Cannot submit new call");
         }
         const state = new ExtrinsicSubmissionState();
-        state._result = null;
-        state._error = null;
-        state._submitted = true;
-        state._callEnded = false;
+        state._result = {};
+        state._error = {};
+        state._submitted = {};
+        state._callEnded = {};
+        state._submissions = submissions;
         return state;
     }
 
-    withResult(result: ISubmittableResult) {
-        if(this._callEnded) {
+    start(submissionId: string) {
+        if(this._submitted[submissionId]) {
+            throw new Error("Call already started");
+        }
+        const state = new ExtrinsicSubmissionState();
+        state._submitted = {
+            ...this._submitted,
+            [ submissionId ]: true,
+        };
+        state._result = this._result;
+        state._error = this._error;
+        state._callEnded = this._callEnded;
+        state._submissions = this._submissions;
+        return state;
+    }
+
+    withResult(callId: string, result: ISubmittableResult) {
+        if(this._callEnded[callId]) {
             throw new Error("Call already ended");
         }
         const state = new ExtrinsicSubmissionState();
-        state._result = result;
+        state._result = {
+            ...this._result,
+            [ callId ]: result,
+        };
         state._error = this._error;
         state._submitted = this._submitted;
         state._callEnded = this._callEnded;
+        state._submissions = this._submissions;
         return state;
     }
 
-    end(error: unknown) {
-        if(this._callEnded) {
+    end(submissionId: string, error: unknown) {
+        if(this._callEnded[submissionId]) {
             throw new Error("Call already ended");
         }
         const state = new ExtrinsicSubmissionState();
         state._result = this._result;
-        state._error = error;
+        state._error = {
+            ...this._error,
+            [ submissionId ]: error,
+        }
         state._submitted = this._submitted;
-        state._callEnded = true;
+        state._callEnded = {
+            ...this._callEnded,
+            [ submissionId ]: true,
+        };
+        state._submissions = this._submissions;
         return state;
     }
 
-    isSuccessful(): boolean {
-        return this.callEnded && this.error === null;
+    isSuccessful(submissionId?: string): boolean {
+        const error = this.error[submissionId || CallBatch.DEFAULT_SUBMISSION_ID];
+        return this._callEnded[submissionId || CallBatch.DEFAULT_SUBMISSION_ID] && error === undefined;
     }
 
-    isError(): boolean {
-        return this.callEnded && this.error !== null;
+    isError(submissionId?: string): boolean {
+        const error = this.error[submissionId || CallBatch.DEFAULT_SUBMISSION_ID];
+        return this._callEnded[submissionId || CallBatch.DEFAULT_SUBMISSION_ID] && error !== undefined;
     }
 
     resetAndKeepResult() {
-        if(!this._callEnded) {
+        if(!this.callEnded) {
             throw new Error("Call not yet ended");
         }
         const state = new ExtrinsicSubmissionState();
         state._result = this._result;
         state._error = this._error;
-        state._submitted = false;
-        state._callEnded = false;
+        state._submitted = {};
+        state._callEnded = {};
+        state._submissions = 0;
         return state;
     }
 }
@@ -166,6 +256,7 @@ export interface LogionChainContextType {
     tryEnableMetaMask: () => Promise<void>,
     extrinsicSubmissionState: ExtrinsicSubmissionState;
     submitCall: (call: Call) => Promise<void>;
+    submitCallBatch: (batch: CallBatch) => Promise<Record<string, unknown>>;
     submitSignAndSubmit: (signAndSubmit: SignAndSubmit) => void;
     resetSubmissionState: () => void;
     clearSubmissionState: () => void;
@@ -200,6 +291,7 @@ const initState = (): FullLogionChainContextType => ({
     tryEnableMetaMask: async () => {},
     extrinsicSubmissionState: new ExtrinsicSubmissionState(),
     submitCall: () => Promise.reject(),
+    submitCallBatch: () => Promise.reject(),
     submitSignAndSubmit: () => {},
     resetSubmissionState: () => {},
     clearSubmissionState: () => {},
@@ -234,6 +326,8 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'RESET_SUBMISSION_STATE'
     | 'SET_CLEAR_SUBMISSION_STATE'
     | 'CLEAR_SUBMISSION_STATE'
+    | 'SET_SUBMIT_CALL_BATCH'
+    | 'SET_SUBMISSION_STARTED'
 ;
 
 interface Action {
@@ -263,6 +357,9 @@ interface Action {
     submitSignAndSubmit?: (signAndSubmit: SignAndSubmit) => void;
     resetSubmissionState?: () => void;
     clearSubmissionState?: () => void;
+    submissions?: number;
+    submissionId?: string;
+    submitCallBatch?: (batch: CallBatch) => Promise<Record<string, unknown>>;
 }
 
 function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
@@ -447,20 +544,25 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             if(state.extrinsicSubmissionState.canSubmit()) {
                 return {
                     ...state,
-                    extrinsicSubmissionState: state.extrinsicSubmissionState.submit(),
+                    extrinsicSubmissionState: state.extrinsicSubmissionState.submit(action.submissions!),
                 };
             } else {
                 return state;
             }
+        case 'SET_SUBMISSION_STARTED':
+            return {
+                ...state,
+                extrinsicSubmissionState: state.extrinsicSubmissionState.start(action.submissionId!),
+            };
         case 'SET_SUBMITTABLE_RESULT':
             return {
                 ...state,
-                extrinsicSubmissionState: state.extrinsicSubmissionState.withResult(action.result!),
+                extrinsicSubmissionState: state.extrinsicSubmissionState.withResult(action.submissionId!, action.result!),
             };
         case 'SET_SUBMISSION_ENDED':
             return {
                 ...state,
-                extrinsicSubmissionState: state.extrinsicSubmissionState.end(action.extrinsicSubmissionError || null),
+                extrinsicSubmissionState: state.extrinsicSubmissionState.end(action.submissionId!, action.extrinsicSubmissionError || null),
             };
         case 'SET_SUBMIT_SIGN_AND_SUBMIT':
             return {
@@ -486,6 +588,11 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             return {
                 ...state,
                 extrinsicSubmissionState: new ExtrinsicSubmissionState(),
+            };
+        case 'SET_SUBMIT_CALL_BATCH':
+            return {
+                ...state,
+                submitCallBatch: action.submitCallBatch!,
             };
         default:
             /* istanbul ignore next */
@@ -778,28 +885,63 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
         }
     }, [ state.tryEnableMetaMask, tryEnableMetaMask ]);
 
-    const submitCall = useCallback(async (call: Call) => {
+    const submitCallBatch = useCallback(async (batch: CallBatch) => {
         if(state.extrinsicSubmissionState.canSubmit()) {
             dispatch({
                 type: 'SUBMIT_EXTRINSIC',
+                submissions: batch.jobs.length,
             });
-            (async function() {
+            let errorMap: Record<string, unknown> = {};
+            for(const job of batch.jobs) {
                 try {
-                    await call((callbackResult: ISubmittableResult) => dispatch({
+                    dispatch({
+                        type: 'SET_SUBMISSION_STARTED',
+                        submissionId: job.submissionId,
+                    });
+                    await job.call((callbackResult: ISubmittableResult) => dispatch({
                         type: 'SET_SUBMITTABLE_RESULT',
                         result: callbackResult,
+                        submissionId: job.submissionId,
                     }));
-                    dispatch({ type: 'SET_SUBMISSION_ENDED' });
+                    dispatch({
+                        type: 'SET_SUBMISSION_ENDED',
+                        submissionId: job.submissionId,
+                    });
                 } catch(e) {
                     console.log(e);
                     dispatch({
                         type: 'SET_SUBMISSION_ENDED',
                         extrinsicSubmissionError: e,
+                        submissionId: job.submissionId,
                     });
+                    errorMap[job.submissionId] = e;
                 }
-            })();
+            }
+            return errorMap;
+        } else {
+            let errorMap: Record<string, unknown> = {};
+            for(const job of batch.jobs) {
+                errorMap[job.submissionId] = "Could not submit";
+            }
+            return errorMap;
         }
     }, [ state.extrinsicSubmissionState ]);
+
+    useEffect(() => {
+        if(state.submitCallBatch !== submitCallBatch) {
+            dispatch({
+                type: 'SET_SUBMIT_CALL_BATCH',
+                submitCallBatch,
+            });
+        }
+    }, [ state.submitCallBatch, submitCallBatch ]);
+
+    const submitCall = useCallback(async (call: Call) => {
+        const errors = await submitCallBatch(CallBatch.fromSingle(call));
+        if(errors[CallBatch.DEFAULT_SUBMISSION_ID]) {
+            throw errors[CallBatch.DEFAULT_SUBMISSION_ID];
+        }
+    }, [ submitCallBatch ]);
 
     useEffect(() => {
         if(state.submitCall !== submitCall) {

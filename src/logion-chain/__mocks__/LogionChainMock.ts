@@ -8,7 +8,7 @@ import Accounts, { Account } from 'src/common/types/Accounts';
 import { LogionClient } from '@logion/client/dist/LogionClient.js';
 import { LogionClient as LogionClientMock } from '../../__mocks__/LogionClientMock';
 import { api } from "src/__mocks__/LogionMock";
-import { Call } from "../LogionChainContext";
+import { Call, CallBatch } from "../LogionChainContext";
 
 export const LogionChainContextProvider = (props: any) => null;
 
@@ -104,7 +104,14 @@ export const SUCCESSFUL_SUBMISSION: unknown = {
     canSubmit: () => true,
     isSuccessful: () => true,
     isError: () => false,
+    isInProgress: () => false,
     error: null,
+    getError: () => null,
+    getResult: () => ({
+        status: {
+            isFinalized: true,
+        }
+    }),
     result: {
         status: {
             isFinalized: true,
@@ -115,10 +122,17 @@ export const SUCCESSFUL_SUBMISSION: unknown = {
 };
 
 export const FAILED_SUBMISSION: unknown = {
-    canSubmit: () => false,
+    canSubmit: () => true,
     isSuccessful: () => false,
     isError: () => true,
+    isInProgress: () => false,
     error: "error",
+    getError: () => "error",
+    getResult: () => ({
+        status: {
+            isFinalized: false,
+        }
+    }),
     result: {
         status: {
             isFinalized: false,
@@ -132,7 +146,14 @@ export const PENDING_SUBMISSION: unknown = {
     canSubmit: () => false,
     isSuccessful: () => false,
     isError: () => false,
+    isInProgress: () => true,
     error: null,
+    getError: () => null,
+    getResult: () => ({
+        status: {
+            isFinalized: false,
+        }
+    }),
     result: {
         status: {
             isFinalized: false,
@@ -173,6 +194,7 @@ export function useLogionChain() {
             resetSubmissionState: () => {},
             submitSignAndSubmit: () => {},
             submitCall: (call: Call) => call(() => {}),
+            submitCallBatch: (batch: CallBatch) => { batch.jobs.forEach(job => job.call(() => {})); return {}; },
             clearSubmissionState: () => {},
         };
     }

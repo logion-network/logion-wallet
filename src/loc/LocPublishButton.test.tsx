@@ -33,7 +33,7 @@ describe("LocPublishButton", () => {
             }
         );
         const confirm = jest.fn();
-        setExtrinsicSubmissionState(NO_SUBMISSION);
+        setExtrinsicSubmissionState(SUCCESSFUL_SUBMISSION);
         render(<LocPublishButton
             itemType="Public Data"
             locItem={ locItem }
@@ -52,7 +52,7 @@ describe("LocPublishButton", () => {
         await clickByName("Publish");
 
         // Then item published
-        await waitFor(() => expectSubmitting());
+        await waitFor(() => screen.getByText("LOC item successfully published"));
         expect(confirm).toBeCalled();
     });
 

@@ -243,10 +243,8 @@ export type LocItem = LinkItem | MetadataItem | FileItem;
 export enum PublishStatus {
     NONE,
     START,
-    PUBLISH_PENDING,
     PUBLISHING,
-    PUBLISHED,
-    ERROR
+    DONE
 }
 
 export interface PublishState {

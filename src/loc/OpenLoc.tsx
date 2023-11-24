@@ -1,13 +1,12 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Fees } from '@logion/node-api';
 import { LocData } from '@logion/client';
-import { useLogionChain } from '../logion-chain';
+import { CallCallback, useLogionChain } from '../logion-chain';
 import { useCommonContext } from '../common/CommonContext';
 import ProcessStep from '../common/ProcessStep';
 import CollectionLocMessage from '../loc/CollectionLocMessage';
 import CollectionLimitsForm, { CollectionLimits, DEFAULT_LIMITS } from '../loc/CollectionLimitsForm';
 import { useLocContext } from 'src/loc/LocContext';
-import { CallCallback } from '../ClientExtrinsicSubmitter';
 import EstimatedFees, { getOtherFeesPaidBy, PAID_BY_REQUESTER } from './fees/EstimatedFees';
 import { AcceptedRequest } from "@logion/client/dist/Loc";
 import Button from 'src/common/Button';

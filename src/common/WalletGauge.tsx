@@ -59,8 +59,10 @@ export default function WalletGauge(props: Props) {
         };
     }, [ amount, destination, unit, mutateBalanceState, signer, expectNewTransaction ]);
 
-    const transferCallback = useCallback(() => {
-        submitCall(transfer);
+    const transferCallback = useCallback(async () => {
+        try {
+            await submitCall(transfer);
+        } catch(e) {}
     }, [ transfer, submitCall ]);
 
     const clearFormCallback = useCallback(() => {
@@ -131,7 +133,7 @@ export default function WalletGauge(props: Props) {
                         buttonText: "Cancel",
                         buttonVariant: 'secondary-polkadot',
                         callback: cancelCallback,
-                        disabled: extrinsicSubmissionState.submitted && !extrinsicSubmissionState.callEnded,
+                        disabled: extrinsicSubmissionState.inProgress,
                     },
                     {
                         id: 'transfer',
