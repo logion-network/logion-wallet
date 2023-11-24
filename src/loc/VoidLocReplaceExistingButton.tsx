@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, useEffect } from "react";
+import { useCallback, useState, useMemo } from "react";
 import { Form } from "react-bootstrap";
 import { OpenLoc, ClosedLoc, ClosedCollectionLoc } from "@logion/client";
 import { UUID } from "@logion/node-api";
@@ -65,11 +65,16 @@ export default function VoidLocReplaceExistingButton() {
         setVisible(false);
     }, [ clearSubmissionState, setReason, setReplacerLocId, setReplacerLocIdError, setVisible ]);
 
-    useEffect(() => {
-        if (extrinsicSubmissionState.isSuccessful()) {
-            clearAndClose();
+    const submit = useCallback(async () => {
+        try {
+            await submitCall(call);
+            if (extrinsicSubmissionState.isSuccessful()) {
+                clearAndClose();
+            }
+        } catch (e) {
+            console.error(e);
         }
-    }, [ extrinsicSubmissionState, clearAndClose]);
+    }, [ submitCall, call, extrinsicSubmissionState, clearAndClose ]);
 
     if(locData === null) {
         return null;
@@ -92,7 +97,7 @@ export default function VoidLocReplaceExistingButton() {
                         id: "void",
                         buttonText: "Void and replace by an EXISTING LOC",
                         buttonVariant: "danger",
-                        callback: () => submitCall(call),
+                        callback: submit,
                         disabled: extrinsicSubmissionState.submitted
                     }
                 ]}

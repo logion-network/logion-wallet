@@ -1,4 +1,4 @@
-import { useCallback, useState, useMemo, useEffect } from "react";
+import { useCallback, useState, useMemo } from "react";
 import { Form } from "react-bootstrap";
 import { OpenLoc, ClosedLoc, ClosedCollectionLoc } from "@logion/client";
 
@@ -39,11 +39,16 @@ export default function VoidLocButton() {
         setVisible(false);
     }, [ clearSubmissionState ]);
 
-    useEffect(() => {
-        if (extrinsicSubmissionState.isSuccessful()) {
-            clearAndClose();
+    const submit = useCallback(async () => {
+        try {
+            await submitCall(call);
+            if (extrinsicSubmissionState.isSuccessful()) {
+                clearAndClose();
+            }
+        } catch (e) {
+            console.error(e);
         }
-    }, [ extrinsicSubmissionState, clearAndClose]);
+    }, [ submitCall, call, extrinsicSubmissionState, clearAndClose ]);
 
     return (
         <>
@@ -63,7 +68,7 @@ export default function VoidLocButton() {
                         id: "void",
                         buttonText: "Void LOC",
                         buttonVariant: "danger",
-                        callback: () => submitCall(call),
+                        callback: submit,
                         disabled: extrinsicSubmissionState.submitted
                     }
                 ]}
