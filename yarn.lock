@@ -2976,89 +2976,68 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/client-browser@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@logion/client-browser@npm:0.1.0"
+"@logion/client-browser@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@logion/client-browser@npm:0.2.0"
   dependencies:
-    "@logion/client": ^0.34.0
-  checksum: 1ba052b7b468e5db858980b82cb7a3e1d17bdfe3254b0243e7c7ee400e99e396ca96256c3bd00248f908fc87f1642bdff93eeaf6b28a1ea55a14c9fe098ebc6d
+    "@logion/client": ^0.35.0
+  checksum: 10a626516914db26a7a8c778dbcd9e9b947ec3feac1048b201082b56a9cc8daea0ab406ee30a5d05757d277ac8b20406b8db0d0d6e18da32f3f6e06cb043bc63
   languageName: node
   linkType: hard
 
-"@logion/client-browser@npm:^0.2.0-1":
-  version: 0.2.0-1
-  resolution: "@logion/client-browser@npm:0.2.0-1"
+"@logion/client@npm:^0.35.0":
+  version: 0.35.0
+  resolution: "@logion/client@npm:0.35.0"
   dependencies:
-    "@logion/client": ^0.35.0-1
-  checksum: b5f62bf03776ae570c99d41eb35671af874f7cadb933363b4588f4312d138638d4d7affe6f1e985a8e821ca3d73d0abeb41c798bc8965bfb8decae59d1c4f069
-  languageName: node
-  linkType: hard
-
-"@logion/client@npm:^0.34.0":
-  version: 0.34.0
-  resolution: "@logion/client@npm:0.34.0"
-  dependencies:
-    "@logion/node-api": ^0.25.0
+    "@logion/node-api": ^0.26.0
     axios: ^0.27.2
     luxon: ^3.0.1
     mime-db: ^1.52.0
-  checksum: d8633f42f179d200ea0fb368a44dd37ee6601062a84c46929cf156133e9f4358b49b0dbd1a232e7fbddd270df6e8fcfb1343e828b27aae37e77d931df8f4dc1f
+  checksum: 01eae1e2370c9d5cae2bf3fb2e4875cd26404adbdd46510eb65287914db76ed64091fa99e6618601645c06b206603b639edac02ae8b5b62d193e60deda837899
   languageName: node
   linkType: hard
 
-"@logion/client@npm:^0.35.0-1":
-  version: 0.35.0-4
-  resolution: "@logion/client@npm:0.35.0-4"
-  dependencies:
-    "@logion/node-api": ^0.26.0-1
-    axios: ^0.27.2
-    luxon: ^3.0.1
-    mime-db: ^1.52.0
-  checksum: 534f4aa8916170e084216c96f5cb2553153d10f0b7f255df8f6b80d6b3c95c3ee3ffa0432f5889db03417687355c8111765f7b99126c99abb6197933267a867c
-  languageName: node
-  linkType: hard
-
-"@logion/crossmint@npm:^0.1.29-1":
-  version: 0.1.29-1
-  resolution: "@logion/crossmint@npm:0.1.29-1"
+"@logion/crossmint@npm:^0.1.29":
+  version: 0.1.29
+  resolution: "@logion/crossmint@npm:0.1.29"
   dependencies:
     "@crossmint/connect": ^0.0.8
-    "@logion/client-browser": ^0.2.0-1
+    "@logion/client-browser": ^0.2.0
   peerDependencies:
-    "@logion/client-browser": ^0.2.0-1
-  checksum: 9895949d484ae93e8b3557b89357e5d78ff3eb57c0cfbf2544e2936cd4279da4e010c33764d9d224367d3b769af8414dafb99815448bec53e1769ec2f1a10426
+    "@logion/client-browser": ^0.2.0
+  checksum: 0ae83f7c529f9862304a4e1e5b98339c561def66575325cad89f10bdea623900bb77c27287d77355e28f9e8246a0925e035cdc6975e88946ebe8129dcd1ed061
   languageName: node
   linkType: hard
 
-"@logion/extension@npm:^0.7.2":
-  version: 0.7.2
-  resolution: "@logion/extension@npm:0.7.2"
+"@logion/extension@npm:^0.7.3":
+  version: 0.7.3
+  resolution: "@logion/extension@npm:0.7.3"
   dependencies:
-    "@logion/client-browser": ^0.1.0
+    "@logion/client-browser": ^0.2.0
     "@polkadot/extension-compat-metamask": ^0.46.5
     "@polkadot/extension-dapp": ^0.46.5
   peerDependencies:
-    "@logion/client-browser": ^0.1.0
-  checksum: 5a2a6008f374905b5c6a81ab4f818a57044351acf1dc64d6cbde7a6de4cdc5fb464325045d42c68d3a7fd3251526ea347db616f9ee8d308d45e460ffbaad7522
+    "@logion/client-browser": ^0.2.0
+  checksum: ad5b6f14330bc06ec722bc54a77d1cbc7cd69781549802ec0d2a70bbb685f435f152e941a046383e26b6be482b18027509a4d84088a6e8fe26dc1032e5c3584c
   languageName: node
   linkType: hard
 
-"@logion/multiversx@npm:^0.1.9":
-  version: 0.1.9
-  resolution: "@logion/multiversx@npm:0.1.9"
+"@logion/multiversx@npm:^0.1.10":
+  version: 0.1.10
+  resolution: "@logion/multiversx@npm:0.1.10"
   dependencies:
-    "@logion/client-browser": ^0.1.0
+    "@logion/client-browser": ^0.2.0
     "@multiversx/sdk-core": ^12.4.3
     "@multiversx/sdk-extension-provider": ^2.0.7
   peerDependencies:
-    "@logion/client-browser": ^0.1.0
-  checksum: 64032e1fadf1aa259990905a4949e4691a655a9e62e0b59055a7d33a86c8e9cf3a5cebd98f857a6086c37985141459b9e1d65b31aeff0e7d0f5e033c5874bea4
+    "@logion/client-browser": ^0.2.0
+  checksum: c97de7688a995f6dbeb662f42e200ad0d450c0fb9df70cad427aab9ad48bcfb28b3f07f6781a67646272217e298dc79440e8e699fd1357f8245133c7bf6ee9d5
   languageName: node
   linkType: hard
 
-"@logion/node-api@npm:^0.25.0":
-  version: 0.25.0
-  resolution: "@logion/node-api@npm:0.25.0"
+"@logion/node-api@npm:^0.26.0":
+  version: 0.26.0
+  resolution: "@logion/node-api@npm:0.26.0"
   dependencies:
     "@polkadot/api": ^10.10.1
     "@polkadot/util": ^12.5.1
@@ -3066,21 +3045,7 @@ __metadata:
     "@types/uuid": ^9.0.2
     fast-sha256: ^1.3.0
     uuid: ^9.0.0
-  checksum: 1ef25c8d565007a293be71275123c37aaee24b66dff822e217312de31f3f4e70fa4e88ecbcc488e1dd50e2ac33dbcafa9a5b72342eb50d8cec01e730f089844e
-  languageName: node
-  linkType: hard
-
-"@logion/node-api@npm:^0.26.0-1":
-  version: 0.26.0-1
-  resolution: "@logion/node-api@npm:0.26.0-1"
-  dependencies:
-    "@polkadot/api": ^10.10.1
-    "@polkadot/util": ^12.5.1
-    "@polkadot/util-crypto": ^12.5.1
-    "@types/uuid": ^9.0.2
-    fast-sha256: ^1.3.0
-    uuid: ^9.0.0
-  checksum: ce06294036b8477941d24a673e15abbf9b65be23ee7896ad47f2567e422e98fc9f75efc875f67ed940359b580eb2bacdc5c0496e20be3a434d95424c4f5c9a11
+  checksum: 4024cf6911e20cf345d9e506ce7dd33e2b29340adce8be384f26df3d4e4ebb34e9b42ddc1cfe3d57e9585bb735749d26d9eb789ceacba6257e38958d0fe47c83
   languageName: node
   linkType: hard
 
@@ -12610,10 +12575,10 @@ __metadata:
     "@babel/preset-react": ^7.18.6
     "@craco/craco": ^6.4.5
     "@creativecommons/cc-assets": ^0.1.0
-    "@logion/client-browser": ^0.2.0-1
-    "@logion/crossmint": ^0.1.29-1
-    "@logion/extension": ^0.7.2
-    "@logion/multiversx": ^0.1.9
+    "@logion/client-browser": ^0.2.0
+    "@logion/crossmint": ^0.1.29
+    "@logion/extension": ^0.7.3
+    "@logion/multiversx": ^0.1.10
     "@multiversx/sdk-extension-provider": ^2.0.7
     "@popperjs/core": ^2.11.6
     "@testing-library/dom": ^8.17.1
