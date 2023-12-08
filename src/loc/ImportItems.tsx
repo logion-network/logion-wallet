@@ -80,9 +80,9 @@ export default function ImportItems() {
             itemFiles: item.files,
             restrictedDelivery: item.restrictedDelivery,
             itemToken: item.token,
-            logionClassification: item.logionClassification,
+            logionClassification: item.logionClassification?.parameters,
             specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
-            creativeCommons: item.creativeCommons,
+            creativeCommons: item.creativeCommons?.parameters,
         });
     }, [ locState ]);
 
@@ -120,9 +120,9 @@ export default function ImportItems() {
                         itemFiles: item.files,
                         restrictedDelivery: item.restrictedDelivery,
                         itemToken: item.token,
-                        logionClassification: item.logionClassification,
+                        logionClassification: item.logionClassification?.parameters,
                         specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
-                        creativeCommons: item.creativeCommons,
+                        creativeCommons: item.creativeCommons?.parameters,
                         callback,
                     })
                 };

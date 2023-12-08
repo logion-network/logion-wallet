@@ -3,8 +3,8 @@ import { useCallback, useMemo, useState } from "react";
 import { OpenLoc, ClosedCollectionLoc, VerifiedIssuerWithSelect } from "@logion/client";
 import { useLocContext } from "../LocContext";
 import Dialog from "../../common/Dialog";
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
-import { useLogionChain } from "src/logion-chain";
+import { CallCallback, useLogionChain } from "src/logion-chain";
+import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 export interface Props {
     issuerSelection: VerifiedIssuerWithSelect
@@ -14,11 +14,15 @@ type Status = 'Idle' | 'Selected' | 'Confirming' | 'Error';
 
 export default function IssuerSelectionCheckbox(props: Props) {
     const { issuerSelection } = props;
-    const { signer } = useLogionChain();
+    const { signer, submitCall, clearSubmissionState } = useLogionChain();
     const { mutateLocState } = useLocContext();
     const [ status, setStatus ] = useState<Status>('Idle');
     const [ showUnselect, setShowUnselect ] = useState<boolean>(false);
-    const [ call, setCall ] = useState<Call>();
+
+    const clearState = useCallback(async () => {
+        setStatus('Idle');
+        clearSubmissionState();
+    }, [ clearSubmissionState ]);
 
     const toggleSelection = useCallback(async () => {
         setStatus('Confirming');
@@ -39,13 +43,13 @@ export default function IssuerSelectionCheckbox(props: Props) {
                 return current;
             }
         });
-        setCall(() => call);
-    }, [ mutateLocState, issuerSelection, signer ]);
-
-    const clearState = useCallback(async () => {
-        setStatus('Idle');
-        setCall(undefined);
-    }, []);
+        try {
+            await submitCall(call);
+            clearState();
+        } catch(e) {
+            setStatus('Error');
+        }
+    }, [ mutateLocState, issuerSelection, signer, submitCall, clearState ]);
 
     const issuerName = useMemo(() => `${ issuerSelection.firstName } ${ issuerSelection.lastName }`, [issuerSelection]);
 
@@ -96,11 +100,7 @@ export default function IssuerSelectionCheckbox(props: Props) {
                 <p>Do you confirm you want to cancel the status of { issuerName } as a Verified Issuer <strong>for
                     this LOC</strong>?</p>
             </> }
-            <ClientExtrinsicSubmitter
-                call={call}
-                onSuccess={clearState}
-                onError={() => setStatus('Error')}
-            />
+            <ExtrinsicSubmissionStateView />
         </Dialog>
     </>)
 }

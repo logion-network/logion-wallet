@@ -209,12 +209,12 @@ export class ExtrinsicSubmissionState {
     }
 
     isSuccessful(submissionId?: string): boolean {
-        const error = this.error[submissionId || CallBatch.DEFAULT_SUBMISSION_ID];
+        const error = this._error[submissionId || CallBatch.DEFAULT_SUBMISSION_ID];
         return this._callEnded[submissionId || CallBatch.DEFAULT_SUBMISSION_ID] && error === undefined;
     }
 
     isError(submissionId?: string): boolean {
-        const error = this.error[submissionId || CallBatch.DEFAULT_SUBMISSION_ID];
+        const error = this._error[submissionId || CallBatch.DEFAULT_SUBMISSION_ID];
         return this._callEnded[submissionId || CallBatch.DEFAULT_SUBMISSION_ID] && error !== undefined;
     }
 
