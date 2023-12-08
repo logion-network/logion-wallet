@@ -4,20 +4,24 @@ import Button from "../../common/Button";
 import Icon from "../../common/Icon";
 import Dialog from "../../common/Dialog";
 import { useLocContext } from "../LocContext";
-import { useLogionChain } from "../../logion-chain";
+import { CallCallback, useLogionChain } from "../../logion-chain";
 import { ClosedLoc } from "@logion/client";
 import './Nominate.css';
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 type Status = 'Idle' | 'Selected' | 'Confirming' | 'Error';
 
 export default function Nominate() {
     const { loc, mutateLocState } = useLocContext();
-    const { signer } = useLogionChain();
+    const { signer, submitCall, clearSubmissionState } = useLogionChain();
     const [ status, setStatus ] = useState<Status>('Idle');
-    const [ call, setCall ] = useState<Call>();
 
     const isIssuer = useMemo(() => loc?.verifiedIssuer || false, [ loc ]);
+
+    const clearState = useCallback(async () => {
+        setStatus('Idle');
+        clearSubmissionState();
+    }, [ clearSubmissionState ]);
 
     const changeIssuer = useCallback(async () => {
         setStatus('Confirming');
@@ -38,13 +42,13 @@ export default function Nominate() {
                 return current;
             }
         });
-        setCall(() => call);
-    }, [ mutateLocState, isIssuer, signer ]);
-
-    const clearState = useCallback(async () => {
-        setStatus('Idle');
-        setCall(undefined);
-    }, []);
+        try {
+            await submitCall(call);
+            clearState();
+        } catch(e) {
+            setStatus("Error");
+        }
+    }, [ mutateLocState, isIssuer, signer, clearState, submitCall ]);
 
     return (
         <>
@@ -92,11 +96,7 @@ export default function Nominate() {
                             (s)he is currently involved with.</strong></p>
                     <p>Do you confirm you want to cancel the Verified Issuer status for this person?</p>
                 </> }
-                <ClientExtrinsicSubmitter
-                    call={call}
-                    onSuccess={clearState}
-                    onError={() => setStatus('Error')}
-                />
+                <ExtrinsicSubmissionStateView />
             </Dialog>
         </>
     )

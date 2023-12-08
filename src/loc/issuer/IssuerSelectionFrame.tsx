@@ -20,6 +20,7 @@ export default function IssuerSelectionFrame() {
         if (locState !== null && (locState instanceof OpenLoc || locState instanceof ClosedCollectionLoc)) {
             (async function() {
                 const issuers = await locState.legalOfficer.getVerifiedIssuers();
+                console.log(issuers)
                 setIssuerSelections(issuers);
             })();
         }

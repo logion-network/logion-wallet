@@ -2,18 +2,18 @@ import { HashOrContent, TokensRecord, ClosedCollectionLoc } from "@logion/client
 import { useCallback, useState } from "react";
 import { Form, Spinner } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import Alert from "src/common/Alert";
 import { useCommonContext } from "src/common/CommonContext";
 import Dialog from "src/common/Dialog";
 import FileSelectorButton from "src/common/FileSelectorButton";
 import FormGroup from "src/common/FormGroup";
 import Icon from "src/common/Icon";
-import { useLogionChain } from "src/logion-chain";
+import { CallCallback, useLogionChain } from "src/logion-chain";
 import { useLocContext } from "../LocContext";
 import { BrowserFile } from "@logion/client-browser";
 import EstimatedFees from "../fees/EstimatedFees";
 import { Fees } from "@logion/node-api";
+import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 export interface Props {
     show: boolean;
@@ -32,12 +32,11 @@ type Status = 'Idle' | 'Hashing' | 'Confirming' | 'Uploading' | 'Error';
 export default function AddTokensRecordDialog(props: Props) {
     const { colorTheme } = useCommonContext();
     const { mutateLocState, locState } = useLocContext();
-    const { signer } = useLogionChain();
+    const { signer, submitCall, clearSubmissionState } = useLogionChain();
     const { control, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm<FormValues>();
     const [ file, setFile ] = useState<File>();
     const [ uploadError, setUploadError ] = useState<string>();
     const [ status, setStatus ] = useState<Status>('Idle');
-    const [ call, setCall ] = useState<Call>();
     const [ fees, setFees ] = useState<Fees | null>(null);
     const [ content, setContent ] = useState<HashOrContent>();
 
@@ -53,14 +52,14 @@ export default function AddTokensRecordDialog(props: Props) {
     }, []);
 
     const clear = useCallback(() => {
-        setCall(undefined);
+        clearSubmissionState();
         setStatus('Idle');
         setUploadError("");
         setFees(null);
         setContent(undefined);
         reset();
         props.hide();
-    }, [ props, reset ]);
+    }, [ props, reset, clearSubmissionState ]);
 
     const estimateFees = useCallback(async (formValues: FormValues) => {
         setUploadError("")
@@ -94,31 +93,31 @@ export default function AddTokensRecordDialog(props: Props) {
         setUploadError("")
         if (content) {
             const hash = content.contentHash;
-            setStatus('Uploading')
+            setStatus('Uploading');
+            const call = async (callback: CallCallback) => await mutateLocState(async current => {
+                if (signer && current instanceof ClosedCollectionLoc) {
+                    const formValues = getValues();
+                    await current.addTokensRecord({
+                        recordId: hash,
+                        description: formValues.description,
+                        files: [ content ],
+                        signer,
+                        callback,
+                    });
+                    const currentLoc = current.getCurrentState() as ClosedCollectionLoc;
+                    return currentLoc.refresh();
+                } else {
+                    return current;
+                }
+            });
             try {
-                const call: Call = async (callback: CallCallback) => await mutateLocState(async current => {
-                    if (signer && current instanceof ClosedCollectionLoc) {
-                        const formValues = getValues();
-                        await current.addTokensRecord({
-                            recordId: hash,
-                            description: formValues.description,
-                            files: [ content ],
-                            signer,
-                            callback,
-                        });
-                        const currentLoc = current.getCurrentState() as ClosedCollectionLoc;
-                        return currentLoc.refresh();
-                    } else {
-                        return current;
-                    }
-                });
-                setCall(() => call);
-            } catch (error: any) {
-                const errorMessage = error?.response?.data?.errorMessage;
-                onError(`${ error }: ${ errorMessage }`);
+                await submitCall(call);
+                clear();
+            } catch (error) {
+                onError();
             }
         }
-    }, [ mutateLocState, onError, signer, getValues, content ]);
+    }, [ mutateLocState, onError, signer, getValues, content, submitCall, clear ]);
 
     return (<>
         <Dialog
@@ -238,11 +237,7 @@ export default function AddTokensRecordDialog(props: Props) {
                     { uploadError }
                 </Alert>
             }
-            <ClientExtrinsicSubmitter
-                call={call}
-                onError={() => onError()}
-                onSuccess={clear}
-            />
+            <ExtrinsicSubmissionStateView />
         </Dialog>
 
         <Dialog

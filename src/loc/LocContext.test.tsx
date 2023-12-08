@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { UUID, LegalOfficerCase, Hash } from '@logion/node-api';
 import {
@@ -17,8 +17,6 @@ import { LocContextProvider, useLocContext } from "./LocContext"
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mocks__/LogionClientMock";
-import { useLogionChain } from "src/logion-chain";
-import ClientExtrinsicSubmitter, { Call } from "src/ClientExtrinsicSubmitter";
 import {
     mockValidPolkadotAccountId,
     api,
@@ -59,15 +57,6 @@ describe("LocContext", () => {
         await waitFor(() => expect(screen.getByRole("button", {name: "Go"})).not.toBeDisabled());
         await clickByName("Go");
         await thenItemsDeleted();
-    })
-
-    it("voids", async () => {
-        givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc);
-        resetDefaultMocks();
-        whenRenderingInContext(_locState, <Voider/>);
-        await clickByName("Go");
-        await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
-        await thenVoided();
     })
 })
 
@@ -334,50 +323,4 @@ async function thenItemsDeleted() {
     await waitFor(() => expect((_locState as OpenLoc).deleteMetadata).toBeCalled());
     expect((_locState as OpenLoc).deleteFile).toBeCalled();
     expect((_locState as OpenLoc).deleteLink).toBeCalled();
-}
-
-function Voider() {
-    const { signer } = useLogionChain();
-    const { loc: locData, mutateLocState } = useLocContext();
-    const [ call, setCall ] = useState<Call>();
-
-    const callback = useCallback(() => {
-        const call: Call = async callback =>
-            mutateLocState(async current => {
-                if(signer && current instanceof OpenLoc) {
-                    return current.legalOfficer.voidLoc({
-                        locState: current,
-                        voidInfo: {
-                            reason: "Some reason"
-                        },
-                        signer,
-                        callback,
-                    });
-                } else {
-                    return current;
-                }
-            });
-        setCall(() => call);
-    }, [ mutateLocState ]);
-
-    if(!locData) {
-        return null;
-    }
-
-    return (
-        <div>
-            <button onClick={ callback }>Go</button>
-            <p>{ locData.voidInfo ? "Voided" : "-" }</p>
-            <ClientExtrinsicSubmitter
-                call={ call }
-                successMessage="Successfully closed"
-                onSuccess={ () => {} }
-                onError={ () => {} }
-            />
-        </div>
-    );
-}
-
-async function thenVoided() {
-    expect((_locState as OpenLoc).legalOfficer.voidLoc).toBeCalled();
 }
