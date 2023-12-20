@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { CoinBalance, Numbers } from "@logion/node-api";
+import { CoinBalance, Numbers, Lgnt } from "@logion/node-api";
 import { LegalOfficerClass, ProtectionState, VaultState, VaultTransferRequest } from "@logion/client";
 
 import { useLogionChain } from "../../logion-chain";
@@ -99,7 +99,7 @@ export default function VaultRecoveryProcessTab() {
             await mutateRecoveredVaultState(async (recoveredVaultState: VaultState) => {
                 return await recoveredVaultState.createVaultTransferRequest({
                     legalOfficer: getOfficer!(legalOfficer!)!,
-                    amount,
+                    amount: Lgnt.fromPrefixedNumber(amount),
                     destination: vaultState!.vaultAddress,
                     signer: signer!,
                     callback,

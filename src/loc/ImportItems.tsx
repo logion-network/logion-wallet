@@ -9,7 +9,7 @@ import {
     SpecificLicense,
     CreativeCommons,
 } from "@logion/client";
-import { Fees, Hash } from '@logion/node-api';
+import { Fees, Hash, Lgnt } from '@logion/node-api';
 import { useCallback, useMemo, useState } from "react";
 import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 
@@ -115,14 +115,16 @@ export default function ImportItems() {
                 map[item.id.toHex()] = async (callback: CallCallback) => {
                     await collection.addCollectionItem({
                         signer: signer!,
-                        itemId: item.id!,
-                        itemDescription: item.description,
-                        itemFiles: item.files,
-                        restrictedDelivery: item.restrictedDelivery,
-                        itemToken: item.token,
-                        logionClassification: item.logionClassification?.parameters,
-                        specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
-                        creativeCommons: item.creativeCommons?.parameters,
+                        payload: {
+                            itemId: item.id!,
+                            itemDescription: item.description,
+                            itemFiles: item.files,
+                            restrictedDelivery: item.restrictedDelivery,
+                            itemToken: item.token,
+                            logionClassification: item.logionClassification?.parameters,
+                            specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
+                            creativeCommons: item.creativeCommons?.parameters,
+                        },
                         callback,
                     })
                 };
@@ -179,7 +181,7 @@ export default function ImportItems() {
     }, [ itemToSubmit, callBatch, callMap, items, submitCallBatch, clearSubmissionState ]);
 
     const batchFees = useCallback(async () => {
-        let total = new Fees({ inclusionFee: 0n });
+        let total = new Fees({ inclusionFee: Lgnt.zero() });
         for(const itemId of Object.keys(callMap)) {
             const item = items.find(item => item.id?.toHex() === itemId);
             if(item) {
@@ -562,7 +564,7 @@ function validateTermsAndConditions(csvItem: CsvItem): TCValidationResult {
 }
 
 function addFees(total: Fees, term: Fees): Fees {
-    const inclusionFee = total.inclusionFee + term.inclusionFee;
+    const inclusionFee = total.inclusionFee.add(term.inclusionFee);
     const storageFee = addFeesTerms(total.storageFee, term.storageFee);
     const legalFee = addFeesTerms(total.legalFee, term.legalFee);
     const certificateFee = addFeesTerms(total.certificateFee, term.certificateFee);
@@ -580,9 +582,9 @@ function addFees(total: Fees, term: Fees): Fees {
     });
 }
 
-function addFeesTerms(term1?: bigint, term2?: bigint): bigint | undefined {
+function addFeesTerms(term1?: Lgnt, term2?: Lgnt): Lgnt | undefined {
     if(term1 !== undefined && term2 !== undefined) {
-        return term1 + term2;
+        return term1.add(term2);
     } else if(term1 !== undefined && term2 === undefined) {
         return term1;
     } else if(term1 === undefined && term2 !== undefined) {

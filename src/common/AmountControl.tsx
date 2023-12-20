@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { Dropdown, DropdownButton, Form, InputGroup } from "react-bootstrap";
-import { Numbers, Currency } from '@logion/node-api';
+import { Numbers, Lgnt } from '@logion/node-api';
 
 export interface Amount {
     value: string;
@@ -55,7 +55,7 @@ export default function AmountControl(props: Props) {
                 onChange={ event => onChangeValue(event.target.value) }
             />
             <DropdownButton
-                title={ `${ props.value?.unit.symbol || Numbers.NONE.symbol }${ Currency.SYMBOL }` }
+                title={ `${ props.value?.unit.symbol || Numbers.NONE.symbol }${ Lgnt.CODE }` }
             >{
                 [
                     Numbers.NONE,
@@ -65,7 +65,7 @@ export default function AmountControl(props: Props) {
                     Numbers.PICO,
                     Numbers.FEMTO,
                     Numbers.ATTO
-                ].map(unit => <Dropdown.Item key={ unit.symbol } onClick={ () => onChangeUnit(unit) }>{ `${ unit.symbol }${ Currency.SYMBOL }` }</Dropdown.Item>)
+                ].map(unit => <Dropdown.Item key={ unit.symbol } onClick={ () => onChangeUnit(unit) }>{ `${ unit.symbol }${ Lgnt.CODE }` }</Dropdown.Item>)
             }</DropdownButton>
         </InputGroup>
     );

@@ -3,9 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { clickByName } from '../tests';
 import ImportItems from './ImportItems';
 import { setLocState, refresh } from "./__mocks__/UserLocContextMock";
-import { CollectionItem, Fees, UUID } from "@logion/node-api";
+import { CollectionItem, Fees, UUID, Lgnt } from "@logion/node-api";
 import { H256 } from "@logion/node-api/dist/types/interfaces";
-import { LogionClient, AddCollectionItemParams, EstimateFeesAddCollectionItemParams } from "@logion/client";
+import { LogionClient, AddCollectionItemParams, BlockchainSubmission } from "@logion/client";
 import { SUCCESSFUL_SUBMISSION, setClientMock, setExtrinsicSubmissionState } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { It, Mock } from 'moq.ts';
 import { SubmittableExtrinsic } from '@polkadot/api/promise/types';
@@ -64,15 +64,15 @@ async function uploadCsv(): Promise<any> {
     setClientMock(clientMock.object());
 
     const collection = {
-        addCollectionItem: jest.fn((params: AddCollectionItemParams) => {
+        addCollectionItem: jest.fn((params: BlockchainSubmission<AddCollectionItemParams>) => {
             return Promise.resolve();
         }),
-        estimateFeesAddCollectionItem: jest.fn((params: EstimateFeesAddCollectionItemParams) => {
+        estimateFeesAddCollectionItem: jest.fn((params: AddCollectionItemParams) => {
             return Promise.resolve(
                 new Fees({
-                    inclusionFee: 42n,
-                    certificateFee: 32n,
-                    storageFee: 22n,
+                    inclusionFee: Lgnt.fromCanonical(42n),
+                    certificateFee: Lgnt.fromCanonical(32n),
+                    storageFee: Lgnt.fromCanonical(22n),
                 })
             )
         }),

@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { Form, Spinner, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { BalanceState } from '@logion/client';
-import { Numbers, CoinBalance, Currency } from '@logion/node-api';
+import { Numbers, CoinBalance, Lgnt } from '@logion/node-api';
 
 import { CallCallback, useLogionChain } from '../logion-chain';
 
@@ -49,7 +49,7 @@ export default function WalletGauge(props: Props) {
         return async (callback: CallCallback) => {
             await mutateBalanceState(async (state: BalanceState) => {
                 return await state.transfer({
-                    amount: new Numbers.PrefixedNumber(amount, unit),
+                    amount: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(amount, unit)),
                     destination,
                     callback,
                     signer: signer!
@@ -92,7 +92,7 @@ export default function WalletGauge(props: Props) {
             <Gauge
                 readingIntegerPart={ props.balance.available.coefficient.toInteger() }
                 readingDecimalPart={ props.balance.available.coefficient.toFixedPrecisionDecimals(2) }
-                unit={ props.balance.available.prefix.symbol + Currency.SYMBOL }
+                unit={ props.balance.available.prefix.symbol + Lgnt.CODE }
                 level={ props.balance.level }
                 type={ props.type }
             />
@@ -104,7 +104,7 @@ export default function WalletGauge(props: Props) {
             <div className="actions">
                     <Button slim onClick={ () => {
                         setTransferDialogState({
-                            title: `Transfer ${ Currency.SYMBOL }s`,
+                            title: `Transfer ${ Lgnt.CODE }s`,
                             destination: true,
                             show: true,
                         });
@@ -115,7 +115,7 @@ export default function WalletGauge(props: Props) {
                     <Button slim onClick={ () => {
                         setDestination(vaultAddress);
                         setTransferDialogState({
-                            title: `Transfer ${ Currency.SYMBOL }s to your logion Vault`,
+                            title: `Transfer ${ Lgnt.CODE }s to your logion Vault`,
                             destination: false,
                             show: true,
                         });
@@ -177,7 +177,7 @@ export default function WalletGauge(props: Props) {
                                         onChange={ value => setAmount(value.target.value) }
                                     />
                                     <DropdownButton
-                                        title={ `${ unit.symbol }${ Currency.SYMBOL }` }
+                                        title={ `${ unit.symbol }${ Lgnt.CODE }` }
                                         id="input-group-dropdown-1"
                                     >{
                                         [
@@ -189,7 +189,7 @@ export default function WalletGauge(props: Props) {
                                             Numbers.FEMTO,
                                             Numbers.ATTO
                                         ].map(unit => <Dropdown.Item key={ unit.symbol }
-                                                                        onClick={ () => setUnit(unit) }>{ `${ unit.symbol }${ Currency.SYMBOL }` }</Dropdown.Item>)
+                                                                        onClick={ () => setUnit(unit) }>{ `${ unit.symbol }${ Lgnt.CODE }` }</Dropdown.Item>)
                                     }</DropdownButton>
                                     <Form.Control.Feedback type="invalid">
                                         Please enter a valid amount.

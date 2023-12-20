@@ -1,6 +1,6 @@
-import { Currency } from "@logion/node-api";
+import { Lgnt } from "@logion/node-api";
 
-import AmountCell, { toPrefixedLgnt } from "../../common/AmountCell";
+import AmountCell from "../../common/AmountCell";
 import { useResponsiveContext } from "../../common/Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "../../common/Table";
 import VaultTransferRequestStatusCell from "../../common/VaultTransferRequestStatusCell";
@@ -29,12 +29,12 @@ export default function VaultTransferRequestsHistory() {
                     },
                     {
                         header: "Type",
-                        render: () => <Cell content={`${Currency.SYMBOL}`} />,
+                        render: () => <Cell content={`${Lgnt.CODE}`} />,
                         width: '80px',
                     },
                     {
                         header: "Amount",
-                        render: request => <AmountCell amount={ toPrefixedLgnt(request.amount) } />,
+                        render: request => <AmountCell amount={ Lgnt.from(request.amount) } />,
                         align: 'right',
                         width: width({
                             onSmallScreen: "100px",
