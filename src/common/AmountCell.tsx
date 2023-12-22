@@ -1,9 +1,10 @@
-import { Currency, Numbers } from "@logion/node-api";
+import { Numbers, Lgnt } from "@logion/node-api";
 import AmountFormat from "./AmountFormat";
 import { Cell } from "./Table";
 
 export interface Props {
-    amount: Numbers.PrefixedNumber | null,
+    amount: Lgnt | null,
+    unit?: Numbers.UnitPrefix,
 }
 
 export default function AmountCell(props: Props) {
@@ -11,12 +12,7 @@ export default function AmountCell(props: Props) {
         return <Cell content="-" align="right" />;
     } else {
         return (
-            <Cell content={ <AmountFormat amount={ props.amount } /> } align="right" />
+            <Cell content={ <AmountFormat amount={ props.amount } unit={ props.unit }/> } align="right" />
         );
     }
-}
-
-export function toPrefixedLgnt(tokens: string): Numbers.PrefixedNumber {
-    const scientific = Currency.toPrefixedNumberAmount(BigInt(tokens)).scientificNumber.optimizeScale(3);
-    return Numbers.convertToPrefixed(scientific);
 }

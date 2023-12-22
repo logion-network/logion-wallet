@@ -1,7 +1,7 @@
 import { LegalOfficer, PostalAddress, UserIdentity } from '@logion/client';
 import { LegalOfficerClass } from "@logion/client/dist/Types.js";
 import { Transaction } from '@logion/client/dist/TransactionClient.js';
-import { Coin, CoinBalance, Currency, Numbers } from '@logion/node-api';
+import { Coin, CoinBalance, Numbers, Lgnt } from '@logion/node-api';
 
 import { ColorTheme, rgbaToHex } from './ColorTheme';
 
@@ -122,7 +122,7 @@ export const COLOR_THEME: ColorTheme = {
 
 export const DEFAULT_COIN: Coin = {
     id: 'lgnt',
-    symbol: Currency.SYMBOL
+    symbol: Lgnt.CODE,
 };
 
 export const DEFAULT_COIN_BALANCE: CoinBalance = {

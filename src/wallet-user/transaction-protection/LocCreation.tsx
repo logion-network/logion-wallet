@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { LocType, Numbers, Currency } from "@logion/node-api";
+import { LocType, Numbers, Lgnt } from "@logion/node-api";
 
 import { useCommonContext } from '../../common/CommonContext';
 import { LocsState, LegalOfficerClass, DraftRequest } from "@logion/client";
@@ -82,7 +82,7 @@ export default function LocCreation(props: Props) {
                     description: formValues.description,
                     draft: true,
                     template: backendTemplate(selectedTemplateId),
-                    legalFee: formValues.legalFee ? Currency.toCanonicalAmount(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
+                    legalFee: formValues.legalFee ? Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
                 }) as DraftRequest;
             } else if(locType === "Identity") {
                 draftRequest = await locsState!.requestIdentityLoc({
@@ -110,10 +110,10 @@ export default function LocCreation(props: Props) {
                     description: formValues.description,
                     draft: true,
                     template: backendTemplate(selectedTemplateId),
-                    valueFee: Currency.toCanonicalAmount(new Numbers.PrefixedNumber(formValues.valueFee.value, formValues.valueFee.unit)),
-                    collectionItemFee: Currency.toCanonicalAmount(new Numbers.PrefixedNumber(formValues.collectionItemFee.value, formValues.collectionItemFee.unit)),
-                    tokensRecordFee: Currency.toCanonicalAmount(new Numbers.PrefixedNumber(formValues.tokensRecordFee.value, formValues.tokensRecordFee.unit)),
-                    legalFee: formValues.legalFee ? Currency.toCanonicalAmount(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
+                    valueFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.valueFee.value, formValues.valueFee.unit)),
+                    collectionItemFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.collectionItemFee.value, formValues.collectionItemFee.unit)),
+                    tokensRecordFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.tokensRecordFee.value, formValues.tokensRecordFee.unit)),
+                    legalFee: formValues.legalFee ? Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
                 }) as DraftRequest;
             } else {
                 throw new Error("Unsupported LOC type");

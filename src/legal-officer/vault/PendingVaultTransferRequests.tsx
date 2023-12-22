@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { Currency } from "@logion/node-api";
+import { Lgnt } from "@logion/node-api";
 import { VaultTransferRequest } from "@logion/client";
 
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { useLogionChain } from "../../logion-chain";
-import AmountCell, { toPrefixedLgnt } from "../../common/AmountCell";
+import AmountCell from "../../common/AmountCell";
 import { useCommonContext } from "../../common/CommonContext";
 import Dialog from "../../common/Dialog";
 import Icon from "../../common/Icon";
@@ -40,7 +40,7 @@ export default function PendingVaultTransferRequests() {
 
     const acceptRequestCallback = useCallback(async () => {
         const signerId = accounts!.current!.accountId.address;
-        const amount = Currency.toPrefixedNumberAmount(BigInt(requestToAccept!.amount));
+        const amount = Lgnt.fromCanonical(BigInt(requestToAccept!.amount));
         const config = await api!.queries.getRecoveryConfig(requestToAccept!.origin);
         if(!config) {
             throw new Error("Cannot approve vault transfer for requester without recovery configured");
@@ -105,12 +105,12 @@ export default function PendingVaultTransferRequests() {
                     },
                     {
                         header: "Type",
-                        render: () => <Cell content={`${Currency.SYMBOL}`} />,
+                        render: () => <Cell content={`${Lgnt.CODE}`} />,
                         width: '80px',
                     },
                     {
                         header: "Amount",
-                        render: request => <AmountCell amount={ toPrefixedLgnt(request.amount) } />,
+                        render: request => <AmountCell amount={ Lgnt.from(request.amount) } />,
                         align: 'right',
                         width: width({
                             onSmallScreen: "100px",
@@ -202,7 +202,7 @@ export default function PendingVaultTransferRequests() {
                     <Col>
                         <StaticLabelValue
                             label="Amount"
-                            value={ requestToAccept ? <AmountFormat amount={ toPrefixedLgnt(requestToAccept.amount) } /> : "" }
+                            value={ requestToAccept ? <AmountFormat amount={ Lgnt.from(requestToAccept.amount) } /> : "" }
                         />
                     </Col>
                     <Col>

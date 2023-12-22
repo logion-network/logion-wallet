@@ -1,6 +1,6 @@
 import { Controller, Control, FieldErrors } from 'react-hook-form';
 import Form from "react-bootstrap/Form";
-import { Currency } from "@logion/node-api";
+import { Lgnt } from "@logion/node-api";
 
 import { BackgroundAndForegroundColors } from '../../common/ColorTheme';
 import FormGroup from '../../common/FormGroup';
@@ -51,7 +51,7 @@ export default function LocCreationForm(props: Props) {
                                 value: 1,
                                 message: 'You must select a Legal Officer'
                             },
-                            
+
                         }}
                         render={({ field }) => (
                             <Select
@@ -210,7 +210,7 @@ export default function LocCreationForm(props: Props) {
                     feedback={ props.errors.legalFee?.message }
                     colors={ props.colors }
                     help={
-                        `If you leave the field empty, the default legal fee (2000 ${ Currency.SYMBOL }) is charged on LOC opening.
+                        `If you leave the field empty, the default legal fee (2000 ${ Lgnt.CODE }) is charged on LOC opening.
     If you negotiated another rate with the selected Legal Officer, you may enter it here.`
                     }
                 />

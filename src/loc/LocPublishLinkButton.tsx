@@ -1,5 +1,5 @@
 import { OpenLoc } from "@logion/client";
-import { UUID, Fees } from "@logion/node-api";
+import { UUID, Fees, Lgnt } from "@logion/node-api";
 
 import { LinkItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
@@ -19,7 +19,7 @@ export default function LocPublishLinkButton(props: Props) {
         if (target && locState instanceof OpenLoc) {
             return locState.estimateFeesPublishLink({ target });
         } else {
-            return new Fees({ inclusionFee: 0n });
+            return new Fees({ inclusionFee: Lgnt.zero() });
         }
     }, [ locState ]);
 

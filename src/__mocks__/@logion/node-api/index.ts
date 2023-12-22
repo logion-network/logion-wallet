@@ -7,6 +7,8 @@ export {
     LogionNodeApiClass,
     Fees,
     Hash,
+    Lgnt,
+    LgntFormatter,
 } from "@logion/node-api";
 
 export type {

@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import { Currency } from '@logion/node-api';
+import { Lgnt } from '@logion/node-api';
 
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from '../common/Dashboard';
@@ -9,7 +9,7 @@ import Frame from '../common/Frame';
 import Loader from '../common/Loader';
 import Table, { DateCell, EmptyTableMessage } from '../common/Table';
 import TransferAmountCell, { transferBalance } from '../common/TransferAmountCell';
-import AmountCell, { toPrefixedLgnt } from '../common/AmountCell';
+import AmountCell from '../common/AmountCell';
 import Reading from '../common/Reading';
 import Button from '../common/Button';
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
@@ -27,6 +27,7 @@ import IdentityLocCreation from './IdentityLocCreation';
 import LocCreation from './transaction-protection/LocCreation';
 import { useMemo } from 'react';
 import { COLLECTION_ART_NFT_TEMPLATE_ID, COLLECTION_REAL_ESTATE_TEMPLATE_ID } from 'src/loc/Template';
+import { toFeesClass } from "@logion/client/dist/Fees.js";
 
 export default function Account() {
     const { colorTheme } = useCommonContext();
@@ -108,7 +109,7 @@ export function Content() {
                                         {
                                             header: "Paid fees",
                                             render: transaction => <AmountCell
-                                                amount={ toPrefixedLgnt(transaction.fees.total) } />,
+                                                amount={ toFeesClass(transaction.fees)?.totalFee || null } />,
                                             align: 'right',
                                             width: "120px",
                                         }
@@ -122,7 +123,7 @@ export function Content() {
                                     <Reading
                                         readingIntegerPart={ balanceState.balances[0].available.coefficient.toInteger() }
                                         readingDecimalPart={ balanceState.balances[0].available.coefficient.toFixedPrecisionDecimals(2) }
-                                        unit={ balanceState.balances[0].available.prefix.symbol + Currency.SYMBOL }
+                                        unit={ balanceState.balances[0].available.prefix.symbol + Lgnt.CODE }
                                         level={ balanceState.balances[0].level }
                                     />
                                     <Button

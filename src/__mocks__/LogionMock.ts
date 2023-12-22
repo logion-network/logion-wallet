@@ -1,4 +1,4 @@
-import { AccountType, ValidAccountId, LogionNodeApiClass, LegalOfficerCase, Hash } from "@logion/node-api";
+import { AccountType, ValidAccountId, LogionNodeApiClass, LegalOfficerCase, Hash, Lgnt } from "@logion/node-api";
 import { H256 } from "@logion/node-api/dist/types/interfaces";
 import { It, Mock } from "moq.ts";
 import type { Text, Compact, u128 } from '@polkadot/types-codec';
@@ -67,10 +67,10 @@ export const CLOSED_IDENTITY_LOC: LegalOfficerCase = {
     metadata: [],
     links: [],
     collectionCanUpload: false,
-    valueFee: 0n,
-    legalFee: 0n,
-    collectionItemFee: 0n,
-    tokensRecordFee: 0n,
+    valueFee: Lgnt.zero(),
+    legalFee: Lgnt.zero(),
+    collectionItemFee: Lgnt.zero(),
+    tokensRecordFee: Lgnt.zero(),
 }
 
 export const OPEN_IDENTITY_LOC_ID = "195914524858768213081425411950368569411";
@@ -84,10 +84,10 @@ export const OPEN_IDENTITY_LOC: LegalOfficerCase = {
     metadata: [],
     links: [],
     collectionCanUpload: false,
-    valueFee: 0n,
-    legalFee: 0n,
-    collectionItemFee: 0n,
-    tokensRecordFee: 0n,
+    valueFee: Lgnt.zero(),
+    legalFee: Lgnt.zero(),
+    collectionItemFee: Lgnt.zero(),
+    tokensRecordFee: Lgnt.zero(),
 }
 
 export const CLOSED_COLLECTION_LOC_ID = "195914524858768213081425411950368569411";
@@ -101,8 +101,8 @@ export const CLOSED_COLLECTION_LOC: LegalOfficerCase = {
     metadata: [],
     links: [],
     collectionCanUpload: false,
-    valueFee: 100n,
-    legalFee: 200n,
-    collectionItemFee: 50n,
-    tokensRecordFee: 40n,
+    valueFee: Lgnt.fromCanonical(100n),
+    legalFee: Lgnt.fromCanonical(200n),
+    collectionItemFee: Lgnt.fromCanonical(50n),
+    tokensRecordFee: Lgnt.fromCanonical(40n),
 }

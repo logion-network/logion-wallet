@@ -8,10 +8,18 @@ exports[`ContextualizedLocDetails renders 1`] = `
       "decisionOn": "2023-10-10T08:25:18.546Z",
       "description": "Description",
       "fees": Object {
-        "collectionItemFee": 0n,
-        "legalFee": 0n,
-        "tokensRecordFee": 0n,
-        "valueFee": 0n,
+        "collectionItemFee": Lgnt {
+          "canonical": 0n,
+        },
+        "legalFee": Lgnt {
+          "canonical": 0n,
+        },
+        "tokensRecordFee": Lgnt {
+          "canonical": 0n,
+        },
+        "valueFee": Lgnt {
+          "canonical": 0n,
+        },
       },
       "files": Array [],
       "id": UUID {
@@ -58,10 +66,18 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
         "fees": Object {
-          "collectionItemFee": 0n,
-          "legalFee": 0n,
-          "tokensRecordFee": 0n,
-          "valueFee": 0n,
+          "collectionItemFee": Lgnt {
+            "canonical": 0n,
+          },
+          "legalFee": Lgnt {
+            "canonical": 0n,
+          },
+          "tokensRecordFee": Lgnt {
+            "canonical": 0n,
+          },
+          "valueFee": Lgnt {
+            "canonical": 0n,
+          },
         },
         "files": Array [],
         "id": UUID {
@@ -120,10 +136,18 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
         "fees": Object {
-          "collectionItemFee": 0n,
-          "legalFee": 0n,
-          "tokensRecordFee": 0n,
-          "valueFee": 0n,
+          "collectionItemFee": Lgnt {
+            "canonical": 0n,
+          },
+          "legalFee": Lgnt {
+            "canonical": 0n,
+          },
+          "tokensRecordFee": Lgnt {
+            "canonical": 0n,
+          },
+          "valueFee": Lgnt {
+            "canonical": 0n,
+          },
         },
         "files": Array [],
         "id": UUID {
@@ -178,10 +202,18 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
         "fees": Object {
-          "collectionItemFee": 0n,
-          "legalFee": 0n,
-          "tokensRecordFee": 0n,
-          "valueFee": 0n,
+          "collectionItemFee": Lgnt {
+            "canonical": 0n,
+          },
+          "legalFee": Lgnt {
+            "canonical": 0n,
+          },
+          "tokensRecordFee": Lgnt {
+            "canonical": 0n,
+          },
+          "valueFee": Lgnt {
+            "canonical": 0n,
+          },
         },
         "files": Array [],
         "id": UUID {
@@ -229,10 +261,18 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
         "fees": Object {
-          "collectionItemFee": 0n,
-          "legalFee": 0n,
-          "tokensRecordFee": 0n,
-          "valueFee": 0n,
+          "collectionItemFee": Lgnt {
+            "canonical": 0n,
+          },
+          "legalFee": Lgnt {
+            "canonical": 0n,
+          },
+          "tokensRecordFee": Lgnt {
+            "canonical": 0n,
+          },
+          "valueFee": Lgnt {
+            "canonical": 0n,
+          },
         },
         "files": Array [],
         "id": UUID {
@@ -280,10 +320,18 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
         "fees": Object {
-          "collectionItemFee": 0n,
-          "legalFee": 0n,
-          "tokensRecordFee": 0n,
-          "valueFee": 0n,
+          "collectionItemFee": Lgnt {
+            "canonical": 0n,
+          },
+          "legalFee": Lgnt {
+            "canonical": 0n,
+          },
+          "tokensRecordFee": Lgnt {
+            "canonical": 0n,
+          },
+          "valueFee": Lgnt {
+            "canonical": 0n,
+          },
         },
         "files": Array [],
         "id": UUID {
@@ -335,10 +383,18 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "decisionOn": "2023-10-10T08:25:18.546Z",
         "description": "Description",
         "fees": Object {
-          "collectionItemFee": 0n,
-          "legalFee": 0n,
-          "tokensRecordFee": 0n,
-          "valueFee": 0n,
+          "collectionItemFee": Lgnt {
+            "canonical": 0n,
+          },
+          "legalFee": Lgnt {
+            "canonical": 0n,
+          },
+          "tokensRecordFee": Lgnt {
+            "canonical": 0n,
+          },
+          "valueFee": Lgnt {
+            "canonical": 0n,
+          },
         },
         "files": Array [],
         "id": UUID {

@@ -16,23 +16,17 @@ exports[`EstimatedFees renders fees with certificate 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000042",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000042",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 42n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>
@@ -43,23 +37,17 @@ exports[`EstimatedFees renders fees with certificate 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000022",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000022",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 22n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>
@@ -70,23 +58,17 @@ exports[`EstimatedFees renders fees with certificate 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000064",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000064",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 64n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>
@@ -111,23 +93,17 @@ exports[`EstimatedFees renders fees with legal 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000042",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000042",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 42n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>
@@ -138,23 +114,17 @@ exports[`EstimatedFees renders fees with legal 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000022",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000022",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 22n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>
@@ -165,23 +135,17 @@ exports[`EstimatedFees renders fees with legal 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000064",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000064",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 64n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>
@@ -206,23 +170,17 @@ exports[`EstimatedFees renders fees with storage 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000042",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000042",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 42n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>
@@ -233,23 +191,17 @@ exports[`EstimatedFees renders fees with storage 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000032",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000032",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 32n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>
@@ -260,23 +212,17 @@ exports[`EstimatedFees renders fees with storage 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000074",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000074",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 74n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>
@@ -301,23 +247,17 @@ exports[`EstimatedFees renders fees with storage and paid by 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000042",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000042",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 42n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
         <td>
@@ -331,23 +271,17 @@ exports[`EstimatedFees renders fees with storage and paid by 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000032",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000032",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 32n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
         <td>
@@ -361,23 +295,17 @@ exports[`EstimatedFees renders fees with storage and paid by 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000074",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000074",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 74n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
         <td />
@@ -403,23 +331,17 @@ exports[`EstimatedFees renders fees without storage 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000042",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000042",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 42n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>
@@ -430,23 +352,17 @@ exports[`EstimatedFees renders fees without storage 1`] = `
         <td>
           <AmountFormat
             amount={
-              PrefixedNumber {
-                "_prefix": Object {
-                  "symbol": "",
-                  "tenExponent": 0,
-                },
-                "_scientificNumber": ScientificNumber {
-                  "_normalized": NormalizedNumber {
-                    "_decimalPart": "000000000000000042",
-                    "_integerPart": "",
-                    "_negative": false,
-                    "_normalized": ".000000000000000042",
-                  },
-                  "_tenExponent": 0,
-                },
+              Lgnt {
+                "canonical": 42n,
               }
             }
             decimals={4}
+            unit={
+              Object {
+                "symbol": "",
+                "tenExponent": 0,
+              }
+            }
           />
         </td>
       </tr>

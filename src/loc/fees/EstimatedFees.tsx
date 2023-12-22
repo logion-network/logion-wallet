@@ -1,5 +1,5 @@
 import { LocData } from "@logion/client";
-import { Fees, Numbers, Currency } from "@logion/node-api";
+import { Fees, Numbers } from "@logion/node-api";
 import AmountFormat from "../../common/AmountFormat";
 import { customClassName } from "../../common/types/Helpers";
 import "../EstimatedFees.css";
@@ -34,54 +34,59 @@ export default function EstimatedFees(props: Props) {
                         <td>Blockchain record</td>
                         <td>
                             <AmountFormat
-                                amount={ Currency.toPrefixedNumberAmount(props.fees.inclusionFee).convertTo(Numbers.NONE) }
+                                amount={ props.fees.inclusionFee }
+                                unit={ Numbers.NONE }
                                 decimals={4}
                             />
                         </td>
                         { showPaidBy && <td>{ props.inclusionFeePaidBy || "" }</td> }
                     </tr>
-                    { props.fees.storageFee !== undefined && 
+                    { props.fees.storageFee !== undefined &&
                         <tr>
                             <td>File storage</td>
                             <td>
                                 <AmountFormat
-                                    amount={ Currency.toPrefixedNumberAmount(props.fees.storageFee).convertTo(Numbers.NONE) }
+                                    amount={ props.fees.storageFee }
+                                    unit={ Numbers.NONE }
                                     decimals={4}
                                 />
                             </td>
                             { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
-                    { props.fees.legalFee !== undefined && 
+                    { props.fees.legalFee !== undefined &&
                         <tr>
                             <td>Legal fee</td>
                             <td>
                                 <AmountFormat
-                                    amount={ Currency.toPrefixedNumberAmount(props.fees.legalFee).convertTo(Numbers.NONE) }
+                                    amount={ props.fees.legalFee }
+                                    unit={ Numbers.NONE }
                                     decimals={4}
                                 />
                             </td>
                             { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
-                    { props.fees.certificateFee !== undefined && 
+                    { props.fees.certificateFee !== undefined &&
                         <tr>
                             <td>Certificate fee</td>
                             <td>
                                 <AmountFormat
-                                    amount={ Currency.toPrefixedNumberAmount(props.fees.certificateFee).convertTo(Numbers.NONE) }
+                                    amount={ props.fees.certificateFee }
+                                    unit={ Numbers.NONE }
                                     decimals={4}
                                 />
                             </td>
                             { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
-                    { props.fees.valueFee !== undefined && 
+                    { props.fees.valueFee !== undefined &&
                         <tr>
                             <td>Value fee</td>
                             <td>
                                 <AmountFormat
-                                    amount={ Currency.toPrefixedNumberAmount(props.fees.valueFee).convertTo(Numbers.NONE) }
+                                    amount={ props.fees.valueFee }
+                                    unit={ Numbers.NONE }
                                     decimals={4}
                                 />
                             </td>
@@ -93,7 +98,8 @@ export default function EstimatedFees(props: Props) {
                             <td>Collection item fee</td>
                             <td>
                                 <AmountFormat
-                                    amount={ Currency.toPrefixedNumberAmount(props.fees.collectionItemFee).convertTo(Numbers.NONE) }
+                                    amount={ props.fees.collectionItemFee }
+                                    unit={ Numbers.NONE }
                                     decimals={4}
                                 />
                             </td>
@@ -105,7 +111,8 @@ export default function EstimatedFees(props: Props) {
                             <td>Tokens record fee</td>
                             <td>
                                 <AmountFormat
-                                    amount={ Currency.toPrefixedNumberAmount(props.fees.tokensRecordFee).convertTo(Numbers.NONE) }
+                                    amount={ props.fees.tokensRecordFee }
+                                    unit={ Numbers.NONE }
                                     decimals={4}
                                 />
                             </td>
@@ -116,7 +123,8 @@ export default function EstimatedFees(props: Props) {
                         <td>Total</td>
                         <td>
                             <AmountFormat
-                                amount={ Currency.toPrefixedNumberAmount(props.fees.totalFee).convertTo(Numbers.NONE) }
+                                amount={ props.fees.totalFee }
+                                unit={ Numbers.NONE }
                                 decimals={4}
                             />
                         </td>

@@ -1,7 +1,7 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from 'react-router-dom';
-import { CoinBalance, Currency } from '@logion/node-api';
+import { CoinBalance, Lgnt } from '@logion/node-api';
 
 import { useCommonContext } from './CommonContext';
 
@@ -17,7 +17,7 @@ import NetworkWarning from './NetworkWarning';
 import { useResponsiveContext } from './Responsive';
 import { buildTransactionType } from "./TransactionType";
 import { Transaction } from '@logion/client/dist/TransactionClient.js';
-import { toPrefixedLgnt } from './AmountCell';
+import AmountCell from './AmountCell';
 import CoinIcon from 'src/components/coin/CoinIcon';
 import CoinName from 'src/components/coin/CoinName';
 
@@ -114,7 +114,7 @@ export function Content(props: Props & { type: WalletType }) {
                             },
                             {
                                 header: "Last transaction amount",
-                                render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? toPrefixedLgnt(transactionAmount(latestTransaction)).convertTo(balance.available.prefix).coefficient.toFixedPrecision(2) : '-' } />,
+                                render: balance => <AmountCell amount={ balance.coin.id !== 'dot' ? transactionAmount(latestTransaction) : null }/>,
                                 align: 'right',
                             },
                             {
@@ -138,7 +138,7 @@ export function Content(props: Props & { type: WalletType }) {
                         title={
                             <div className="gauge-title">
                                 <CoinIcon coinId={ balances[0].coin.id } height="72px" />
-                                <span>Current { Currency.SYMBOL } balance</span>
+                                <span>Current { Lgnt.CODE } balance</span>
                             </div>
                         }
                         className="gauge-container"
@@ -178,12 +178,12 @@ function NotAvailable() {
     );
 }
 
-function transactionAmount(transaction: Transaction): string {
+function transactionAmount(transaction: Transaction): Lgnt {
     if(transaction.transferDirection === 'Received') {
-        return transaction.transferValue;
+        return Lgnt.fromCanonical(BigInt(transaction.transferValue));
     } else if(transaction.transferDirection === 'Sent') {
-        return "-" + transaction.transferValue;
+        return Lgnt.fromCanonical(BigInt(transaction.transferValue)).negate();
     } else {
-        return transaction.total;
+        return Lgnt.fromCanonical(BigInt(transaction.total));
     }
 }

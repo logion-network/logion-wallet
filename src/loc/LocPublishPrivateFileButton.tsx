@@ -1,5 +1,5 @@
 import { OpenLoc } from "@logion/client";
-import { UUID, Hash, Fees } from "@logion/node-api";
+import { UUID, Hash, Fees, Lgnt } from "@logion/node-api";
 
 import { FileItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
@@ -19,7 +19,7 @@ export default function LocPublishPrivateFileButton(props: Props) {
         if (hash && locState instanceof OpenLoc) {
             return locState.estimateFeesPublishFile({ hash });
         } else {
-            return new Fees({ inclusionFee: 0n });
+            return new Fees({ inclusionFee: Lgnt.zero() });
         }
     }, [ locState ])
 

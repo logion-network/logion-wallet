@@ -1,4 +1,4 @@
-import { Hash, Fees } from "@logion/node-api";
+import { Lgnt, Fees } from "@logion/node-api";
 import { render, waitFor, screen } from "@testing-library/react";
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName } from "../tests";
@@ -42,7 +42,7 @@ describe("LocPublishButton", () => {
                 confirm();
                 return current;
             }}
-            feesEstimator={ async () => new Fees({ inclusionFee: 42n }) }
+            feesEstimator={ async () => new Fees({ inclusionFee: Lgnt.fromCanonical(42n) }) }
         />);
 
         // When publishing
@@ -80,7 +80,7 @@ describe("LocPublishButton", () => {
                 callback(mockSubmittableResult(true));
                 return current;
             }}
-            feesEstimator={ async () => new Fees({ inclusionFee: 42n }) }
+            feesEstimator={ async () => new Fees({ inclusionFee: Lgnt.fromCanonical(42n) }) }
         />);
 
         // When publishing
