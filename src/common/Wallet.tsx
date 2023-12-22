@@ -182,7 +182,7 @@ function transactionAmount(transaction: Transaction): Lgnt {
     if(transaction.transferDirection === 'Received') {
         return Lgnt.fromCanonical(BigInt(transaction.transferValue));
     } else if(transaction.transferDirection === 'Sent') {
-        return Lgnt.fromCanonical(BigInt(transaction.transferValue)).multiply(-1n); // TODO use negate when available
+        return Lgnt.fromCanonical(BigInt(transaction.transferValue)).negate();
     } else {
         return Lgnt.fromCanonical(BigInt(transaction.total));
     }

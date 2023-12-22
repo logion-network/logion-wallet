@@ -17,7 +17,7 @@ export default function TransferAmountCell(props: Props) {
     const formatter = new LgntFormatter(2, toUnit(props.amount || Lgnt.zero()));
     if(props.amount === null) {
         return <Cell content="-" align="center" />;
-    } else if(props.amount.canonical < 0n) {
+    } else if(props.amount.isNegative()) {
         return (
             <div className="TransferAmountCell">
                 <Icon icon={{id: 'send_red'}} />
@@ -49,7 +49,7 @@ export default function TransferAmountCell(props: Props) {
 export function transferBalance(address: string, transaction: Transaction): Lgnt {
     const amount = Lgnt.fromCanonical(BigInt(transaction.transferValue));
     if(transaction.from === address) {
-        return amount.multiply(-1n); // TODO use negate() when available
+        return amount.negate();
     } else {
         return amount;
     }
