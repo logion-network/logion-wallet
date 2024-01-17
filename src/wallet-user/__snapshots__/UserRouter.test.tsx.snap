@@ -237,5 +237,13 @@ exports[`renders 1`] = `
     }
     path="/verified-issuer/:locId/records/:recordId/claims/:hash"
   />
+  <Route
+    element={
+      <UserInvitedContributorsPane
+        contributionMode="Requester"
+      />
+    }
+    path="/loc/:locType/:locId/invited-contributors"
+  />
 </Routes>
 `;

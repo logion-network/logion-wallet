@@ -112,3 +112,10 @@ export function tokensRecordDocumentClaimHistoryPath(locId: UUID, recordId: Hash
         .replace(":recordId", recordId.toHex())
         .replace(":hash", hash.toHex());
 }
+
+export const INVITED_CONTRIBUTORS_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/invited-contributors";
+export function invitedContributorsPath(locId: UUID) {
+    return LEGAL_OFFICER_PATH + INVITED_CONTRIBUTORS_RELATIVE_PATH
+        .replace(":locType", "collection")
+        .replace(":locId", locId.toString());
+}

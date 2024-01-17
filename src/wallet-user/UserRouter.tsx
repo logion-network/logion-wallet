@@ -32,6 +32,7 @@ import { UserTokensRecordPane } from 'src/loc/record/TokensRecordPane';
 import IdentityLocCreation from './IdentityLocCreation';
 import { Navigate } from 'react-router-dom';
 import { getBaseUrl } from "../PublicPaths";
+import { UserInvitedContributorsPane } from "../loc/invited-contributor/InvitedContributorsPane";
 
 export const HOME_PATH = USER_PATH;
 
@@ -134,6 +135,13 @@ export function issuerTokensRecordDocumentClaimHistoryPath(locId: UUID, recordId
         .replace(":locId", locId.toString())
         .replace(":recordId", recordId.toHex())
         .replace(":hash", hash.toHex());
+}
+
+export const INVITED_CONTRIBUTORS_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/invited-contributors";
+export function invitedContributorsPath(locId: UUID) {
+    return USER_PATH + INVITED_CONTRIBUTORS_RELATIVE_PATH
+        .replace(":locType", "collection")
+        .replace(":locId", locId.toString());
 }
 
 export default function UserRouter() {
@@ -271,6 +279,7 @@ export default function UserRouter() {
             <Route path={ ISSUER_TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='VerifiedIssuer'/> }/>
             <Route path={ TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='Requester'/> } />
             <Route path={ ISSUER_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='VerifiedIssuer'/> } />
+            <Route path={ INVITED_CONTRIBUTORS_RELATIVE_PATH } element={ <UserInvitedContributorsPane contributionMode='Requester'/> }/>
         </Routes>
     );
 }

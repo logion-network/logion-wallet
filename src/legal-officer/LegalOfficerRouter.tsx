@@ -22,6 +22,7 @@ import {
     tokensRecordPath,
     TOKENS_RECORD_ISSUER_RELATIVE_PATH,
     TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH,
+    INVITED_CONTRIBUTORS_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -50,8 +51,12 @@ import { useLogionChain } from '../logion-chain';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import IssuerSelection from "../loc/issuer/IssuerSelection";
 import Votes from './votes/Votes';
-import { GuardianDocumentClaimHistory, LegalOfficerTokensRecordDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
+import {
+    GuardianDocumentClaimHistory,
+    LegalOfficerTokensRecordDocumentClaimHistory
+} from 'src/loc/DocumentClaimHistory';
 import { LegalOfficerTokensRecordPane } from 'src/loc/record/TokensRecordPane';
+import { LegalInvitedContributorsPane } from "../loc/invited-contributor/InvitedContributorsPane";
 
 export default function LegalOfficerRouter() {
     const { accounts } = useLogionChain();
@@ -183,6 +188,7 @@ export default function LegalOfficerRouter() {
             }/>
             <Route path={ TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <LegalOfficerTokensRecordDocumentClaimHistory/> } />
             <Route path="" element={ currentLegalOfficerUnavailable ? <Navigate to={ SETTINGS_PATH }/> : <Home /> } />
+            <Route path={ INVITED_CONTRIBUTORS_RELATIVE_PATH } element={ <LegalInvitedContributorsPane/> }/>
         </Routes>
     );
 }

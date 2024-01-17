@@ -28,6 +28,7 @@ import TokensRecordButton from './record/TokensRecordButton';
 import { ContributionMode } from './types';
 import ViewQrCodeButton from './ViewQrCodeButton';
 import ViewCertificateButton from './ViewCertificateButton';
+import InvitedContributorsButton from "./invited-contributor/InvitedContributorsButton";
 
 export interface Props {
     loc: LocData;
@@ -37,26 +38,27 @@ export interface Props {
 }
 
 export default function CertificateAndLimits(props: Props) {
+    const { loc } = props;
     const { api } = useLogionChain();
     const { backendConfig } = useCommonContext();
 
     const [ dateLimit, setDateLimit ] = useState<string>();
     const [ showSettings, setShowSettings ] = useState(false);
 
-    const certificateUrl = fullCertificateUrl(props.loc.id);
+    const certificateUrl = fullCertificateUrl(loc.id);
 
     useEffect(() => {
-        if(api !== null && props.loc.collectionLastBlockSubmission) {
+        if(api !== null && loc.collectionLastBlockSubmission) {
             (async function() {
-                const chainTime = await (await ChainTime.now(api.polkadot)).atBlock(props.loc.collectionLastBlockSubmission!);
+                const chainTime = await (await ChainTime.now(api.polkadot)).atBlock(loc.collectionLastBlockSubmission!);
                 setDateLimit(new Date(chainTime.currentTime).toISOString());
             })();
         }
-    }, [ api, props.loc ]);
+    }, [ api, loc ]);
 
     const hasVoteFeature = useMemo(() => {
-        return backendConfig(props.loc.ownerAddress).features.vote;
-    }, [ props.loc, backendConfig ]);
+        return backendConfig(loc.ownerAddress).features.vote;
+    }, [ loc, backendConfig ]);
 
     return (
         <div
@@ -73,12 +75,12 @@ export default function CertificateAndLimits(props: Props) {
                     </div>
                 </Col>
                 {
-                    props.loc.locType === 'Collection' &&
+                    loc.locType === 'Collection' &&
                     <Col>
                         <div className="limits">
                             <div><strong>Collection Date Limit:</strong> <InlineDateTime dateTime={ dateLimit } dateOnly={ true } /></div>
-                            <div><strong>Collection Item Limit:</strong> { itemLimit(props.loc) }</div>
-                            <div><strong>Collection Upload Accepted:</strong> { props.loc.collectionCanUpload ? "Yes" : "No" }</div>
+                            <div><strong>Collection Item Limit:</strong> { itemLimit(loc) }</div>
+                            <div><strong>Collection Upload Accepted:</strong> { loc.collectionCanUpload ? "Yes" : "No" }</div>
                         </div>
                     </Col>
                 }
@@ -89,26 +91,27 @@ export default function CertificateAndLimits(props: Props) {
                         <ButtonGroup
                             align="center"
                         >
-                            { props.loc.locType === 'Collection' && props.loc.status === "CLOSED" && !props.loc.voidInfo && <TokensRecordButton contributionMode={props.contributionMode}/> }
-                            { props.loc.locType === 'Collection' && props.loc.status === "CLOSED" && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
+                            { showInvitedContributors(props) && <InvitedContributorsButton/> }
+                            { loc.locType === 'Collection' && loc.status === "CLOSED" && !loc.voidInfo && <TokensRecordButton contributionMode={props.contributionMode}/> }
+                            { loc.locType === 'Collection' && loc.status === "CLOSED" && !loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
 
-                            { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <IssuerSelectionButton/> }
-                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <IssuerSelectionButton/> }
-                            { props.loc.locType === 'Identity' && props.viewer === 'LegalOfficer' && !isLogionIdentityLoc({ ...props.loc, requesterAddress: props.loc.requesterAddress?.address }) && props.loc.requesterAddress?.type === "Polkadot" && props.loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
+                            { loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <IssuerSelectionButton/> }
+                            { loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && loc.status ==='OPEN' && <IssuerSelectionButton/> }
+                            { loc.locType === 'Identity' && props.viewer === 'LegalOfficer' && !isLogionIdentityLoc({ ...loc, requesterAddress: loc.requesterAddress?.address }) && loc.requesterAddress?.type === "Polkadot" && loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
 
-                            { props.loc.locType === 'Identity' && !isLogionIdentityLoc({ ...props.loc, requesterAddress: props.loc.requesterAddress?.address }) && props.viewer === 'LegalOfficer' && props.loc.status === "CLOSED" && hasVoteFeature && !props.loc.voteId && !props.isReadOnly && <RequestVoteButton/> }
+                            { loc.locType === 'Identity' && !isLogionIdentityLoc({ ...loc, requesterAddress: loc.requesterAddress?.address }) && props.viewer === 'LegalOfficer' && loc.status === "CLOSED" && hasVoteFeature && !loc.voteId && !props.isReadOnly && <RequestVoteButton/> }
 
-                            { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <ArchiveButton/> }
-                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && !props.isReadOnly && <ArchiveButton/> }
+                            { loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <ArchiveButton/> }
+                            { loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && !props.isReadOnly && <ArchiveButton/> }
 
-                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && !props.isReadOnly && <StatementOfFactsButton/> }
-                            { props.loc.locType !== 'Collection' && props.viewer === 'User' && <StatementOfFactsRequestButton/> }
+                            { loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && !props.isReadOnly && <StatementOfFactsButton/> }
+                            { loc.locType !== 'Collection' && props.viewer === 'User' && <StatementOfFactsRequestButton/> }
                         </ButtonGroup>
                     </div>
                 </Col>
             </Row>
             {
-                props.loc.locType === "Collection" && props.loc.status === "CLOSED" && !props.loc.voidInfo &&
+                loc.locType === "Collection" && loc.status === "CLOSED" && !loc.voidInfo &&
                 <Dialog
                     className="CertificateAndLimits"
                     actions={[
@@ -145,21 +148,21 @@ export default function CertificateAndLimits(props: Props) {
                     <StaticLabelValue
                         label='Signature will be executed by the following public key'
                         value={
-                            <p>{ props.loc.requesterAddress?.address }</p>
+                            <p>{ loc.requesterAddress?.address }</p>
                         }
                     />
 
                     <div className="arguments">
                         <h3>Arguments</h3>
                         <ul>
-                            <li><strong>collectionLocId:</strong> { props.loc.id.toDecimalString() }</li>
+                            <li><strong>collectionLocId:</strong> { loc.id.toDecimalString() }</li>
                         </ul>
                     </div>
                     <div className="limits">
                         <h3>Collection limits</h3>
                         <ul>
                             <li><strong>Date limit:</strong> { dateLimit }</li>
-                            <li><strong>Item number limit:</strong> { itemLimit(props.loc) }</li>
+                            <li><strong>Item number limit:</strong> { itemLimit(loc) }</li>
                         </ul>
                     </div>
                 </Dialog>
@@ -170,4 +173,12 @@ export default function CertificateAndLimits(props: Props) {
 
 function itemLimit(loc: LocData): string {
     return loc.collectionMaxSize ? loc.collectionMaxSize.toString() : "-";
+}
+
+function showInvitedContributors(props: Props): boolean {
+    const { loc } = props;
+    return loc.locType === 'Collection'
+        && (loc.status === "OPEN" || loc.status === "CLOSED")
+        && !loc.voidInfo
+        && props.contributionMode !== "VerifiedIssuer"
 }
