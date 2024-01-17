@@ -98,9 +98,11 @@ export default function AddTokensRecordDialog(props: Props) {
                 if (signer && current instanceof ClosedCollectionLoc) {
                     const formValues = getValues();
                     await current.addTokensRecord({
-                        recordId: hash,
-                        description: formValues.description,
-                        files: [ content ],
+                        payload: {
+                            recordId: hash,
+                            description: formValues.description,
+                            files: [ content ],
+                        },
                         signer,
                         callback,
                     });
