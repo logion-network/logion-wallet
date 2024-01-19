@@ -42,6 +42,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
         })),
         verifiedIssuer: false,
         issuers: [],
+        invitedContributors: [],
         fees: {
             valueFee: loc.valueFee,
             legalFee: loc.legalFee,

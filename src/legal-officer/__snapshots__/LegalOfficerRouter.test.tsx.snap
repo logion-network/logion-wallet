@@ -189,5 +189,9 @@ exports[`renders 1`] = `
     element={<Account />}
     path=""
   />
+  <Route
+    element={<LegalInvitedContributorsPane />}
+    path="/loc/:locType/:locId/invited-contributors"
+  />
 </Routes>
 `;
