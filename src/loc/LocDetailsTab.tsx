@@ -30,7 +30,7 @@ import LocTemplateItems from "./LocTemplateItems";
 import { canAdd, getLinkData, LinkData, LocItem, MetadataData, FileData } from "./LocItem";
 import { createDocumentTemplateItem, createLinkTemplateItem, createMetadataTemplateItem } from "./LocItemFactory";
 import { useLogionChain } from "src/logion-chain";
-import { CollectionInfo } from "src/components/identity/CollectionInfo";
+import { CollectionInfo } from "./CollectionInfo";
 import { TransactionInfo } from "./TransactionInfo";
 
 export interface Props {

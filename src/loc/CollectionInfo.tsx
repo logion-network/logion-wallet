@@ -2,7 +2,7 @@ import { LocData } from "@logion/client";
 import { Lgnt } from "@logion/node-api";
 import { Row, Col } from "react-bootstrap";
 
-import Detail from "../../common/Detail";
+import Detail from "../common/Detail";
 
 import "./CollectionInfo.css";
 import AmountFormat from "src/common/AmountFormat";
