@@ -178,8 +178,10 @@ function NotAvailable() {
     );
 }
 
-function transactionAmount(transaction: Transaction): Lgnt {
-    if(transaction.transferDirection === 'Received') {
+function transactionAmount(transaction: Transaction | undefined): Lgnt | null {
+    if (transaction === undefined) {
+        return null;
+    } else if(transaction.transferDirection === 'Received') {
         return Lgnt.fromCanonical(BigInt(transaction.transferValue));
     } else if(transaction.transferDirection === 'Sent') {
         return Lgnt.fromCanonical(BigInt(transaction.transferValue)).negate();
