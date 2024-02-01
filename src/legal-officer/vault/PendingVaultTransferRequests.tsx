@@ -3,8 +3,7 @@ import { Col, Form, Row } from "react-bootstrap";
 import { Lgnt } from "@logion/node-api";
 import { VaultTransferRequest } from "@logion/client";
 
-import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
-import { useLogionChain } from "../../logion-chain";
+import { CallCallback, useLogionChain } from "../../logion-chain";
 import AmountCell from "../../common/AmountCell";
 import { useCommonContext } from "../../common/CommonContext";
 import Dialog from "../../common/Dialog";
@@ -23,20 +22,26 @@ import AddressFormat from "../../common/AddressFormat";
 import { VaultApi } from "../../vault/VaultApi";
 
 import VaultTransferRequestDetails from "./VaultTransferDetails";
-import { signAndSend } from "src/logion-chain/Signature";
 import { useLegalOfficerContext } from "../LegalOfficerContext";
 import InlineDateTime from "src/common/InlineDateTime";
+import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 export default function PendingVaultTransferRequests() {
-    const { api, axiosFactory, accounts } = useLogionChain();
+    const { api, axiosFactory, accounts, submitCall, signer, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { pendingVaultTransferRequests, refreshRequests } = useLegalOfficerContext();
     const { width } = useResponsiveContext();
     const [ requestToReject, setRequestToReject ] = useState<VaultTransferRequest | null>(null);
     const [ reason, setReason ] = useState<string>("");
     const [ requestToAccept, setRequestToAccept ] = useState<VaultTransferRequest | null>(null);
-    const [ approvalFailed, setApprovalFailed ] = useState(false);
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+
+    const onApprovalSuccessCallback = useCallback(async () => {
+        const legalOfficer = requestToAccept!.legalOfficerAddress;
+        const api = new VaultApi(axiosFactory!(legalOfficer), legalOfficer);
+        await api.acceptVaultTransferRequest(requestToAccept!.id);
+        setRequestToAccept(null);
+        refreshRequests!(false);
+    }, [ requestToAccept, axiosFactory, setRequestToAccept, refreshRequests ]);
 
     const acceptRequestCallback = useCallback(async () => {
         const signerId = accounts!.current!.accountId.address;
@@ -53,22 +58,20 @@ export default function PendingVaultTransferRequests() {
             block: BigInt(requestToAccept!.block),
             index: requestToAccept!.index,
         });
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-            signerId,
-            callback: setResult,
-            errorCallback: setError,
-            submittable,
-        });
-        setSignAndSubmit(() => signAndSubmit);
-    }, [ accounts, api, requestToAccept, setSignAndSubmit ]);
-
-    const onApprovalSuccessCallback = useCallback(async () => {
-        const legalOfficer = requestToAccept!.legalOfficerAddress;
-        const api = new VaultApi(axiosFactory!(legalOfficer), legalOfficer);
-        await api.acceptVaultTransferRequest(requestToAccept!.id);
-        setRequestToAccept(null);
-        refreshRequests!(false);
-    }, [ requestToAccept, axiosFactory, setRequestToAccept, refreshRequests ]);
+        const call = async (callback: CallCallback) => {
+            await signer?.signAndSend({
+                signerId,
+                submittable,
+                callback,
+            });
+        };
+        try {
+            await submitCall(call);
+            onApprovalSuccessCallback();
+        } finally {
+            clearSubmissionState();
+        }
+    }, [ accounts, api, requestToAccept, submitCall, onApprovalSuccessCallback, clearSubmissionState, signer ]);
 
     const rejectRequestCallback = useCallback(async () => {
         const legalOfficer = requestToReject!.legalOfficerAddress;
@@ -110,7 +113,7 @@ export default function PendingVaultTransferRequests() {
                     },
                     {
                         header: "Amount",
-                        render: request => <AmountCell amount={ Lgnt.from(request.amount) } />,
+                        render: request => <AmountCell amount={ Lgnt.fromCanonical(BigInt(request.amount)) } />,
                         align: 'right',
                         width: width({
                             onSmallScreen: "100px",
@@ -162,14 +165,14 @@ export default function PendingVaultTransferRequests() {
                         buttonVariant: "secondary-polkadot",
                         id: "cancel",
                         callback: () => setRequestToAccept(null),
-                        disabled: signAndSubmit !== null && !approvalFailed
+                        disabled: extrinsicSubmissionState.inProgress
                     },
                     {
                         buttonText: "Proceed",
                         buttonVariant: "polkadot",
                         id: "proceed",
                         callback: () => acceptRequestCallback(),
-                        disabled: signAndSubmit !== null
+                        disabled: !extrinsicSubmissionState.canSubmit(),
                     }
                 ]}
                 size="xl"
@@ -202,7 +205,7 @@ export default function PendingVaultTransferRequests() {
                     <Col>
                         <StaticLabelValue
                             label="Amount"
-                            value={ requestToAccept ? <AmountFormat amount={ Lgnt.from(requestToAccept.amount) } /> : "" }
+                            value={ requestToAccept ? <AmountFormat amount={ Lgnt.fromCanonical(BigInt(requestToAccept.amount)) } /> : "" }
                         />
                     </Col>
                     <Col>
@@ -213,12 +216,7 @@ export default function PendingVaultTransferRequests() {
                     </Col>
                 </Row>
 
-                <ExtrinsicSubmitter
-                    id="approve"
-                    signAndSubmit={ signAndSubmit }
-                    onSuccess={ onApprovalSuccessCallback }
-                    onError={ () => setApprovalFailed(true) }
-                />
+                <ExtrinsicSubmissionStateView />
             </Dialog>
             <Dialog
                 show={ requestToReject !== null }

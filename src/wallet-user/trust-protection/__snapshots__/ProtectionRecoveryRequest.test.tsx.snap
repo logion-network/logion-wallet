@@ -21,12 +21,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
       icon="activated"
       text="Your Logion Protection is active"
     />
-    <ClientExtrinsicSubmitter
-      successMessage="Protection successfully activated."
-    />
-    <ClientExtrinsicSubmitter
-      successMessage="Recovery successfully initiated."
-    />
+    <ExtrinsicSubmissionStateView />
     <Row
       className="legal-officers"
     >
@@ -406,9 +401,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
       icon="activated"
       text="You are now ready to claim the access to address toRecover."
     />
-    <ClientExtrinsicSubmitter
-      successMessage="Protection successfully activated."
-    />
     <ButtonGroup
       className="Claim"
     >
@@ -419,9 +411,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
         Claim
       </Button>
     </ButtonGroup>
-    <ClientExtrinsicSubmitter
-      successMessage="Recovery successfully initiated."
-    />
+    <ExtrinsicSubmissionStateView />
     <Row
       className="legal-officers"
     >
@@ -798,12 +788,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
       icon="activated"
       text="Your Logion Protection is active"
     />
-    <ClientExtrinsicSubmitter
-      successMessage="Protection successfully activated."
-    />
-    <ClientExtrinsicSubmitter
-      successMessage="Recovery successfully initiated."
-    />
+    <ExtrinsicSubmissionStateView />
     <Row
       className="legal-officers"
     >
@@ -1183,9 +1168,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
       icon="activated"
       text="You are now ready to claim the access to address toRecover."
     />
-    <ClientExtrinsicSubmitter
-      successMessage="Protection successfully activated."
-    />
     <ButtonGroup
       className="Claim"
     >
@@ -1196,9 +1178,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
         Claim
       </Button>
     </ButtonGroup>
-    <ClientExtrinsicSubmitter
-      successMessage="Recovery successfully initiated."
-    />
+    <ExtrinsicSubmissionStateView />
     <Row
       className="legal-officers"
     >
@@ -1573,17 +1553,11 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
     <Header
       color="#ff9b3f"
       icon="pending"
-      text="Your Logion Protection request has been submitted. Your Legal Officers
-                        will contact you as soon as possible to finalize the KYC process. Please note that, after the successful
+      text="Your Logion Protection request has been submitted for review. Please note that, after the successful
                         completion of one of your Legal Officer approval processes, you will be able to use all features
                         provided by your logion account dashboard."
     />
-    <ClientExtrinsicSubmitter
-      successMessage="Protection successfully activated."
-    />
-    <ClientExtrinsicSubmitter
-      successMessage="Recovery successfully initiated."
-    />
+    <ExtrinsicSubmissionStateView />
     <Row
       className="legal-officers"
     >
@@ -1962,15 +1936,10 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
     <Header
       color="#ff9b3f"
       icon="pending"
-      text="Your Logion Recovery request  for account toRecover has been submitted. Your Legal Officers will contact you
-                        as soon as possible to finalize the KYC process."
+      text="Your Logion Recovery request  for account toRecover has been submitted for review. Your Legal Officers will contact you
+                        as soon as possible to finalize the procedure."
     />
-    <ClientExtrinsicSubmitter
-      successMessage="Protection successfully activated."
-    />
-    <ClientExtrinsicSubmitter
-      successMessage="Recovery successfully initiated."
-    />
+    <ExtrinsicSubmissionStateView />
     <Row
       className="legal-officers"
     >

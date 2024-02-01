@@ -1,0 +1,16 @@
+.SelectLegalOfficerAndLoc {
+    width: 520px;
+    max-width: 100%;
+}
+
+.SelectLegalOfficerAndLoc .form-group {
+    margin-bottom: 5px;
+}
+
+.SelectLegalOfficerAndLoc .icon-status {
+    margin-top: 40px;
+}
+
+.Dashboard .ContentArea .SelectLegalOfficerAndLoc > .row {
+    margin-bottom: 0;
+}

@@ -53,7 +53,7 @@ export default function ProtectionRequestsHistory() {
                     },
                     {
                         header: "Action",
-                        render: request => request.decision.locId ? <Button onClick={ () => navigate(identityLocDetailsPath(request.decision.locId!)) }>Identity LOC</Button> : "" ,
+                        render: request => <Button onClick={ () => navigate(identityLocDetailsPath(request.requesterIdentityLoc)) }>Identity LOC</Button> ,
                         width: "180px",
                         align: 'center',
                     },

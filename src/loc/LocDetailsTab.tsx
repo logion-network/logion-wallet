@@ -1,4 +1,4 @@
-import { LocData, LegalOfficer, LocRequestState, DraftRequest, ProtectionRequest } from "@logion/client";
+import { LocData, LegalOfficer, LocRequestState, DraftRequest } from "@logion/client";
 import { LocType, UUID } from "@logion/node-api";
 import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ButtonGroup from "src/common/ButtonGroup";
@@ -42,7 +42,6 @@ export interface Props {
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
     locItems: LocItem[];
-    protectionRequest?: ProtectionRequest | null;
 }
 
 export default function LocDetailsTab(props: Props) {
@@ -118,7 +117,6 @@ export interface ContentProps {
     detailsPath: (locId: UUID, type: LocType) => string;
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
-    protectionRequest?: ProtectionRequest | null;
     locTabBorderColor: string;
 }
 
@@ -128,7 +126,6 @@ export function LocDetailsTabContent(props: ContentProps) {
         detailsPath,
         legalOfficer,
         checkResult,
-        protectionRequest,
         locTabBorderColor,
     } = props;
     const [ showCancelDialog, setShowCancelDialog ] = useState(false);
@@ -360,7 +357,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                 <Col className="close-button-container" xxl={ 5 } xl={ 6 }>
                     {
                         !loc.voidInfo &&
-                        <CloseLocButton protectionRequest={ protectionRequest } />
+                        <CloseLocButton />
                     }
                 </Col>
                 </>

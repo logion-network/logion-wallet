@@ -10,6 +10,7 @@ export const PENDING_PROTECTION_REQUESTS: ProtectionRequest[] = [
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER.address,
         otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER.address,
+        requesterIdentityLoc: "460acfb9-0bae-42d2-9a23-0545d964e633",
         decision: {
             rejectReason: null,
             decisionOn: null,
@@ -40,10 +41,10 @@ export const PROTECTION_REQUESTS_HISTORY: ProtectionRequest[] = [
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER.address,
         otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER.address,
+        requesterIdentityLoc: "460acfb9-0bae-42d2-9a23-0545d964e633",
         decision: {
-                rejectReason: null,
-                decisionOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),
-                locId: "locId"
+            rejectReason: null,
+            decisionOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),
         },
         userIdentity: {
             firstName: "John",
@@ -71,10 +72,10 @@ export const RECOVERY_REQUESTS_HISTORY: ProtectionRequest[] = [
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER.address,
         otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER.address,
+        requesterIdentityLoc: "460acfb9-0bae-42d2-9a23-0545d964e633",
         decision: {
             rejectReason: null,
             decisionOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),
-            locId: "locId"
         },
         userIdentity: {
             firstName: "John",

@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { PATRICK } from "../common/TestData";
+import { ALAIN, GUILLAUME, PATRICK, threeLegalOfficers } from "../common/TestData";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 export { toIsoString, fromIsoString } from "@logion/client/dist/DateTimeUtil.js";
 import { api } from "./LogionMock";
@@ -28,14 +28,14 @@ export class LogionClient {
     tokens = new AccountTokens();
 
     isLegalOfficer(address: string) {
-        return address === PATRICK.address;
+        return address === PATRICK.address || address === GUILLAUME.address || address === ALAIN.address;
     }
 
     isRegisteredLegalOfficer(address: string) {
-        return address === PATRICK.address;
+        return address === PATRICK.address || address === GUILLAUME.address || address === ALAIN.address;
     }
 
-    legalOfficers = [ PATRICK ];
+    legalOfficers = threeLegalOfficers;
 
     isValidAddress() {
         return true;
@@ -70,6 +70,18 @@ export class LogionClient {
     currentAddress = TEST_WALLET_USER;
 
     logionApi = api.object();
+
+    getLegalOfficer(address: string) {
+        if(address === PATRICK.address) {
+            return threeLegalOfficers[0];
+        } else if(address === GUILLAUME.address) {
+            return threeLegalOfficers[1];
+        } else if(address === ALAIN.address) {
+            return threeLegalOfficers[2];
+        } else {
+            throw new Error();
+        }
+    }
 }
 
 export class AccountTokens {

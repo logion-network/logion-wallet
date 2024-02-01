@@ -34,7 +34,7 @@ export default function VaultTransferRequestsHistory() {
                     },
                     {
                         header: "Amount",
-                        render: request => <AmountCell amount={ Lgnt.from(request.amount) } />,
+                        render: request => <AmountCell amount={ Lgnt.fromCanonical(BigInt(request.amount)) } />,
                         align: 'right',
                         width: width({
                             onSmallScreen: "100px",

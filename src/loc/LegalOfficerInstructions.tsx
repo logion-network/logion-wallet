@@ -1,5 +1,4 @@
 import { LocData, LocRequestState } from "@logion/client";
-import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
 import { LocType, UUID } from "@logion/node-api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +14,6 @@ import "./LegalOfficerInstructions.css";
 export interface Props {
     loc: LocData;
     locState: LocRequestState;
-    protectionRequest: ProtectionRequest | null;
     detailsPath: (locId: UUID, type: LocType) => string;
 }
 
@@ -23,7 +21,6 @@ export default function LegalOfficerInstructions(props: Props) {
     const {
         loc,
         locState,
-        protectionRequest,
         detailsPath,
     } = props;
 
@@ -58,51 +55,6 @@ export default function LegalOfficerInstructions(props: Props) {
                             </Button>
                         }
                     </div>
-                </Row>
-            }
-            {
-                loc.locType === "Identity" && !locState.isLogionIdentity() && protectionRequest !== null && !protectionRequest.isRecovery &&
-                <Row className="LegalOfficerInstructions logion-loc-tip-container">
-                    <IconTextRow
-                        icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
-                        text={
-                            <p><strong>Protection request context:</strong> you are currently verifying the identity
-                                of
-                                a given person by collecting the
-                                required documentation. This verification must follow proper due diligence using
-                                tools
-                                and processes defined by you and under
-                                your Legal Officer responsibility. After this verification, you will be able to
-                                confirm
-                                the fact you agree to be the
-                                Legal Officer of the related person and, thus, be requested to execute protection
-                                services such as recovery or multi-signature actions.</p>
-                        }
-                        className="logion-loc-tip"
-                    />
-                </Row>
-            }
-            {
-                loc.locType === "Identity" && !locState.isLogionIdentity() && protectionRequest !== undefined && protectionRequest !== null && protectionRequest.isRecovery &&
-                <Row className="LegalOfficerInstructions logion-loc-tip-container">
-                    <IconTextRow
-                        icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
-                        text={
-                            <p><strong>Recovery request context:</strong> you are currently verifying the identity
-                                of a
-                                given person by collecting the required documentation.
-                                This verification must follow proper due diligence using tools and processes defined
-                                by
-                                you and under your Legal Officer responsibility. After this
-                                verification, within this present page, you will be able to confirm the fact you are
-                                the
-                                Legal Officer of the related person and, thus, authorize the
-                                transfer of all the assets to the new account this person opened to replace his/her
-                                lost
-                                one.</p>
-                        }
-                        className="logion-loc-tip"
-                    />
                 </Row>
             }
             {

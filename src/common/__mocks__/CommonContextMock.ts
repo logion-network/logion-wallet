@@ -20,6 +20,12 @@ export function setViewer(_viewer: Viewer) {
     viewer = _viewer;
 }
 
+export enum ExpectNewTransactionStatus {
+    IDLE,
+    WAITING_NEW_TRANSACTION,
+    DONE
+}
+
 export function useCommonContext() {
     const commonContext:Partial<CommonContext> = {
         balanceState,
@@ -31,6 +37,7 @@ export function useCommonContext() {
         availableLegalOfficers: threeLegalOfficers,
         viewer,
         backendConfig: () => ({ features:{ iDenfy: false, vote: false }}),
+        expectNewTransactionState: { status: ExpectNewTransactionStatus.IDLE, refreshCount: 0 },
     };
     return commonContext;
 }

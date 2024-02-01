@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
-import { UUID } from '@logion/node-api';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
@@ -14,18 +13,14 @@ import { acceptProtectionRequest, rejectProtectionRequest } from '../loc/Model';
 import ProcessStep from '../common/ProcessStep';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
-import { recoveryDetailsPath, identityLocDetailsPath } from "./LegalOfficerPaths";
+import { recoveryDetailsPath } from "./LegalOfficerPaths";
 import AccountInfo from "../common/AccountInfo";
-import LocIdFormGroup from './LocIdFormGroup';
-import LocCreationDialog from '../loc/LocCreationDialog';
 import { useLogionChain } from '../logion-chain';
 
 enum ReviewStatus {
     NONE,
     PENDING,
     REJECTING,
-    ACCEPTING,
-    CREATE_NEW_LOC
 }
 
 interface ReviewState {
@@ -46,7 +41,6 @@ export default function PendingProtectionRequests(props: Props) {
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
     const navigate = useNavigate();
-    const [ locId, setLocId ] = useState<UUID | undefined>();
 
     const handleClose = useCallback(() => {
         setReviewState(NO_REVIEW_STATE);
@@ -66,18 +60,13 @@ export default function PendingProtectionRequests(props: Props) {
         })();
     }, [ axiosFactory, reviewState, accounts, rejectReason, setReviewState, refreshRequests ]);
 
-    const acceptAndCloseModal = useCallback(() => {
+    const acceptAndCloseModal = useCallback(async () => {
         const currentAddress = accounts!.current!.accountId.address;
-        (async function() {
-            const requestId = reviewState.request!.id;
-            await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
-                requestId,
-                locId: locId!
-            });
-            setReviewState(NO_REVIEW_STATE);
-            refreshRequests!(false);
-        })();
-    }, [ axiosFactory, reviewState, accounts, setReviewState, refreshRequests, locId ]);
+        const requestId = reviewState.request!.id;
+        await acceptProtectionRequest(axiosFactory!(currentAddress)!, { requestId });
+        setReviewState(NO_REVIEW_STATE);
+        refreshRequests!(false);
+    }, [ axiosFactory, reviewState, accounts, setReviewState, refreshRequests ]);
 
     if (!api || pendingProtectionRequests === null || pendingRecoveryRequests === null) {
         return null;
@@ -236,18 +225,9 @@ export default function PendingProtectionRequests(props: Props) {
                         {
                             id: "accept",
                             mayProceed: true,
-                            buttonVariant: "success",
+                            buttonVariant: "primary",
                             buttonText: "Yes",
-                            choices: [
-                                {
-                                    text: "Create the required Identity LOC",
-                                    onClick: () => setReviewState({ ...reviewState, status: ReviewStatus.CREATE_NEW_LOC })
-                                },
-                                {
-                                    text: "Link to an existing Identity LOC",
-                                    onClick: () => setReviewState({ ...reviewState, status: ReviewStatus.ACCEPTING })
-                                }
-                            ]
+                            callback: acceptAndCloseModal,
                         }
                     ] }
                 >
@@ -296,54 +276,6 @@ export default function PendingProtectionRequests(props: Props) {
                         />
                     </Form.Group>
                 </ProcessStep>
-            }
-            {
-                reviewState.status === ReviewStatus.ACCEPTING &&
-                <ProcessStep
-                    active={ true }
-                    title="Accept the protection request"
-                    nextSteps={ [
-                        {
-                            id: "cancel",
-                            callback: handleClose,
-                            mayProceed: true,
-                            buttonVariant: "secondary",
-                            buttonText: "Cancel",
-                        },
-                        {
-                            id: "confirm",
-                            callback: acceptAndCloseModal,
-                            mayProceed: locId !== undefined,
-                            buttonVariant: "primary",
-                            buttonText: "Confirm",
-                        }
-                    ] }
-                >
-                    <LocIdFormGroup
-                        colors={ colorTheme.dialog }
-                        expect={{
-                            closed: true,
-                            type: 'Identity',
-                            requester: api.queries.getValidAccountId(reviewState.request!.requesterAddress, "Polkadot"),
-                        }}
-                        onChange={ setLocId }
-                    />
-                </ProcessStep>
-            }
-            {
-                reviewState.request !== undefined &&
-                <LocCreationDialog
-                    show={ reviewState.status === ReviewStatus.CREATE_NEW_LOC }
-                    exit={ handleClose }
-                    onSuccess={ (newLoc) => navigate({pathname: identityLocDetailsPath(newLoc.id.toString()), search: `protection-request=${ reviewState.request?.id }`}) }
-                    locRequest={{
-                        requesterAddress: reviewState.request!.requesterAddress,
-                        userIdentity: reviewState.request!.userIdentity,
-                        locType: 'Identity'
-                    }}
-                    hasLinkNature={ false }
-                    defaultDescription={ `KYC ${ reviewState.request!.userIdentity.firstName } ${ reviewState.request!.userIdentity.lastName } - ${ reviewState.request!.requesterAddress }` }
-                />
             }
         </>
     );

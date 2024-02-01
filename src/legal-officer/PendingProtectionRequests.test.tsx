@@ -116,19 +116,7 @@ describe("PendingProtectionRequests", () => {
         const reviewModal = screen.getByRole("dialog");
         await userEvent.click(acceptButton!);
 
-        let linkButton: HTMLElement;
-        await waitFor(() => linkButton = screen.getByRole("button", {name: "Link to an existing Identity LOC"}));
-        await userEvent.click(linkButton!);
-
         await waitFor(() => expect(reviewModal).not.toBeInTheDocument());
-
-        let closedLocInput: HTMLElement;
-        await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
-        await userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
-
-        let confirmButton: HTMLElement;
-        await waitFor(() => confirmButton = screen.getByRole("button", {name: "Confirm"}));
-        await userEvent.click(confirmButton!);
 
         await waitFor(() => expect(acceptCallback).toBeCalledWith(
             axiosMock.object(),

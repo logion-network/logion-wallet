@@ -3,7 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { CoinBalance, Numbers, Lgnt } from "@logion/node-api";
 import { LegalOfficerClass, ProtectionState, VaultState, VaultTransferRequest } from "@logion/client";
 
-import { useLogionChain } from "../../logion-chain";
+import { CallCallback, useLogionChain } from "../../logion-chain";
 
 import { useCommonContext } from "../../common/CommonContext";
 import Button from "../../common/Button";
@@ -21,8 +21,9 @@ import { useUserContext } from "../UserContext";
 
 import { buildOptions } from "./SelectLegalOfficer";
 import "./VaultRecoveryProcessTab.css"
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "../../ClientExtrinsicSubmitter";
 import CoinIcon from "src/components/coin/CoinIcon";
+import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
+import AmountCell from "src/common/AmountCell";
 
 interface FormValues {
     legalOfficer: string | null;
@@ -39,18 +40,14 @@ function legalOfficers(protectionState: ProtectionState): string[] {
 
 export default function VaultRecoveryProcessTab() {
 
-    const { getOfficer, signer } = useLogionChain();
+    const { getOfficer, signer, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { colorTheme, availableLegalOfficers } = useCommonContext();
     const { protectionState, vaultState, mutateRecoveredVaultState, recoveredVaultState } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
     const [ legalOfficer, setLegalOfficer ] = useState<string | null>(null);
     const [ status, setStatus ] = useState<Status>(Status.IDLE);
-    const [ requestSignAndSubmit, setRequestSignAndSubmit ] = useState<Call>();
-    const [ requestFailed, setRequestFailed ] = useState<boolean>(false);
     const [ candidates, setCandidates ] = useState<LegalOfficerClass[]>([]);
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
-    const [ cancelSignAndSubmit, setCancelSignAndSubmit ] = useState<Call>();
-    const [ cancelFailed, setCancelFailed ] = useState(false);
 
     useEffect(() => {
         if (candidates.length === 0 && protectionState && availableLegalOfficers) {
@@ -67,13 +64,11 @@ export default function VaultRecoveryProcessTab() {
 
     const clearFormCallback = useCallback(() => {
         setRecoveredCoinBalance(null);
-        setRequestSignAndSubmit(undefined);
-        setCancelSignAndSubmit(undefined);
-        setRequestFailed(false);
-        setCancelFailed(false);
         setLegalOfficer(null);
         setStatus(Status.IDLE);
-    }, [ setRecoveredCoinBalance, setRequestSignAndSubmit, setCancelSignAndSubmit, setRequestFailed ])
+        clearSubmissionState();
+        setRequestToCancel(null);
+    }, [ clearSubmissionState ]);
 
     const amountToRecover = useMemo<Numbers.PrefixedNumber>(() => recoveredCoinBalance?.available ?
             recoveredCoinBalance?.available :
@@ -95,7 +90,7 @@ export default function VaultRecoveryProcessTab() {
     [ recoveredVaultState ]);
 
     const recoverCoin = useCallback(async (amount: Numbers.PrefixedNumber) => {
-        const signAndSubmit: Call = async (callback: CallCallback) => {
+        const call = async (callback: CallCallback) => {
             await mutateRecoveredVaultState(async (recoveredVaultState: VaultState) => {
                 return await recoveredVaultState.createVaultTransferRequest({
                     legalOfficer: getOfficer!(legalOfficer!)!,
@@ -106,15 +101,16 @@ export default function VaultRecoveryProcessTab() {
                 });
             })
         }
-        setRequestSignAndSubmit(() => signAndSubmit)
-    }, [ mutateRecoveredVaultState, getOfficer, legalOfficer, signer, setRequestSignAndSubmit, vaultState ])
-
-    const onTransferSuccessCallback = useCallback(() => {
-        clearFormCallback();
-    }, [ clearFormCallback ])
+        try {
+            await submitCall(call);
+            clearFormCallback();
+        } catch(_) {
+            // State cleared on close
+        }
+    }, [ mutateRecoveredVaultState, getOfficer, legalOfficer, signer, vaultState, clearFormCallback, submitCall ]);
 
     const cancelRequestCallback = useCallback(async () => {
-        const signAndSubmit: Call = async (callback: CallCallback) => {
+        const call = async (callback: CallCallback) => {
             await mutateRecoveredVaultState(async (vaultState: VaultState) => {
                 return await vaultState.cancelVaultTransferRequest(
                     getOfficer!(requestToCancel!.legalOfficerAddress)!,
@@ -124,12 +120,13 @@ export default function VaultRecoveryProcessTab() {
                 );
             })
         }
-        setCancelSignAndSubmit(() => signAndSubmit)
-    }, [ requestToCancel, setCancelSignAndSubmit, getOfficer, signer, mutateRecoveredVaultState ]);
-
-    const onCancelSuccessCallback = useCallback(() => {
-        setRequestToCancel(null);
-    }, [ setRequestToCancel ]);
+        try {
+            await submitCall(call);
+            clearFormCallback();
+        } catch(_) {
+            // State cleared on close
+        }
+    }, [ requestToCancel, getOfficer, signer, mutateRecoveredVaultState, submitCall, clearFormCallback ]);
 
     if (!vaultState || !recoveredVaultState || availableLegalOfficers === undefined) {
         return null;
@@ -152,8 +149,7 @@ export default function VaultRecoveryProcessTab() {
                         },
                         {
                             header: "Balance",
-                            render: coinBalance => <Cell
-                                content={ coinBalance.available.coefficient.toFixedPrecision(2) } />,
+                            render: coinBalance => <AmountCell amount={ Lgnt.fromPrefixedNumber(coinBalance.available) } />,
                             width: "300px",
                             align: 'right',
                         },
@@ -214,14 +210,14 @@ export default function VaultRecoveryProcessTab() {
                         buttonText: "Cancel",
                         buttonVariant: "secondary",
                         callback: clearFormCallback,
-                        disabled: requestSignAndSubmit !== undefined && !requestFailed,
+                        disabled: extrinsicSubmissionState.inProgress,
                     },
                     {
                         id: "transfer",
                         buttonText: "Transfer",
                         buttonVariant: "recovery",
                         callback: () => recoverCoin(amountToRecover),
-                        disabled: status !== Status.TRANSFERRING || requestSignAndSubmit !== undefined || legalOfficer === null,
+                        disabled: !extrinsicSubmissionState.canSubmit() || extrinsicSubmissionState.isError(),
                     }
                 ] }
             >
@@ -264,11 +260,7 @@ export default function VaultRecoveryProcessTab() {
                     </p>
                 </>
                 }
-                <ClientExtrinsicSubmitter
-                    call={ requestSignAndSubmit }
-                    onSuccess={ onTransferSuccessCallback }
-                    onError={ () => setRequestFailed(true) }
-                />
+                <ExtrinsicSubmissionStateView />
             </Dialog>
             <Dialog
                 show={ requestToCancel !== null }
@@ -277,15 +269,15 @@ export default function VaultRecoveryProcessTab() {
                         buttonText: "Cancel",
                         buttonVariant: "secondary-polkadot",
                         id: "cancel",
-                        callback: () => { setRequestToCancel(null); setCancelSignAndSubmit(undefined) },
-                        disabled: cancelSignAndSubmit !== undefined && !cancelFailed
+                        callback: clearFormCallback,
+                        disabled: extrinsicSubmissionState.inProgress,
                     },
                     {
                         buttonText: "Proceed",
                         buttonVariant: "polkadot",
                         id: "proceed",
                         callback: cancelRequestCallback,
-                        disabled: cancelSignAndSubmit !== undefined
+                        disabled: !extrinsicSubmissionState.canSubmit() || extrinsicSubmissionState.isError(),
                     }
                 ]}
                 size="lg"
@@ -294,11 +286,7 @@ export default function VaultRecoveryProcessTab() {
 
                 <p>This will cancel the vault recovery. Your Legal Officer will be notified.</p>
 
-                <ClientExtrinsicSubmitter
-                    call={ cancelSignAndSubmit }
-                    onSuccess={ onCancelSuccessCallback }
-                    onError={ () => setCancelFailed(true) }
-                />
+                <ExtrinsicSubmissionStateView />
             </Dialog>
         </>
     )

@@ -1,8 +1,7 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Lgnt } from "@logion/node-api";
-import { VaultState, VaultTransferRequest } from "@logion/client";
+import { VaultTransferRequest } from "@logion/client";
 
-import { useLogionChain } from "../logion-chain";
 import AmountCell from "./AmountCell";
 import Clickable from "./Clickable";
 import Icon from "./Icon";
@@ -12,28 +11,11 @@ import RequestToCancel from "./RequestToCancel";
 import { useResponsiveContext } from "./Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
 import { useUserContext } from "../wallet-user/UserContext";
-import { Call, CallCallback } from "../ClientExtrinsicSubmitter";
 
 export default function PendingVaultTransferRequests() {
-    const { getOfficer, signer } = useLogionChain();
-    const { mutateVaultState, vaultState } = useUserContext();
+    const { vaultState } = useUserContext();
     const { width } = useResponsiveContext();
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
-    const [ cancelFailed, setCancelFailed ] = useState(false);
-    const [ call, setCall ] = useState<Call>();
-
-    const cancelRequestCallback = useCallback(() => {
-        setCall(() => async (callback: CallCallback) => {
-            await mutateVaultState(async (vaultState: VaultState) => {
-                return await vaultState.cancelVaultTransferRequest(
-                    getOfficer!(requestToCancel!.legalOfficerAddress)!,
-                    requestToCancel!,
-                    signer!,
-                    callback
-                );
-            })
-        });
-    }, [ requestToCancel, mutateVaultState, signer, getOfficer ]);
 
     if(!vaultState) {
         return null;
@@ -60,7 +42,7 @@ export default function PendingVaultTransferRequests() {
                     },
                     {
                         header: "Amount",
-                        render: request => <AmountCell amount={ Lgnt.from(request.amount) } />,
+                        render: request => <AmountCell amount={ Lgnt.fromCanonical(BigInt(request.amount)) } />,
                         align: 'right',
                         width: width({
                             onSmallScreen: "100px",
@@ -88,13 +70,8 @@ export default function PendingVaultTransferRequests() {
                 renderEmpty={ () => <EmptyTableMessage>No pending vault-out transfers</EmptyTableMessage> }
             />
             <RequestToCancel
-                cancelFailed={ cancelFailed }
-                cancelRequestCallback={ cancelRequestCallback }
                 requestToCancel={ requestToCancel }
-                setCancelFailed={ setCancelFailed }
                 setRequestToCancel={ setRequestToCancel }
-                setCall={ setCall }
-                call={ call }
             />
         </>
     );
