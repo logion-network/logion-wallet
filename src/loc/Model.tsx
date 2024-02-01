@@ -1,5 +1,4 @@
 import { AxiosInstance } from 'axios';
-import { UUID } from '@logion/node-api';
 
 export interface RejectProtectionRequestParameters {
     requestId: string,
@@ -19,14 +18,11 @@ export async function rejectProtectionRequest(
 
 export interface AcceptProtectionRequestParameters {
     requestId: string,
-    locId: UUID,
 }
 
 export async function acceptProtectionRequest(
     axios: AxiosInstance,
     parameters: AcceptProtectionRequestParameters
 ): Promise<void> {
-    await axios.post(`/api/protection-request/${parameters.requestId}/accept`, {
-        locId: parameters.locId.toString(),
-    });
+    await axios.post(`/api/protection-request/${parameters.requestId}/accept`);
 }

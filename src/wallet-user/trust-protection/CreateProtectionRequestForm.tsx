@@ -1,50 +1,49 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { useForm } from 'react-hook-form';
-import { LegalOfficer, LegalOfficerClass } from "@logion/client";
 
 import Button from "../../common/Button";
 import { FullWidthPane } from "../../common/Dashboard";
 import Frame from "../../common/Frame";
 import Alert from "../../common/Alert";
-import Dialog from '../../common/Dialog';
 import FormGroup from '../../common/FormGroup';
 import NetworkWarning from '../../common/NetworkWarning';
 import { useCommonContext } from "../../common/CommonContext";
 
 import { useUserContext } from "../UserContext";
-import { useLogionChain } from '../../logion-chain';
-import ClientExtrinsicSubmitter, { Call, CallCallback } from '../../ClientExtrinsicSubmitter';
+import { CallCallback, useLogionChain } from '../../logion-chain';
 import { SETTINGS_PATH } from '../UserRouter';
 
 import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
-import IdentityForm, { FormValues } from "../../components/identity/IdentityForm";
+import { LegalOfficerAndLoc } from './SelectLegalOfficerAndLoc';
+import { getLegalOfficerAndLocs } from './ProtectionRefusal';
+import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';
 
 export interface Props {
     isRecovery: boolean,
 }
 
 export default function CreateProtectionRequestForm(props: Props) {
-    const { api, client } = useLogionChain();
-    const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
-    const { colorTheme, nodesDown, availableLegalOfficers } = useCommonContext();
-    const { createProtectionRequest, refreshRequests } = useUserContext();
-    const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
-    const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);
+    const { api, client, clearSubmissionState, submitCall, extrinsicSubmissionState } = useLogionChain();
+    const { colorTheme, nodesDown } = useCommonContext();
+    const { createProtectionRequest, locsState } = useUserContext();
+    const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficerAndLoc | null>(null);
+    const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficerAndLoc | null>(null);
     const [ addressToRecover, setAddressToRecover ] = useState<string>("");
     const [ addressToRecoverError, setAddressToRecoverError ] = useState<string>("");
-    const [ requestCreated, setRequestCreated ] = useState<boolean>(false);
-    const [ call, setCall ] = useState<Call>();
-    const [ agree, setAgree ] = useState<boolean>(false);
 
-    const submit = async (formValues: FormValues) => {
-        if((legalOfficer1 === null || !(legalOfficer1 instanceof LegalOfficerClass))
-            || (legalOfficer2 === null || !(legalOfficer2 instanceof LegalOfficerClass))
-            || !agree
-            || (props.isRecovery && addressToRecoverError !== "")) {
+    const legalOfficersAndLocs = useMemo(() => getLegalOfficerAndLocs(locsState, client), [ locsState, client ]);
+
+    const canSubmit = useMemo(() => {
+        return legalOfficer1 !== null
+        && legalOfficer2 !== null
+        && (!props.isRecovery || addressToRecoverError === "");
+    }, [ legalOfficer1, legalOfficer2, props.isRecovery, addressToRecoverError ]);
+
+    const submit = useCallback(async () => {
+        if(!canSubmit) {
             return;
         }
 
@@ -52,51 +51,32 @@ export default function CreateProtectionRequestForm(props: Props) {
             const call = async (callback: CallCallback) => {
                 await createProtectionRequest!({
                     legalOfficers: [
-                        legalOfficer1,
-                        legalOfficer2
+                        legalOfficer1!.legalOfficer,
+                        legalOfficer2!.legalOfficer,
                     ],
-                    postalAddress: {
-                        line1: formValues.line1,
-                        line2: formValues.line2,
-                        postalCode: formValues.postalCode,
-                        city: formValues.city,
-                        country: formValues.country,
-                    },
-                    userIdentity: {
-                        firstName: formValues.firstName,
-                        lastName: formValues.lastName,
-                        email: formValues.email,
-                        phoneNumber: formValues.phoneNumber,
-                    },
                     addressToRecover,
                     callback,
+                    requesterIdentityLoc1: legalOfficer1!.loc,
+                    requesterIdentityLoc2: legalOfficer2!.loc,
                 });
             };
-            setCall(() => call);
+            try {
+                await submitCall(call);
+            } finally {
+                clearSubmissionState();
+            }
         } else {
             await createProtectionRequest!({
                 legalOfficers: [
-                    legalOfficer1,
-                    legalOfficer2
+                    legalOfficer1!.legalOfficer,
+                    legalOfficer2!.legalOfficer,
                 ],
-                postalAddress: {
-                    line1: formValues.line1,
-                    line2: formValues.line2,
-                    postalCode: formValues.postalCode,
-                    city: formValues.city,
-                    country: formValues.country,
-                },
-                userIdentity: {
-                    firstName: formValues.firstName,
-                    lastName: formValues.lastName,
-                    email: formValues.email,
-                    phoneNumber: formValues.phoneNumber,
-                },
                 addressToRecover: undefined,
+                requesterIdentityLoc1: legalOfficer1!.loc,
+                requesterIdentityLoc2: legalOfficer2!.loc,
             });
-            setRequestCreated(true);
         }
-    }
+    }, [ legalOfficer1, legalOfficer2, addressToRecover, props.isRecovery, createProtectionRequest, submitCall, clearSubmissionState, canSubmit ]);
 
     let mainTitle;
     if(props.isRecovery) {
@@ -138,10 +118,6 @@ export default function CreateProtectionRequestForm(props: Props) {
         legalOfficersTitle = "Choose your Legal Officers";
     }
 
-    if(availableLegalOfficers === undefined) {
-        return null;
-    }
-
     return (
         <FullWidthPane
             mainTitle={ mainTitle }
@@ -163,7 +139,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                 </Row>
             }
             <Row>
-                <Col md={6}>
+                <Col>
                     {
                         props.isRecovery &&
                         <Frame
@@ -203,90 +179,39 @@ export default function CreateProtectionRequestForm(props: Props) {
                             </Alert>
                         }
 
-                        <LegalOfficers
-                            legalOfficers={ availableLegalOfficers }
-                            legalOfficer1={ legalOfficer1 }
-                            setLegalOfficer1={ setLegalOfficer1 }
-                            legalOfficer2={ legalOfficer2 }
-                            setLegalOfficer2={ setLegalOfficer2 }
-                            label={ props.isRecovery ? "Select Legal Officer N°" : "Choose Legal Officer N°" }
-                        />
-                    </Frame>
-                </Col>
-                <Col md={6}>
-                    <Frame
-                        className="CreateProtectionRequestFormOther"
-                        disabled={ legalOfficer1 === null || legalOfficer2 === null || legalOfficer1.address === legalOfficer2.address || addressToRecoverError !== "" }
-                    >
-                        <h3>Fill in your personal information</h3>
-
                         {
-                            !props.isRecovery &&
-                            <Alert variant="info">
-                                This initial personal information sharing will start KYC process and will also be used
-                                in the context of a potential future recovery process.
+                            legalOfficersAndLocs.length < 2 &&
+                            <Alert variant="warning">
+                                You do not have 2 valid (i.e. closed and non-void) Identity LOCs yet.
                             </Alert>
                         }
                         {
-                            props.isRecovery &&
-                            <Alert variant="info">
-                                This personal information sharing will start KYC process part of the recovery process.
-                            </Alert>
-                        }
-
-                        <Form onSubmit={ handleSubmit(submit) }>
-                            <IdentityForm
-                                control={ control }
-                                errors={ errors }
-                                colors={ colorTheme.frame }
+                            legalOfficersAndLocs.length >= 2 &&
+                            <>
+                            <LegalOfficers
+                                legalOfficers={ legalOfficersAndLocs }
+                                legalOfficer1={ legalOfficer1 }
+                                setLegalOfficer1={ setLegalOfficer1 }
+                                legalOfficer2={ legalOfficer2 }
+                                setLegalOfficer2={ setLegalOfficer2 }
+                                label={ props.isRecovery ? "Select Legal Officer N°" : "Choose Legal Officer N°" }
                             />
 
-                            <div className="agree-submit">
-                                <Form.Check
-                                    data-testid="agree"
-                                    type="checkbox"
-                                    checked={ agree }
-                                    onChange={ () => {
-                                        setAgree(!agree);
-                                        setCall(undefined)
-                                    } }
-                                    label="I agree to send my personal information to the chosen Legal Officers"
-                                />
-                                <ClientExtrinsicSubmitter
-                                    successMessage="Recovery successfully initiated."
-                                    call={ call }
-                                    onSuccess={ () => setRequestCreated(true) }
-                                    onError={ () => setAgree(false) }
-                                />
+                            <ExtrinsicSubmissionStateView
+                                successMessage="Recovery successfully initiated."
+                            />
 
+                            {
+                                extrinsicSubmissionState.canSubmit() && canSubmit &&
                                 <Button
-                                    action={{
-                                        id: "submit",
-                                        buttonVariant: "primary",
-                                        buttonText: "Next",
-                                        buttonTestId: "btnSubmit",
-                                        type: 'submit',
-                                        disabled: !agree,
-                                    }}
-                                />
-                            </div>
-                        </Form>
-                        <Dialog
-                            show={ requestCreated }
-                            size='lg'
-                            actions={[
-                                {
-                                    buttonText: "OK",
-                                    callback: () => { refreshRequests!(true); setRequestCreated(false); },
-                                    id: "discard",
-                                    buttonVariant: 'primary'
-                                }
-                            ]}
-                        >
-                            <>
-                                The legal officers have been informed of your request.
+                                    onClick={ submit }
+                                    variant={ props.isRecovery ? "polkadot" : "primary" }
+                                >
+                                    Submit request
+                                </Button>
+                            }
                             </>
-                        </Dialog>
+                        }
                     </Frame>
                 </Col>
             </Row>

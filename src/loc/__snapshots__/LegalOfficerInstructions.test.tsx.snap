@@ -1,65 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LegalOfficerInstructions renders for identity LOC and protection request 1`] = `
-<React.Fragment>
-  <Row
-    className="LegalOfficerInstructions logion-loc-tip-container"
-  >
-    <IconTextRow
-      className="logion-loc-tip"
-      icon={
-        <Icon
-          icon={
-            Object {
-              "id": "tip",
-            }
-          }
-          width="45px"
-        />
-      }
-      text={
-        <p>
-          <strong>
-            Protection request context:
-          </strong>
-           you are currently verifying the identity of a given person by collecting the required documentation. This verification must follow proper due diligence using tools and processes defined by you and under your Legal Officer responsibility. After this verification, you will be able to confirm the fact you agree to be the Legal Officer of the related person and, thus, be requested to execute protection services such as recovery or multi-signature actions.
-        </p>
-      }
-    />
-  </Row>
-</React.Fragment>
-`;
-
-exports[`LegalOfficerInstructions renders for identity LOC and recovery request 1`] = `
-<React.Fragment>
-  <Row
-    className="LegalOfficerInstructions logion-loc-tip-container"
-  >
-    <IconTextRow
-      className="logion-loc-tip"
-      icon={
-        <Icon
-          icon={
-            Object {
-              "id": "tip",
-            }
-          }
-          width="45px"
-        />
-      }
-      text={
-        <p>
-          <strong>
-            Recovery request context:
-          </strong>
-           you are currently verifying the identity of a given person by collecting the required documentation. This verification must follow proper due diligence using tools and processes defined by you and under your Legal Officer responsibility. After this verification, within this present page, you will be able to confirm the fact you are the Legal Officer of the related person and, thus, authorize the transfer of all the assets to the new account this person opened to replace his/her lost one.
-        </p>
-      }
-    />
-  </Row>
-</React.Fragment>
-`;
-
 exports[`LegalOfficerInstructions renders for logion identity 1`] = `
 <React.Fragment>
   <Row
@@ -127,3 +67,5 @@ exports[`LegalOfficerInstructions renders for logion identity 1`] = `
   />
 </React.Fragment>
 `;
+
+exports[`LegalOfficerInstructions renders for polkadot identity 1`] = `<React.Fragment />`;

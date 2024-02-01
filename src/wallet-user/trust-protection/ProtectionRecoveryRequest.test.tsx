@@ -102,7 +102,7 @@ describe("ProtectionRecoveryRequest", () => {
         const activateButton = screen.getByRole('button', {name: "Activate"});
         await userEvent.click(activateButton);
 
-        await waitFor(() => expect(screen.getByText("Protection successfully activated.")).toBeInTheDocument());
+        await waitFor(() => expect(screen.getByText("Submission successful.")).toBeInTheDocument());
     });
 
     it("protection request", () => {

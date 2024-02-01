@@ -32,7 +32,7 @@ export default function ProtectedUsers() {
                 },
                 {
                     header: "Action",
-                    render: request => <Button onClick={ () => navigate(identityLocDetailsPath(request.decision.locId!)) }>Identity LOC</Button>,
+                    render: request => <Button onClick={ () => navigate(identityLocDetailsPath(request.requesterIdentityLoc)) }>Identity LOC</Button>,
                     width: "200px",
                     align: 'center',
                 },

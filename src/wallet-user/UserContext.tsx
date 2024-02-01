@@ -7,9 +7,7 @@ import {
     LegalOfficerClass,
     NoProtection,
     PendingProtection,
-    PostalAddress,
     ProtectionState,
-    UserIdentity,
     SignCallback,
     AcceptedProtection,
     PendingRecovery,
@@ -24,13 +22,14 @@ import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
 import { BalanceState } from "@logion/client/dist/Balance.js";
 import { LocsState } from "@logion/client";
+import { UUID } from "@logion/node-api";
 
 export interface CreateProtectionRequestParams {
     legalOfficers: LegalOfficerClass[],
-    postalAddress: PostalAddress,
-    userIdentity: UserIdentity,
     addressToRecover?: string,
     callback?: SignCallback,
+    requesterIdentityLoc1: UUID,
+    requesterIdentityLoc2: UUID,
 }
 
 export interface UserContext {
@@ -42,7 +41,7 @@ export interface UserContext {
     claimRecovery: ((callback: SignCallback) => Promise<void>) | null,
     cancelProtection: () => Promise<void>,
     resubmitProtection: (legalOfficer: LegalOfficer) => Promise<void>,
-    changeProtectionLegalOfficer: (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer) => Promise<void>
+    changeProtectionLegalOfficer: (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer, newIdentityLoc: UUID) => Promise<void>
     protectionState?: ProtectionState,
     vaultState?: VaultState,
     mutateVaultState: (mutator: (current: VaultState) => Promise<VaultState>) => Promise<void>,
@@ -109,7 +108,7 @@ interface Action {
     claimRecovery?: (callback: SignCallback) => Promise<void>,
     cancelProtection?: () => Promise<void>,
     resubmitProtection?: (legalOfficer: LegalOfficer) => Promise<void>,
-    changeProtectionLegalOfficer?: (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer) => Promise<void>,
+    changeProtectionLegalOfficer?: (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer, newIdentityLoc: UUID) => Promise<void>,
     clearBeforeRefresh?: boolean,
     axiosFactory?: AxiosFactory,
     vaultState?: VaultState,
@@ -352,11 +351,13 @@ export function UserContextProvider(props: Props) {
             let pending: ProtectionState;
             if(params.addressToRecover !== undefined) {
                 pending = await protectionState.requestRecovery({
-                    legalOfficer1: params.legalOfficers[0],
-                    legalOfficer2: params.legalOfficers[1],
-                    postalAddress: params.postalAddress,
-                    userIdentity: params.userIdentity,
-                    recoveredAddress: params.addressToRecover,
+                    payload: {
+                        legalOfficer1: params.legalOfficers[0],
+                        legalOfficer2: params.legalOfficers[1],
+                        recoveredAddress: params.addressToRecover,
+                        requesterIdentityLoc1: params.requesterIdentityLoc1,
+                        requesterIdentityLoc2: params.requesterIdentityLoc2,
+                    },
                     callback: params.callback,
                     signer: signer!,
                 });
@@ -364,8 +365,8 @@ export function UserContextProvider(props: Props) {
                 pending = await protectionState.requestProtection({
                     legalOfficer1: params.legalOfficers[0],
                     legalOfficer2: params.legalOfficers[1],
-                    postalAddress: params.postalAddress,
-                    userIdentity: params.userIdentity,
+                    requesterIdentityLoc1: params.requesterIdentityLoc1,
+                    requesterIdentityLoc2: params.requesterIdentityLoc2,
                 });
             }
             dispatch({
@@ -386,7 +387,7 @@ export function UserContextProvider(props: Props) {
 
     const activateProtectionCallback = useCallback(async (callback: SignCallback) => {
         const acceptedProtection = contextValue.protectionState as AcceptedProtection;
-        const protectionState = await acceptedProtection.activate(signer!, callback);
+        const protectionState = await acceptedProtection.activate({ signer: signer!, callback });
         const vaultState = await protectionState.vaultState();
         dispatch({
             type: "REFRESH_PROTECTION_STATE",
@@ -406,7 +407,7 @@ export function UserContextProvider(props: Props) {
 
     const claimRecoveryCallback = useCallback(async (callback: SignCallback) => {
         const pendingRecovery = contextValue.protectionState as PendingRecovery;
-        const protectionState = await pendingRecovery.claimRecovery(signer!, callback);
+        const protectionState = await pendingRecovery.claimRecovery({ signer: signer!, callback });
         const recoveredBalanceState = await protectionState.recoveredBalanceState();
         const recoveredVaultState = await protectionState.recoveredVaultState();
         dispatch({
@@ -524,9 +525,9 @@ export function UserContextProvider(props: Props) {
         })
     }, [ contextValue.protectionState ])
 
-    const changeProtectionLegalOfficerCallback = useCallback(async (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer) => {
+    const changeProtectionLegalOfficerCallback = useCallback(async (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer, newIdentityLoc: UUID) => {
         const rejectedProtection = contextValue.protectionState as RejectedProtection;
-        const pendingProtection = await rejectedProtection.changeLegalOfficer(legalOfficer, newLegalOfficer);
+        const pendingProtection = await rejectedProtection.changeLegalOfficer(legalOfficer, newLegalOfficer, newIdentityLoc);
         dispatch({
             type: "REFRESH_PROTECTION_STATE",
             protectionState: pendingProtection

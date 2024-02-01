@@ -2,7 +2,6 @@ import { LocData, LocRequestState } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { shallowRender } from "src/tests"
 import LegalOfficerInstructions from "./LegalOfficerInstructions"
-import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
 
 describe("LegalOfficerInstructions", () => {
 
@@ -11,29 +10,16 @@ describe("LegalOfficerInstructions", () => {
         const element = shallowRender(<LegalOfficerInstructions
             loc={ loc }
             locState={ locState }
-            protectionRequest={ null }
             { ...otherProps }
         />);
         expect(element).toMatchSnapshot();
     })
 
-    it("renders for identity LOC and protection request", () => {
+    it("renders for polkadot identity", () => {
         const { loc, locState } = buildPolkadotIdentityMock();
         const element = shallowRender(<LegalOfficerInstructions
             loc={ loc }
             locState={ locState }
-            protectionRequest={ protectionRequest }
-            { ...otherProps }
-        />);
-        expect(element).toMatchSnapshot();
-    })
-
-    it("renders for identity LOC and recovery request", () => {
-        const { loc, locState } = buildPolkadotIdentityMock();
-        const element = shallowRender(<LegalOfficerInstructions
-            loc={ loc }
-            locState={ locState }
-            protectionRequest={ recoveryRequest }
             { ...otherProps }
         />);
         expect(element).toMatchSnapshot();
@@ -71,11 +57,3 @@ function buildPolkadotIdentityMock(): { loc: LocData, locState: LocRequestState 
     } as unknown as LocRequestState;
     return { loc, locState };
 }
-
-const protectionRequest = {
-    isRecovery: false,
-} as unknown as ProtectionRequest;
-
-const recoveryRequest = {
-    isRecovery: true,
-} as unknown as ProtectionRequest;

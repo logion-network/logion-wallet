@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import {
     LegalOfficer,
@@ -17,7 +17,6 @@ import Icon from '../../common/Icon';
 import { GREEN, ORANGE, rgbaToHex, YELLOW } from '../../common/ColorTheme';
 import { useCommonContext } from '../../common/CommonContext';
 import NetworkWarning from '../../common/NetworkWarning';
-import ClientExtrinsicSubmitter, { Call } from '../../ClientExtrinsicSubmitter';
 
 import { useUserContext } from '../UserContext';
 import { SETTINGS_PATH } from '../UserRouter';
@@ -29,6 +28,7 @@ import { ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient.js';
 import ProtectionRefusal from "./ProtectionRefusal";
 import RecoveryRefusal from "./RecoveryRefusal";
 import ButtonGroup from "../../common/ButtonGroup";
+import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated' | 'unavailable' | 'rejected';
 
@@ -39,20 +39,25 @@ export interface Props {
 export type Refusal = 'single' | 'double' | 'none';
 
 export default function ProtectionRecoveryRequest(props: Props) {
-    const { getOfficer } = useLogionChain();
+    const { getOfficer, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { colorTheme, availableLegalOfficers, nodesDown } = useCommonContext();
     const { protectionState, activateProtection, claimRecovery } = useUserContext();
-    const [ activationCall, setActivationCall ] = useState<Call>();
-    const [ claimCall, setClaimCall ] = useState<Call>();
 
     const activateProtectionCallback = useCallback(async () => {
-        setActivationCall(() => activateProtection!);
-    }, [ activateProtection, setActivationCall ]);
+        try {
+            await submitCall(activateProtection!);
+        } finally {
+            clearSubmissionState();
+        }
+    }, [ submitCall, activateProtection, clearSubmissionState ]);
 
     const claimRecoveryCallback = useCallback(async () => {
-        setActivationCall(undefined);
-        setClaimCall(() => claimRecovery!);
-    }, [ claimRecovery, setClaimCall ]);
+        try {
+            await submitCall(claimRecovery!);
+        } finally {
+            clearSubmissionState();
+        }
+    }, [ submitCall, claimRecovery, clearSubmissionState ]);
 
     if(protectionState === undefined || availableLegalOfficers === undefined || getOfficer === undefined) {
         return null;
@@ -88,8 +93,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     <Header
                         icon="pending"
                         color={ ORANGE }
-                        text={`Your Logion Recovery request ${forAccount} has been submitted. Your Legal Officers will contact you
-                        as soon as possible to finalize the KYC process.`}
+                        text={`Your Logion Recovery request ${forAccount} has been submitted for review. Your Legal Officers will contact you
+                        as soon as possible to finalize the procedure.`}
                     />
                 );
             } else {
@@ -97,8 +102,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     <Header
                         icon="pending"
                         color={ ORANGE }
-                        text={`Your Logion Protection request has been submitted. Your Legal Officers
-                        will contact you as soon as possible to finalize the KYC process. Please note that, after the successful
+                        text={`Your Logion Protection request has been submitted for review. Please note that, after the successful
                         completion of one of your Legal Officer approval processes, you will be able to use all features
                         provided by your logion account dashboard.`}
                     />
@@ -196,7 +200,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         { header }
 
                         {
-                            props.type === 'accepted' && !protectionParameters.isActive && activationCall === undefined &&
+                            props.type === 'accepted' && !protectionParameters.isActive && !extrinsicSubmissionState.inProgress &&
                             <ButtonGroup className="Activate">
                                 <Button
                                     data-testid="btnActivate"
@@ -206,12 +210,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
                                 </Button>
                             </ButtonGroup>
                         }
-                        <ClientExtrinsicSubmitter
-                            successMessage="Protection successfully activated."
-                            call={ activationCall }
-                        />
                         {
-                            props.type === 'activated' && protectionParameters.isRecovery && !protectionParameters.isClaimed && claimCall === undefined &&
+                            props.type === 'activated' && protectionParameters.isRecovery && !protectionParameters.isClaimed && !extrinsicSubmissionState.inProgress &&
                             <ButtonGroup className="Claim">
                                 <Button
                                     data-testid="btnClaim"
@@ -221,10 +221,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                                 </Button>
                             </ButtonGroup>
                         }
-                        <ClientExtrinsicSubmitter
-                            successMessage="Recovery successfully initiated."
-                            call={ claimCall }
-                        />
+                        <ExtrinsicSubmissionStateView />
 
                         { refusal === 'double' &&
                             <Row className="legal-officers">

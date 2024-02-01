@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `
+exports[`CreateProtectionRequestForm renders 1`] = `
 <FullWidthPane
   mainTitle="My Logion Protection"
   subTitle="Activate my Logion Protection"
@@ -15,9 +15,7 @@ exports[`renders 1`] = `
   }
 >
   <Row>
-    <Col
-      md={6}
-    >
+    <Col>
       <Frame
         className="CreateProtectionRequestFormLegalOfficers"
         disabled={false}
@@ -25,247 +23,11 @@ exports[`renders 1`] = `
         <h3>
           Choose your Legal Officers
         </h3>
-        <LegalOfficers
-          label="Choose Legal Officer N°"
-          legalOfficer1={null}
-          legalOfficer2={null}
-          legalOfficers={
-            Array [
-              LegalOfficerClass {
-                "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "axiosFactory": Object {
-                  "buildAxiosInstance": [MockFunction],
-                },
-                "name": "Patrick Gielen",
-                "node": "http://logion.patrick.com",
-                "nodeId": "",
-                "postalAddress": Object {
-                  "city": "Etterbeek",
-                  "company": "MODERO",
-                  "country": "Belgique",
-                  "line1": "Huissier de Justice Etterbeek",
-                  "line2": "Rue Beckers 17",
-                  "postalCode": "1040",
-                },
-                "region": "Europe",
-                "token": undefined,
-                "userIdentity": Object {
-                  "email": "patrick@logion.network",
-                  "firstName": "Patrick",
-                  "lastName": "Gielen",
-                  "phoneNumber": "+32 498 237 107",
-                },
-              },
-              LegalOfficerClass {
-                "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "axiosFactory": Object {
-                  "buildAxiosInstance": [MockFunction],
-                },
-                "name": "Guillaume Grain",
-                "node": "http://logion.guillaume.com",
-                "nodeId": "",
-                "postalAddress": Object {
-                  "city": "LYON",
-                  "company": "SELARL ADRASTEE",
-                  "country": "France",
-                  "line1": "Gare des Brotteaux",
-                  "line2": "14, place Jules Ferry",
-                  "postalCode": "69006",
-                },
-                "region": "Europe",
-                "token": undefined,
-                "userIdentity": Object {
-                  "email": "g.grain@adrastee-lyon.fr",
-                  "firstName": "Patrick",
-                  "lastName": "Gielen",
-                  "phoneNumber": "+33 4 78 52 87 56",
-                },
-              },
-              LegalOfficerClass {
-                "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "axiosFactory": Object {
-                  "buildAxiosInstance": [MockFunction],
-                },
-                "name": "Alain Barland",
-                "node": "http://logion.alain.com",
-                "nodeId": "",
-                "postalAddress": Object {
-                  "city": "Bourges",
-                  "company": "AUXILIA CONSEILS 18",
-                  "country": "France",
-                  "line1": "Huissiers de Justice associés",
-                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
-                  "postalCode": "18000",
-                },
-                "region": "Europe",
-                "token": undefined,
-                "userIdentity": Object {
-                  "email": "alain.barland@auxilia-conseils.com",
-                  "firstName": "Patrick",
-                  "lastName": "Gielen",
-                  "phoneNumber": "+33 2 48 67 50 50",
-                },
-              },
-            ]
-          }
-          setLegalOfficer1={[Function]}
-          setLegalOfficer2={[Function]}
-        />
-      </Frame>
-    </Col>
-    <Col
-      md={6}
-    >
-      <Frame
-        className="CreateProtectionRequestFormOther"
-        disabled={true}
-      >
-        <h3>
-          Fill in your personal information
-        </h3>
         <Alert
-          variant="info"
+          variant="warning"
         >
-          This initial personal information sharing will start KYC process and will also be used in the context of a potential future recovery process.
+          You do not have 2 valid (i.e. closed and non-void) Identity LOCs yet.
         </Alert>
-        <Form
-          onSubmit={[Function]}
-        >
-          <IdentityForm
-            colors={
-              Object {
-                "altBackground": "#eff3fe",
-                "background": "#ffffff",
-                "foreground": "#000000",
-                "link": "#3b6cf426",
-              }
-            }
-            control={
-              Object {
-                "_defaultValues": Object {},
-                "_executeSchema": [Function],
-                "_fields": Object {},
-                "_focusError": [Function],
-                "_formState": Object {
-                  "dirtyFields": Object {},
-                  "errors": Object {},
-                  "isDirty": false,
-                  "isSubmitSuccessful": false,
-                  "isSubmitted": false,
-                  "isSubmitting": false,
-                  "isValid": false,
-                  "isValidating": false,
-                  "submitCount": 0,
-                  "touchedFields": Object {},
-                },
-                "_formValues": Object {},
-                "_getDirty": [Function],
-                "_getFieldArray": [Function],
-                "_getWatch": [Function],
-                "_names": Object {
-                  "array": Set {},
-                  "mount": Set {},
-                  "unMount": Set {},
-                  "watch": Set {},
-                },
-                "_options": Object {
-                  "mode": "onSubmit",
-                  "reValidateMode": "onChange",
-                  "shouldFocusError": true,
-                },
-                "_proxyFormState": Object {
-                  "dirtyFields": false,
-                  "errors": "all",
-                  "isDirty": false,
-                  "isValid": false,
-                  "isValidating": false,
-                  "touchedFields": false,
-                },
-                "_removeUnmounted": [Function],
-                "_stateFlags": Object {
-                  "action": false,
-                  "mount": false,
-                  "watch": false,
-                },
-                "_subjects": Object {
-                  "array": Object {
-                    "next": [Function],
-                    "observers": Array [],
-                    "subscribe": [Function],
-                    "unsubscribe": [Function],
-                  },
-                  "state": Object {
-                    "next": [Function],
-                    "observers": Array [],
-                    "subscribe": [Function],
-                    "unsubscribe": [Function],
-                  },
-                  "watch": Object {
-                    "next": [Function],
-                    "observers": Array [],
-                    "subscribe": [Function],
-                    "unsubscribe": [Function],
-                  },
-                },
-                "_updateFieldArray": [Function],
-                "_updateValid": [Function],
-                "getFieldState": [Function],
-                "register": [Function],
-                "unregister": [Function],
-              }
-            }
-            errors={Object {}}
-          />
-          <div
-            className="agree-submit"
-          >
-            <FormCheck
-              checked={false}
-              data-testid="agree"
-              label="I agree to send my personal information to the chosen Legal Officers"
-              onChange={[Function]}
-              type="checkbox"
-            />
-            <ClientExtrinsicSubmitter
-              onError={[Function]}
-              onSuccess={[Function]}
-              successMessage="Recovery successfully initiated."
-            />
-            <Button
-              action={
-                Object {
-                  "buttonTestId": "btnSubmit",
-                  "buttonText": "Next",
-                  "buttonVariant": "primary",
-                  "disabled": true,
-                  "id": "submit",
-                  "type": "submit",
-                }
-              }
-            />
-          </div>
-        </Form>
-        <Dialog
-          actions={
-            Array [
-              Object {
-                "buttonText": "OK",
-                "buttonVariant": "primary",
-                "callback": [Function],
-                "id": "discard",
-              },
-            ]
-          }
-          show={false}
-          size="lg"
-        >
-          <React.Fragment>
-            The legal officers have been informed of your request.
-          </React.Fragment>
-        </Dialog>
       </Frame>
     </Col>
   </Row>

@@ -56,6 +56,7 @@ exports[`PendingProtectionRequests Renders pending requests 1`] = `
           "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
           "otherLegalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
           "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "requesterIdentityLoc": "460acfb9-0bae-42d2-9a23-0545d964e633",
           "status": "PENDING",
           "userIdentity": Object {
             "email": "john.doe@logion.network",

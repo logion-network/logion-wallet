@@ -11,11 +11,11 @@ import Dialog from "../common/Dialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
 import Select from "../common/Select";
-import { useLogionChain } from "../logion-chain";
+import { CallCallback, useLogionChain } from "../logion-chain";
 
 import { buildOptions } from '../wallet-user/trust-protection/SelectLegalOfficer';
 import { useUserContext } from "../wallet-user/UserContext";
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 interface FormValues {
     legalOfficer: string;
@@ -24,13 +24,11 @@ interface FormValues {
 }
 
 export default function VaultOutRequest() {
-    const { api, accounts, getOfficer, signer, client } = useLogionChain();
+    const { api, accounts, getOfficer, signer, client, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { availableLegalOfficers, colorTheme } = useCommonContext();
     const { protectionState, mutateVaultState } = useUserContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
-    const [ signAndSubmit, setSignAndSubmit ] = useState<Call>();
-    const [ failed, setFailed ] = useState(false);
     const [ candidates, setCandidates ] = useState<LegalOfficer[]>([]);
 
     useEffect(() => {
@@ -51,8 +49,13 @@ export default function VaultOutRequest() {
         }
     });
 
+    const close = useCallback(() => {
+        reset();
+        setShowDialog(false);
+    }, [ reset ]);
+
     const transferCallback = useCallback(async (formValues: FormValues) => {
-        const signAndSubmit: Call = async (callback: CallCallback) => {
+        const call = async (callback: CallCallback) => {
             await mutateVaultState(async (state: VaultState) => {
                 return await state.createVaultTransferRequest({
                     legalOfficer: getOfficer!(formValues!.legalOfficer)!,
@@ -63,23 +66,13 @@ export default function VaultOutRequest() {
                 });
             })
         };
-        setSignAndSubmit(() => signAndSubmit);
-    }, [ getOfficer, mutateVaultState, signer ]);
-
-    const cleanUpCallback = useCallback(() => {
-        setSignAndSubmit(undefined);
-        reset();
-    }, [ setSignAndSubmit, reset ]);
-
-    const onExtrinsicSuccessCallback = useCallback(async () => {
-        cleanUpCallback();
-        setShowDialog(false);
-    }, [ cleanUpCallback, setShowDialog ]);
-
-    const cancelCallback = useCallback(() => {
-        cleanUpCallback();
-        setShowDialog(false);
-    }, [ cleanUpCallback, setShowDialog ]);
+        try {
+            await submitCall(call);
+            close();
+        } finally {
+            clearSubmissionState();
+        }
+    }, [ getOfficer, mutateVaultState, signer, submitCall, clearSubmissionState, close ]);
 
     if(availableLegalOfficers === undefined || !client) {
         return null;
@@ -98,22 +91,22 @@ export default function VaultOutRequest() {
                         buttonText: "Cancel",
                         id: "cancel",
                         buttonVariant: "secondary-polkadot",
-                        callback: cancelCallback,
-                        disabled: signAndSubmit !== undefined && !failed
+                        callback: close,
+                        disabled: extrinsicSubmissionState.inProgress && !extrinsicSubmissionState.isError()
                     },
                     {
                         buttonText: "Transfer",
                         id: "transfer",
                         buttonVariant: "polkadot",
                         type: 'submit',
-                        disabled: signAndSubmit !== undefined
+                        disabled: extrinsicSubmissionState.inProgress
                     }
                 ]}
                 onSubmit={ handleSubmit(transferCallback) }
             >
                 <h2>Transfer { Lgnt.CODE }s from your logion Vault</h2>
 
-                { signAndSubmit === undefined &&
+                { !extrinsicSubmissionState.inProgress &&
                 <>
                     <FormGroup
                         id="destination"
@@ -203,11 +196,7 @@ export default function VaultOutRequest() {
                 </>
                 }
 
-                <ClientExtrinsicSubmitter
-                    call={ signAndSubmit }
-                    onSuccess={ onExtrinsicSuccessCallback }
-                    onError={ () => setFailed(true) }
-                />
+                <ExtrinsicSubmissionStateView />
             </Dialog>
         </>
     )

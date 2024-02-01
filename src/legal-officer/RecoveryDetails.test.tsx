@@ -54,26 +54,12 @@ describe("RecoveryDetails", () => {
         await waitFor(() => processButton = screen.getByRole("button", {name: "Proceed"}));
         await userEvent.click(processButton!);
 
-        let linkButton: HTMLElement;
-        await waitFor(() => linkButton = screen.getByRole("button", {name: "Link to an existing Identity LOC"}));
-        await userEvent.click(linkButton!);
-
-        let closedLocInput: HTMLElement;
-        await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
-        await userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
-
-        let confirmButton: HTMLElement;
-        await waitFor(() => confirmButton = screen.getByRole("button", {name: "Confirm and sign"}));
-        await userEvent.click(confirmButton!);
-
         await waitFor(() => expect(acceptProtectionRequest).toBeCalledWith(
             axiosMock.object(),
             expect.objectContaining({
                 requestId: protectionRequest.id,
             })
         ));
-
-        await waitFor(() => expect(screen.getByText('Submitting...')).toBeInTheDocument());
     });
 
     it("Recovery can be refused", async () => {

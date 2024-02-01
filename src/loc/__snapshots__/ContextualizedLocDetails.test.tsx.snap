@@ -124,7 +124,6 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "isLogionIdentity": [Function],
       }
     }
-    protectionRequest={null}
   />
   <LocDetailsTab
     checkResult={
@@ -528,7 +527,6 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "isLogionIdentity": [Function],
       }
     }
-    protectionRequest={null}
   />
   <LocDetailsTab
     checkResult={

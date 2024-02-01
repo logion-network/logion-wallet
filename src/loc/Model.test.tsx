@@ -1,4 +1,3 @@
-import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
@@ -33,17 +32,12 @@ describe("Model", () => {
         } as unknown as AxiosInstance;
 
         const requestId = "0e16421a-2550-4be5-a6a8-1ab2239b7dc4";
-        const identityLocId = new UUID("8f12876b-7fde-49b0-93a4-d29ed5179151");
         await acceptProtectionRequest(axios, {
             requestId,
-            locId: identityLocId,
         });
 
         expect(axios.post).toBeCalledWith(
             `/api/protection-request/${requestId}/accept`,
-            expect.objectContaining({
-                locId: identityLocId.toString(),
-            })
         );
     });
 });
