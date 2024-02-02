@@ -4,8 +4,7 @@ import {
     LegalOfficer,
     PendingProtection,
     UnavailableProtection,
-    RejectedProtection,
-    RejectedRecovery, ProtectionState
+    RejectedRecovery,
 } from "@logion/client";
 
 import { useLogionChain } from '../../logion-chain';
@@ -25,7 +24,6 @@ import SelectLegalOfficer from './SelectLegalOfficer';
 
 import './ProtectionRecoveryRequest.css';
 import { ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient.js';
-import ProtectionRefusal from "./ProtectionRefusal";
 import RecoveryRefusal from "./RecoveryRefusal";
 import ButtonGroup from "../../common/ButtonGroup";
 import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';
@@ -65,11 +63,11 @@ export default function ProtectionRecoveryRequest(props: Props) {
 
     if(props.type !== 'unavailable') {
         const protectionParameters = protectionState.protectionParameters;
-        const legalOfficer1: LegalOfficer = protectionParameters.states[0].legalOfficer;
-        const legalOfficer2: LegalOfficer = protectionParameters.states[1].legalOfficer;
+        const legalOfficer1: LegalOfficer = protectionParameters.legalOfficers[0];
+        const legalOfficer2: LegalOfficer = protectionParameters.legalOfficers[1];
         let legalOfficer1Status: ProtectionRequestStatus;
         let legalOfficer2Status: ProtectionRequestStatus;
-        if(protectionState instanceof PendingProtection || protectionState instanceof RejectedProtection || protectionState instanceof RejectedRecovery) {
+        if(protectionState instanceof PendingProtection || protectionState instanceof RejectedRecovery) {
             legalOfficer1Status = protectionParameters.states[0].status;
             legalOfficer2Status = protectionParameters.states[1].status;
         } else if(props.type === 'accepted') {
@@ -205,6 +203,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                                 <Button
                                     data-testid="btnActivate"
                                     onClick={ activateProtectionCallback }
+                                    variant="polkadot"
                                 >
                                     Activate
                                 </Button>
@@ -216,6 +215,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                                 <Button
                                     data-testid="btnClaim"
                                     onClick={ claimRecoveryCallback }
+                                    variant="polkadot"
                                 >
                                     Claim
                                 </Button>
@@ -226,11 +226,10 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         { refusal === 'double' &&
                             <Row className="legal-officers">
                                 <Col md={ 6 }>
-                                    <RefusalBox
-                                        isRecovery={ protectionParameters.isRecovery }
-                                        protectionState={ protectionState }
-                                        refusal={ refusal }
-                                    />
+                                <RecoveryRefusal
+                                    recovery={ protectionState as RejectedRecovery }
+                                    refusal={ refusal }
+                                />
                                 </Col>
                             </Row>
                         }
@@ -248,9 +247,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             </Col>
                             <Col md={6}>
                                 { refusal === 'single' &&
-                                    <RefusalBox
-                                        isRecovery={ protectionParameters.isRecovery }
-                                        protectionState={ protectionState }
+                                    <RecoveryRefusal
+                                        recovery={ protectionState as RejectedRecovery }
                                         refusal={ refusal }
                                     />
                                 }
@@ -324,31 +322,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     </Frame>
             </FullWidthPane>
         );
-    }
-}
-
-interface RefusalProps {
-    isRecovery: boolean
-    protectionState: ProtectionState
-    refusal: Refusal
-}
-
-function RefusalBox(props: RefusalProps) {
-    const { isRecovery, protectionState, refusal } = props
-    if (!isRecovery) {
-        return (
-            <ProtectionRefusal
-                protection={ protectionState as RejectedProtection }
-                refusal={ refusal }
-            />
-        )
-    } else {
-        return (
-            <RecoveryRefusal
-                recovery={ protectionState as RejectedRecovery }
-                refusal={ refusal }
-            />
-        )
     }
 }
 

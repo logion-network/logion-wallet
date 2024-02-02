@@ -61,10 +61,11 @@ export default function RecoveryDetails() {
         const currentAddress = accounts!.current!.accountId.address;
         const lost = recoveryInfo!.accountToRecover!.requesterAddress;
         const rescuer = recoveryInfo!.recoveryAccount.requesterAddress;
-        await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
-            requestId: requestId!,
-        });
+
         if (await alreadyVouched(lost, rescuer, currentAddress)) {
+            await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
+                requestId: requestId!,
+            });
             refreshRequests!(false);
             navigate(RECOVERY_REQUESTS_PATH);
         } else {
@@ -77,7 +78,10 @@ export default function RecoveryDetails() {
                     signerId: currentAddress,
                     submittable,
                     callback,
-                })
+                });
+                await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
+                    requestId: requestId!,
+                });
             };
             try {
                 await submitCall(call);

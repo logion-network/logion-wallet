@@ -30,22 +30,6 @@ exports[`renders 1`] = `
         "icon": Object {
           "height": "auto",
           "icon": Object {
-            "hasVariants": true,
-            "id": "shield",
-          },
-          "width": "60px",
-        },
-        "id": "protection",
-        "onClick": [Function],
-        "text": "Protection Management",
-        "to": "/legal-officer/protection",
-      },
-      Object {
-        "disabled": false,
-        "exact": true,
-        "icon": Object {
-          "height": "auto",
-          "icon": Object {
             "id": "vault-big",
           },
           "width": "60px",

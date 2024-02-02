@@ -35,7 +35,7 @@ describe("CreateProtectionRequestForm", () => {
 
         await selectLegalOfficers();
 
-        await clickByName("Submit request");
+        await clickByName("Proceed");
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
             expect.objectContaining({
@@ -52,7 +52,7 @@ describe("CreateProtectionRequestForm", () => {
 
         await selectLegalOfficers();
 
-        await clickByName("Submit request");
+        await clickByName("Proceed");
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
             expect.objectContaining({
@@ -71,7 +71,7 @@ describe("CreateProtectionRequestForm", () => {
 
         await selectLegalOfficers();
 
-        await clickByName("Submit request");
+        await clickByName("Proceed");
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
             expect.objectContaining({

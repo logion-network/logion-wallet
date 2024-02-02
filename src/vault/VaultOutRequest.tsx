@@ -33,7 +33,7 @@ export default function VaultOutRequest() {
 
     useEffect(() => {
         if(availableLegalOfficers && protectionState) {
-            const protectingLegalOfficers = protectionState.protectionParameters.states.map(state => state.legalOfficer.address);
+            const protectingLegalOfficers = protectionState.protectionParameters.legalOfficers.map(legalOfficer => legalOfficer.address);
             setCandidates(availableLegalOfficers.filter(legalOfficer => protectingLegalOfficers.includes(legalOfficer.address)));
         }
     }, [ accounts, api, availableLegalOfficers, setCandidates, protectionState ]);

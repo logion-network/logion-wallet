@@ -1,3 +1,4 @@
+import { LocsState, LogionClient } from "@logion/client";
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -18,8 +19,23 @@ import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
 import { LegalOfficerAndLoc } from './SelectLegalOfficerAndLoc';
-import { getLegalOfficerAndLocs } from './ProtectionRefusal';
 import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';
+
+export function getLegalOfficerAndLocs(locsState: LocsState | undefined, client: LogionClient | null) {
+    if(locsState && client) {
+        const closedIdentityLocs = locsState.closedLocs["Identity"];
+        const list: LegalOfficerAndLoc[] = [];
+        for(const loc of closedIdentityLocs) {
+            list.push({
+                loc: loc.locId,
+                legalOfficer: client.getLegalOfficer(loc.data().ownerAddress),
+            });
+        }
+        return list;
+    } else {
+        return [];
+    }
+}
 
 export interface Props {
     isRecovery: boolean,
@@ -47,34 +63,23 @@ export default function CreateProtectionRequestForm(props: Props) {
             return;
         }
 
-        if(props.isRecovery) {
-            const call = async (callback: CallCallback) => {
-                await createProtectionRequest!({
-                    legalOfficers: [
-                        legalOfficer1!.legalOfficer,
-                        legalOfficer2!.legalOfficer,
-                    ],
-                    addressToRecover,
-                    callback,
-                    requesterIdentityLoc1: legalOfficer1!.loc,
-                    requesterIdentityLoc2: legalOfficer2!.loc,
-                });
-            };
-            try {
-                await submitCall(call);
-            } finally {
-                clearSubmissionState();
-            }
-        } else {
+        const call = async (callback: CallCallback) => {
             await createProtectionRequest!({
                 legalOfficers: [
                     legalOfficer1!.legalOfficer,
                     legalOfficer2!.legalOfficer,
                 ],
-                addressToRecover: undefined,
+                addressToRecover: props.isRecovery ? addressToRecover : undefined,
+                callback,
                 requesterIdentityLoc1: legalOfficer1!.loc,
                 requesterIdentityLoc2: legalOfficer2!.loc,
             });
+        };
+
+        try {
+            await submitCall(call);
+        } finally {
+            clearSubmissionState();
         }
     }, [ legalOfficer1, legalOfficer2, addressToRecover, props.isRecovery, createProtectionRequest, submitCall, clearSubmissionState, canSubmit ]);
 
@@ -205,9 +210,9 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 extrinsicSubmissionState.canSubmit() && canSubmit &&
                                 <Button
                                     onClick={ submit }
-                                    variant={ props.isRecovery ? "polkadot" : "primary" }
+                                    variant={ "polkadot" }
                                 >
-                                    Submit request
+                                    Proceed
                                 </Button>
                             }
                             </>

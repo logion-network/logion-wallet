@@ -407,6 +407,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
       <Button
         data-testid="btnClaim"
         onClick={[Function]}
+        variant="polkadot"
       >
         Claim
       </Button>
@@ -1174,6 +1175,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
       <Button
         data-testid="btnClaim"
         onClick={[Function]}
+        variant="polkadot"
       >
         Claim
       </Button>
