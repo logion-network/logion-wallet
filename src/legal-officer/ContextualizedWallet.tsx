@@ -7,7 +7,6 @@ import { useCommonContext } from '../common/CommonContext';
 
 import {
     HOME_PATH,
-    PROTECTION_REQUESTS_PATH,
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
     WALLET_PATH,
@@ -145,22 +144,6 @@ export default function ContextualizedWallet() {
             <Dashboard
                 menuTop={ menuTop }
                 menuMiddle={[
-                    {
-                        id: "protection",
-                        text: "Protection Management",
-                        to: PROTECTION_REQUESTS_PATH,
-                        exact: true,
-                        icon: {
-                            icon: {
-                                id: 'shield',
-                                hasVariants: true,
-                            },
-                            height: 'auto',
-                            width: '60px',
-                        },
-                        onClick: refreshAll,
-                        disabled: currentLegalOfficerUnavailable,
-                    },
                     {
                         id: "vault",
                         text: "Vault-out Requests",

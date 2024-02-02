@@ -11,7 +11,7 @@ import {
     SignCallback,
     AcceptedProtection,
     PendingRecovery,
-    RejectedProtection,
+    RejectedRecovery,
 } from "@logion/client";
 import { VaultState } from "@logion/client";
 
@@ -27,7 +27,7 @@ import { UUID } from "@logion/node-api";
 export interface CreateProtectionRequestParams {
     legalOfficers: LegalOfficerClass[],
     addressToRecover?: string,
-    callback?: SignCallback,
+    callback: SignCallback,
     requesterIdentityLoc1: UUID,
     requesterIdentityLoc2: UUID,
 }
@@ -41,7 +41,6 @@ export interface UserContext {
     claimRecovery: ((callback: SignCallback) => Promise<void>) | null,
     cancelProtection: () => Promise<void>,
     resubmitProtection: (legalOfficer: LegalOfficer) => Promise<void>,
-    changeProtectionLegalOfficer: (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer, newIdentityLoc: UUID) => Promise<void>
     protectionState?: ProtectionState,
     vaultState?: VaultState,
     mutateVaultState: (mutator: (current: VaultState) => Promise<VaultState>) => Promise<void>,
@@ -67,7 +66,6 @@ function initialContextValue(): FullUserContext {
         claimRecovery: null,
         cancelProtection: () => Promise.reject(),
         resubmitProtection: () => Promise.reject(),
-        changeProtectionLegalOfficer: () => Promise.reject(),
         mutateVaultState: () => Promise.reject(),
         mutateRecoveredVaultState: () => Promise.reject(),
         mutateRecoveredBalanceState: () => Promise.reject(),
@@ -243,11 +241,6 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                 ...state,
                 resubmitProtection: action.resubmitProtection!,
             }
-        case "SET_PROTECTION_CHANGE_LO":
-            return {
-                ...state,
-                changeProtectionLegalOfficer: action.changeProtectionLegalOfficer!
-            }
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -362,11 +355,15 @@ export function UserContextProvider(props: Props) {
                     signer: signer!,
                 });
             } else {
-                pending = await protectionState.requestProtection({
-                    legalOfficer1: params.legalOfficers[0],
-                    legalOfficer2: params.legalOfficers[1],
-                    requesterIdentityLoc1: params.requesterIdentityLoc1,
-                    requesterIdentityLoc2: params.requesterIdentityLoc2,
+                pending = await protectionState.activateProtection({
+                    payload: {
+                        legalOfficer1: params.legalOfficers[0],
+                        legalOfficer2: params.legalOfficers[1],
+                        requesterIdentityLoc1: params.requesterIdentityLoc1,
+                        requesterIdentityLoc2: params.requesterIdentityLoc2,
+                    },
+                    callback: params.callback,
+                    signer: signer!,
                 });
             }
             dispatch({
@@ -508,7 +505,7 @@ export function UserContextProvider(props: Props) {
     }, [ mutateLocsStateCallback, contextValue.mutateLocsState ]);
 
     const cancelProtectionCallback = useCallback(async () => {
-        const rejectedProtection = contextValue.protectionState as RejectedProtection;
+        const rejectedProtection = contextValue.protectionState as RejectedRecovery;
         const noProtection = await rejectedProtection.cancel();
         dispatch({
             type: "REFRESH_PROTECTION_STATE",
@@ -517,17 +514,8 @@ export function UserContextProvider(props: Props) {
     }, [ contextValue.protectionState ])
 
     const resubmitProtectionCallback = useCallback(async (legalOfficer: LegalOfficer) => {
-        const rejectedProtection = contextValue.protectionState as RejectedProtection;
+        const rejectedProtection = contextValue.protectionState as RejectedRecovery;
         const pendingProtection = await rejectedProtection.resubmit(legalOfficer);
-        dispatch({
-            type: "REFRESH_PROTECTION_STATE",
-            protectionState: pendingProtection
-        })
-    }, [ contextValue.protectionState ])
-
-    const changeProtectionLegalOfficerCallback = useCallback(async (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer, newIdentityLoc: UUID) => {
-        const rejectedProtection = contextValue.protectionState as RejectedProtection;
-        const pendingProtection = await rejectedProtection.changeLegalOfficer(legalOfficer, newLegalOfficer, newIdentityLoc);
         dispatch({
             type: "REFRESH_PROTECTION_STATE",
             protectionState: pendingProtection
@@ -551,15 +539,6 @@ export function UserContextProvider(props: Props) {
             });
         }
     }, [ contextValue.resubmitProtection, resubmitProtectionCallback ]);
-
-    useEffect(() => {
-        if (contextValue.changeProtectionLegalOfficer !== changeProtectionLegalOfficerCallback) {
-            dispatch({
-                type: "SET_PROTECTION_CHANGE_LO",
-                changeProtectionLegalOfficer: changeProtectionLegalOfficerCallback
-            });
-        }
-    }, [ contextValue.changeProtectionLegalOfficer, changeProtectionLegalOfficerCallback ]);
 
     return (
         <UserContextObject.Provider value={ contextValue }>

@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import {
-    PROTECTION_REQUESTS_RELATIVE_PATH,
     RECOVERY_REQUESTS_RELATIVE_PATH,
     SETTINGS_RELATIVE_PATH,
     RECOVERY_DETAILS_RELATIVE_PATH,
@@ -26,7 +25,6 @@ import {
 } from './LegalOfficerPaths';
 
 import Home from './Home';
-import ProtectionRequests from './ProtectionRequests';
 import RecoveryRequests from './RecoveryRequests';
 import Settings from '../settings/Settings';
 import RecoveryDetails from "./RecoveryDetails";
@@ -88,7 +86,6 @@ export default function LegalOfficerRouter() {
 
     return (
         <Routes>
-            <Route path={ PROTECTION_REQUESTS_RELATIVE_PATH } element={ <ProtectionRequests /> } />
             <Route path={ VAULT_OUT_REQUESTS_RELATIVE_PATH } element={ <VaultOutRequests /> } />
             <Route path={ RECOVERY_REQUESTS_RELATIVE_PATH } element={ <RecoveryRequests /> } />
             <Route path={ RECOVERY_DETAILS_RELATIVE_PATH } element={ <RecoveryDetails /> } />
