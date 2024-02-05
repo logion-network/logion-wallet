@@ -1,6 +1,6 @@
 {
     "name": "logion-wallet",
-    "version": "0.51.0",
+    "version": "0.52.0",
     "private": true,
     "author": {
         "name": "Logion Team",
@@ -11,10 +11,11 @@
     "dependencies": {
         "@craco/craco": "^6.4.5",
         "@creativecommons/cc-assets": "^0.1.0",
-        "@logion/client-browser": "^0.3.3-1",
-        "@logion/crossmint": "^0.1.32-1",
-        "@logion/extension": "^0.7.6-1",
-        "@logion/multiversx": "^0.1.13-1",
+        "@logion/client": "^0.39.0",
+        "@logion/client-browser": "^0.3.3",
+        "@logion/crossmint": "^0.1.32",
+        "@logion/extension": "^0.7.6",
+        "@logion/multiversx": "^0.1.13",
         "@multiversx/sdk-extension-provider": "^2.0.7",
         "@popperjs/core": "^2.11.6",
         "@types/qrcode": "^1.5.0",
