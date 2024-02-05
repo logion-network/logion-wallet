@@ -33,6 +33,18 @@ module.exports = {
 
 			return config;
 		}
+    },
+    jest: {
+        configure: (config) => {
+            config.transformIgnorePatterns = [
+                "/node_modules/(?!(@polkadot|@babel|react-calendar|react-date-picker|pagedjs|@creativecommons|@logion)/).*"
+            ];
+
+            delete config.transform['^.+\\.(js|jsx|mjs|cjs|ts|tsx)$'];
+            config.transform["\\.[jt]sx?$"] = "babel-jest";
+
+            return config;
+        }
     }
 };
 

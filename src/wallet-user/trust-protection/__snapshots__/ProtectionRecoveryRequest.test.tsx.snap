@@ -37,6 +37,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -67,6 +68,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -93,6 +95,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -119,6 +122,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -149,6 +153,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -185,6 +190,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -215,6 +221,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -241,6 +248,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -267,6 +275,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -297,6 +306,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -428,6 +438,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -458,6 +469,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -484,6 +496,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -510,6 +523,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -540,6 +554,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -576,6 +591,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -606,6 +622,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -632,6 +649,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -658,6 +676,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -688,6 +707,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -805,6 +825,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -835,6 +856,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -861,6 +883,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -887,6 +910,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -917,6 +941,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -953,6 +978,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -983,6 +1009,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -1009,6 +1036,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -1035,6 +1063,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -1065,6 +1094,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -1196,6 +1226,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -1226,6 +1257,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -1252,6 +1284,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -1278,6 +1311,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -1308,6 +1342,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -1344,6 +1379,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -1374,6 +1410,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -1400,6 +1437,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -1426,6 +1464,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -1456,6 +1495,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -1575,6 +1615,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -1605,6 +1646,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -1631,6 +1673,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -1657,6 +1700,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -1687,6 +1731,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -1723,6 +1768,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -1753,6 +1799,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -1779,6 +1826,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -1805,6 +1853,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -1835,6 +1884,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -1957,6 +2007,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
@@ -1987,6 +2038,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -2013,6 +2065,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -2039,6 +2092,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -2069,6 +2123,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -2105,6 +2160,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "nodeId": "",
@@ -2135,6 +2191,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -2161,6 +2218,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -2187,6 +2245,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
+                "config": undefined,
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
@@ -2217,6 +2276,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
+              "config": undefined,
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "nodeId": "",
