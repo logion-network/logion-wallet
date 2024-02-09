@@ -42,7 +42,7 @@ export default function VaultRecoveryProcessTab() {
 
     const { getOfficer, signer, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { colorTheme, availableLegalOfficers } = useCommonContext();
-    const { protectionState, vaultState, mutateRecoveredVaultState, recoveredVaultState } = useUserContext();
+    const { protectionState, vaultState, mutateRecoveredVaultState, recoveredVaultState, workloads } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
     const [ legalOfficer, setLegalOfficer ] = useState<string | null>(null);
     const [ status, setStatus ] = useState<Status>(Status.IDLE);
@@ -240,7 +240,7 @@ export default function VaultRecoveryProcessTab() {
                                 render={ () => (
                                     <Select
                                         isInvalid={ !!errors.legalOfficer?.message }
-                                        options={ buildOptions(candidates) }
+                                        options={ buildOptions(candidates, workloads) }
                                         value={ legalOfficer }
                                         onChange={ value => setLegalOfficer(value) }
                                     />

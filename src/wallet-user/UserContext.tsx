@@ -50,6 +50,7 @@ export interface UserContext {
     mutateRecoveredBalanceState: (mutator: (current: BalanceState) => Promise<BalanceState>) => Promise<void>,
     locsState?: LocsState,
     mutateLocsState: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>,
+    workloads: Record<string, number>,
 }
 
 interface FullUserContext extends UserContext {
@@ -70,6 +71,7 @@ function initialContextValue(): FullUserContext {
         mutateRecoveredVaultState: () => Promise.reject(),
         mutateRecoveredBalanceState: () => Promise.reject(),
         mutateLocsState: () => Promise.reject(),
+        workloads: {},
     }
 }
 
@@ -117,6 +119,7 @@ interface Action {
     mutateRecoveredBalanceState?: (mutator: (current: BalanceState) => Promise<BalanceState>) => Promise<void>,
     locsState?: LocsState,
     mutateLocsState?: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>,
+    workloads?: Record<string, number>,
 }
 
 const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, action: Action): FullUserContext => {
@@ -150,6 +153,7 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                     recoveredVaultState: action.recoveredVaultState,
                     recoveredBalanceState: action.recoveredBalanceState,
                     locsState: action.locsState,
+                    workloads: action.workloads!,
                 };
             } else {
                 console.log(`Skipping data because ${action.dataAddress} <> ${state.fetchForAddress}`);
@@ -304,6 +308,11 @@ export function UserContextProvider(props: Props) {
 
                 const locsState = await client.locsState();
 
+                const workloads: Record<string, number> = {};
+                for(const legalOfficer of client.legalOfficers) {
+                    workloads[legalOfficer.address] = await legalOfficer.getWorkload();
+                }
+
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress.toKey(),
@@ -312,6 +321,7 @@ export function UserContextProvider(props: Props) {
                     recoveredVaultState,
                     recoveredBalanceState,
                     locsState,
+                    workloads,
                 });
             })();
         }

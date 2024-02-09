@@ -98,5 +98,5 @@ describe("IdentityLocRequest", () => {
 async function selectLegalOfficer() {
     const legalOfficer1Select = screen.getByTestId('legalOfficer1Group');
     await userEvent.click(getByText(legalOfficer1Select, "Select..."));
-    await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen")));
+    await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen (workload: 1)")));
 }

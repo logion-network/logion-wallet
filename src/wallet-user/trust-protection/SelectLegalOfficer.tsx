@@ -1,6 +1,6 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { LegalOfficer } from "@logion/client";
+import { LegalOfficerClass } from "@logion/client";
 import { ProtectionRequestStatus } from "@logion/client/dist/RecoveryClient.js";
 
 import { ORANGE, GREEN, RED, YELLOW, BackgroundAndForegroundColors } from "../../common/ColorTheme";
@@ -12,30 +12,32 @@ import { useCommonContext } from '../../common/CommonContext';
 import Officer from './Officer';
 
 import './SelectLegalOfficer.css';
+import { useUserContext } from "../UserContext";
+import { useMemo } from "react";
 
 export type Mode = 'select' | 'view';
 
-export function buildOptions(legalOfficers: LegalOfficer[]): OptionType<string>[] {
+export function buildOptions(legalOfficers: LegalOfficerClass[], workloads: Record<string, number>): OptionType<string>[] {
     const options: OptionType<string>[] = [];
     legalOfficers.forEach(legalOfficer => {
-        options.push(buildOption(legalOfficer));
+        options.push(buildOption(legalOfficer, workloads[legalOfficer.address]));
     });
     return options;
 }
 
-function buildOption(legalOfficer: LegalOfficer): OptionType<string> {
+function buildOption(legalOfficer: LegalOfficerClass, workload: number | undefined): OptionType<string> {
     return {
-        label: legalOfficer.name,
+        label: legalOfficer.name + (workload !== undefined ? ` (workload: ${ workload })` : ""),
         value: legalOfficer.address,
     };
 }
 
 export interface Props {
     legalOfficerNumber: number,
-    legalOfficers: LegalOfficer[],
-    legalOfficer: LegalOfficer | null,
-    otherLegalOfficer: LegalOfficer | null,
-    setLegalOfficer?: (legalOfficer: LegalOfficer) => void,
+    legalOfficers: LegalOfficerClass[],
+    legalOfficer: LegalOfficerClass | null,
+    otherLegalOfficer: LegalOfficerClass | null,
+    setLegalOfficer?: (legalOfficer: LegalOfficerClass) => void,
     mode: Mode,
     status?: ProtectionRequestStatus,
     label: string,
@@ -46,11 +48,14 @@ export interface Props {
 
 export default function SelectLegalOfficer(props: Props) {
     const { colorTheme } = useCommonContext();
+    const { workloads } = useUserContext();
     const colors = props.colors !== undefined ? props.colors : colorTheme.frame;
     const feedback = props.feedback ? props.feedback : "Required and different from other legal officer";
     const { label } = props;
-    const legalOfficersOptions = buildOptions(props.legalOfficers);
-    const legalOfficersByAddress: Record<string, LegalOfficer> = {};
+
+    const legalOfficersOptions = useMemo(() => buildOptions(props.legalOfficers, workloads), [ props.legalOfficers, workloads ]);
+
+    const legalOfficersByAddress: Record<string, LegalOfficerClass> = {};
     props.legalOfficers.forEach(legalOfficer => {
         legalOfficersByAddress[legalOfficer.address] = legalOfficer;
     });
