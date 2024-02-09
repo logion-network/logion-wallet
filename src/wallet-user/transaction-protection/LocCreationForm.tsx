@@ -29,7 +29,7 @@ export interface Props {
 }
 
 export default function LocCreationForm(props: Props) {
-    const { locsState } = useUserContext();
+    const { locsState, workloads } = useUserContext();
 
     if(locsState === undefined) {
         return null;
@@ -56,7 +56,7 @@ export default function LocCreationForm(props: Props) {
                         render={({ field }) => (
                             <Select
                                 isInvalid={ !!props.errors.legalOfficer?.message }
-                                options={ buildOptions(locsState?.legalOfficersWithValidIdentityLoc) }
+                                options={ buildOptions(locsState?.legalOfficersWithValidIdentityLoc, workloads) }
                                 value={ field.value }
                                 onChange={ field.onChange }
                             />

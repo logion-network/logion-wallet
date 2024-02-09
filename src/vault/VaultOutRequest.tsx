@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { Numbers, Lgnt } from "@logion/node-api";
-import { LegalOfficer, VaultState } from "@logion/client";
+import { LegalOfficerClass, VaultState } from "@logion/client";
 
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";
 import Button from "../common/Button";
@@ -26,10 +26,10 @@ interface FormValues {
 export default function VaultOutRequest() {
     const { api, accounts, getOfficer, signer, client, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { availableLegalOfficers, colorTheme } = useCommonContext();
-    const { protectionState, mutateVaultState } = useUserContext();
+    const { protectionState, mutateVaultState, workloads } = useUserContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
-    const [ candidates, setCandidates ] = useState<LegalOfficer[]>([]);
+    const [ candidates, setCandidates ] = useState<LegalOfficerClass[]>([]);
 
     useEffect(() => {
         if(availableLegalOfficers && protectionState) {
@@ -183,7 +183,7 @@ export default function VaultOutRequest() {
                                 render={({ field }) => (
                                     <Select
                                         isInvalid={ !!errors.legalOfficer?.message }
-                                        options={ buildOptions(candidates) }
+                                        options={ buildOptions(candidates, workloads) }
                                         value={ field.value }
                                         onChange={ field.onChange }
                                     />

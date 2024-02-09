@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import {
-    LegalOfficer,
     PendingProtection,
     UnavailableProtection,
     RejectedRecovery,
@@ -63,8 +62,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
 
     if(props.type !== 'unavailable') {
         const protectionParameters = protectionState.protectionParameters;
-        const legalOfficer1: LegalOfficer = protectionParameters.legalOfficers[0];
-        const legalOfficer2: LegalOfficer = protectionParameters.legalOfficers[1];
+        const legalOfficer1 = protectionParameters.legalOfficers[0];
+        const legalOfficer2 = protectionParameters.legalOfficers[1];
         let legalOfficer1Status: ProtectionRequestStatus;
         let legalOfficer2Status: ProtectionRequestStatus;
         if(protectionState instanceof PendingProtection || protectionState instanceof RejectedRecovery) {

@@ -38,7 +38,7 @@ describe("LocCreation", () => {
         await openDialog(true);
 
         await userEvent.click(screen.getByText("Select..."));
-        await waitFor(() => userEvent.click(screen.getByText("Guillaume Grain")));
+        await waitFor(() => userEvent.click(screen.getByText("Guillaume Grain (workload: 3)")));
 
         await waitFor(() => {
             expect(screen.getByRole("button", { name: "Cancel" })).toBeEnabled();
@@ -89,7 +89,7 @@ describe("LocCreation", () => {
         await typeByLabel("Description", description)
 
         await userEvent.click(screen.getByText("Select..."));
-        await waitFor(() => userEvent.click(screen.getByText("Patrick Gielen")));
+        await waitFor(() => userEvent.click(screen.getByText("Patrick Gielen (workload: 1)")));
         await clickByName("Submit");
 
         await waitFor(() => expect(navigate).toBeCalledWith(`/user/loc/transaction/${locId.toString()}`));

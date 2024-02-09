@@ -19,6 +19,7 @@ import {
 } from "@logion/client";
 import { LocType, ValidAccountId } from "@logion/node-api";
 import { Mock } from 'moq.ts';
+import { PATRICK, GUILLAUME, ALAIN } from "../../common/TestData";
 
 export let createTokenRequest = () => null;
 
@@ -184,7 +185,12 @@ export function useUserContext() {
         recoveredBalanceState,
         mutateRecoveredBalanceState,
         locsState,
-        mutateLocsState
+        mutateLocsState,
+        workloads: {
+            [ PATRICK.address ]: 1,
+            [ ALAIN.address ]: 2,
+            [ GUILLAUME.address ]: 3,
+        },
     } as unknown as Partial<UserContext>;
 }
 

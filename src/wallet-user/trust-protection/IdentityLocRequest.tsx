@@ -4,7 +4,7 @@ import IdentityForm, { FormValues } from "../../components/identity/IdentityForm
 import { useForm } from "react-hook-form";
 import { useCommonContext } from "../../common/CommonContext";
 import SelectLegalOfficer from "./SelectLegalOfficer";
-import { LegalOfficer, LegalOfficerClass, LocsState, UserIdentity, PostalAddress, DraftRequest } from "@logion/client";
+import { LegalOfficerClass, LocsState, UserIdentity, PostalAddress, DraftRequest } from "@logion/client";
 import { useUserContext } from "../UserContext";
 import Form from "react-bootstrap/Form";
 import Frame from "../../common/Frame";
@@ -37,7 +37,7 @@ export default function IdentityLocRequest(props: Props) {
     const [ search ] = useSearchParams();
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
     const { colorTheme, availableLegalOfficers } = useCommonContext();
-    const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null);
+    const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficerClass | null>(null);
     const { locsState, mutateLocsState } = useUserContext();
     const [ agree, setAgree ] = useState<boolean>(false);
     const [ company, setCompany ] = useState<boolean>(false);
