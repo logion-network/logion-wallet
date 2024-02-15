@@ -11,7 +11,7 @@
     "dependencies": {
         "@craco/craco": "^7.1.0",
         "@creativecommons/cc-assets": "^0.1.0",
-        "@logion/client": "^0.40.0-1",
+        "@logion/client": "^0.40.0-3",
         "@logion/client-browser": "^0.3.3",
         "@logion/crossmint": "^0.1.32",
         "@logion/extension": "^0.7.6",

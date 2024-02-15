@@ -12,24 +12,24 @@ import { useCommonContext } from '../../common/CommonContext';
 import Officer from './Officer';
 
 import './SelectLegalOfficer.css';
-import { useUserContext } from "../UserContext";
-import { useMemo } from "react";
+import { useState, useEffect } from "react";
 
 export type Mode = 'select' | 'view';
 
-export function buildOptions(legalOfficers: LegalOfficerClass[], workloads: Record<string, number>): OptionType<string>[] {
-    const options: OptionType<string>[] = [];
-    legalOfficers.forEach(legalOfficer => {
-        options.push(buildOption(legalOfficer, workloads[legalOfficer.address]));
-    });
-    return options;
+export async function buildOptions(legalOfficers: LegalOfficerClass[]): Promise<OptionType<string>[]> {
+    const options: Promise<OptionType<string>>[] = [];
+    for (const legalOfficer of legalOfficers) {
+        options.push(buildOption(legalOfficer));
+    }
+    return await Promise.all(options);
 }
 
-function buildOption(legalOfficer: LegalOfficerClass, workload: number | undefined): OptionType<string> {
-    return {
+async function buildOption(legalOfficer: LegalOfficerClass): Promise<OptionType<string>> {
+    const promisedWorkload = legalOfficer.getWorkload();
+    return promisedWorkload.then(workload => ({
         label: legalOfficer.name + (workload !== undefined ? ` (workload: ${ workload })` : ""),
         value: legalOfficer.address,
-    };
+    }))
 }
 
 export interface Props {
@@ -48,17 +48,22 @@ export interface Props {
 
 export default function SelectLegalOfficer(props: Props) {
     const { colorTheme } = useCommonContext();
-    const { workloads } = useUserContext();
     const colors = props.colors !== undefined ? props.colors : colorTheme.frame;
     const feedback = props.feedback ? props.feedback : "Required and different from other legal officer";
     const { label } = props;
-
-    const legalOfficersOptions = useMemo(() => buildOptions(props.legalOfficers, workloads), [ props.legalOfficers, workloads ]);
+    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<string>[]>([]);
 
     const legalOfficersByAddress: Record<string, LegalOfficerClass> = {};
     props.legalOfficers.forEach(legalOfficer => {
         legalOfficersByAddress[legalOfficer.address] = legalOfficer;
     });
+
+    useEffect(() => {
+        if(legalOfficersOptions.length === 0) {
+            buildOptions(props.legalOfficers)
+                .then(options => setLegalOfficersOptions(options));
+        }
+    }, [ legalOfficersOptions, props.legalOfficers ]);
 
     let icon;
     let status;

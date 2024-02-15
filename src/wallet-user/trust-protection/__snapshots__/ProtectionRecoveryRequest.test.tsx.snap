@@ -31,7 +31,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°1"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -57,12 +57,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -88,8 +89,9 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -115,8 +117,9 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -142,12 +145,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -173,6 +177,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           status="ACTIVATED"
@@ -184,7 +189,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°2"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -210,12 +215,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -241,8 +247,9 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -268,8 +275,9 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -295,12 +303,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -326,6 +335,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           status="ACTIVATED"
@@ -432,7 +442,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°1"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -458,12 +468,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -489,8 +500,9 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -516,8 +528,9 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -543,12 +556,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -574,6 +588,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           status="ACTIVATED"
@@ -585,7 +600,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°2"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -611,12 +626,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -642,8 +658,9 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -669,8 +686,9 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -696,12 +714,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -727,6 +746,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           status="ACTIVATED"
@@ -819,7 +839,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°1"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -845,12 +865,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -876,8 +897,9 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -903,8 +925,9 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -930,12 +953,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -961,6 +985,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           status="PENDING"
@@ -972,7 +997,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°2"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -998,12 +1023,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -1029,8 +1055,9 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -1056,8 +1083,9 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -1083,12 +1111,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -1114,6 +1143,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           status="PENDING"
@@ -1220,7 +1250,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°1"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -1246,12 +1276,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -1277,8 +1308,9 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -1304,8 +1336,9 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -1331,12 +1364,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -1362,6 +1396,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           status="ACTIVATED"
@@ -1373,7 +1408,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°2"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -1399,12 +1434,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -1430,8 +1466,9 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -1457,8 +1494,9 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -1484,12 +1522,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -1515,6 +1554,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           status="ACTIVATED"
@@ -1609,7 +1649,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°1"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -1635,12 +1675,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -1666,8 +1707,9 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -1693,8 +1735,9 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -1720,12 +1763,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -1751,6 +1795,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           status="PENDING"
@@ -1762,7 +1807,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°2"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -1788,12 +1833,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -1819,8 +1865,9 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -1846,8 +1893,9 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -1873,12 +1921,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -1904,6 +1953,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           status="PENDING"
@@ -2001,7 +2051,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°1"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -2027,12 +2077,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -2058,8 +2109,9 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -2085,8 +2137,9 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -2112,12 +2165,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -2143,6 +2197,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           status="PENDING"
@@ -2154,7 +2209,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
         <SelectLegalOfficer
           label="Legal Officer N°2"
           legalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
@@ -2180,12 +2235,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+33 4 78 52 87 56",
               },
+              "workload": 3,
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
@@ -2211,8 +2267,9 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+32 498 237 107",
                 },
+                "workload": 1,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -2238,8 +2295,9 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -2265,12 +2323,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
-            LegalOfficerClass {
+            TestLegalOfficer {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
@@ -2296,6 +2355,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "lastName": "Gielen",
                 "phoneNumber": "+32 498 237 107",
               },
+              "workload": 1,
             }
           }
           status="PENDING"

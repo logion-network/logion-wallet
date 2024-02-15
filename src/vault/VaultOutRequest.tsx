@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { Numbers, Lgnt } from "@logion/node-api";
-import { LegalOfficerClass, VaultState } from "@logion/client";
+import { VaultState } from "@logion/client";
 
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";
 import Button from "../common/Button";
@@ -10,7 +10,7 @@ import { useCommonContext } from "../common/CommonContext";
 import Dialog from "../common/Dialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
-import Select from "../common/Select";
+import Select, { OptionType } from "../common/Select";
 import { CallCallback, useLogionChain } from "../logion-chain";
 
 import { buildOptions } from '../wallet-user/trust-protection/SelectLegalOfficer';
@@ -26,17 +26,19 @@ interface FormValues {
 export default function VaultOutRequest() {
     const { api, accounts, getOfficer, signer, client, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { availableLegalOfficers, colorTheme } = useCommonContext();
-    const { protectionState, mutateVaultState, workloads } = useUserContext();
+    const { protectionState, mutateVaultState } = useUserContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
-    const [ candidates, setCandidates ] = useState<LegalOfficerClass[]>([]);
+    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<string>[]>([]);
 
     useEffect(() => {
-        if(availableLegalOfficers && protectionState) {
+        if (legalOfficersOptions.length === 0 && protectionState && availableLegalOfficers) {
             const protectingLegalOfficers = protectionState.protectionParameters.legalOfficers.map(legalOfficer => legalOfficer.address);
-            setCandidates(availableLegalOfficers.filter(legalOfficer => protectingLegalOfficers.includes(legalOfficer.address)));
+            const candidates = availableLegalOfficers.filter(legalOfficer => protectingLegalOfficers.includes(legalOfficer.address));
+            buildOptions(candidates)
+                .then(options => setLegalOfficersOptions(options));
         }
-    }, [ accounts, api, availableLegalOfficers, setCandidates, protectionState ]);
+    }, [ accounts, api, availableLegalOfficers, legalOfficersOptions, setLegalOfficersOptions, protectionState ]);
 
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
@@ -183,7 +185,7 @@ export default function VaultOutRequest() {
                                 render={({ field }) => (
                                     <Select
                                         isInvalid={ !!errors.legalOfficer?.message }
-                                        options={ buildOptions(candidates, workloads) }
+                                        options={ legalOfficersOptions }
                                         value={ field.value }
                                         onChange={ field.onChange }
                                     />

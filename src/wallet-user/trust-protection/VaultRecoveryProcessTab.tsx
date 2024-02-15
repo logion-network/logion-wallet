@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { CoinBalance, Numbers, Lgnt } from "@logion/node-api";
-import { LegalOfficerClass, ProtectionState, VaultState, VaultTransferRequest } from "@logion/client";
+import { ProtectionState, VaultState, VaultTransferRequest } from "@logion/client";
 
 import { CallCallback, useLogionChain } from "../../logion-chain";
 
@@ -11,7 +11,7 @@ import { AssetNameCell } from "../../common/Wallet";
 import Dialog from "../../common/Dialog";
 import Icon from "../../common/Icon";
 import Table, { Cell, EmptyTableMessage } from "../../common/Table";
-import Select from "../../common/Select";
+import Select, { OptionType } from "../../common/Select";
 import FormGroup from "../../common/FormGroup";
 import VaultTransferRequestStatusCell from "../../common/VaultTransferRequestStatusCell";
 import Clickable from "../../common/Clickable";
@@ -42,19 +42,21 @@ export default function VaultRecoveryProcessTab() {
 
     const { getOfficer, signer, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { colorTheme, availableLegalOfficers } = useCommonContext();
-    const { protectionState, vaultState, mutateRecoveredVaultState, recoveredVaultState, workloads } = useUserContext();
+    const { protectionState, vaultState, mutateRecoveredVaultState, recoveredVaultState } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
     const [ legalOfficer, setLegalOfficer ] = useState<string | null>(null);
     const [ status, setStatus ] = useState<Status>(Status.IDLE);
-    const [ candidates, setCandidates ] = useState<LegalOfficerClass[]>([]);
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
+    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<string>[]>([]);
 
     useEffect(() => {
-        if (candidates.length === 0 && protectionState && availableLegalOfficers) {
+        if (legalOfficersOptions.length === 0 && protectionState && availableLegalOfficers) {
             const addresses = legalOfficers(protectionState);
-            setCandidates(availableLegalOfficers.filter(legalOfficer => addresses.includes(legalOfficer.address)));
+            const candidates = availableLegalOfficers.filter(legalOfficer => addresses.includes(legalOfficer.address));
+            buildOptions(candidates)
+                .then(options => setLegalOfficersOptions(options));
         }
-    }, [ candidates, setCandidates, availableLegalOfficers, protectionState ])
+    }, [ legalOfficersOptions, setLegalOfficersOptions, availableLegalOfficers, protectionState ])
 
     const { control, formState: { errors } } = useForm<FormValues>({
         defaultValues: {
@@ -240,7 +242,7 @@ export default function VaultRecoveryProcessTab() {
                                 render={ () => (
                                     <Select
                                         isInvalid={ !!errors.legalOfficer?.message }
-                                        options={ buildOptions(candidates, workloads) }
+                                        options={ legalOfficersOptions }
                                         value={ legalOfficer }
                                         onChange={ value => setLegalOfficer(value) }
                                     />

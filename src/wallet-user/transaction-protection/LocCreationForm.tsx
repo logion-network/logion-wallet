@@ -4,12 +4,13 @@ import { Lgnt } from "@logion/node-api";
 
 import { BackgroundAndForegroundColors } from '../../common/ColorTheme';
 import FormGroup from '../../common/FormGroup';
-import Select from '../../common/Select';
+import Select, { OptionType } from '../../common/Select';
 
 import { buildOptions } from '../trust-protection/SelectLegalOfficer';
 import { useUserContext } from "../UserContext";
 import AmountControl, { Amount, validateAmount } from 'src/common/AmountControl';
 import CollapsePane from 'src/components/collapsepane/CollapsePane';
+import { useState, useEffect } from "react";
 
 export interface FormValues {
     description: string;
@@ -29,7 +30,15 @@ export interface Props {
 }
 
 export default function LocCreationForm(props: Props) {
-    const { locsState, workloads } = useUserContext();
+    const { locsState } = useUserContext();
+    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<string>[]>([]);
+
+    useEffect(() => {
+        if (locsState !== undefined && legalOfficersOptions.length === 0) {
+            buildOptions(locsState.legalOfficersWithValidIdentityLoc)
+                .then(options => setLegalOfficersOptions(options));
+        }
+    }, [ legalOfficersOptions, locsState ]);
 
     if(locsState === undefined) {
         return null;
@@ -56,7 +65,7 @@ export default function LocCreationForm(props: Props) {
                         render={({ field }) => (
                             <Select
                                 isInvalid={ !!props.errors.legalOfficer?.message }
-                                options={ buildOptions(locsState?.legalOfficersWithValidIdentityLoc, workloads) }
+                                options={ legalOfficersOptions }
                                 value={ field.value }
                                 onChange={ field.onChange }
                             />
