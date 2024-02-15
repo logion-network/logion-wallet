@@ -26,7 +26,7 @@ exports[`IdentityLocRequest renders 1`] = `
           legalOfficerNumber={1}
           legalOfficers={
             Array [
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
@@ -52,8 +52,9 @@ exports[`IdentityLocRequest renders 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
+                "workload": 3,
               },
-              LegalOfficerClass {
+              TestLegalOfficer {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
@@ -79,6 +80,7 @@ exports[`IdentityLocRequest renders 1`] = `
                   "lastName": "Gielen",
                   "phoneNumber": "+33 2 48 67 50 50",
                 },
+                "workload": 2,
               },
             ]
           }

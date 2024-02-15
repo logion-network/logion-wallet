@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { clickByName, typeByLabel } from '../../tests';
 import LocCreation from './LocCreation';
 import { setHasValidIdentityLoc, setLocsState, setMutateLocsState } from "../__mocks__/UserContextMock";
-import { PATRICK, GUILLAUME, oneLegalOfficer, twoLegalOfficers } from "../../common/TestData";
+import { oneLegalOfficer, twoLegalOfficers } from "../../common/TestData";
 import { DraftRequest, LocsState } from '@logion/client';
 import { UUID } from '@logion/node-api';
 import { navigate } from 'src/__mocks__/ReactRouterMock';
@@ -74,7 +74,7 @@ describe("LocCreation", () => {
             locsState: () => locsState,
         } as DraftRequest;
         const locsState = {
-            legalOfficersWithValidIdentityLoc: [ PATRICK, GUILLAUME ],
+            legalOfficersWithValidIdentityLoc: twoLegalOfficers,
             requestTransactionLoc: () => Promise.resolve(draftRequest),
         } as unknown as LocsState;
         setLocsState(locsState);
@@ -107,5 +107,5 @@ describe("LocCreation", () => {
         await userEvent.click(screen.getByText("Please select your project type"));
         await userEvent.click(screen.getByText("Custom LOC"));
         await clickByName("Submit");
-    }    
+    }
 })

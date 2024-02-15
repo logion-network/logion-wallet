@@ -186,11 +186,6 @@ export function useUserContext() {
         mutateRecoveredBalanceState,
         locsState,
         mutateLocsState,
-        workloads: {
-            [ PATRICK.address ]: 1,
-            [ ALAIN.address ]: 2,
-            [ GUILLAUME.address ]: 3,
-        },
     } as unknown as Partial<UserContext>;
 }
 

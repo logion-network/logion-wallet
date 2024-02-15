@@ -238,16 +238,33 @@ export const legalOfficers: LegalOfficer[] = [
     ALAIN
 ];
 
+class TestLegalOfficer extends LegalOfficerClass {
+
+    constructor(args: {
+        legalOfficer: LegalOfficer,
+        workload: number,
+    }) {
+        super({ legalOfficer: args.legalOfficer, axiosFactory: { buildAxiosInstance: jest.fn() } });
+        this.workload = args.workload;
+    }
+
+    private readonly workload: number;
+
+    getWorkload(): Promise<number> {
+        return Promise.resolve(this.workload)
+    }
+}
+
 export const oneLegalOfficer: LegalOfficerClass[] = [
-    new LegalOfficerClass({ legalOfficer: PATRICK, axiosFactory: { buildAxiosInstance: jest.fn() } }),
+    new TestLegalOfficer({ legalOfficer: PATRICK, workload: 1 }),
 ];
 
 export const twoLegalOfficers: LegalOfficerClass[] = [
     oneLegalOfficer[0],
-    new LegalOfficerClass({ legalOfficer: GUILLAUME, axiosFactory: { buildAxiosInstance: jest.fn() } }),
+    new TestLegalOfficer({ legalOfficer: GUILLAUME, workload: 3 }),
 ];
 
 export const threeLegalOfficers: LegalOfficerClass[] = [
     ...twoLegalOfficers,
-    new LegalOfficerClass({ legalOfficer: ALAIN, axiosFactory: { buildAxiosInstance: jest.fn() } }),
+    new TestLegalOfficer({ legalOfficer: ALAIN, workload: 2 }),
 ];
