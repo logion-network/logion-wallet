@@ -45,6 +45,13 @@ const palletLogionLocMethods: Record<LogionLocMethod, string> = {
     acknowledgeFile: "File acknowledged",
     acknowledgeMetadata: "Public data acknowledged",
     acknowledgeLink: "Link acknowledged",
+    importLoc: "LOC imported",
+    importCollectionItem: "Collection Item imported",
+    importTokensRecord: "Tokens Record imported",
+    importInvitedContributorSelection: "Invited Contributor Selection imported",
+    importVerifiedIssuer: "Verified Issuer imported",
+    importVerifiedIssuerSelection: "Verified Issuer Selection imported",
+    importSponsorship: "Sponsorship imported",
 }
 
 const palletLogionVaultMethods: Record<Uncapitalize<PalletLogionVaultCall["type"]>, string> = {
@@ -71,7 +78,9 @@ const palletRecoveryMethods: Record<Uncapitalize<PalletRecoveryCall["type"]>, st
 const palletLoAuthorityListMethods: Record<Uncapitalize<PalletLoAuthorityListCall["type"]>, string> = {
     addLegalOfficer: "Legal Officer added",
     removeLegalOfficer: "Legal Officer removed",
-    updateLegalOfficer: "Legal Officer settings updated"
+    updateLegalOfficer: "Legal Officer settings updated",
+    importHostLegalOfficer: "Legal Officer (Host) imported",
+    importGuestLegalOfficer: "Legal Officer (Guest) imported",
 }
 
 // Partial use of multisig pallet
