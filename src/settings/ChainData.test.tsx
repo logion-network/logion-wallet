@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { LegalOfficerData } from "@logion/node-api";
-import { PalletLoAuthorityListLegalOfficerData } from "@polkadot/types/lookup";
+import { PalletLoAuthorityListLegalOfficerDataParam } from "@polkadot/types/lookup";
 
 import { setOnchainSettings, refreshOnchainSettings } from "src/legal-officer/__mocks__/LegalOfficerContextMock";
 import { DEFAULT_LEGAL_OFFICER_ACCOUNT, NO_SUBMISSION, SUCCESSFUL_SUBMISSION, setCurrentAddress, setExtrinsicSubmissionState } from "src/logion-chain/__mocks__/LogionChainMock";
@@ -55,7 +55,7 @@ describe("ChainData", () => {
             api.setup(instance => instance.queries.getAvailableRegions()).returns([ "Europe" ]);
             api.setup(instance => instance.queries.getDefaultRegion()).returns("Europe");
 
-            const data = new Mock<PalletLoAuthorityListLegalOfficerData>();
+            const data = new Mock<PalletLoAuthorityListLegalOfficerDataParam>();
             api.setup(instance => instance.adapters.toPalletLoAuthorityListLegalOfficerDataHost(It.IsAny())).returns(data.object());
             const submittable = new Mock<SubmittableExtrinsic<"promise">>();
             api.setup(instance => instance.polkadot.tx.loAuthorityList.updateLegalOfficer(It.IsAny(), It.IsAny())).returns(submittable.object());
@@ -86,7 +86,7 @@ describe("ChainData", () => {
             api.setup(instance => instance.queries.getAvailableRegions()).returns([ "Europe" ]);
             api.setup(instance => instance.queries.getDefaultRegion()).returns("Europe");
 
-            const data = new Mock<PalletLoAuthorityListLegalOfficerData>();
+            const data = new Mock<PalletLoAuthorityListLegalOfficerDataParam>();
             api.setup(instance => instance.adapters.toPalletLoAuthorityListLegalOfficerDataHost(It.IsAny())).returns(data.object());
             const submittable = new Mock<SubmittableExtrinsic<"promise">>();
             api.setup(instance => instance.polkadot.tx.loAuthorityList.updateLegalOfficer(It.IsAny(), It.IsAny())).returns(submittable.object());
