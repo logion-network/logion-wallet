@@ -51,6 +51,7 @@ export default function Certificate() {
 
     const locIdParam = useParams<"locId">().locId!;
     const collectionItemIdParam = useParams<"collectionItemId">().collectionItemId;
+    const tokensRecordIdParam = useParams<"tokensRecordId">().tokensRecordId;
     const [ searchParams ] = useSearchParams();
     const locId: UUID = useMemo(() => UUID.fromAnyString(locIdParam)!, [ locIdParam ]);
     const { client } = useLogionChain();
@@ -122,6 +123,21 @@ export default function Certificate() {
         }
     }, [ client, locId, tokensRecords, tokenForDownload ]);
 
+    useEffect(() => {
+        if (client && tokensRecordIdParam && tokensRecords === null) {
+            console.log("Getting Tokens records...")
+            client.public.getTokensRecord({ locId, recordId: Hash.fromHex(tokensRecordIdParam)})
+                .then(tokensRecord => {
+                    console.log(tokensRecord);
+                    if (tokensRecord) {
+                        setTokensRecords([ tokensRecord ]);
+                    } else {
+                        setTokensRecords([ ]);
+                    }
+                })
+        }
+    }, [ client, locId, tokensRecords, tokensRecordIdParam ]);
+
     if (!client || loc === undefined) {
         return (
             <div className="Certificate">
@@ -150,6 +166,20 @@ export default function Certificate() {
                         <CertificateCell md={ 4 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
                         <CertificateCell md={ 4 }
                                          label="COLLECTION ITEM NOT FOUND">{ collectionItemIdParam }</CertificateCell>
+                    </Row>
+                </Container>
+            </div>
+        )
+    }
+
+    if (tokensRecordIdParam && tokensRecords !== null && tokensRecords.length === 0) {
+        return (
+            <div className="CertificateBox">
+                <Container>
+                    <Row>
+                        <CertificateCell md={ 4 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
+                        <CertificateCell md={ 4 }
+                                         label="TOKENS RECORD NOT FOUND">{ tokensRecordIdParam }</CertificateCell>
                     </Row>
                 </Container>
             </div>
@@ -305,7 +335,7 @@ export default function Certificate() {
                             />
                         </Col>
                         <Col md={ 7 }>
-                            <IntroductionText loc={ loc } tokenGated={ true } />
+                            <IntroductionText loc={ loc } type="TokenGated" />
                         </Col>
                     </Row>
                 }
@@ -313,7 +343,7 @@ export default function Certificate() {
                     <Row>
                         <Col md={ 2 }/>
                         <Col md={ 8 }>
-                            <IntroductionText loc={ loc } tokenGated={ false } />
+                            <IntroductionText loc={ loc } type={ tokensRecordIdParam ? "TokensRecord" : "Regular" } />
                         </Col>
                     </Row>
                 }
@@ -365,13 +395,13 @@ export default function Certificate() {
                         tokenForDownload={ tokenForDownload }
                     />
                 }
-                { collectionItem !== null && tokenForDownload !== undefined &&
+                { tokensRecords !== null &&
                     <TokensRecords
                         locId={ locId }
                         owner={ legalOfficer.address }
                         collectionItem={ collectionItem! }
                         tokenForDownload={ tokenForDownload }
-                        tokensRecords={ tokensRecords || [] }
+                        tokensRecords={ tokensRecords }
                         checkResult={ checkResult }
                     />
                 }

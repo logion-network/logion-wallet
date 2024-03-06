@@ -97,7 +97,7 @@ export default function ImportItemDetails(props: { locId: UUID, item: Item }) {
                         <p>Certificate QR code (only valid after successful import):</p>
                         <p className="qr">
                             <QrCode
-                                data={ fullCollectionItemCertificate(props.locId, props.item.id) }
+                                data={ fullCollectionItemCertificate(props.locId, props.item.id!) }
                                 width="200px"
                             />
                         </p>
@@ -106,7 +106,7 @@ export default function ImportItemDetails(props: { locId: UUID, item: Item }) {
             </Row>
             <div className="item-certificate">
                 <p>Certificate URL (only valid after successful import):</p>
-                <p className="url">{ fullCollectionItemCertificate(props.locId, props.item.id) } <CopyPasteButton value={ fullCollectionItemCertificate(props.locId, props.item.id) } /></p>
+                <p className="url">{ fullCollectionItemCertificate(props.locId, props.item.id!) } <CopyPasteButton value={ fullCollectionItemCertificate(props.locId, props.item.id!) } /></p>
             </div>
         </div>
     );
