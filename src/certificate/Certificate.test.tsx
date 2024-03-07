@@ -182,7 +182,7 @@ function mockClient(loc: PublicLoc, item?: CollectionItem, tokensRecord?: Client
                     throw Error("LOC not found")
                 }
             },
-            getTokensRecords: () => Promise.resolve([]),
+            getTokensRecords: () => Promise.resolve( tokensRecord ? [ tokensRecord ] : []),
             getTokensRecord: () => Promise.resolve(tokensRecord),
         },
     } as unknown as LogionClient;

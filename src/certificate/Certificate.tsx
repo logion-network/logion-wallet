@@ -125,10 +125,8 @@ export default function Certificate() {
 
     useEffect(() => {
         if (client && tokensRecordIdParam && tokensRecords === null) {
-            console.log("Getting Tokens records...")
             client.public.getTokensRecord({ locId, recordId: Hash.fromHex(tokensRecordIdParam)})
                 .then(tokensRecord => {
-                    console.log(tokensRecord);
                     if (tokensRecord) {
                         setTokensRecords([ tokensRecord ]);
                     } else {
