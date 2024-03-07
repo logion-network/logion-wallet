@@ -13,6 +13,9 @@ import { ContributionMode } from "../types";
 import { tokensRecordDocumentClaimHistoryPath as requesterTokensRecordDocumentClaimHistoryPath, issuerTokensRecordDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
 import { useLogionChain } from "src/logion-chain";
 import { FileItem } from "../LocItem";
+import ViewCertificateButton from "../ViewCertificateButton";
+import { fullTokensRecordsCertificate } from "../../PublicPaths";
+import "./TokensRecordTable.css";
 
 export interface Props {
     records: TokensRecord[];
@@ -34,7 +37,7 @@ export default function TokensRecordTable(props: Props) {
         return null;
     }
 
-    return (
+    return ( <div className="TokensRecordTable">
         <PagedTable
             columns={[
                 {
@@ -47,7 +50,7 @@ export default function TokensRecordTable(props: Props) {
                     renderDetails: record => <LocPrivateFileDetails
                         item={new FileItem(
                             {
-                                
+
                                 newItem: false,
                                 status: "PUBLISHED",
                                 submitter: api.queries.getValidAccountId(record.issuer, "Polkadot"),
@@ -98,7 +101,16 @@ export default function TokensRecordTable(props: Props) {
                             }) }
                         />
                     } />,
-                    align: "left",
+                    align: "center",
+                    width: "100px",
+                },
+                {
+                    header: "Certificate",
+                    render: record => <Cell content={
+                        <ViewCertificateButton url={ fullTokensRecordsCertificate(loc.id, record.id) } />
+                    } />,
+                    align: "center",
+                    width: "100px",
                 }
             ]}
             currentPage={ currentPage }
@@ -106,7 +118,7 @@ export default function TokensRecordTable(props: Props) {
             fullSize={ records.length }
             renderEmpty={ () => <EmptyTableMessage>No records to display</EmptyTableMessage> }
         />
-    );
+    </div>);
 }
 
 function documentClaimHistory(viewer: Viewer, loc: LocData, record: TokensRecord, contributionMode?: ContributionMode): string {

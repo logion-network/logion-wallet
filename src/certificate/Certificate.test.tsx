@@ -1,4 +1,4 @@
-import { LogionClient, PublicLoc, LocData, CollectionItem, HashString } from '@logion/client';
+import { LogionClient, PublicLoc, LocData, CollectionItem, HashString, TokensRecord } from '@logion/client';
 import { UUID, Hash } from '@logion/node-api';
 import { render, screen, waitFor } from "@testing-library/react";
 import { act } from 'react-test-renderer';
@@ -10,6 +10,7 @@ import Certificate from './Certificate';
 import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { PATRICK } from 'src/common/TestData';
 import { URLSearchParams } from 'url';
+import { ClientTokensRecord } from "@logion/client/dist/LocClient";
 
 jest.mock("react-router");
 jest.mock("react-router-dom");
@@ -47,6 +48,24 @@ describe("Certificate", () => {
         expect(() => screen.getByText("Legal Officer Case")).toThrow();
     })
 
+    it("renders TOKENS RECORD not found", async () => {
+        const locId = UUID.fromDecimalStringOrThrow("95306891657235687884416897796814545554");
+        const loc = mockPublicLoc(locId);
+
+        const client = mockClient(loc);
+        setClientMock(client);
+
+        const nonExistentRecord = Hash.of("some-non-existent-record")
+        setParams({locId: locId.toString(), tokensRecordId: nonExistentRecord.toHex()});
+        setSearchParams(mockEmptySearchParams());
+
+        render(<Certificate/>);
+
+        await waitFor(() => expect(screen.getByText("TOKENS RECORD NOT FOUND")).toBeVisible());
+        expect(screen.getByText(nonExistentRecord.toHex())).toBeVisible();
+        expect(() => screen.getByText("Legal Officer Case")).toThrow();
+    })
+
     it("renders found LOC", async () => {
         const locId = UUID.fromDecimalStringOrThrow("95306891657235687884416897796814545554");
         const loc = mockPublicLoc(locId);
@@ -61,6 +80,26 @@ describe("Certificate", () => {
 
         await waitFor(() => expect(screen.getByText("Legal Officer Case")).toBeVisible());
         expect(screen.getByRole("button", { name: "Check a document" })).toBeVisible();
+    })
+
+    it("renders found TOKENS RECORD", async () => {
+        const locId = UUID.fromDecimalStringOrThrow("95306891657235687884416897796814545554");
+        const loc = mockPublicLoc(locId);
+        const tokensRecord = mockTokensRecord();
+        const client = mockClient(loc, undefined, tokensRecord);
+        setClientMock(client);
+
+        setParams({ locId: locId.toString(), tokensRecordId: tokensRecord.id.toHex() });
+        setSearchParams(mockEmptySearchParams());
+
+        render(<Certificate/>);
+
+        await waitFor(() => expect(screen.getByText("Legal Officer Case")).toBeVisible());
+        expect(screen.getByText("Tokens record")).toBeVisible();
+        expect(screen.getByText(mockTRCellContent(tokensRecord.issuer))).toBeVisible();
+        expect(screen.getByText(mockTRCellContent(tokensRecord.description.validValue()))).toBeVisible();
+        expect(screen.getByText(mockTRCellContent(tokensRecord.files[0].contentType.validValue()))).toBeVisible();
+        expect(screen.getByText(tokensRecord.files[0].name.validValue())).toBeVisible();
     })
 
     it("renders item with restricted delivery", async () => {
@@ -80,6 +119,10 @@ describe("Certificate", () => {
         expect(checkAssetButton).toBe(null);
     })
 })
+
+function mockTRCellContent(content: string): string {
+    return `: ${ content }`
+}
 
 function mockPublicLoc(locId: UUID): PublicLoc {
     return {
@@ -128,7 +171,7 @@ function mockCollectionItem(locId: UUID, itemId: Hash, restrictedDelivery: boole
     } as unknown as CollectionItem;
 }
 
-function mockClient(loc: PublicLoc, item?: CollectionItem): LogionClient {
+function mockClient(loc: PublicLoc, item?: CollectionItem, tokensRecord?: ClientTokensRecord): LogionClient {
     const client = {
         legalOfficers: [ PATRICK ],
         public: {
@@ -139,7 +182,8 @@ function mockClient(loc: PublicLoc, item?: CollectionItem): LogionClient {
                     throw Error("LOC not found")
                 }
             },
-            getTokensRecords: () => Promise.resolve([]),
+            getTokensRecords: () => Promise.resolve( tokensRecord ? [ tokensRecord ] : []),
+            getTokensRecord: () => Promise.resolve(tokensRecord),
         },
     } as unknown as LogionClient;
 
@@ -155,4 +199,21 @@ function mockClient(loc: PublicLoc, item?: CollectionItem): LogionClient {
     }
 
     return client;
+}
+
+function mockTokensRecord(): ClientTokensRecord {
+    return {
+        id: Hash.of("record-id"),
+        description: HashString.fromValue("Record Description"),
+        addedOn: "2022-08-23T07:27:46.128Z",
+        issuer: "record-issuer",
+        files: [ {
+            name: HashString.fromValue("record-file-name.txt"),
+            hash: Hash.of("record-file-content"),
+            size: 10n,
+            uploaded: true,
+            contentType: HashString.fromValue("text/plain")
+        } ]
+
+    }
 }

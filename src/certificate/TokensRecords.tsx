@@ -12,7 +12,7 @@ export interface TokensRecordsProps {
     locId: UUID,
     owner: string,
     collectionItem: CollectionItem,
-    tokenForDownload: Token,
+    tokenForDownload: Token | undefined,
     tokensRecords: TokensRecord[];
     checkResult?: CheckHashResult;
 }
@@ -23,13 +23,18 @@ export default function TokensRecords(props: TokensRecordsProps) {
     if (tokensRecords.length === 0) {
         return null;
     }
+    const title = tokensRecords.length === 1 ?
+        "Tokens record" :
+        "Tokens records";
+    const introduction = tokensRecords.length === 1 ?
+        "The following Tokens Record is signed by the issuer." :
+        "The following Tokens Records, shared with all the owners of tokens declared in this LOC, are signed by issuers."
     return (
         <div className="TokensRecords">
             <Row>
                 <Col>
-                    <h2><MenuIcon icon={ { id: "records_polka" } } height="40px" width="70px" /> Tokens record(s)</h2>
-                    <p>The following Tokens Records, shared with all the owners of tokens declared in this LOC, are
-                        signed by logion Verified Issuers.</p>
+                    <h2><MenuIcon icon={ { id: "records_polka" } } height="40px" width="70px" /> { title }</h2>
+                    <p>{ introduction }</p>
                 </Col>
             </Row>
             { tokensRecords.map((tokensRecord, index) => (
