@@ -1,32 +1,3 @@
 .TokensRecordTable .Table.constrained-row-height .body .Row .Col {
     height: 62px;
 }
-
-.TokensRecordTable .TokensRecordFiles {
-    padding: 10px 10px 0 10px;
-    width: 100%;
-}
-
-.TokensRecordTable .TokensRecordFiles .value {
-    font-weight: lighter;
-}
-
-.TokensRecordTable .TokensRecordFiles .TokensRecordFileAttribute {
-    margin-bottom: 0;
-}
-
-.TokensRecordTable .TokensRecordFiles .TokensRecordFile .ButtonGroup {
-    margin-top: 16px;
-    position: relative;
-}
-
-.TokensRecordTable .TokensRecordFiles .TokensRecordFile .btn-group {
-    position: absolute;
-    right: 5px;
-}
-
-.TokensRecordTable .TokensRecordFiles .TokensRecordFile .ButtonGroup .Button {
-    min-width: 58px;
-    margin-left: 5px;
-}
-

@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import ButtonGroup from "../../common/ButtonGroup";
 import Col from "react-bootstrap/Col";
 import { Row } from "../../common/Grid";
+import "./TokensRecordFiles.css";
 
 export interface Props {
     record: TokensRecord;
