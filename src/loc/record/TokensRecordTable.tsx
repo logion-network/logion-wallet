@@ -1,21 +1,20 @@
-import { LocData, TokensRecord, fromIsoString } from "@logion/client";
+import { TokensRecord } from "@logion/client";
 import { useMemo, useState } from "react";
-import { useCommonContext, Viewer } from "src/common/CommonContext";
 import SubmitterName from "src/common/SubmitterName";
-import { Cell, DateTimeCell, EmptyTableMessage } from "src/common/Table";
-import ViewFileButton from "src/common/ViewFileButton";
+import { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "src/common/Table";
 import PagedTable, { getPage, Page } from "src/components/pagedtable/PagedTable";
-import { tokensRecordDocumentClaimHistoryPath } from "src/legal-officer/LegalOfficerPaths";
-import { getTokensRecordFileSource } from "../FileModel";
 import { useLocContext } from "../LocContext";
-import LocPrivateFileDetails from "../LocPrivateFileDetails";
 import { ContributionMode } from "../types";
-import { tokensRecordDocumentClaimHistoryPath as requesterTokensRecordDocumentClaimHistoryPath, issuerTokensRecordDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
 import { useLogionChain } from "src/logion-chain";
-import { FileItem } from "../LocItem";
 import ViewCertificateButton from "../ViewCertificateButton";
 import { fullTokensRecordsCertificate } from "../../PublicPaths";
 import "./TokensRecordTable.css";
+import CellWithCopyPaste from "../../components/table/CellWithCopyPaste";
+import TokensRecordFiles from "./TokensRecordFiles";
+import ButtonGroup from "../../common/ButtonGroup";
+import CopyPasteButton from "../../common/CopyPasteButton";
+import ViewQrCodeButton from "../ViewQrCodeButton";
+import { useResponsiveContext } from "../../common/Responsive";
 
 export interface Props {
     records: TokensRecord[];
@@ -24,10 +23,10 @@ export interface Props {
 
 export default function TokensRecordTable(props: Props) {
     const { records } = props;
-    const { viewer } = useCommonContext();
     const { loc } = useLocContext();
     const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
     const { api } = useLogionChain();
+    const { width } = useResponsiveContext();
 
     const currentPage: Page<TokensRecord> = useMemo(() => {
         return getPage(records, currentPageNumber, 10);
@@ -41,77 +40,48 @@ export default function TokensRecordTable(props: Props) {
         <PagedTable
             columns={[
                 {
-                    header: "Name",
-                    render: record => <Cell
-                        content={ record.files[0].name.validValue() }
-                        tooltipId={`record-${record.id}-filename`}
-                        overflowing
-                    />,
-                    renderDetails: record => <LocPrivateFileDetails
-                        item={new FileItem(
-                            {
-
-                                newItem: false,
-                                status: "PUBLISHED",
-                                submitter: api.queries.getValidAccountId(record.issuer, "Polkadot"),
-                                timestamp: fromIsoString(record.addedOn),
-                                type: "Document",
-                                template: false,
-                            },
-                            {
-                                fileName: record.files[0].name.validValue(),
-                                hash: record.files[0].hash,
-                                nature: record.description,
-                                size: record.files[0].size,
-                                storageFeePaidBy: "Requester",
-                            }
-                        )}
-                        documentClaimHistory={ documentClaimHistory(viewer, loc, record, props.contributionMode) }
-                        fileName={record.files[0].name.validValue()}
-                        fileType={record.files[0].contentType.validValue()}
-                        otherFeesPaidByRequester={ false }
-                    />,
+                    header: "ID",
+                    render: record => <CellWithCopyPaste content={ record.id.toHex() } />,
+                    align: "left",
+                    width: "40%"
+                },
+                {
+                    header: "Description",
+                    render: record => <Cell content={ record.description.validValue() } />,
+                    align: "left",
+                },
+                {
+                    header: "Files",
+                    render: record => <Cell content={ record.files.length.toString() } />,
+                    renderDetails: record => <TokensRecordFiles record={ record } contributionMode={ props.contributionMode }/>,
+                    width: "100px"
                 },
                 {
                     header: "Timestamp",
                     render: record => <DateTimeCell dateTime={ record.addedOn }/>
                 },
                 {
-                    header: "Type",
-                    render: record => <Cell content={ record.files[0].contentType.validValue() }/>
-                },
-                {
-                    header: "Size (bytes)",
-                    render: record => <Cell content={record.files[0].size.toString()}/>
-                },
-                {
                     header: "Submitted by",
                     render: record => <SubmitterName loc={ loc } submitter={ record.issuer } />
                 },
                 {
-                    header: "Source",
-                    render: record => <Cell content={
-                        <ViewFileButton
-                            nodeOwner={ loc.ownerAddress }
-                            fileName={ record.files[0].name.validValue() }
-                            downloader={ (axios) => getTokensRecordFileSource(axios, {
-                                locId: loc.id.toString(),
-                                recordId: record.id,
-                                hash: record.files[0].hash,
-                            }) }
-                        />
-                    } />,
-                    align: "center",
-                    width: "100px",
-                },
-                {
                     header: "Certificate",
-                    render: record => <Cell content={
-                        <ViewCertificateButton url={ fullTokensRecordsCertificate(loc.id, record.id) } />
-                    } />,
-                    align: "center",
-                    width: "100px",
-                }
+                    render: item => (
+                        <ActionCell>
+                            <ButtonGroup
+                                narrow={ true }
+                            >
+                                <ViewCertificateButton url={ fullTokensRecordsCertificate(loc.id, item.id) } />
+                                <CopyPasteButton value={ fullTokensRecordsCertificate(loc.id, item.id) } tooltip="Copy certificate URL to clipboard" />
+                                <ViewQrCodeButton certificateUrl={ fullTokensRecordsCertificate(loc.id, item.id) } />
+                            </ButtonGroup>
+                        </ActionCell>
+                    ),
+                    width: width({
+                        onSmallScreen: "140px",
+                        otherwise: "160px",
+                    }),
+                },
             ]}
             currentPage={ currentPage }
             goToPage={ setCurrentPageNumber }
@@ -119,16 +89,4 @@ export default function TokensRecordTable(props: Props) {
             renderEmpty={ () => <EmptyTableMessage>No records to display</EmptyTableMessage> }
         />
     </div>);
-}
-
-function documentClaimHistory(viewer: Viewer, loc: LocData, record: TokensRecord, contributionMode?: ContributionMode): string {
-    if(viewer === "LegalOfficer") {
-        return tokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
-    } else if(contributionMode === "Requester") {
-        return requesterTokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
-    } else if(contributionMode === "VerifiedIssuer") {
-        return issuerTokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
-    } else {
-        return "";
-    }
 }

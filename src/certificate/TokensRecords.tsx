@@ -26,15 +26,15 @@ export default function TokensRecords(props: TokensRecordsProps) {
     const title = tokensRecords.length === 1 ?
         "Tokens record" :
         "Tokens records";
-    const introduction = tokensRecords.length === 1 ?
-        "The following Tokens Record is signed by the issuer." :
-        "The following Tokens Records, shared with all the owners of tokens declared in this LOC, are signed by issuers."
     return (
         <div className="TokensRecords">
             <Row>
                 <Col>
                     <h2><MenuIcon icon={ { id: "records_polka" } } height="40px" width="70px" /> { title }</h2>
-                    <p>{ introduction }</p>
+                    { tokensRecords.length > 1 &&
+                        <p>The following Tokens Records, shared with all the owners of tokens declared in this LOC, are
+                            signed by issuers.</p>
+                    }
                 </Col>
             </Row>
             { tokensRecords.map((tokensRecord, index) => (
