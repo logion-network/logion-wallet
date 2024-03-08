@@ -1,0 +1,27 @@
+.TokensRecordFiles {
+    padding: 10px 10px 0 10px;
+    width: 100%;
+}
+
+.TokensRecordFiles .value {
+    font-weight: lighter;
+}
+
+.TokensRecordFiles .TokensRecordFileAttribute {
+    margin-bottom: 0 !important;
+}
+
+.TokensRecordFiles .TokensRecordFile .ButtonGroup {
+    margin-top: 18px;
+    position: relative;
+}
+
+.TokensRecordFiles .TokensRecordFile .btn-group {
+    position: absolute;
+    right: 5px;
+}
+
+.TokensRecordFiles .TokensRecordFile .ButtonGroup .Button {
+    min-width: 58px;
+    margin-left: 5px;
+}
