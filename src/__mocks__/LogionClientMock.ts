@@ -5,6 +5,7 @@ export { toIsoString, fromIsoString } from "@logion/client/dist/DateTimeUtil.js"
 import { api } from "./LogionMock";
 import { VerifiedIssuerWithSelect } from "@logion/client/dist/Loc";
 import { Hash } from "@logion/node-api";
+import { TokensRecord } from "@logion/client";
 
 export const axiosMock = {
     post: jest.fn().mockReturnValue(undefined),
@@ -123,6 +124,12 @@ export class LocRequestState {
 
 export class ClosedCollectionLoc extends LocRequestState {
     requestSof: jest.Mock<Promise<EditableRequest>> | undefined;
+    getTokensRecord(_: { recordId: Hash } ): Promise<TokensRecord | undefined> {
+        return Promise.resolve(undefined)
+    }
+    getTokensRecords(): Promise<TokensRecord[]> {
+        return Promise.resolve([])
+    }
 }
 
 export class ClosedLoc extends LocRequestState {

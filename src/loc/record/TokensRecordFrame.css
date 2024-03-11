@@ -1,0 +1,51 @@
+.TokensRecordFrame {
+}
+
+.TokensRecordFrame .IconTextRow .text {
+    width: calc(100% - 80px);
+}
+
+.TokensRecordFrame .tokens-record-id-input {
+    display: inline-block;
+    width: calc(100% - 32px);
+}
+.TokensRecordFrame .clear-button {
+    cursor: pointer;
+    margin-left: 7px;
+}
+
+.TokensRecordFrame .clear-button:hover {
+    opacity: 0.5;
+}
+
+.TokensRecordFrame .Button {
+    margin-left: 20px;
+}
+
+.TokensRecordFrame .IconTextRow .text {
+    width: calc(100% - 80px);
+}
+
+.TokensRecordFrame .CheckResultFeedback {
+    margin-top: 20px;
+}
+
+.TokensRecordFrame .CheckResultFeedback .label-positive {
+    color: #37ad4b;
+    font-weight: bold;
+}
+
+.TokensRecordFrame .CheckResultFeedback .label-negative {
+    color: #ea1f46;
+    font-weight: bold;
+}
+
+.TokensRecordFrame .CheckResultFeedback .Col {
+    padding-right: 20px;
+    min-width: 65px;
+}
+
+.TokensRecordFrame div.IconTextRow div.text div.FormGroup div div.Row div.Col {
+    width: 50rem;
+}
+
