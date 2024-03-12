@@ -1,4 +1,4 @@
-import { LogionClient, PublicLoc, LocData, CollectionItem, HashString, TokensRecord } from '@logion/client';
+import { LogionClient, PublicLoc, LocData, CollectionItem, HashString, ClientTokensRecord } from '@logion/client';
 import { UUID, Hash } from '@logion/node-api';
 import { render, screen, waitFor } from "@testing-library/react";
 import { act } from 'react-test-renderer';
@@ -10,7 +10,6 @@ import Certificate from './Certificate';
 import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { PATRICK } from 'src/common/TestData';
 import { URLSearchParams } from 'url';
-import { ClientTokensRecord } from "@logion/client/dist/LocClient";
 
 jest.mock("react-router");
 jest.mock("react-router-dom");

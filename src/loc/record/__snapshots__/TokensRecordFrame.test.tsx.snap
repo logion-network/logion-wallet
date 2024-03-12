@@ -1,0 +1,260 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TokensRecordFrame renders 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="Frame TokensRecordFrame"
+        style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); box-shadow: 0 0 25px #3b6cf41a; border: 2px solid #e6007a;"
+      >
+        <div
+          class="title-area"
+        >
+          <div
+            class="MenuIcon"
+            style="height: 36px; width: 64px;"
+          >
+            <img
+              alt="records_polka"
+              src="/assets/records_polka.svg"
+            />
+          </div>
+          <div
+            class="title"
+          >
+            Tokens records
+          </div>
+        </div>
+        <div
+          class="IconTextRow"
+        >
+          <div
+            class="icon"
+          >
+            <img
+              alt="tip"
+              src="/assets/tip.svg"
+              width="45px"
+            />
+          </div>
+          <div
+            class="text"
+          >
+            <p>
+              The entire Tokens record list below will be visible on each token public certificate for all the owners of tokens declared in this LOC. If the restricted delivery option is activated, token owners will be able to get a copy of the related file.
+            </p>
+            <div
+              class="FormGroup"
+              style="background-color: rgb(255, 255, 255);"
+            >
+              <style>
+                
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
+        color: #000000;
+    }
+    
+              </style>
+              <div
+                data-testid="tokenRecordIdGroup"
+              >
+                <div
+                  class="Row"
+                >
+                  <div
+                    class="Col"
+                  >
+                    <input
+                      class="tokens-record-id-input form-control"
+                      data-testid="tokens-record-id"
+                      id="tokenRecordId"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="Col buttons"
+                  >
+                    <button
+                      class="Button btn btn-primary"
+                      disabled=""
+                      type="button"
+                    >
+                      <img
+                        alt="search"
+                        src="/assets/search.svg"
+                      />
+                       Check Tokens Record ID
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="Row CheckResultFeedback result-none"
+              id="feedback-NONE"
+            />
+          </div>
+        </div>
+        <div
+          class="spinner-border"
+        />
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="Frame TokensRecordFrame"
+      style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); box-shadow: 0 0 25px #3b6cf41a; border: 2px solid #e6007a;"
+    >
+      <div
+        class="title-area"
+      >
+        <div
+          class="MenuIcon"
+          style="height: 36px; width: 64px;"
+        >
+          <img
+            alt="records_polka"
+            src="/assets/records_polka.svg"
+          />
+        </div>
+        <div
+          class="title"
+        >
+          Tokens records
+        </div>
+      </div>
+      <div
+        class="IconTextRow"
+      >
+        <div
+          class="icon"
+        >
+          <img
+            alt="tip"
+            src="/assets/tip.svg"
+            width="45px"
+          />
+        </div>
+        <div
+          class="text"
+        >
+          <p>
+            The entire Tokens record list below will be visible on each token public certificate for all the owners of tokens declared in this LOC. If the restricted delivery option is activated, token owners will be able to get a copy of the related file.
+          </p>
+          <div
+            class="FormGroup"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <style>
+              
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
+        color: #000000;
+    }
+    
+            </style>
+            <div
+              data-testid="tokenRecordIdGroup"
+            >
+              <div
+                class="Row"
+              >
+                <div
+                  class="Col"
+                >
+                  <input
+                    class="tokens-record-id-input form-control"
+                    data-testid="tokens-record-id"
+                    id="tokenRecordId"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="Col buttons"
+                >
+                  <button
+                    class="Button btn btn-primary"
+                    disabled=""
+                    type="button"
+                  >
+                    <img
+                      alt="search"
+                      src="/assets/search.svg"
+                    />
+                     Check Tokens Record ID
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="Row CheckResultFeedback result-none"
+            id="feedback-NONE"
+          />
+        </div>
+      </div>
+      <div
+        class="spinner-border"
+      />
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

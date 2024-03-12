@@ -306,11 +306,6 @@ interface CheckResultProps {
 
 function CheckResultFeedback(props: CheckResultProps) {
     const { state } = props;
-    const { client } = useLogionChain();
-
-    if(!client) {
-        return null;
-    }
 
     switch (state) {
         case "POSITIVE":

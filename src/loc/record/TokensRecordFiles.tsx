@@ -33,7 +33,7 @@ export default function TokensRecordFiles(props: Props) {
 
     return (<div className="TokensRecordFiles">
         { record.files.map(file => (
-            <TokensRecordFileCell { ...props } loc={ loc } file={ file } />
+            <TokensRecordFileCell { ...props } loc={ loc } file={ file } key={`tokens-record-file-${ loc.id }-${ file.hash.toHex() }`}/>
         )) }
     </div>)
 }
