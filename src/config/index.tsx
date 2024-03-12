@@ -1,13 +1,15 @@
+import { EnvironmentString } from "@logion/client";
+
 export interface Node {
     socket: string;
     peerId: string;
 }
 
 export interface ConfigType {
+    environment: EnvironmentString | undefined,
     APP_NAME: string,
     DEVELOPMENT_KEYRING: boolean,
     PROVIDER_SOCKET?: string,
-    RPC: object,
     directory: string,
     edgeNodes: Node[],
     crossmintApiKey: string,
@@ -16,10 +18,9 @@ export interface ConfigType {
 }
 
 export const DEFAULT_CONFIG: ConfigType = {
+    environment: undefined,
     APP_NAME: "Logion Wallet",
     DEVELOPMENT_KEYRING: true,
-    RPC: {
-    },
     directory: "",
     edgeNodes: [],
     crossmintApiKey: "",

@@ -83,6 +83,10 @@ export class LogionClient {
             throw new Error();
         }
     }
+
+    config = {
+        rpcEndpoints: [ "ws://localhost:9944", "ws://localhost:9945", "ws://localhost:9946" ]
+    };
 }
 
 export class AccountTokens {
