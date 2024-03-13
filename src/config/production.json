@@ -1,6 +1,5 @@
 {
     "APP_NAME": "Logion Wallet",
     "directory": "http://localhost:8090/api",
-    "edgeNodes": [],
     "crossmintApiKey": ""
 }

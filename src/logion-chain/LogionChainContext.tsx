@@ -32,7 +32,7 @@ import {
     storeTokens
 } from '../common/Storage';
 
-import { getEndpoints, NodeMetadata } from './Connection';
+import { NodeMetadata } from './Connection';
 import { BrowserAxiosFileUploader, newLogionClient } from '@logion/client-browser';
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
@@ -689,9 +689,8 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 if (config.environment) {
                     logionClient = await newLogionClient(config.environment);
                 } else {
-                    const rpcEndpoints = getEndpoints();
                     logionClient = await LogionClient.create({
-                        rpcEndpoints,
+                        rpcEndpoints: config.rpcEndpoints,
                         directoryEndpoint: config.directory,
                         buildFileUploader: () => new BrowserAxiosFileUploader(),
                         logionClassificationLoc: UUID.fromAnyString(config.logionClassification),
