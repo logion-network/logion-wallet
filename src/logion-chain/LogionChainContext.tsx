@@ -16,12 +16,12 @@ import {
     InjectedAccount,
     isExtensionAvailable
 } from '@logion/extension';
-import { buildApiClass, LogionNodeApiClass, ValidAccountId } from '@logion/node-api';
+import { LogionNodeApiClass, ValidAccountId, UUID } from '@logion/node-api';
 import axios, { AxiosInstance } from 'axios';
 import React, { useReducer, useContext, Context, Reducer, useEffect, useCallback } from 'react';
 import { DateTime } from 'luxon';
 
-import config, { Node } from '../config';
+import config from '../config';
 import Accounts, { buildAccounts, toValidAccountId } from '../common/types/Accounts';
 import {
     clearAll,
@@ -32,8 +32,8 @@ import {
     storeTokens
 } from '../common/Storage';
 
-import { getEndpoints, NodeMetadata } from './Connection';
-import { BrowserAxiosFileUploader } from '@logion/client-browser';
+import { NodeMetadata } from './Connection';
+import { BrowserAxiosFileUploader, newLogionClient } from '@logion/client-browser';
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
@@ -79,7 +79,7 @@ export class CallBatch {
     }
 
     readonly jobs: CallBatchJobs;
-};
+}
 
 export class ExtrinsicSubmissionState {
 
@@ -238,7 +238,6 @@ export interface LogionChainContextType {
     injectedAccounts: InjectedAccount[] | null,
     metaMaskAccounts: InjectedAccount[] | null,
     allAccounts: InjectedAccount[] | null,
-    edgeNodes: Node[],
     connectedNodeMetadata: NodeMetadata | null,
     extensionsEnabled: boolean,
     client: LogionClient | null,
@@ -275,7 +274,6 @@ const initState = (): FullLogionChainContextType => ({
     injectedAccounts: null,
     metaMaskAccounts: null,
     allAccounts: null,
-    edgeNodes: config.edgeNodes,
     connectedNodeMetadata: null,
     extensionsEnabled: false,
     connecting: false,
@@ -686,15 +684,22 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
             });
 
             const accounts = state.allAccounts;
+            let logionClient: LogionClient;
             (async function() {
-                const rpcEndpoints = getEndpoints();
-                const api = await buildApiClass(rpcEndpoints);
+                if (config.environment) {
+                    logionClient = await newLogionClient(config.environment);
+                } else {
+                    logionClient = await LogionClient.create({
+                        rpcEndpoints: config.rpcEndpoints,
+                        directoryEndpoint: config.directory,
+                        buildFileUploader: () => new BrowserAxiosFileUploader(),
+                        logionClassificationLoc: UUID.fromAnyString(config.logionClassification),
+                        creativeCommonsLoc: UUID.fromAnyString(config.creativeCommons),
+                    });
+                }
+
+                const api = logionClient.logionApi;
                 const peerId = await api.polkadot.rpc.system.localPeerId();
-                const logionClient = await LogionClient.create({
-                    rpcEndpoints,
-                    directoryEndpoint: config.directory,
-                    buildFileUploader: () => new BrowserAxiosFileUploader(),
-                });
 
                 let startupTokens: AccountTokens;
                 try {
@@ -857,7 +862,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 type: 'SET_METAMASK_ACCOUNTS',
                 metaMaskAccounts: [],
             });
-    
+
             const metaMaskEnabled = await enableMetaMask(config.APP_NAME);
             if(metaMaskEnabled) {
                 const metaMaskAccounts = await allMetamaskAccounts();

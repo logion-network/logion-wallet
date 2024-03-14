@@ -8,6 +8,7 @@ import {
     LogionClassification,
     SpecificLicense,
     CreativeCommons,
+    LogionClientConfig,
 } from "@logion/client";
 import { Fees, Hash, Lgnt } from '@logion/node-api';
 import { useCallback, useMemo, useState } from "react";
@@ -28,7 +29,6 @@ import './ImportItems.css';
 import { CsvItem, readItemsCsv } from "./ImportCsvReader";
 import Alert from "src/common/Alert";
 import { UUID } from "@logion/node-api";
-import config from "../config";
 import EstimatedFees from "./fees/EstimatedFees";
 import { BrowserFile } from "@logion/client-browser";
 import { Call, CallBatch, CallCallback } from "src/logion-chain/LogionChainContext";
@@ -36,7 +36,7 @@ import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 export default function ImportItems() {
     const { width } = useResponsiveContext();
-    const { signer, submitCallBatch, extrinsicSubmissionState, clearSubmissionState } = useLogionChain();
+    const { signer, submitCallBatch, extrinsicSubmissionState, clearSubmissionState, client } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { refresh, locState } = useUserLocContext();
 
@@ -48,29 +48,31 @@ export default function ImportItems() {
     const [ itemToSubmit, setItemToSubmit ] = useState<Item>();
 
     const readCsvFile = useCallback(async (file: File) => {
-        const collection = locState as ClosedCollectionLoc;
-        const acceptsUpload = collectionAcceptsUpload(collection);
-        clearSubmissionState();
+        if (client !== null) {
+            const collection = locState as ClosedCollectionLoc;
+            const acceptsUpload = collectionAcceptsUpload(collection);
+            clearSubmissionState();
 
-        const result = await readItemsCsv(file);
-        if("items" in result) {
-            const rows = toItems(result.items, acceptsUpload);
+            const result = await readItemsCsv(file);
+            if ("items" in result) {
+                const rows = toItems(result.items, acceptsUpload, client.config);
 
-            for(const item of rows) {
-                if(!item.error) {
-                    const existingItem = await collection.getCollectionItem({ itemId: item.id as Hash });
-                    item.submitted = existingItem !== undefined;
-                    item.success = existingItem !== undefined;
-                    item.upload = shouldUpload(acceptsUpload, existingItem, item.upload);
+                for (const item of rows) {
+                    if (!item.error) {
+                        const existingItem = await collection.getCollectionItem({ itemId: item.id as Hash });
+                        item.submitted = existingItem !== undefined;
+                        item.success = existingItem !== undefined;
+                        item.upload = shouldUpload(acceptsUpload, existingItem, item.upload);
+                    }
                 }
-            }
 
-            setItems(rows);
-        } else {
-            setCsvReadError(result.error);
+                setItems(rows);
+            } else {
+                setCsvReadError(result.error);
+            }
+            setShowImportItems(true);
         }
-        setShowImportItems(true);
-    }, [ clearSubmissionState, locState ]);
+    }, [ clearSubmissionState, locState, client ]);
 
     const itemFees = useCallback(async (item: Item) => {
         const collection = locState as ClosedCollectionLoc;
@@ -437,7 +439,7 @@ function collectionAcceptsUpload(collection: ClosedCollectionLoc): boolean {
     return collection.data().collectionCanUpload !== undefined && collection.data().collectionCanUpload === true;
 }
 
-function toItems(csvItems: CsvItem[], collectionAcceptsUpload: boolean): Item[] {
+function toItems(csvItems: CsvItem[], collectionAcceptsUpload: boolean, config: LogionClientConfig): Item[] {
     return csvItems.map(csvItem => {
         const id = csvItem.id;
         const displayId = csvItem.displayId;
@@ -497,7 +499,7 @@ function toItems(csvItems: CsvItem[], collectionAcceptsUpload: boolean): Item[] 
 
             let tcValidationResult: TCValidationResult = {}
             if (error === undefined) {
-                tcValidationResult = validateTermsAndConditions(csvItem);
+                tcValidationResult = validateTermsAndConditions(csvItem, config);
                 error = tcValidationResult.tcError;
                 errorType = "validation";
             }
@@ -531,17 +533,17 @@ interface TCValidationResult {
     tcError?: string;
 }
 
-function validateTermsAndConditions(csvItem: CsvItem): TCValidationResult {
+function validateTermsAndConditions(csvItem: CsvItem, config: LogionClientConfig): TCValidationResult {
     try {
         if (csvItem.termsAndConditionsType === 'logion_classification') {
-            const logionClassificationLocId = UUID.fromAnyString(config.logionClassification);
+            const logionClassificationLocId = config.logionClassificationLoc;
             if (logionClassificationLocId === undefined) {
                 return { tcError: "logion_classification: Logion Classification LOC id not properly configured" }
             }
             const logionClassification = LogionClassification.fromDetails(logionClassificationLocId, csvItem.termsAndConditionsParameters);
             return { logionClassification }
         } else if (csvItem.termsAndConditionsType === 'CC4.0') {
-            const ccLocId = UUID.fromAnyString(config.creativeCommons);
+            const ccLocId = config.creativeCommonsLoc;
             if (ccLocId === undefined) {
                 return { tcError: "CC4.0: LOC id not properly configured" }
             }

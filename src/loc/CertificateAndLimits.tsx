@@ -9,7 +9,6 @@ import Dialog from '../common/Dialog';
 import Icon from '../common/Icon';
 import { useLogionChain } from '../logion-chain';
 import { fullCertificateUrl } from '../PublicPaths';
-import config from '../config';
 import NewTabLink from '../common/NewTabLink';
 import StaticLabelValue from '../common/StaticLabelValue';
 
@@ -39,7 +38,7 @@ export interface Props {
 
 export default function CertificateAndLimits(props: Props) {
     const { loc } = props;
-    const { api } = useLogionChain();
+    const { api, client } = useLogionChain();
     const { backendConfig } = useCommonContext();
 
     const [ dateLimit, setDateLimit ] = useState<string>();
@@ -141,7 +140,7 @@ export default function CertificateAndLimits(props: Props) {
                     <StaticLabelValue
                         label='Logion endpoint'
                         value={
-                            <p>{ config.edgeNodes[0].socket }</p>
+                            <p>{ client?.config.rpcEndpoints[0] }</p>
                         }
                     />
 

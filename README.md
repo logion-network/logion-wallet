@@ -11,6 +11,11 @@ For the most recent version and how to install yarn, please refer to [yarn](http
 yarn install
 ```
 
+## Target an environment
+A config file `development.json` is required under [src/config/](src/config/).
+* To target a locally running node and directory, or fine-tune the config,  it's recommended to copy and/or adapt from [development.json.sample](src/config/development.json.sample).
+* To target a deployed environment (i.e. DEV, TEST or MVP), it's recommended to copy and/or adapt from [development-env.json.sample](src/config/development-env.json.sample).
+
 ## Usage
 
 Use below command in order to connect to a locally running infrastructure
