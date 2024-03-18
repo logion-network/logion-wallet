@@ -17,7 +17,7 @@ import {
     isExtensionAvailable
 } from '@logion/extension';
 import { LogionNodeApiClass, ValidAccountId, UUID } from '@logion/node-api';
-import axios, { AxiosInstance } from 'axios';
+import axios, { AxiosInstance, AxiosHeaders } from 'axios';
 import React, { useReducer, useContext, Context, Reducer, useEffect, useCallback } from 'react';
 import { DateTime } from 'luxon';
 
@@ -370,7 +370,7 @@ function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
             if (token) {
                 axios.interceptors.request.use((config) => {
                     if (!config.headers) {
-                        config.headers = {};
+                        config.headers = new AxiosHeaders();
                     }
                     config.headers['Authorization'] = `Bearer ${ token.value }`;
                     return config;
