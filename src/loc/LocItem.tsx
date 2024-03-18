@@ -169,7 +169,7 @@ abstract class AbstractLocItem<T> implements CommonData {
 export class MetadataItem extends AbstractLocItem<MetadataData> {
 
     static TYPE: LocItemType = "Data";
-    
+
     override title() {
         if (this.hasData()) {
             return this.data().name.value || "-";
@@ -428,7 +428,9 @@ export function canDelete(account: ValidAccountId | undefined, item: LocItem, vi
 
 export function canAdd(viewer: Viewer, loc: LocData) {
     return (viewer === "User" && (!loc.voidInfo && (loc.status === "DRAFT" || loc.status === "OPEN")))
-        || (viewer === "LegalOfficer" && (!loc.voidInfo && loc.status === "OPEN"));
+        || (viewer === "LegalOfficer"
+            && (!loc.voidInfo && loc.status === "OPEN")
+            && ( loc.requesterAddress === undefined || loc.requesterAddress.type !== "Polkadot"));
 }
 
 type ActorType = "Owner" | ContributionMode;
