@@ -16,18 +16,16 @@ import LocStatusCell from '../common/LocStatusCell';
 import ButtonGroup from '../common/ButtonGroup';
 
 
-import { WALLET_PATH, dataLocDetailsPath, identityLocDetailsPath, locRequestsPath } from './LegalOfficerPaths';
+import { WALLET_PATH, dataLocDetailsPath, identityLocDetailsPath, locDetailsPath, locRequestsPath } from './LegalOfficerPaths';
 
 import './Home.css';
 import UserIdentityNameCell from '../common/UserIdentityNameCell';
-import LocRequestDetails from './transaction-protection/LocRequestDetails';
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import { useLogionChain } from '../logion-chain';
 import TransactionType from 'src/common/TransactionType';
 import { toFeesClass } from "@logion/client/dist/Fees.js";
 
-const MAX_OPEN_LOCS = 3;
-const MAX_PENDING_LOCS = 3;
+const MAX_WAITING_LOCS = 3;
 
 export default function Account() {
     const { accounts } = useLogionChain();
@@ -35,14 +33,10 @@ export default function Account() {
         colorTheme,
         balanceState,
     } = useCommonContext();
-    const {
-        openedLocRequests,
-        pendingLocRequests,
-        openedIdentityLocs
-    } = useLegalOfficerContext();
+    const { locs, locsState } = useLegalOfficerContext();
     const navigate = useNavigate();
 
-    if (!balanceState || accounts === null || openedLocRequests === null || pendingLocRequests === null || openedIdentityLocs === null) {
+    if (!balanceState || accounts === null || locsState === null || locsState.discarded) {
         return <Loader />;
     }
 
@@ -120,99 +114,8 @@ export default function Account() {
                     </Frame>
 
                     <Frame
-                        className="transactions"
-                        title="Last open Transaction LOC"
-                    >
-                        <Button
-                            onClick={ () => navigate(locRequestsPath('Transaction')) }
-                            slim={ true }
-                            className="transactions-button"
-                        >
-                            <Icon icon={ { id: "loc" } } /> Go to transactions
-                        </Button>
-                        <Table
-                            columns={ [
-                                {
-                                    "header": "Requester",
-                                    render: requestAndLoc => <UserIdentityNameCell
-                                        userIdentity={ requestAndLoc.data().userIdentity } />,
-                                    align: 'left',
-                                },
-                                {
-                                    "header": "Description",
-                                    render: requestAndLoc => <Cell content={ requestAndLoc.data().description }
-                                                                   overflowing
-                                                                   tooltipId='open-loc-description-tooltip' />,
-                                    align: 'left',
-                                },
-                                {
-                                    header: "Status",
-                                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.data().status } />,
-                                    width: "140px",
-                                },
-                                {
-                                    "header": "Creation date",
-                                    render: requestAndLoc => <DateTimeCell
-                                        dateTime={ requestAndLoc.data().createdOn || null } />,
-                                    width: '200px',
-                                    align: 'center',
-                                },
-                                {
-                                    header: "Action",
-                                    render: requestAndLoc =>
-                                        <ActionCell>
-                                            <ButtonGroup>
-                                                <Button
-                                                    onClick={ () => navigate(dataLocDetailsPath(requestAndLoc.data().locType, requestAndLoc.data().id.toString())) }>Manage
-                                                    LOC</Button>
-                                            </ButtonGroup>
-                                        </ActionCell>
-                                    ,
-                                    width: '200px',
-                                    align: 'center',
-                                }
-                            ] }
-                            data={ openedLocRequests['Transaction'].slice(0, MAX_OPEN_LOCS) }
-                            renderEmpty={ () => <EmptyTableMessage>No open LOC yet</EmptyTableMessage> }
-                        />
-                    </Frame>
-                    <Frame
-                        className="transactions"
-                        title="Last Transaction LOC requests"
-                    >
-                        <Table
-                            columns={ [
-                                {
-                                    header: "Requester",
-                                    render: request => <UserIdentityNameCell userIdentity={ request.data().userIdentity } />,
-                                    align: "left",
-                                    renderDetails: request => <LocRequestDetails request={ request.data() } />
-                                },
-                                {
-                                    "header": "Description",
-                                    render: request => <Cell content={ request.data().description } overflowing
-                                                             tooltipId='loc-request-description-tooltip' />,
-                                    align: 'left',
-                                },
-                                {
-                                    header: "Status",
-                                    render: request => <LocStatusCell status={ request.data().status } />,
-                                    width: "140px",
-                                },
-                                {
-                                    header: "Creation date",
-                                    render: request => <DateTimeCell dateTime={ request.data().createdOn || null } />,
-                                    width: '200px',
-                                    align: 'center',
-                                }
-                            ] }
-                            data={ pendingLocRequests['Transaction'].slice(0, MAX_PENDING_LOCS) }
-                            renderEmpty={ () => <EmptyTableMessage>No requested LOC yet</EmptyTableMessage> }
-                        />
-                    </Frame>
-                    <Frame
                         className="identities"
-                        title="Last open Identity LOC"
+                        title="Last waiting Identity LOC"
                     >
                         <Button
                             onClick={ () => navigate(locRequestsPath('Identity')) }
@@ -263,8 +166,124 @@ export default function Account() {
                                     align: 'center',
                                 }
                             ] }
-                            data={ openedIdentityLocs.slice(0, MAX_OPEN_LOCS) }
-                            renderEmpty={ () => <EmptyTableMessage>No open LOC yet</EmptyTableMessage> }
+                            data={ locs["Identity"].workInProgress.slice(0, MAX_WAITING_LOCS) }
+                            renderEmpty={ () => <EmptyTableMessage>No waiting LOC yet</EmptyTableMessage> }
+                        />
+                    </Frame>
+
+                    <Frame
+                        className="collections"
+                        title="Last waiting Collection LOCs"
+                    >
+                        <Button
+                            onClick={ () => navigate(locRequestsPath('Collection')) }
+                            slim={ true }
+                            className="collections-button"
+                        >
+                            <Icon icon={ { id: "loc" } } /> Go to collections
+                        </Button>
+                        <Table
+                            columns={ [
+                                {
+                                    "header": "Requester",
+                                    render: requestAndLoc => <UserIdentityNameCell
+                                        userIdentity={ requestAndLoc.data().userIdentity } />,
+                                    align: 'left',
+                                },
+                                {
+                                    "header": "Description",
+                                    render: requestAndLoc => <Cell content={ requestAndLoc.data().description }
+                                                                   overflowing
+                                                                   tooltipId='open-id-loc-description-tooltip' />,
+                                    align: 'left',
+                                },
+                                {
+                                    header: "Status",
+                                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.data().status } />,
+                                    width: "140px",
+                                },
+                                {
+                                    "header": "Creation date",
+                                    render: requestAndLoc => <DateTimeCell
+                                        dateTime={ requestAndLoc.data().createdOn || null } />,
+                                    width: '200px',
+                                    align: 'center',
+                                },
+                                {
+                                    header: "Action",
+                                    render: requestAndLoc =>
+                                        <ActionCell>
+                                            <ButtonGroup>
+                                                <Button
+                                                    onClick={ () => navigate(locDetailsPath(requestAndLoc.data().id.toString(), "Collection")) }>Manage
+                                                    LOC</Button>
+                                            </ButtonGroup>
+                                        </ActionCell>
+                                    ,
+                                    width: '200px',
+                                    align: 'center',
+                                }
+                            ] }
+                            data={ locs["Collection"].workInProgress.slice(0, MAX_WAITING_LOCS) }
+                            renderEmpty={ () => <EmptyTableMessage>No waiting LOC yet</EmptyTableMessage> }
+                        />
+                    </Frame>
+
+                    <Frame
+                        className="transactions"
+                        title="Last waiting Transaction LOC"
+                    >
+                        <Button
+                            onClick={ () => navigate(locRequestsPath('Transaction')) }
+                            slim={ true }
+                            className="transactions-button"
+                        >
+                            <Icon icon={ { id: "loc" } } /> Go to transactions
+                        </Button>
+                        <Table
+                            columns={ [
+                                {
+                                    "header": "Requester",
+                                    render: requestAndLoc => <UserIdentityNameCell
+                                        userIdentity={ requestAndLoc.data().userIdentity } />,
+                                    align: 'left',
+                                },
+                                {
+                                    "header": "Description",
+                                    render: requestAndLoc => <Cell content={ requestAndLoc.data().description }
+                                                                   overflowing
+                                                                   tooltipId='open-loc-description-tooltip' />,
+                                    align: 'left',
+                                },
+                                {
+                                    header: "Status",
+                                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.data().status } />,
+                                    width: "140px",
+                                },
+                                {
+                                    "header": "Creation date",
+                                    render: requestAndLoc => <DateTimeCell
+                                        dateTime={ requestAndLoc.data().createdOn || null } />,
+                                    width: '200px',
+                                    align: 'center',
+                                },
+                                {
+                                    header: "Action",
+                                    render: requestAndLoc =>
+                                        <ActionCell>
+                                            <ButtonGroup>
+                                                <Button
+                                                    onClick={ () => navigate(dataLocDetailsPath(requestAndLoc.data().locType, requestAndLoc.data().id.toString())) }>Manage
+                                                    LOC</Button>
+                                            </ButtonGroup>
+                                        </ActionCell>
+                                    ,
+                                    width: '200px',
+                                    align: 'center',
+                                }
+                            ] }
+                            data={ locs['Transaction'].workInProgress.slice(0, MAX_WAITING_LOCS) }
+                            renderEmpty={ () => <EmptyTableMessage>No waiting LOC yet</EmptyTableMessage> }
                         />
                     </Frame>
                 </Col>

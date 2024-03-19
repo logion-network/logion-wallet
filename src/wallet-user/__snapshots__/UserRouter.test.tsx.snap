@@ -68,7 +68,7 @@ exports[`renders 1`] = `
   />
   <Route
     element={
-      <TransactionProtection
+      <LocsDashboard
         actions={
           <LocCreation
             locType="Transaction"
@@ -76,21 +76,26 @@ exports[`renders 1`] = `
           />
         }
         iconId="loc"
-        locType="Transaction"
-        titles={
-          Object {
-            "loc": "Transaction Protection Case(s)",
-            "main": "Transaction Case Management",
-            "request": "Transaction Protection Case Request(s)",
+        loading={true}
+        locDetailsPath={[Function]}
+        locs={
+          Locs {
+            "_completed": Array [],
+            "_waiting": Array [],
+            "_workInProgress": Array [],
+            "allLocs": Array [],
+            "viewer": "User",
           }
         }
+        settingsPath="/user/settings"
+        title="Transaction LOCs"
       />
     }
     path="/loc/transaction"
   />
   <Route
     element={
-      <TransactionProtection
+      <LocsDashboard
         actions={
           <LocCreation
             locType="Collection"
@@ -98,31 +103,46 @@ exports[`renders 1`] = `
           />
         }
         iconId="collection"
-        locType="Collection"
-        titles={
-          Object {
-            "loc": "Collection Protection Case(s)",
-            "main": "Collection Protection Management",
-            "request": "Collection Protection Request(s)",
+        loading={true}
+        locDetailsPath={[Function]}
+        locs={
+          Locs {
+            "_completed": Array [],
+            "_waiting": Array [],
+            "_workInProgress": Array [],
+            "allLocs": Array [],
+            "viewer": "User",
           }
         }
+        settingsPath="/user/settings"
+        title="Collection LOCs"
       />
     }
     path="/loc/collection"
   />
   <Route
     element={
-      <TransactionProtection
-        actions={<IdentityLocCreation />}
+      <LocsDashboard
+        actions={
+          <LocCreation
+            locType="Identity"
+            requestButtonLabel="Request an Identity Protection"
+          />
+        }
         iconId="identity"
-        locType="Identity"
-        titles={
-          Object {
-            "loc": "Identity Case(s)",
-            "main": "Identity Case Management",
-            "request": "Identity Case Request(s)",
+        loading={true}
+        locDetailsPath={[Function]}
+        locs={
+          Locs {
+            "_completed": Array [],
+            "_waiting": Array [],
+            "_workInProgress": Array [],
+            "allLocs": Array [],
+            "viewer": "User",
           }
         }
+        settingsPath="/user/settings"
+        title="Identity LOCs"
       />
     }
     path="/loc/identity"

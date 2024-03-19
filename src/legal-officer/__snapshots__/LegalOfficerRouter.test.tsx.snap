@@ -49,32 +49,44 @@ exports[`renders 1`] = `
   />
   <Route
     element={
-      <TransactionProtection
+      <LocsDashboard
+        actions={null}
         iconId="loc"
-        locType="Transaction"
-        titles={
-          Object {
-            "loc": "Transaction Protection Case(s)",
-            "main": "Transaction Case Management",
-            "request": "Transaction Protection Case Request(s)",
+        loading={true}
+        locDetailsPath={[Function]}
+        locs={
+          Locs {
+            "_completed": Array [],
+            "_waiting": Array [],
+            "_workInProgress": Array [],
+            "allLocs": Array [],
+            "viewer": "LegalOfficer",
           }
         }
+        settingsPath="/legal-officer/settings"
+        title="Transaction LOCs"
       />
     }
     path="/loc/transaction"
   />
   <Route
     element={
-      <TransactionProtection
-        iconId="collection"
-        locType="Collection"
-        titles={
-          Object {
-            "loc": "Collection Protection Case(s)",
-            "main": "Collection Protection Management",
-            "request": "Collection Protection Request(s)",
+      <LocsDashboard
+        actions={null}
+        iconId="loc"
+        loading={true}
+        locDetailsPath={[Function]}
+        locs={
+          Locs {
+            "_completed": Array [],
+            "_waiting": Array [],
+            "_workInProgress": Array [],
+            "allLocs": Array [],
+            "viewer": "LegalOfficer",
           }
         }
+        settingsPath="/legal-officer/settings"
+        title="Collection LOCs"
       />
     }
     path="/loc/collection"

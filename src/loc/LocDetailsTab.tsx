@@ -1,4 +1,4 @@
-import { LocData, LegalOfficer, LocRequestState, DraftRequest } from "@logion/client";
+import { LocData, LegalOfficer, LocRequestState, DraftRequest, RejectedRequest, AcceptedRequest } from "@logion/client";
 import { LocType, UUID } from "@logion/node-api";
 import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ButtonGroup from "src/common/ButtonGroup";
@@ -203,7 +203,7 @@ export function LocDetailsTabContent(props: ContentProps) {
 
     const cancelRequestCallback = useCallback(async () => {
         await mutateLocState(async current => {
-            if(current instanceof DraftRequest) {
+            if(current instanceof DraftRequest || current instanceof AcceptedRequest) {
                 const newLocs = await current.cancel();
                 navigate(backPath);
                 return newLocs;
@@ -223,6 +223,18 @@ export function LocDetailsTabContent(props: ContentProps) {
                 const next = await current.submit();
                 navigate(backPath);
                 return next;
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState, navigate, backPath ]);
+
+    const resubmitRequestCallback = useCallback(async (request: LocData) => {
+        await mutateLocState(async current => {
+            if(current instanceof RejectedRequest) {
+                const next = await current.rework();
+                navigate(backPath);
+                return next.locsState();
             } else {
                 return current;
             }
@@ -367,21 +379,35 @@ export function LocDetailsTabContent(props: ContentProps) {
                 <>
                 <Col xxl={ 5 } xl={ 6 }>
                     {
-                        loc.status === "DRAFT" && loc.iDenfy?.status !== "PENDING" &&
+                        loc.iDenfy?.status !== "PENDING" &&
                         <ButtonGroup
                             align="right"
                         >
-                            <Button
-                                variant="danger"
-                                onClick={ confirmCancel }
-                            >
-                                <Icon icon={{ id: "void_inv" }}/> Cancel request
-                            </Button>
-                            <Button
-                                onClick={ confirmSubmit }
-                            >
-                                <Icon icon={{ id: "submit" }}/> Submit request
-                            </Button>
+                            {
+                                (loc.status === "DRAFT" || loc.status === "REVIEW_REJECTED" || loc.status === "REVIEW_ACCEPTED") &&
+                                <Button
+                                    variant="danger"
+                                    onClick={ confirmCancel }
+                                >
+                                    <Icon icon={{ id: "void_inv" }}/> Cancel request
+                                </Button>
+                            }
+                            {
+                                loc.status === "DRAFT" &&
+                                <Button
+                                    onClick={ confirmSubmit }
+                                >
+                                    <Icon icon={{ id: "submit" }}/> Submit request
+                                </Button>
+                            }
+                            {
+                                loc.status === "REVIEW_REJECTED" &&
+                                <Button
+                                    onClick={ resubmitRequestCallback }
+                                >
+                                    <Icon icon={{ id: "edit" }}/> Re-edit as draft
+                                </Button>
+                            }
                         </ButtonGroup>
                     }
                 </Col>

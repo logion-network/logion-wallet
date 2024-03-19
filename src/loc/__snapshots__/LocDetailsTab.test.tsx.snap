@@ -621,7 +621,11 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
       <Col
         xl={6}
         xxl={5}
-      />
+      >
+        <ButtonGroup
+          align="right"
+        />
+      </Col>
     </React.Fragment>
   </Row>
   <WarningDialog
@@ -1126,7 +1130,11 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
       <Col
         xl={6}
         xxl={5}
-      />
+      >
+        <ButtonGroup
+          align="right"
+        />
+      </Col>
     </React.Fragment>
   </Row>
   <WarningDialog
@@ -1859,7 +1867,11 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
       <Col
         xl={6}
         xxl={5}
-      />
+      >
+        <ButtonGroup
+          align="right"
+        />
+      </Col>
     </React.Fragment>
   </Row>
   <WarningDialog

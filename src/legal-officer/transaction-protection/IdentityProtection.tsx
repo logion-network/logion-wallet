@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -6,31 +6,37 @@ import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
 
 import { useCommonContext } from '../../common/CommonContext';
-import OpenedLocs from './OpenedLocs';
-import ClosedLocs from './ClosedLocs';
 import Frame from '../../common/Frame';
 
 import './IdentityProtection.css';
-import VoidLocs from './VoidLocs';
 import Button from '../../common/Button';
 import LocCreationDialog from '../../loc/LocCreationDialog';
 import { useNavigate } from 'react-router-dom';
-import { identityLocDetailsPath } from '../LegalOfficerPaths';
-import PendingLocRequests from "./PendingLocRequests";
-import RejectedLocRequests from "./RejectedLocRequests";
-import AcceptedLocRequests from "./AcceptedLocRequests";
+import { identityLocDetailsPath, locDetailsPath } from '../LegalOfficerPaths';
+import WorkInProgressLocs from 'src/loc/dashboard/WorkInProgressLocs';
+import WaitingLocs from 'src/loc/dashboard/WaitingLocs';
+import CompletedLocs from 'src/loc/dashboard/CompletedLocs';
+import { useLegalOfficerContext } from '../LegalOfficerContext';
 
 export default function IdentityProtection() {
     const { colorTheme } = useCommonContext();
-    const [ polkadotLocTabKey, setPolkadotLocTabKey ] = useState('open');
-    const [ logionLocTabKey, setLogionLocTabKey ] = useState('open');
+    const [ polkadotLocTabKey, setPolkadotLocTabKey ] = useState('workInProgress');
+    const [ logionLocTabKey, setLogionLocTabKey ] = useState('workInProgress');
     const [ createLoc, setCreateLoc ] = useState(false);
     const navigate = useNavigate();
-    const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
+    const { locs } = useLegalOfficerContext();
+
+    const polkadotLocs = useMemo(() => {
+        return locs.Identity.filter(loc => !loc.isLogionIdentity());
+    }, [ locs ]);
+
+    const logionLocs = useMemo(() => {
+        return locs.Identity.filter(loc => loc.isLogionIdentity());
+    }, [ locs ]);
 
     return (
         <FullWidthPane
-            mainTitle="Identity Case Management"
+            mainTitle="Identity LOCs"
             titleIcon={ {
                 icon: {
                     id: 'identity'
@@ -46,53 +52,33 @@ export default function IdentityProtection() {
                     >
                         <Tabs
                             activeKey={ polkadotLocTabKey }
-                            onSelect={ key => setPolkadotLocTabKey(key || 'open') }
+                            onSelect={ key => setPolkadotLocTabKey(key || 'workInProgress') }
                             tabs={[
                                 {
-                                    key: "open",
-                                    title: "Open",
-                                    render: () => <OpenedLocs locType="Identity" identityLocType="Polkadot" />
+                                    key: "workInProgress",
+                                    title: "Work in progress",
+                                    render: () => <WorkInProgressLocs
+                                        locs={ polkadotLocs.workInProgress }
+                                        locDetailsPath={ locDetailsPath }
+                                    />,
                                 },
                                 {
-                                    key: "closed",
-                                    title: "Closed",
-                                    render: () => <ClosedLocs locType="Identity" identityLocType="Polkadot" />
+                                    key: "waiting",
+                                    title: "Waiting",
+                                    render: () => <WaitingLocs
+                                        locs={ polkadotLocs.waiting }
+                                        locDetailsPath={ locDetailsPath }
+                                    />,
                                 },
                                 {
-                                    key: "void",
-                                    title: "Void",
-                                    render: () => <VoidLocs locType="Identity" identityLocType="Polkadot" />
-                                }
-                            ]}
-                        />
-                    </Frame>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <Frame
-                        title="Polkadot Identity LOC Request(s)"
-                    >
-                        <Tabs
-                            activeKey={ requestTabKey }
-                            onSelect={ key => setRequestTabKey(key || 'pending') }
-                            tabs={ [
-                                {
-                                    key: "pending",
-                                    title: "Pending",
-                                    render: () => <PendingLocRequests locType="Identity" />
+                                    key: "completed",
+                                    title: "Completed",
+                                    render: () => <CompletedLocs
+                                        locs={ polkadotLocs.completed }
+                                        locDetailsPath={ locDetailsPath }
+                                    />,
                                 },
-                                {
-                                    key: "accepted",
-                                    title: "Accepted",
-                                    render: () => <AcceptedLocRequests locType="Identity" />
-                                },
-                                {
-                                    key: "rejected",
-                                    title: "Rejected",
-                                    render: () => <RejectedLocRequests locType="Identity" />
-                                }
-                            ]}
+                            ] }
                         />
                     </Frame>
                 </Col>
@@ -110,24 +96,33 @@ export default function IdentityProtection() {
                         </Button>
                         <Tabs
                             activeKey={ logionLocTabKey }
-                            onSelect={ key => setLogionLocTabKey(key || 'open') }
+                            onSelect={ key => setLogionLocTabKey(key || 'workInProgress') }
                             tabs={[
                                 {
-                                    key: "open",
-                                    title: "Open",
-                                    render: () => <OpenedLocs locType="Identity" identityLocType="Logion" />
+                                    key: "workInProgress",
+                                    title: "Work in progress",
+                                    render: () => <WorkInProgressLocs
+                                        locs={ logionLocs.workInProgress }
+                                        locDetailsPath={ locDetailsPath }
+                                    />,
                                 },
                                 {
-                                    key: "closed",
-                                    title: "Closed",
-                                    render: () => <ClosedLocs locType="Identity" identityLocType="Logion" />
+                                    key: "waiting",
+                                    title: "Waiting",
+                                    render: () => <WaitingLocs
+                                        locs={ logionLocs.waiting }
+                                        locDetailsPath={ locDetailsPath }
+                                    />,
                                 },
                                 {
-                                    key: "void",
-                                    title: "Void",
-                                    render: () => <VoidLocs locType="Identity" identityLocType="Logion" />
-                                }
-                            ]}
+                                    key: "completed",
+                                    title: "Completed",
+                                    render: () => <CompletedLocs
+                                        locs={ logionLocs.completed }
+                                        locDetailsPath={ locDetailsPath }
+                                    />,
+                                },
+                            ] }
                         />
                         <LocCreationDialog
                             show={ createLoc }

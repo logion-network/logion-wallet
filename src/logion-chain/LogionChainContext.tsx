@@ -382,7 +382,6 @@ function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
 }
 
 const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionChainContextType, action: Action): FullLogionChainContextType => {
-    console.log(action.type)
     switch (action.type) {
         case 'CONNECT_INIT':
             return { ...state, connecting: true };
