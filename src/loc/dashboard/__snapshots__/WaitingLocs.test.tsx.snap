@@ -34,7 +34,7 @@ exports[`WaitingLocs renders for LLO 1`] = `
   data={
     Array [
       Object {
-        "createdOn": "2024-03-19T16:00:00.000+01:00",
+        "createdOn": "2024-03-19T16:00:00.000Z",
         "status": "REVIEW_ACCEPTED",
         "userIdentity": Object {},
       },
@@ -78,7 +78,7 @@ exports[`WaitingLocs renders for user 1`] = `
   data={
     Array [
       Object {
-        "createdOn": "2024-03-19T16:00:00.000+01:00",
+        "createdOn": "2024-03-19T16:00:00.000Z",
         "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "status": "REVIEW_PENDING",
       },

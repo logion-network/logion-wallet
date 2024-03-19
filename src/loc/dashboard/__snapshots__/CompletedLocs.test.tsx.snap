@@ -34,12 +34,12 @@ exports[`CompletedLocs renders for LLO 1`] = `
   data={
     Array [
       Object {
-        "closedOn": "2024-03-19T16:00:00.000+01:00",
+        "closedOn": "2024-03-19T16:00:00.000Z",
         "status": "CLOSED",
         "userIdentity": Object {},
       },
       Object {
-        "closedOn": "2024-03-19T16:00:00.000+01:00",
+        "closedOn": "2024-03-19T16:00:00.000Z",
         "status": "OPEN",
         "userIdentity": Object {},
         "voidInfo": Object {},
@@ -84,12 +84,12 @@ exports[`CompletedLocs renders for user 1`] = `
   data={
     Array [
       Object {
-        "closedOn": "2024-03-19T16:00:00.000+01:00",
+        "closedOn": "2024-03-19T16:00:00.000Z",
         "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "status": "CLOSED",
       },
       Object {
-        "closedOn": "2024-03-19T16:00:00.000+01:00",
+        "closedOn": "2024-03-19T16:00:00.000Z",
         "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "status": "OPEN",
         "voidInfo": Object {},

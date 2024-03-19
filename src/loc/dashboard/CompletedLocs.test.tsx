@@ -14,12 +14,12 @@ describe("CompletedLocs", () => {
         const locs = [
             mockLoc({
                 ownerAddress: PATRICK.address,
-                closedOn: DateTime.fromISO("2024-03-19T16:00:00"),
+                closedOn: DateTime.fromISO("2024-03-19T16:00:00Z", {zone: 'utc'}),
                 status: "CLOSED",
             }),
             mockLoc({
                 ownerAddress: PATRICK.address,
-                closedOn: DateTime.fromISO("2024-03-19T16:00:00"),
+                closedOn: DateTime.fromISO("2024-03-19T16:00:00Z", {zone: 'utc'}),
                 status: "OPEN",
                 voidInfo: {},
             }),
@@ -33,12 +33,12 @@ describe("CompletedLocs", () => {
         const locs = [
             mockLoc({
                 userIdentity: {},
-                closedOn: DateTime.fromISO("2024-03-19T16:00:00"),
+                closedOn: DateTime.fromISO("2024-03-19T16:00:00Z", {zone: 'utc'}),
                 status: "CLOSED",
             }),
             mockLoc({
                 userIdentity: {},
-                closedOn: DateTime.fromISO("2024-03-19T16:00:00"),
+                closedOn: DateTime.fromISO("2024-03-19T16:00:00Z", {zone: 'utc'}),
                 status: "OPEN",
                 voidInfo: {},
             }),

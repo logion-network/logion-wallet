@@ -14,7 +14,7 @@ describe("WaitingLocs", () => {
         const locs = [
             mockLoc({
                 ownerAddress: PATRICK.address,
-                createdOn: DateTime.fromISO("2024-03-19T16:00:00"),
+                createdOn: DateTime.fromISO("2024-03-19T16:00:00Z", {zone: 'utc'}),
                 status: "REVIEW_PENDING",
             }),
         ];
@@ -27,7 +27,7 @@ describe("WaitingLocs", () => {
         const locs = [
             mockLoc({
                 userIdentity: {},
-                createdOn: DateTime.fromISO("2024-03-19T16:00:00"),
+                createdOn: DateTime.fromISO("2024-03-19T16:00:00Z", {zone: 'utc'}),
                 status: "REVIEW_ACCEPTED",
             }),
         ];
