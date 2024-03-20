@@ -9,6 +9,7 @@ import LegalOfficerName from "src/common/LegalOfficerNameCell";
 import LocStatusCell from "src/common/LocStatusCell";
 import Table, { Cell, Column, DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import UserIdentityNameCell from "src/common/UserIdentityNameCell";
+import WorkInProgressLocDetails from "./WorkInProgressLocDetails";
 
 export interface Props {
     locs: LocRequestState[];
@@ -25,6 +26,7 @@ export default function WorkInProgressLocs(props: Props) {
             result.push({
                 header: "Legal officer",
                 render: locData => <LegalOfficerName address={ locData.ownerAddress } />,
+                renderDetails: locData => <WorkInProgressLocDetails locData={ locData } />,
                 align: 'left',
             });
         } else {

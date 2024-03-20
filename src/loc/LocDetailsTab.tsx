@@ -203,7 +203,9 @@ export function LocDetailsTabContent(props: ContentProps) {
 
     const cancelRequestCallback = useCallback(async () => {
         await mutateLocState(async current => {
-            if(current instanceof DraftRequest || current instanceof AcceptedRequest) {
+            if(current instanceof DraftRequest
+                    || current instanceof AcceptedRequest
+                    || current instanceof RejectedRequest) {
                 const newLocs = await current.cancel();
                 navigate(backPath);
                 return newLocs;

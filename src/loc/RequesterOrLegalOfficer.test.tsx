@@ -40,6 +40,7 @@ describe("RequesterOrLegalOfficer", () => {
 
 const locWithPolkadotRequester = {
     requesterAddress: TEST_WALLET_USER,
+    requesterLocId: UUID.fromDecimalStringOrThrow(CLOSED_IDENTITY_LOC_ID),
     userIdentity: {
         firstName: "John",
         lastName: "Doe",

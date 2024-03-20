@@ -52,6 +52,7 @@ exports[`WorkInProgressLocs renders for user 1`] = `
         "align": "left",
         "header": "Legal officer",
         "render": [Function],
+        "renderDetails": [Function],
       },
       Object {
         "align": "left",

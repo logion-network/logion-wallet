@@ -3,7 +3,7 @@ import { Locs } from "./Locs";
 import { DateTime } from "luxon";
 import { UUID } from "@logion/node-api";
 
-fdescribe("Locs", () => {
+describe("Locs", () => {
 
     it("creates empty for user", () => {
         const locs = Locs.empty("User");
@@ -133,6 +133,7 @@ function expectLocs(locs: LocRequestState[], expected: UUID[]) {
 }
 
 const DRAFT_LOC_ID = new UUID();
+const OPEN_WITH_NO_ITEM_LOC_ID = new UUID();
 const OPEN_WITH_UNPUBLISHED_META_ID = new UUID();
 const OPEN_WITH_UNPUBLISHED_FILE_ID = new UUID();
 const OPEN_WITH_UNPUBLISHED_LINK_ID = new UUID();
@@ -141,6 +142,7 @@ const REJECTED_ID = new UUID();
 
 const USER_WORK_IN_PROGRESS = [
     DRAFT_LOC_ID,
+    OPEN_WITH_NO_ITEM_LOC_ID,
     OPEN_WITH_UNPUBLISHED_META_ID,
     OPEN_WITH_UNPUBLISHED_FILE_ID,
     OPEN_WITH_UNPUBLISHED_LINK_ID,
@@ -148,7 +150,6 @@ const USER_WORK_IN_PROGRESS = [
     REJECTED_ID,
 ];
 
-const OPEN_WITH_NO_ITEM_LOC_ID = new UUID();
 const OPEN_WITH_ALL_PUBLISHED_ID = new UUID();
 const PENDING_ID = new UUID();
 

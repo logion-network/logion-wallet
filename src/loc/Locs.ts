@@ -61,7 +61,7 @@ export class Locs {
     private isUserWorkInProgress(loc: LocRequestState): boolean {
         const status = loc.data().status;
         return status === "DRAFT"
-            || (status === "OPEN" && loc.data().voidInfo === undefined && this.hasUnpublishedItems(loc))
+            || (status === "OPEN" && loc.data().voidInfo === undefined && (this.hasUnpublishedItems(loc) || this.hasNoItem(loc)))
             || status === "REVIEW_ACCEPTED"
             || status === "REVIEW_REJECTED";
     }
@@ -71,6 +71,10 @@ export class Locs {
             || (loc.data().files.find(item => !item.published) !== undefined)
             || (loc.data().links.find(item => !item.published) !== undefined)
         ;
+    }
+
+    private hasNoItem(loc: LocRequestState): boolean {
+        return (loc.data().metadata.length + loc.data().files.length + loc.data().links.length) === 0;
     }
 
     private sortByIncreasingCreatedOn(a: LocRequestState, b: LocRequestState): number {
