@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkInProgressLocDetails shows reason when LOC rejected 1`] = `
+<div
+  className="WorkInProgressLocDetails"
+>
+  <Detail
+    label="ID"
+    value="285592762140649115665042833463990413648"
+  />
+  <Detail
+    label="Reason"
+    value="Because."
+  />
+</div>
+`;

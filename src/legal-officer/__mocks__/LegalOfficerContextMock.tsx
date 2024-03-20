@@ -1,16 +1,7 @@
-import { ClosedCollectionLoc, ClosedLoc, OpenLoc, PendingRequest, RejectedRequest, VoidedLoc, LocsState, SignCallback, Votes, Vote, VoteResult } from "@logion/client";
-import { LocType, IdentityLocType, LegalOfficerData } from "@logion/node-api";
-import { ISubmittableResult } from '@polkadot/types/types';
-import { AxiosInstance } from "axios";
-import { COLOR_THEME, PATRICK } from "src/common/TestData";
-
-export let pendingTokenizationRequests: any[] | null = null;
-
-export let rejectRequest = () => {
-
-};
-
-export let tokenizationRequestsHistory: any[] | null = null;
+import { LocsState, Votes } from "@logion/client";
+import { LegalOfficerData } from "@logion/node-api";
+import { PATRICK } from "src/common/TestData";
+import { Locs } from "src/loc/Locs";
 
 export let refreshRequests = jest.fn();
 
@@ -23,18 +14,6 @@ export let protectionRequestsHistory: any[] | null = null;
 export let pendingRecoveryRequests: any[] | null = null;
 
 export let recoveryRequestsHistory: any[] | null = null;
-
-export function setPendingRequests(requests: any[]) {
-    pendingTokenizationRequests = requests;
-}
-
-export function setRejectRequest(callback: any) {
-    rejectRequest = callback;
-}
-
-export function setTokenizationRequestsHistory(requests: any[]) {
-    tokenizationRequestsHistory = requests;
-}
 
 export function setRefreshRequests(callback: any) {
     refreshRequests = callback;
@@ -60,61 +39,6 @@ export function setRecoveryRequestsHistory(requests: any[]) {
     recoveryRequestsHistory = requests;
 }
 
-export let pendingLocRequests: Record<LocType, PendingRequest[]> | null = null;
-export let rejectedLocRequests: Record<LocType, RejectedRequest[]> | null = null;
-
-export let openedLocRequests: Record<LocType, OpenLoc[]> | null = {
-    "Transaction": [],
-    "Collection": [],
-    "Identity": [],
-};
-
-export let closedLocRequests: Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> | null = {
-    "Transaction": [],
-    "Collection": [],
-    "Identity": [],
-};
-
-export let openedIdentityLocs: OpenLoc[] | null = null;
-
-export let openedIdentityLocsByType: Record<IdentityLocType, OpenLoc[]> | null = null;
-
-export let closedIdentityLocsByType: Record<IdentityLocType, ClosedLoc[]> | null = null;
-
-export let voidIdentityLocsByType: Record<IdentityLocType, VoidedLoc[]> | null = null;
-
-export function setRejectedLocRequests(requests: RejectedRequest[]) {
-    rejectedLocRequests = { Collection: [], Transaction: requests, Identity: [] };
-}
-
-export function setOpenedLocRequests(requests: OpenLoc[]) {
-    openedLocRequests = { Collection: [], Transaction: requests, Identity: [] };
-}
-
-export function setPendingLocRequests(requests: PendingRequest[]) {
-    pendingLocRequests = { Collection: [], Transaction: requests, Identity: [] };
-}
-
-export function setClosedLocRequests(requests: ClosedLoc[]) {
-    closedLocRequests = { Collection: [], Transaction: requests, Identity: [] };
-}
-
-export function setOpenedIdentityLocs(requests: OpenLoc[]) {
-    openedIdentityLocs = requests;
-}
-
-export function setOpenedIdentityLocsByType(locs: Record<IdentityLocType, OpenLoc[]>) {
-    openedIdentityLocsByType = locs;
-}
-
-export function setClosedIdentityLocsByType(locs: Record<IdentityLocType, ClosedLoc[]>) {
-    closedIdentityLocsByType = locs;
-}
-
-export function setVoidedIdentityLocsByType(locs: Record<IdentityLocType, VoidedLoc[]>) {
-    voidIdentityLocsByType = locs;
-}
-
 let onchainSettings: LegalOfficerData = {};
 
 export function setOnchainSettings(settings: LegalOfficerData) {
@@ -137,19 +61,6 @@ export function setLocsState(mock: LocsState) {
     locsState = mock;
 }
 
-async function vote(params: {
-    targetVote: Vote,
-    myVote: VoteResult,
-    callback: SignCallback
-}): Promise<Vote> {
-    params.callback({
-        status: {
-            isFinalized: true,
-        }
-    } as ISubmittableResult);
-    return params.targetVote;
-}
-
 let votes: Votes;
 
 export function setVotes(value: Votes) {
@@ -164,32 +75,27 @@ async function mutateVotes(mutator: (current: Votes) => Promise<Votes>): Promise
     votes = await mutator(votes);
 }
 
+const locs = {
+    Identity: Locs.empty("LegalOfficer"),
+    Collection: Locs.empty("LegalOfficer"),
+    Transaction: Locs.empty("LegalOfficer"),
+};
+
 export function useLegalOfficerContext() {
     return {
-        pendingTokenizationRequests,
-        rejectRequest,
-        tokenizationRequestsHistory,
         refreshRequests,
         pendingProtectionRequests,
         activatedProtectionRequests,
         protectionRequestsHistory,
-        colorTheme: COLOR_THEME,
-        openedLocRequests,
-        openedIdentityLocs,
-        openedIdentityLocsByType,
-        closedLocRequests,
-        closedIdentityLocsByType,
-        pendingLocRequests,
-        rejectedLocRequests,
-        voidIdentityLocsByType,
-        axios: {} as AxiosInstance,
-        onchainSettings,
+        axios: {},
         pendingRecoveryRequests,
         refreshLocs,
         legalOfficer,
         refreshLegalOfficer,
+        onchainSettings,
         refreshOnchainSettings,
         locsState,
+        locs,
         votes,
         mutateLocsState,
         mutateVotes,

@@ -30,7 +30,6 @@ import Settings from '../settings/Settings';
 import RecoveryDetails from "./RecoveryDetails";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
-import TransactionProtection from './transaction-protection/TransactionProtection';
 import LocDetails, { VoterLocDetails } from "../loc/LocDetails";
 import IdentityProtection from './transaction-protection/IdentityProtection';
 import { useCommonContext } from '../common/CommonContext';
@@ -55,11 +54,12 @@ import {
 } from 'src/loc/DocumentClaimHistory';
 import { LegalOfficerTokensRecordPane } from 'src/loc/record/TokensRecordPane';
 import { LegalInvitedContributorsPane } from "../loc/invited-contributor/InvitedContributorsPane";
+import LocsDashboard from 'src/loc/dashboard/LocsDashboard';
 
 export default function LegalOfficerRouter() {
     const { accounts } = useLogionChain();
     const { nodesDown, availableLegalOfficers, balanceState } = useCommonContext();
-    const { missingSettings } = useLegalOfficerContext();
+    const { missingSettings, locs, locsState } = useLegalOfficerContext();
 
     if(availableLegalOfficers === undefined || !(accounts?.current?.accountId)) {
         return null;
@@ -104,26 +104,30 @@ export default function LegalOfficerRouter() {
                     transactions={ balanceState?.transactions || [] }
                     type="Wallet"
             /> } />
-            <Route path={ locRequestsRelativePath('Transaction') }
-                   element={ <TransactionProtection
-                       locType='Transaction'
-                       titles={ {
-                           main: "Transaction Case Management",
-                           loc: "Transaction Protection Case(s)",
-                           request: "Transaction Protection Case Request(s)"
-                       } }
-                       iconId="loc"
-                   /> } />
-            <Route path={ locRequestsRelativePath('Collection') }
-                   element={ <TransactionProtection
-                       locType='Collection'
-                       titles={{
-                           main: "Collection Protection Management",
-                           loc: "Collection Protection Case(s)",
-                           request: "Collection Protection Request(s)"
-                       }}
-                       iconId="collection"
-                   /> } />
+            <Route
+                path={ locRequestsRelativePath('Transaction') }
+                element={ <LocsDashboard
+                    title="Transaction LOCs"
+                    iconId="loc"
+                    actions={ null }
+                    settingsPath={ SETTINGS_PATH }
+                    locs={ locs["Transaction"] }
+                    loading={ locsState === null || locsState.discarded }
+                    locDetailsPath={ locDetailsPath }
+                /> }
+            />
+            <Route
+                path={ locRequestsRelativePath('Collection') }
+                element={ <LocsDashboard
+                    title="Collection LOCs"
+                    iconId="loc"
+                    actions={ null }
+                    settingsPath={ SETTINGS_PATH }
+                    locs={ locs["Collection"] }
+                    loading={ locsState === null || locsState.discarded }
+                    locDetailsPath={ locDetailsPath }
+                /> }
+            />
             <Route path={ locDetailsRelativePath('Transaction') } element={
                 <LocDetails
                     backPath={ locRequestsPath('Transaction') }

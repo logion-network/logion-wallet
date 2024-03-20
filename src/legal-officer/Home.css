@@ -12,11 +12,14 @@
     display: block;
 }
 
-.LegalOfficerHome .transactions {
+.LegalOfficerHome .transactions,
+.LegalOfficerHome .collections {
     margin-top: 30px;
 }
 
-.LegalOfficerHome .transactions-button {
+.LegalOfficerHome .transactions-button,
+.LegalOfficerHome .identities-button,
+.LegalOfficerHome .collections-button {
     position: absolute;
     top: 25px;
     right: 25px;
@@ -25,12 +28,6 @@
 .LegalOfficerHome .identities {
     position: relative;
     margin-top: 30px;
-}
-
-.LegalOfficerHome .identities-button {
-    position: absolute;
-    top: 25px;
-    right: 25px;
 }
 
 @media (max-width: 1350px) {

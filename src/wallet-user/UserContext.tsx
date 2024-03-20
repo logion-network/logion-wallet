@@ -22,7 +22,8 @@ import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
 import { BalanceState } from "@logion/client/dist/Balance.js";
 import { LocsState } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { UUID, LocType } from "@logion/node-api";
+import { Locs, getLocsMap } from "src/loc/Locs";
 
 export interface CreateProtectionRequestParams {
     legalOfficers: LegalOfficerClass[],
@@ -50,6 +51,7 @@ export interface UserContext {
     mutateRecoveredBalanceState: (mutator: (current: BalanceState) => Promise<BalanceState>) => Promise<void>,
     locsState?: LocsState,
     mutateLocsState: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>,
+    locs: Record<LocType, Locs>,
 }
 
 interface FullUserContext extends UserContext {
@@ -70,6 +72,11 @@ function initialContextValue(): FullUserContext {
         mutateRecoveredVaultState: () => Promise.reject(),
         mutateRecoveredBalanceState: () => Promise.reject(),
         mutateLocsState: () => Promise.reject(),
+        locs: {
+            Identity: Locs.empty("User"),
+            Transaction: Locs.empty("User"),
+            Collection: Locs.empty("User"),
+        }
     }
 }
 
@@ -116,6 +123,7 @@ interface Action {
     recoveredBalanceState?: BalanceState,
     mutateRecoveredBalanceState?: (mutator: (current: BalanceState) => Promise<BalanceState>) => Promise<void>,
     locsState?: LocsState,
+    locs?: Record<LocType, Locs>,
     mutateLocsState?: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>,
 }
 
@@ -150,6 +158,7 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                     recoveredVaultState: action.recoveredVaultState,
                     recoveredBalanceState: action.recoveredBalanceState,
                     locsState: action.locsState,
+                    locs: action.locs!,
                 };
             } else {
                 console.log(`Skipping data because ${action.dataAddress} <> ${state.fetchForAddress}`);
@@ -230,6 +239,7 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
             return {
                 ...state,
                 locsState: action.locsState!,
+                locs: action.locs!,
             };
         case "SET_PROTECTION_CANCEL":
             return {
@@ -303,7 +313,7 @@ export function UserContextProvider(props: Props) {
                 }
 
                 const locsState = await client.locsState();
-
+                const locs = getLocsMap(locsState, "User");
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress.toKey(),
@@ -312,6 +322,7 @@ export function UserContextProvider(props: Props) {
                     recoveredVaultState,
                     recoveredBalanceState,
                     locsState,
+                    locs,
                 });
             })();
         }
@@ -488,9 +499,11 @@ export function UserContextProvider(props: Props) {
     const mutateLocsStateCallback = useCallback(async (mutator: (current: LocsState) => Promise<LocsState>): Promise<void> => {
         const newState = await mutator(contextValue.locsState!);
         if(newState !== contextValue.locsState) {
+            const locs = getLocsMap(newState, "User");
             dispatch({
                 type: "MUTATE_LOCS_STATE",
                 locsState: newState,
+                locs,
             });
         }
     }, [ contextValue.locsState ]);

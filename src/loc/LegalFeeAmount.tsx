@@ -14,7 +14,7 @@ const DEFAULT_LEGAL_FEE = 2000n;
 export default function LegalFeeAmount(props: Props) {
 
     const legalFee = useMemo(() => {
-        if(props.loc.requesterLocId) {
+        if(props.loc.requesterAddress === undefined) {
             return { value: Lgnt.zero(), custom: true };
         } else {
             if(props.loc.fees.legalFee !== undefined) {

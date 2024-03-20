@@ -19,7 +19,6 @@ import { useCommonContext } from "../common/CommonContext";
 import { useUserContext } from "./UserContext";
 import Home from "./Home";
 import TrustProtection from "./trust-protection/TrustProtection";
-import TransactionProtection from "./transaction-protection/TransactionProtection";
 import Recovery from "./trust-protection/Recovery";
 import Vault from "./trust-protection/Vault";
 import { useLogionChain } from '../logion-chain';
@@ -29,10 +28,10 @@ import IssuerDashboard from "./issuer/IssuerDashboard";
 import IdenfyVerificationResult from './IdenfyVerificationResult';
 import { UserDocumentClaimHistory, UserTokensRecordDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
 import { UserTokensRecordPane } from 'src/loc/record/TokensRecordPane';
-import IdentityLocCreation from './IdentityLocCreation';
 import { Navigate } from 'react-router-dom';
 import { getBaseUrl } from "../PublicPaths";
 import { UserInvitedContributorsPane } from "../loc/invited-contributor/InvitedContributorsPane";
+import LocsDashboard from 'src/loc/dashboard/LocsDashboard';
 
 export const HOME_PATH = USER_PATH;
 
@@ -147,7 +146,7 @@ export function invitedContributorsPath(locId: UUID) {
 export default function UserRouter() {
     const { accounts } = useLogionChain();
     const { balanceState } = useCommonContext();
-    const { vaultState } = useUserContext();
+    const { vaultState, locs, locsState } = useUserContext();
 
     if(!(accounts?.current?.accountId)) {
         return null;
@@ -192,41 +191,51 @@ export default function UserRouter() {
                     type="Vault"
                 />
             } />
-            <Route path={ locRequestsRelativePath('Transaction') }
-                   element={ <TransactionProtection
-                       locType='Transaction'
-                       titles={ {
-                           main: "Transaction Case Management",
-                           loc: "Transaction Protection Case(s)",
-                           request: "Transaction Protection Case Request(s)"
-                       } }
-                       iconId="loc"
-                       actions={ <LocCreation locType='Transaction'
-                                              requestButtonLabel="Request a Transaction Protection" /> }
-                   /> } />
-            <Route path={ locRequestsRelativePath('Collection') }
-                   element={ <TransactionProtection
-                       locType='Collection'
-                       titles={ {
-                           main: "Collection Protection Management",
-                           loc: "Collection Protection Case(s)",
-                           request: "Collection Protection Request(s)"
-                       } }
-                       iconId="collection"
-                       actions={ <LocCreation locType='Collection'
-                                              requestButtonLabel="Request a Collection Protection" /> }
-                   /> } />
-            <Route path={ locRequestsRelativePath('Identity') }
-                   element={ <TransactionProtection
-                       locType='Identity'
-                       titles={ {
-                           main: "Identity Case Management",
-                           loc: "Identity Case(s)",
-                           request: "Identity Case Request(s)"
-                       } }
-                       iconId="identity"
-                       actions={ <IdentityLocCreation/> }
-                   /> } />
+            <Route
+                path={ locRequestsRelativePath('Transaction') }
+                element={ <LocsDashboard
+                    title="Transaction LOCs"
+                    iconId="loc"
+                    actions={ <LocCreation
+                        locType='Transaction'
+                        requestButtonLabel="Request a Transaction Protection"
+                    /> }
+                    settingsPath={ SETTINGS_PATH }
+                    locs={ locs["Transaction"] }
+                    loading={ locsState === undefined || locsState.discarded }
+                    locDetailsPath={ locDetailsPath }
+                /> }
+            />
+            <Route
+                path={ locRequestsRelativePath('Collection') }
+                element={ <LocsDashboard
+                    title="Collection LOCs"
+                    iconId="collection"
+                    actions={ <LocCreation
+                        locType='Collection'
+                        requestButtonLabel="Request a Collection Protection"
+                    /> }
+                    settingsPath={ SETTINGS_PATH }
+                    locs={ locs["Collection"] }
+                    loading={ locsState === undefined || locsState.discarded }
+                    locDetailsPath={ locDetailsPath }
+                /> }
+            />
+            <Route
+                path={ locRequestsRelativePath('Identity') }
+                element={ <LocsDashboard
+                    title="Identity LOCs"
+                    iconId="identity"
+                    actions={ <LocCreation
+                        locType='Identity'
+                        requestButtonLabel="Request an Identity Protection"
+                    /> }
+                    settingsPath={ SETTINGS_PATH }
+                    locs={ locs["Identity"] }
+                    loading={ locsState === undefined || locsState.discarded }
+                    locDetailsPath={ locDetailsPath }
+                /> }
+            />
             <Route path={ locDetailsRelativePath('Transaction') } element={
                 <UserLocDetails
                     backPath={ locRequestsPath('Transaction') }

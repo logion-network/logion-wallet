@@ -50,7 +50,7 @@ export default function RequesterOrLegalOfficer(props: Props) {
                         </>
                     }
                     {
-                        loc.requesterLocId !== undefined &&
+                        loc.requesterAddress === undefined && loc.requesterLocId !== undefined &&
                         <span><br />
                         <NewTabLink
                             href={ detailsPath(loc.requesterLocId, 'Identity') }

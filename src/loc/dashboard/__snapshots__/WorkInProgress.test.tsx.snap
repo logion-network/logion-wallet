@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WorkInProgressLocs renders for LLO 1`] = `
+<Table
+  columns={
+    Array [
+      Object {
+        "align": "left",
+        "header": "Requester",
+        "render": [Function],
+      },
+      Object {
+        "align": "left",
+        "header": "Description",
+        "render": [Function],
+      },
+      Object {
+        "header": "Status",
+        "render": [Function],
+        "width": "140px",
+      },
+      Object {
+        "align": "center",
+        "header": "Creation date",
+        "render": [Function],
+        "width": "200px",
+      },
+      Object {
+        "header": "Action",
+        "render": [Function],
+      },
+    ]
+  }
+  data={
+    Array [
+      Object {
+        "createdOn": "2024-03-19T16:00:00.000Z",
+        "status": "REVIEW_ACCEPTED",
+        "userIdentity": Object {},
+      },
+    ]
+  }
+  renderEmpty={[Function]}
+/>
+`;
+
+exports[`WorkInProgressLocs renders for user 1`] = `
+<Table
+  columns={
+    Array [
+      Object {
+        "align": "left",
+        "header": "Legal officer",
+        "render": [Function],
+        "renderDetails": [Function],
+      },
+      Object {
+        "align": "left",
+        "header": "Description",
+        "render": [Function],
+      },
+      Object {
+        "header": "Status",
+        "render": [Function],
+        "width": "140px",
+      },
+      Object {
+        "align": "center",
+        "header": "Creation date",
+        "render": [Function],
+        "width": "200px",
+      },
+      Object {
+        "header": "Action",
+        "render": [Function],
+      },
+    ]
+  }
+  data={
+    Array [
+      Object {
+        "createdOn": "2024-03-19T16:00:00.000Z",
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "status": "REVIEW_PENDING",
+      },
+    ]
+  }
+  renderEmpty={[Function]}
+/>
+`;

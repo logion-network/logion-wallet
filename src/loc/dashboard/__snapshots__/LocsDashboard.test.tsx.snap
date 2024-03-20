@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LocsDashboard renders loading 1`] = `
+<FullWidthPane
+  className="LocsDashboard"
+  mainTitle="Title"
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "loc",
+      },
+    }
+  }
+>
+  <Loader />
+</FullWidthPane>
+`;
+
+exports[`LocsDashboard renders locs 1`] = `
+<FullWidthPane
+  className="LocsDashboard"
+  mainTitle="Title"
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "loc",
+      },
+    }
+  }
+>
+  <Row>
+    <Col>
+      <Frame>
+        <Tabs
+          activeKey="workInProgress"
+          onSelect={[Function]}
+          tabs={
+            Array [
+              Object {
+                "key": "workInProgress",
+                "render": [Function],
+                "title": "Work in progress",
+              },
+              Object {
+                "key": "waiting",
+                "render": [Function],
+                "title": "Waiting",
+              },
+              Object {
+                "key": "completed",
+                "render": [Function],
+                "title": "Completed",
+              },
+            ]
+          }
+        />
+        <div
+          className="action-bar"
+        />
+      </Frame>
+    </Col>
+  </Row>
+</FullWidthPane>
+`;

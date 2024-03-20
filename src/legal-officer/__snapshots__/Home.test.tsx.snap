@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `
+exports[`Home renders 1`] = `
 <FullWidthPane
   className="LegalOfficerHome"
   mainTitle="Home"
@@ -108,22 +108,22 @@ exports[`renders 1`] = `
         </Row>
       </Frame>
       <Frame
-        className="transactions"
-        title="Last open Transaction LOC"
+        className="identities"
+        title="Last waiting Identity LOC"
       >
         <Button
-          className="transactions-button"
+          className="identities-button"
           onClick={[Function]}
           slim={true}
         >
           <Icon
             icon={
               Object {
-                "id": "loc",
+                "id": "identity",
               }
             }
           />
-           Go to transactions
+           Go to identities
         </Button>
         <Table
           columns={
@@ -157,20 +157,28 @@ exports[`renders 1`] = `
               },
             ]
           }
-          data={
-            Array [
-              Object {
-                "data": [Function],
-              },
-            ]
-          }
+          data={Array []}
           renderEmpty={[Function]}
         />
       </Frame>
       <Frame
-        className="transactions"
-        title="Last Transaction LOC requests"
+        className="collections"
+        title="Last waiting Collection LOCs"
       >
+        <Button
+          className="collections-button"
+          onClick={[Function]}
+          slim={true}
+        >
+          <Icon
+            icon={
+              Object {
+                "id": "loc",
+              }
+            }
+          />
+           Go to collections
+        </Button>
         <Table
           columns={
             Array [
@@ -178,7 +186,6 @@ exports[`renders 1`] = `
                 "align": "left",
                 "header": "Requester",
                 "render": [Function],
-                "renderDetails": [Function],
               },
               Object {
                 "align": "left",
@@ -196,35 +203,35 @@ exports[`renders 1`] = `
                 "render": [Function],
                 "width": "200px",
               },
-            ]
-          }
-          data={
-            Array [
               Object {
-                "data": [Function],
+                "align": "center",
+                "header": "Action",
+                "render": [Function],
+                "width": "200px",
               },
             ]
           }
+          data={Array []}
           renderEmpty={[Function]}
         />
       </Frame>
       <Frame
-        className="identities"
-        title="Last open Identity LOC"
+        className="transactions"
+        title="Last waiting Transaction LOC"
       >
         <Button
-          className="identities-button"
+          className="transactions-button"
           onClick={[Function]}
           slim={true}
         >
           <Icon
             icon={
               Object {
-                "id": "identity",
+                "id": "loc",
               }
             }
           />
-           Go to identities
+           Go to transactions
         </Button>
         <Table
           columns={

@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LegalFeeAmount renders custom for Polkadot requester 1`] = `
+<span>
+  <AmountFormat
+    amount={
+      Lgnt {
+        "canonical": 200000000000000000000n,
+      }
+    }
+  />
+  LGNT
+  
+</span>
+`;
+
+exports[`LegalFeeAmount renders default for Polkadot requester 1`] = `
+<span>
+  <AmountFormat
+    amount={
+      Lgnt {
+        "canonical": 2000000000000000000000n,
+      }
+    }
+  />
+  LGNT
+   (default fee)
+</span>
+`;
+
+exports[`LegalFeeAmount renders for Logion identity requester 1`] = `
+<span>
+  <AmountFormat
+    amount={
+      Lgnt {
+        "canonical": 0n,
+      }
+    }
+  />
+  LGNT
+  
+</span>
+`;
