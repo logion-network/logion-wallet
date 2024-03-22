@@ -29,11 +29,11 @@ describe("LocCreation", () => {
         await waitFor(() => {
             expect(screen.getByRole("button", { name: "Cancel" })).toBeEnabled();
             expect(screen.getByRole("button", { name: "Submit" })).toBeDisabled();
-            expect(screen.getByRole("button", { name: "Request an Identity Case" })).toBeEnabled();
+            expect(screen.getByRole("button", { name: "Request an Identity Protection" })).toBeEnabled();
         });
     })
 
-    it("should enable 'Submit' and remove 'Request an Identity Case' when an LO is selected", async () => {
+    it("should enable 'Submit' and remove 'Request an Identity Protection' when an LO is selected", async () => {
         setHasValidIdentityLoc([ twoLegalOfficers[1] ])
         await openDialog(true);
 
@@ -43,18 +43,18 @@ describe("LocCreation", () => {
         await waitFor(() => {
             expect(screen.getByRole("button", { name: "Cancel" })).toBeEnabled();
             expect(screen.getByRole("button", { name: "Submit" })).toBeEnabled();
-            expect(screen.queryByRole("button", { name: "Request an Identity Case" })).toBeNull();
+            expect(screen.queryByRole("button", { name: "Request an Identity Protection" })).toBeNull();
         });
     })
 
-    it("should remove 'Submit' and enable 'Request an Identity Case' when there are no LO's", async () => {
+    it("should remove 'Submit' and enable 'Request an Identity Protection' when there are no LO's", async () => {
         setHasValidIdentityLoc([ ])
         await openDialog(false);
 
         await waitFor(() => {
             expect(screen.getByRole("button", { name: "Cancel" })).toBeEnabled();
             expect(screen.queryByRole("button", { name: "Submit" })).toBeNull();
-            expect(screen.getByRole("button", { name: "Request an Identity Case" })).toBeEnabled();
+            expect(screen.getByRole("button", { name: "Request an Identity Protection" })).toBeEnabled();
         });
     })
 

@@ -48,7 +48,7 @@ export default function IdentityLocCreation(props: Props) {
         <>
             {
                 props.renderButton === undefined &&
-                <Button onClick={ () => setRequestLoc(true) }>Request an Identity Case</Button>
+                <Button onClick={ () => setRequestLoc(true) }>Request an Identity Protection</Button>
             }
             {
                 props.renderButton !== undefined &&

@@ -19,7 +19,7 @@ import LocTemplateChooser from 'src/loc/LocTemplateChooser';
 import IdentityLocCreation from '../IdentityLocCreation';
 
 export interface Props {
-    locType: LocType;
+    locType: 'Collection' | 'Transaction';
     requestButtonLabel?: string;
     renderButton?: (onClick: () => void) => React.ReactNode;
     templateId?: string;
@@ -83,26 +83,6 @@ export default function LocCreation(props: Props) {
                     draft: true,
                     template: backendTemplate(selectedTemplateId),
                     legalFee: formValues.legalFee ? Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
-                }) as DraftRequest;
-            } else if(locType === "Identity") {
-                draftRequest = await locsState!.requestIdentityLoc({
-                    legalOfficerAddress: selectedLegalOfficer!.address,
-                    description: formValues.description,
-                    draft: true,
-                    template: backendTemplate(selectedTemplateId),
-                    userIdentity: {
-                        email: "",
-                        firstName: "",
-                        lastName: "",
-                        phoneNumber: "",
-                    },
-                    userPostalAddress: {
-                        line1: "",
-                        line2: "",
-                        postalCode: "",
-                        city: "",
-                        country: "",
-                    }
                 }) as DraftRequest;
             } else if(locType === "Collection") {
                 draftRequest = await locsState!.requestCollectionLoc({

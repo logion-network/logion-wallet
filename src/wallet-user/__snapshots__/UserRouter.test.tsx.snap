@@ -123,12 +123,7 @@ exports[`renders 1`] = `
   <Route
     element={
       <LocsDashboard
-        actions={
-          <LocCreation
-            locType="Identity"
-            requestButtonLabel="Request an Identity Protection"
-          />
-        }
+        actions={<IdentityLocCreation />}
         iconId="identity"
         loading={true}
         locDetailsPath={[Function]}

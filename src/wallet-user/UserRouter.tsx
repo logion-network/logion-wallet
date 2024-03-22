@@ -32,6 +32,7 @@ import { Navigate } from 'react-router-dom';
 import { getBaseUrl } from "../PublicPaths";
 import { UserInvitedContributorsPane } from "../loc/invited-contributor/InvitedContributorsPane";
 import LocsDashboard from 'src/loc/dashboard/LocsDashboard';
+import IdentityLocCreation from "./IdentityLocCreation";
 
 export const HOME_PATH = USER_PATH;
 
@@ -226,10 +227,7 @@ export default function UserRouter() {
                 element={ <LocsDashboard
                     title="Identity LOCs"
                     iconId="identity"
-                    actions={ <LocCreation
-                        locType='Identity'
-                        requestButtonLabel="Request an Identity Protection"
-                    /> }
+                    actions={ <IdentityLocCreation/> }
                     settingsPath={ SETTINGS_PATH }
                     locs={ locs["Identity"] }
                     loading={ locsState === undefined || locsState.discarded }
