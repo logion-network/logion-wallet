@@ -65,6 +65,9 @@ function collectionLocMock(status: LocRequestStatus, voidLoc: boolean): LocData 
         status,
         closed: status === "CLOSED",
         locType: "Collection",
+        collectionParams: {
+            canUpload: false
+        }
     } as unknown as LocData;
 
     if(voidLoc) {

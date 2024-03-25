@@ -40,22 +40,7 @@ export default function OpenLoc(props: Props) {
             setFees(null);
             (async function () {
                 if (locState instanceof AcceptedRequest) {
-                    if (locState.data().locType === "Collection") {
-                        const apiLimits = await limits.toApiLimits(client.logionApi);
-                        const fees = locState.data().fees;
-                        if(fees.valueFee === undefined || fees.collectionItemFee === undefined || fees.tokensRecordFee === undefined) {
-                            throw new Error("Value or recurrent fees missing");
-                        }
-                        setFees(await locState.estimateFeesOpenCollection({
-                            ...apiLimits,
-                            autoPublish,
-                            valueFee: fees.valueFee,
-                            collectionItemFee: fees.collectionItemFee,
-                            tokensRecordFee: fees.tokensRecordFee,
-                        }));
-                    } else {
-                        setFees(await locState.estimateFeesOpen({ autoPublish }));
-                    }
+                    setFees(await locState.estimateFeesOpen({ autoPublish }));
                 }
             })();
         }
@@ -65,21 +50,11 @@ export default function OpenLoc(props: Props) {
         return async (callback: CallCallback) =>
             await mutateLocState(async current => {
                 if(client && signer && current instanceof AcceptedRequest) {
-                    if(current.data().locType !== "Collection") {
-                        return current.open({
-                            signer,
-                            callback,
-                            autoPublish
-                        });
-                    } else {
-                        const apiLimits = await limits.toApiLimits(client.logionApi)
-                        return current.openCollection({
-                            ...apiLimits,
-                            signer,
-                            callback,
-                            autoPublish
-                        });
-                    }
+                    return current.open({
+                        signer,
+                        callback,
+                        autoPublish
+                    });
                 } else {
                     return current;
                 }
@@ -89,7 +64,6 @@ export default function OpenLoc(props: Props) {
         client,
         signer,
         autoPublish,
-        limits,
     ]);
 
     // LOC creation

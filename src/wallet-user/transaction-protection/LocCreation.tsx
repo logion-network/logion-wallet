@@ -94,6 +94,9 @@ export default function LocCreation(props: Props) {
                     collectionItemFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.collectionItemFee.value, formValues.collectionItemFee.unit)),
                     tokensRecordFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.tokensRecordFee.value, formValues.tokensRecordFee.unit)),
                     legalFee: formValues.legalFee ? Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
+                    collectionParams: {
+                        canUpload: false // TODO grab collection params from form.
+                    }
                 }) as DraftRequest;
             } else {
                 throw new Error("Unsupported LOC type");

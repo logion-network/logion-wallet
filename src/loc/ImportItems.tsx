@@ -436,7 +436,8 @@ function shouldUpload(collectionAcceptsUpload: boolean, existingItem: Uploadable
 }
 
 function collectionAcceptsUpload(collection: ClosedCollectionLoc): boolean {
-    return collection.data().collectionCanUpload !== undefined && collection.data().collectionCanUpload === true;
+    const collectionParams = collection.data().collectionParams;
+    return collectionParams !== undefined && collectionParams.canUpload;
 }
 
 function toItems(csvItems: CsvItem[], collectionAcceptsUpload: boolean, config: LogionClientConfig): Item[] {

@@ -47,9 +47,9 @@ export default function CertificateAndLimits(props: Props) {
     const certificateUrl = fullCertificateUrl(loc.id);
 
     useEffect(() => {
-        if(api !== null && loc.collectionLastBlockSubmission) {
+        if(api !== null && loc.collectionParams && loc.collectionParams?.lastBlockSubmission) {
             (async function() {
-                const chainTime = await (await ChainTime.now(api.polkadot)).atBlock(loc.collectionLastBlockSubmission!);
+                const chainTime = await (await ChainTime.now(api.polkadot)).atBlock(loc.collectionParams?.lastBlockSubmission!);
                 setDateLimit(new Date(chainTime.currentTime).toISOString());
             })();
         }
@@ -74,12 +74,12 @@ export default function CertificateAndLimits(props: Props) {
                     </div>
                 </Col>
                 {
-                    loc.locType === 'Collection' &&
+                    loc.locType === 'Collection' && loc.collectionParams &&
                     <Col>
                         <div className="limits">
                             <div><strong>Collection Date Limit:</strong> <InlineDateTime dateTime={ dateLimit } dateOnly={ true } /></div>
                             <div><strong>Collection Item Limit:</strong> { itemLimit(loc) }</div>
-                            <div><strong>Collection Upload Accepted:</strong> { loc.collectionCanUpload ? "Yes" : "No" }</div>
+                            <div><strong>Collection Upload Accepted:</strong> { loc.collectionParams.canUpload ? "Yes" : "No" }</div>
                         </div>
                     </Col>
                 }
@@ -171,7 +171,7 @@ export default function CertificateAndLimits(props: Props) {
 }
 
 function itemLimit(loc: LocData): string {
-    return loc.collectionMaxSize ? loc.collectionMaxSize.toString() : "-";
+    return loc.collectionParams?.maxSize ? loc.collectionParams?.maxSize.toString() : "-";
 }
 
 function showInvitedContributors(props: Props): boolean {
