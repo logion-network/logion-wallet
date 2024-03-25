@@ -115,7 +115,7 @@ export default function IdentityLocRequest(props: Props) {
     return (
         <FullWidthPane
             className="IdentityLocRequest"
-            mainTitle="Request an Identity Case"
+            mainTitle="Request an Identity Protection"
             titleIcon={ { icon: { id: "identity" } } }
             onBack={ () => navigate(props.backPath) }
         >

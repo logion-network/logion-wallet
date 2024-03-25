@@ -3,7 +3,7 @@
 exports[`IdentityLocRequest renders 1`] = `
 <FullWidthPane
   className="IdentityLocRequest"
-  mainTitle="Request an Identity Case"
+  mainTitle="Request an Identity Protection"
   onBack={[Function]}
   titleIcon={
     Object {
