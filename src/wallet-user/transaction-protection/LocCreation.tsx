@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { LocType, Numbers, Lgnt } from "@logion/node-api";
+import { Numbers, Lgnt } from "@logion/node-api";
 
 import { useCommonContext } from '../../common/CommonContext';
 import { LocsState, LegalOfficerClass, DraftRequest } from "@logion/client";
@@ -20,7 +20,6 @@ export interface Props {
     locType: 'Collection' | 'Transaction';
     requestButtonLabel?: string;
     renderButton?: (onClick: () => void) => React.ReactNode;
-    templateId?: string;
 }
 
 export default function LocCreation(props: Props) {
@@ -50,18 +49,11 @@ export default function LocCreation(props: Props) {
         }
     });
     const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<LegalOfficerClass | undefined>();
-    const [ currentLocType, setCurrentLocType ] = useState<LocType>();
 
     const legalOfficersWithValidIdentityLoc = useMemo(
         () => (locsState && !locsState.discarded) ? locsState.legalOfficersWithValidIdentityLoc : undefined,
         [ locsState ]
     );
-
-    useEffect(() => {
-        if(currentLocType !== props.locType) {
-            setCurrentLocType(props.locType);
-        }
-    }, [ currentLocType, props.locType, props.templateId ]);
 
     const clear = useCallback(() => {
         reset();

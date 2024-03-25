@@ -26,7 +26,6 @@ import Shortcuts from 'src/components/shortcuts/Shortcuts';
 import IdentityLocCreation from './IdentityLocCreation';
 import LocCreation from './transaction-protection/LocCreation';
 import { useMemo } from 'react';
-import { COLLECTION_ART_NFT_TEMPLATE_ID, COLLECTION_REAL_ESTATE_TEMPLATE_ID } from 'src/loc/Template';
 import { toFeesClass } from "@logion/client/dist/Fees.js";
 
 export default function Account() {
@@ -151,21 +150,19 @@ export function Content() {
                                 />
                                 <LocCreation
                                     locType='Collection'
-                                    templateId={ COLLECTION_REAL_ESTATE_TEMPLATE_ID }
                                     renderButton={ onClick => <Shortcut
                                         onClick={ onClick }
                                         iconId="shortcut_realestate"
-                                        text={ <span>Real Estate<br/> Tokenization</span> }
+                                        text={ <span>Collection<br/><span style={{ display: "inline-block" }}></span></span> }
                                         disabled={ legalOfficersWithValidIdentityLoc?.length === 0 }
                                     /> }
                                 />
                                 <LocCreation
-                                    locType='Collection'
-                                    templateId={ COLLECTION_ART_NFT_TEMPLATE_ID }
+                                    locType='Transaction'
                                     renderButton={ onClick => <Shortcut
                                         onClick={ onClick }
                                         iconId="shortcut_art"
-                                        text={ <span>Art<br/> Tokenization</span> }
+                                        text={ <span>Transaction<br/><span style={{ display: "inline-block" }}></span></span> }
                                         disabled={ legalOfficersWithValidIdentityLoc?.length === 0 }
                                     /> }
                                 />

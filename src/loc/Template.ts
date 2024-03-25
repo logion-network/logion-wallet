@@ -33,8 +33,8 @@ export const CUSTOM_LOC_TEMPLATE = {
     links: [],
 };
 
-export const COLLECTION_ART_NFT_TEMPLATE_ID = "art_nft";
-export const COLLECTION_REAL_ESTATE_TEMPLATE_ID = "real_estate";
+const COLLECTION_ART_NFT_TEMPLATE_ID = "art_nft";
+const COLLECTION_REAL_ESTATE_TEMPLATE_ID = "real_estate";
 
 export const TEMPLATES: Record<LocType, LocTemplate[]> = {
     Identity: [
