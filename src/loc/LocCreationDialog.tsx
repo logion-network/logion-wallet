@@ -8,8 +8,6 @@ import LocCreationForm, { FormValues } from "./LocCreationForm";
 import { isLogionIdentityLoc, LocRequestFragment } from "../common/types/ModelTypes";
 import LocCreationSteps from "./LocCreationSteps";
 import Alert from '../common/Alert';
-import { autoSelectTemplate, backendTemplate } from "./Template";
-import LocTemplateChooser from "./LocTemplateChooser";
 
 export interface LinkTarget {
     id: UUID;
@@ -35,7 +33,6 @@ export default function LocCreationDialog(props: Props) {
     });
     const [ newLocRequest, setNewLocRequest ] = useState<OpenLocParams | null>(null);
     const [ linkNature, setLinkNature ] = useState<string | undefined>();
-    const [ selectedTemplateId, setSelectedTemplateId ] = useState<string | undefined>();
 
     const submit = useCallback((formValues: FormValues) => {
         let userIdentity = props.locRequest.userIdentity;
@@ -56,21 +53,20 @@ export default function LocCreationDialog(props: Props) {
                 locType,
                 description: formValues.description,
                 userIdentity: userIdentity,
-                template: backendTemplate(selectedTemplateId),
+                template: undefined,
             }
             setNewLocRequest(request);
             if(props.hasLinkNature) {
                 setLinkNature(formValues.linkNature);
             }
         })();
-    }, [ props.locRequest, props.hasLinkNature, selectedTemplateId ]);
+    }, [ props.locRequest, props.hasLinkNature ]);
 
     const clear = useCallback(() => {
         reset();
         setNewLocRequest(null);
         setLinkNature(undefined);
-        setSelectedTemplateId(autoSelectTemplate(props.locRequest.locType));
-    }, [ reset, setNewLocRequest, setLinkNature, props.locRequest.locType ]);
+    }, [ reset, setNewLocRequest, setLinkNature ]);
 
     const onSuccess = useCallback(async (locId: UUID) => {
         if(newLocRequest) {
@@ -82,22 +78,10 @@ export default function LocCreationDialog(props: Props) {
         }
     }, [ clear, props, newLocRequest, linkNature ]);
 
-    const onCancel = useCallback(() => {
-        clear();
-        props.exit();
-    }, [ clear, props ]);
-
     return (
         <>
-            <LocTemplateChooser
-                show={ props.show && selectedTemplateId === undefined }
-                locType={ props.locRequest.locType }
-                onCancel={ onCancel }
-                onSelect={ value => setSelectedTemplateId(value) }
-                selected={ selectedTemplateId }
-            />
             <Dialog
-                show={ props.show && selectedTemplateId !== undefined }
+                show={ props.show }
                 contentVisible={ newLocRequest === null }
                 size="lg"
                 actions={ [

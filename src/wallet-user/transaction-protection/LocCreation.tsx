@@ -14,8 +14,6 @@ import { useLogionChain } from '../../logion-chain';
 import { useNavigate } from "react-router-dom";
 import { locDetailsPath } from "../UserRouter";
 import './LocCreation.css';
-import { autoSelectTemplate, backendTemplate } from 'src/loc/Template';
-import LocTemplateChooser from 'src/loc/LocTemplateChooser';
 import IdentityLocCreation from '../IdentityLocCreation';
 
 export interface Props {
@@ -52,7 +50,6 @@ export default function LocCreation(props: Props) {
         }
     });
     const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<LegalOfficerClass | undefined>();
-    const [ selectedTemplateId, setSelectedTemplateId ] = useState<string | undefined>();
     const [ currentLocType, setCurrentLocType ] = useState<LocType>();
 
     const legalOfficersWithValidIdentityLoc = useMemo(
@@ -61,17 +58,15 @@ export default function LocCreation(props: Props) {
     );
 
     useEffect(() => {
-        if(currentLocType !== props.locType || (props.templateId && selectedTemplateId !== props.templateId)) {
+        if(currentLocType !== props.locType) {
             setCurrentLocType(props.locType);
-            setSelectedTemplateId(props.templateId || autoSelectTemplate(props.locType));
         }
-    }, [ currentLocType, selectedTemplateId, props.locType, props.templateId ]);
+    }, [ currentLocType, props.locType, props.templateId ]);
 
     const clear = useCallback(() => {
         reset();
         setRequestLoc(false);
-        setSelectedTemplateId(autoSelectTemplate(props.locType));
-    }, [ reset, props.locType ]);
+    }, [ reset ]);
 
     const submit = useCallback(async (formValues: FormValues) => {
         let draftRequest: DraftRequest;
@@ -81,7 +76,7 @@ export default function LocCreation(props: Props) {
                     legalOfficerAddress: selectedLegalOfficer!.address,
                     description: formValues.description,
                     draft: true,
-                    template: backendTemplate(selectedTemplateId),
+                    template: undefined,
                     legalFee: formValues.legalFee ? Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
                 }) as DraftRequest;
             } else if(locType === "Collection") {
@@ -89,7 +84,7 @@ export default function LocCreation(props: Props) {
                     legalOfficerAddress: selectedLegalOfficer!.address,
                     description: formValues.description,
                     draft: true,
-                    template: backendTemplate(selectedTemplateId),
+                    template: undefined,
                     valueFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.valueFee.value, formValues.valueFee.unit)),
                     collectionItemFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.collectionItemFee.value, formValues.collectionItemFee.unit)),
                     tokensRecordFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.tokensRecordFee.value, formValues.tokensRecordFee.unit)),
@@ -105,7 +100,7 @@ export default function LocCreation(props: Props) {
         });
         clear();
         navigate(locDetailsPath(draftRequest!.locId, locType));
-    }, [ selectedLegalOfficer, locType, mutateLocsState, clear, navigate, selectedTemplateId ]);
+    }, [ selectedLegalOfficer, locType, mutateLocsState, clear, navigate ]);
 
     useEffect(() => {
         if (getOfficer !== undefined && locsState !== undefined) {
@@ -153,16 +148,7 @@ export default function LocCreation(props: Props) {
                     <p className="info-text">Please request an Identity LOC to the Logion Legal Officer of your choice:</p>
                 </Dialog>
             }
-            { legalOfficersWithValidIdentityLoc?.length > 0 && requestLoc && selectedTemplateId === undefined &&
-                <LocTemplateChooser
-                    show={ legalOfficersWithValidIdentityLoc?.length > 0 && requestLoc && selectedTemplateId === undefined }
-                    locType={ props.locType }
-                    onCancel={ clear }
-                    onSelect={ value => setSelectedTemplateId(value) }
-                    selected={ selectedTemplateId }
-                />
-            }
-            { legalOfficersWithValidIdentityLoc?.length > 0 && selectedTemplateId !== undefined &&
+            { legalOfficersWithValidIdentityLoc?.length > 0 &&
                 <Dialog
                     className="LocCreation"
                     show={ requestLoc }

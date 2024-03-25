@@ -1,6 +1,5 @@
 import { LocType, UUID } from "@logion/node-api";
 import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 
 import { LocRequestFragment } from "../common/types/ModelTypes";
 import { clickByName, typeByLabel } from "../tests";
@@ -26,7 +25,7 @@ describe("LocCreationDialog", () => {
     beforeAll(() => {
         setAuthenticatedUser(TEST_WALLET_USER);
     });
-  
+
     it("create Logion Identity LOC with user identity", async () => createsWithUserIdentity('Identity', undefined));
     it("create Logion Transaction LOC without user identity", async () => createsWithoutUserIdentity('Transaction', "aed4c6e4-979e-48ad-be6e-4bd39fb94762"));
 
@@ -58,16 +57,9 @@ async function createsWithUserIdentity(locType: LocType, requesterIdentityLoc: s
         locRequest={ requestFragment }
     />);
 
-    await selectProjectType();
     await typeByLabel("LOC Private Description", "Test");
 
     await submitAndExpectSuccess(exit, onSuccess);
-}
-
-async function selectProjectType() {
-    await userEvent.click(screen.getByText("Please select your project type"));
-    await userEvent.click(screen.getByText("Custom LOC"));
-    await clickByName("Submit");
 }
 
 async function submitAndExpectSuccess(exit: jest.Mock<any, any>, onSuccess: jest.Mock<any, any>) {
@@ -98,7 +90,6 @@ async function createsWithoutUserIdentity(locType: LocType, requesterIdentityLoc
         locRequest={ requestFragment }
     />);
 
-    await selectProjectType();
     await typeByLabel("LOC Private Description", "Test");
     await fillInUserIdentityForm();
 
@@ -128,7 +119,6 @@ async function failsWithoutUserIdentity(locType: LocType, requesterIdentityLoc: 
         locRequest={ requestFragment }
     />);
 
-    await selectProjectType();
     await typeByLabel("LOC Private Description", "Test");
 
     await submitAndExpectFailure(exit, onSuccess);
