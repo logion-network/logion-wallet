@@ -190,19 +190,6 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
     ],
 };
 
-export function autoSelectTemplate(locType: LocType): string | undefined {
-    const templates = TEMPLATES[locType];
-    if(templates.length === 1 && templates[0].id === CUSTOM_LOC_TEMPLATE_ID) {
-        return CUSTOM_LOC_TEMPLATE_ID;
-    } else {
-        return undefined;
-    }
-}
-
-export function backendTemplate(templateId: string | undefined): string | undefined {
-    return templateId === CUSTOM_LOC_TEMPLATE_ID ? undefined : templateId;
-}
-
 export function getTemplate(locType: LocType, templateId: string | undefined): LocTemplate | undefined {
     return TEMPLATES[locType].find(template => template.id === templateId);
 }
