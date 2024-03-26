@@ -2,22 +2,19 @@ import { Controller, Control, FieldErrors } from 'react-hook-form';
 import Form from "react-bootstrap/Form";
 import { Lgnt } from "@logion/node-api";
 
-import { BackgroundAndForegroundColors } from '../../common/ColorTheme';
-import FormGroup from '../../common/FormGroup';
-import Select, { OptionType } from '../../common/Select';
+import { BackgroundAndForegroundColors } from '../common/ColorTheme';
+import FormGroup from '../common/FormGroup';
+import Select, { OptionType } from '../common/Select';
 
-import { buildOptions } from '../trust-protection/SelectLegalOfficer';
-import { useUserContext } from "../UserContext";
-import AmountControl, { Amount, validateAmount } from 'src/common/AmountControl';
-import CollapsePane from 'src/components/collapsepane/CollapsePane';
+import { buildOptions } from '../wallet-user/trust-protection/SelectLegalOfficer';
+import { useUserContext } from "../wallet-user/UserContext";
+import AmountControl, { Amount, validateAmount } from '../common/AmountControl';
+import CollapsePane from '../components/collapsepane/CollapsePane';
 import { useState, useEffect } from "react";
 
 export interface FormValues {
     description: string;
     legalOfficer: string;
-    valueFee: Amount;
-    collectionItemFee: Amount;
-    tokensRecordFee: Amount;
     legalFee: Amount | undefined;
 }
 
@@ -26,10 +23,9 @@ export interface Props {
     errors: FieldErrors<FormValues>;
     colors: BackgroundAndForegroundColors;
     legalOfficer: string | null;
-    showValueFee: boolean;
 }
 
-export default function LocCreationForm(props: Props) {
+export default function TransactionLocRequestForm(props: Props) {
     const { locsState } = useUserContext();
     const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<string>[]>([]);
 
@@ -109,89 +105,6 @@ export default function LocCreationForm(props: Props) {
                 colors={ props.colors }
                 feedback={ props.errors.description?.message }
             />
-
-            {
-                props.showValueFee &&
-                <>
-                <FormGroup
-                    id="valueFee"
-                    label="Value fee"
-                    control={
-                        <Controller
-                            name="valueFee"
-                            control={ props.control }
-                            rules={{
-                                validate: validateAmount
-                            }}
-                            render={ ({ field }) => (
-                                <AmountControl
-                                    isInvalid={ !!props.errors.valueFee?.message }
-                                    value={ field.value }
-                                    onChange={ field.onChange }
-                                />
-                            )}
-                        />
-                    }
-                    feedback={ props.errors.valueFee?.message }
-                    colors={ props.colors }
-                    help={
-                        `The value fee is calculated in function of the value of the asset being protected by
- this collection LOC. The details of the fee calculation must be attached to the LOC so that the Logion Legal Officer
- can review them, otherwise your request may be rejected.`
-                    }
-                />
-                <FormGroup
-                    id="collectionItemFee"
-                    label="Collection item fee"
-                    control={
-                        <Controller
-                            name="collectionItemFee"
-                            control={ props.control }
-                            rules={{
-                                validate: validateAmount
-                            }}
-                            render={ ({ field }) => (
-                                <AmountControl
-                                    isInvalid={ !!props.errors.collectionItemFee?.message }
-                                    value={ field.value }
-                                    onChange={ field.onChange }
-                                />
-                            )}
-                        />
-                    }
-                    feedback={ props.errors.collectionItemFee?.message }
-                    colors={ props.colors }
-                    help={
-                        `The collection item fee is calculated in function of the value fee. It is charged to the requester on every item creation.`
-                    }
-                />
-                <FormGroup
-                    id="tokensRecordFee"
-                    label="Tokens record fee"
-                    control={
-                        <Controller
-                            name="tokensRecordFee"
-                            control={ props.control }
-                            rules={{
-                                validate: validateAmount
-                            }}
-                            render={ ({ field }) => (
-                                <AmountControl
-                                    isInvalid={ !!props.errors.tokensRecordFee?.message }
-                                    value={ field.value }
-                                    onChange={ field.onChange }
-                                />
-                            )}
-                        />
-                    }
-                    feedback={ props.errors.tokensRecordFee?.message }
-                    colors={ props.colors }
-                    help={
-                        `The tokens record fee is calculated in function of the value fee. It is charged to the requester on every tokens record creation.`
-                    }
-                />
-                </>
-            }
 
             <CollapsePane
                 title="Advanced creation parameters"

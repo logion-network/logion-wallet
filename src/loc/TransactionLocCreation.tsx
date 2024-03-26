@@ -2,49 +2,36 @@ import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Numbers, Lgnt } from "@logion/node-api";
 
-import { useCommonContext } from '../../common/CommonContext';
+import { useCommonContext } from '../common/CommonContext';
 import { LocsState, LegalOfficerClass, DraftRequest } from "@logion/client";
-import Button, { Action } from '../../common/Button';
-import Dialog from '../../common/Dialog';
+import Button, { Action } from '../common/Button';
+import Dialog from '../common/Dialog';
 
-import { useUserContext } from '../UserContext';
-import ButtonGroup from "../../common/ButtonGroup";
-import LocCreationForm, { FormValues } from './LocCreationForm';
-import { useLogionChain } from '../../logion-chain';
+import { useUserContext } from '../wallet-user/UserContext';
+import ButtonGroup from "../common/ButtonGroup";
+import TransactionLocRequestForm, { FormValues } from './TransactionLocRequestForm';
+import { useLogionChain } from '../logion-chain';
 import { useNavigate } from "react-router-dom";
-import { locDetailsPath } from "../UserRouter";
-import './LocCreation.css';
-import IdentityLocCreation from '../IdentityLocCreation';
+import { locDetailsPath } from "../wallet-user/UserRouter";
+import './TransactionLocCreation.css';
+import IdentityLocCreation from '../wallet-user/IdentityLocCreation';
 
 export interface Props {
-    locType: 'Collection' | 'Transaction';
     requestButtonLabel?: string;
     renderButton?: (onClick: () => void) => React.ReactNode;
 }
 
-export default function LocCreation(props: Props) {
+export default function TransactionLocCreation(props: Props) {
     const { getOfficer } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { locsState, mutateLocsState } = useUserContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
-    const { locType, requestButtonLabel } = props;
+    const { requestButtonLabel } = props;
     const navigate = useNavigate();
     const { control, handleSubmit, formState: { errors }, reset, watch } = useForm<FormValues>({
         defaultValues: {
             description: "",
             legalOfficer: "",
-            valueFee: {
-                unit: Numbers.NONE,
-                value: "0",
-            },
-            collectionItemFee: {
-                unit: Numbers.NONE,
-                value: "0",
-            },
-            tokensRecordFee: {
-                unit: Numbers.NONE,
-                value: "0",
-            },
             legalFee: undefined,
         }
     });
@@ -63,36 +50,18 @@ export default function LocCreation(props: Props) {
     const submit = useCallback(async (formValues: FormValues) => {
         let draftRequest: DraftRequest;
         await mutateLocsState(async (locsState: LocsState) => {
-            if(locType === "Transaction") {
-                draftRequest = await locsState!.requestTransactionLoc({
-                    legalOfficerAddress: selectedLegalOfficer!.address,
-                    description: formValues.description,
-                    draft: true,
-                    template: undefined,
-                    legalFee: formValues.legalFee ? Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
-                }) as DraftRequest;
-            } else if(locType === "Collection") {
-                draftRequest = await locsState!.requestCollectionLoc({
-                    legalOfficerAddress: selectedLegalOfficer!.address,
-                    description: formValues.description,
-                    draft: true,
-                    template: undefined,
-                    valueFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.valueFee.value, formValues.valueFee.unit)),
-                    collectionItemFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.collectionItemFee.value, formValues.collectionItemFee.unit)),
-                    tokensRecordFee: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.tokensRecordFee.value, formValues.tokensRecordFee.unit)),
-                    legalFee: formValues.legalFee ? Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
-                    collectionParams: {
-                        canUpload: false // TODO grab collection params from form.
-                    }
-                }) as DraftRequest;
-            } else {
-                throw new Error("Unsupported LOC type");
-            }
+            draftRequest = await locsState!.requestTransactionLoc({
+                legalOfficerAddress: selectedLegalOfficer!.address,
+                description: formValues.description,
+                draft: true,
+                template: undefined,
+                legalFee: formValues.legalFee ? Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
+            }) as DraftRequest;
             return draftRequest.locsState();
         });
         clear();
-        navigate(locDetailsPath(draftRequest!.locId, locType));
-    }, [ selectedLegalOfficer, locType, mutateLocsState, clear, navigate ]);
+        navigate(locDetailsPath(draftRequest!.locId, "Transaction"));
+    }, [ selectedLegalOfficer, mutateLocsState, clear, navigate ]);
 
     useEffect(() => {
         if (getOfficer !== undefined && locsState !== undefined) {
@@ -134,8 +103,8 @@ export default function LocCreation(props: Props) {
                     size="lg"
                     actions={ [ cancelAction, requestIdLocAction ] }
                 >
-                    <h3>{ locType } LOC Request</h3>
-                    <p className="info-text">To submit a { locType } LOC request, you must select a Logion Legal Officer who already executed
+                    <h3>Transaction LOC Request</h3>
+                    <p className="info-text">To submit a Transaction LOC request, you must select a Logion Legal Officer who already executed
                         an Identity LOC linked to your Polkadot address.</p>
                     <p className="info-text">Please request an Identity LOC to the Logion Legal Officer of your choice:</p>
                 </Dialog>
@@ -147,13 +116,12 @@ export default function LocCreation(props: Props) {
                     size="lg"
                     actions={ selectedLegalOfficer === undefined ? [ requestIdLocAction ] : [] }
                 >
-                    <h3>{ locType } LOC Request</h3>
-                    <LocCreationForm
+                    <h3>Transaction LOC Request</h3>
+                    <TransactionLocRequestForm
                         control={ control }
                         errors={ errors }
                         colors={ colorTheme.dialog }
                         legalOfficer={ selectedLegalOfficer?.address || null }
-                        showValueFee={ props.locType === "Collection" }
                     />
                     <ButtonGroup>
                         <Button onClick={ cancelAction.callback } variant={ cancelAction.buttonVariant }>{ cancelAction.buttonText }</Button>

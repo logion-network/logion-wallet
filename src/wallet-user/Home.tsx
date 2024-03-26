@@ -24,9 +24,10 @@ import { useUserContext } from "./UserContext";
 import Shortcut from 'src/components/shortcuts/Shortcut';
 import Shortcuts from 'src/components/shortcuts/Shortcuts';
 import IdentityLocCreation from './IdentityLocCreation';
-import LocCreation from './transaction-protection/LocCreation';
+import TransactionLocCreation from '../loc/TransactionLocCreation';
 import { useMemo } from 'react';
 import { toFeesClass } from "@logion/client/dist/Fees.js";
+import CollectionLocCreation from "../loc/CollectionLocCreation";
 
 export default function Account() {
     const { colorTheme } = useCommonContext();
@@ -148,8 +149,7 @@ export function Content() {
                                         text={ <span>Identity<br/><span style={{ display: "inline-block" }}></span></span> }
                                     />}
                                 />
-                                <LocCreation
-                                    locType='Collection'
+                                <CollectionLocCreation
                                     renderButton={ onClick => <Shortcut
                                         onClick={ onClick }
                                         iconId="shortcut_realestate"
@@ -157,8 +157,7 @@ export function Content() {
                                         disabled={ legalOfficersWithValidIdentityLoc?.length === 0 }
                                     /> }
                                 />
-                                <LocCreation
-                                    locType='Transaction'
+                                <TransactionLocCreation
                                     renderButton={ onClick => <Shortcut
                                         onClick={ onClick }
                                         iconId="shortcut_art"

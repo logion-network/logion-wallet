@@ -6,12 +6,7 @@ import DatePicker from '../common/DatePicker';
 
 import './CollectionLimitsForm.css'
 import { LogionNodeApiClass, ChainTime } from "@logion/node-api";
-
-export interface ApiLimits {
-    collectionCanUpload: boolean,
-    collectionLastBlockSubmission: bigint | undefined,
-    collectionMaxSize: number | undefined,
-}
+import { CollectionParams } from "@logion/client";
 
 export class CollectionLimits {
 
@@ -39,7 +34,7 @@ export class CollectionLimits {
         return (this.hasDateLimit && (this.dateLimit ? true : false)) || (this.hasDataNumberLimit && (this.dataNumberLimit ? true : false));
     }
 
-    async toApiLimits(api: LogionNodeApiClass): Promise<ApiLimits> {
+    async toCollectionParams(api: LogionNodeApiClass): Promise<CollectionParams> {
         let lastBlock: bigint | undefined;
         if(this.hasDateLimit) {
             const now = await ChainTime.now(api!.polkadot);
@@ -53,9 +48,9 @@ export class CollectionLimits {
         }
 
         return {
-            collectionCanUpload: this.canUpload,
-            collectionLastBlockSubmission: lastBlock,
-            collectionMaxSize: maxSize,
+            canUpload: this.canUpload,
+            lastBlockSubmission: lastBlock,
+            maxSize,
         }
     }
 }
@@ -71,78 +66,81 @@ export interface Props {
 export default function CollectionLimitsForm(props: Props) {
     return (
         <>
-        <Row className="CollectionLimitsForm">
-            <Col>
-                <div className="limit-container date">
-                    <CheckedControl
-                        baseId="dateLimit"
-                        label="Date limit"
-                        type="date"
-                        checked={ props.value.hasDateLimit }
-                        onChangeChecked={ () => props.onChange(new CollectionLimits({
-                            ...props.value,
-                            hasDateLimit: !props.value.hasDateLimit
-                        })) }
-                        valueControl={
-                            <DatePicker
-                                value={ props.value.dateLimit }
-                                onChange={ (value: Date) => props.onChange(new CollectionLimits({
-                                    ...props.value,
-                                    dateLimit: value
-                                })) }
-                                minDate={ new Date(Date.now() + (1000 * 3600 * 24)) }
-                            />
-                        }
-                        colors={ props.colors }
-                    />
-                </div>
-            </Col>
-            <Col>
-                <div className="limit-container data-number">
-                    <CheckedControl
-                        baseId="maxSize"
-                        label="Data number limit"
-                        type="number"
-                        checked={ props.value.hasDataNumberLimit }
-                        onChangeChecked={ () => props.onChange(new CollectionLimits({
-                            ...props.value,
-                            hasDataNumberLimit: !props.value.hasDataNumberLimit
-                        })) }
-                        valueControl={
-                            <Form.Control
-                                value={ props.value.dataNumberLimit }
-                                onChange={ e => props.onChange(new CollectionLimits({
-                                    ...props.value,
-                                    dataNumberLimit: e.target.value
-                                })) }
-                            />
-                        }
-                        colors={ props.colors }
-                    />
-                </div>
-            </Col>
-        </Row>
-        <Row className="CollectionLimitsForm">
-            <Col>
-                <div className="can-upload-check-container">
-                    <FormGroup
-                        id="canUploadCheck"
-                        control={
-                            <Form.Check
-                                label="Accepts upload of item files"
-                                type="checkbox"
-                                checked={ props.value.canUpload }
-                                onChange={ () => props.onChange(new CollectionLimits({
-                                    ...props.value,
-                                    canUpload: !props.value.canUpload
-                                })) }
-                            />
-                        }
-                        colors={ props.colors }
-                    />
-                </div>
-            </Col>
-        </Row>
+            <p>A Collection LOC must have a Date limit and/or and Collection item number limit You must a least set one
+                of the settings below:</p>
+
+            <Row className="CollectionLimitsForm">
+                <Col>
+                    <div className="limit-container date">
+                        <CheckedControl
+                            baseId="dateLimit"
+                            label="Date limit"
+                            type="date"
+                            checked={ props.value.hasDateLimit }
+                            onChangeChecked={ () => props.onChange(new CollectionLimits({
+                                ...props.value,
+                                hasDateLimit: !props.value.hasDateLimit
+                            })) }
+                            valueControl={
+                                <DatePicker
+                                    value={ props.value.dateLimit }
+                                    onChange={ (value: Date) => props.onChange(new CollectionLimits({
+                                        ...props.value,
+                                        dateLimit: value
+                                    })) }
+                                    minDate={ new Date(Date.now() + (1000 * 3600 * 24)) }
+                                />
+                            }
+                            colors={ props.colors }
+                        />
+                    </div>
+                </Col>
+                <Col>
+                    <div className="limit-container data-number">
+                        <CheckedControl
+                            baseId="maxSize"
+                            label="Data number limit"
+                            type="number"
+                            checked={ props.value.hasDataNumberLimit }
+                            onChangeChecked={ () => props.onChange(new CollectionLimits({
+                                ...props.value,
+                                hasDataNumberLimit: !props.value.hasDataNumberLimit
+                            })) }
+                            valueControl={
+                                <Form.Control
+                                    value={ props.value.dataNumberLimit }
+                                    onChange={ e => props.onChange(new CollectionLimits({
+                                        ...props.value,
+                                        dataNumberLimit: e.target.value
+                                    })) }
+                                />
+                            }
+                            colors={ props.colors }
+                        />
+                    </div>
+                </Col>
+            </Row>
+            <Row className="CollectionLimitsForm">
+                <Col>
+                    <div className="can-upload-check-container">
+                        <FormGroup
+                            id="canUploadCheck"
+                            control={
+                                <Form.Check
+                                    label="Accepts upload of item files"
+                                    type="checkbox"
+                                    checked={ props.value.canUpload }
+                                    onChange={ () => props.onChange(new CollectionLimits({
+                                        ...props.value,
+                                        canUpload: !props.value.canUpload
+                                    })) }
+                                />
+                            }
+                            colors={ props.colors }
+                        />
+                    </div>
+                </Col>
+            </Row>
         </>
     );
 }

@@ -5,7 +5,6 @@ import { CallCallback, useLogionChain } from '../logion-chain';
 import { useCommonContext } from '../common/CommonContext';
 import ProcessStep from '../common/ProcessStep';
 import CollectionLocMessage from '../loc/CollectionLocMessage';
-import CollectionLimitsForm, { CollectionLimits, DEFAULT_LIMITS } from '../loc/CollectionLimitsForm';
 import { useLocContext } from 'src/loc/LocContext';
 import EstimatedFees, { getOtherFeesPaidBy, PAID_BY_REQUESTER } from './fees/EstimatedFees';
 import { AcceptedRequest } from "@logion/client/dist/Loc";
@@ -28,10 +27,9 @@ export interface Props {
 
 export default function OpenLoc(props: Props) {
     const { signer, client, submitCall } = useLogionChain();
-    const { refresh, colorTheme } = useCommonContext();
+    const { refresh } = useCommonContext();
     const { mutateLocState, locState } = useLocContext();
     const [ acceptState, setAcceptState ] = useState<OpenStatus>(OpenStatus.NONE);
-    const [ limits, setLimits ] = useState<CollectionLimits>(DEFAULT_LIMITS);
     const [ fees, setFees ] = useState<Fees | undefined | null>();
     const [ autoPublish, setAutoPublish ] = useState(false);
 
@@ -44,7 +42,7 @@ export default function OpenLoc(props: Props) {
                 }
             })();
         }
-    }, [ fees, client, props.loc, limits, locState, autoPublish ]);
+    }, [ fees, client, props.loc, locState, autoPublish ]);
 
     const openLoc = useMemo(() => {
         return async (callback: CallCallback) =>
@@ -79,14 +77,9 @@ export default function OpenLoc(props: Props) {
         openLoc,
     ]);
 
-    const resetFields = useCallback(() => {
-        setLimits(DEFAULT_LIMITS);
-    }, [ setLimits ]);
-
     const close = useCallback(() => {
         setAcceptState(OpenStatus.NONE);
-        resetFields();
-    }, [ resetFields ]);
+    }, []);
 
     const closeAndRefresh = useCallback(() => {
         close();
@@ -157,7 +150,7 @@ export default function OpenLoc(props: Props) {
                         id: 'proceed',
                         buttonText: 'Proceed',
                         buttonVariant: 'polkadot',
-                        mayProceed: acceptState === OpenStatus.CREATE_LOC && (props.loc.locType !== 'Collection' || limits.areValid()),
+                        mayProceed: acceptState === OpenStatus.CREATE_LOC,
                         callback: openLocCallback,
                     }
                 ]}
@@ -180,11 +173,6 @@ export default function OpenLoc(props: Props) {
                     <>
                         <CollectionLocMessage/>
                         <p>The LOC's creation will require your signature and may take several seconds.</p>
-                        <CollectionLimitsForm
-                            value={ limits }
-                            onChange={ value => setLimits(value) }
-                            colors={ colorTheme.dialog }
-                        />
                         <EstimatedFees
                             fees={ fees }
                             centered={ true }

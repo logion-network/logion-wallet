@@ -20,7 +20,7 @@ import Home from "./Home";
 import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
 import { useLogionChain } from '../logion-chain';
-import LocCreation from "./transaction-protection/LocCreation";
+import TransactionLocCreation from "../loc/TransactionLocCreation";
 import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
 import IssuerDashboard from "./issuer/IssuerDashboard";
 import IdenfyVerificationResult from './IdenfyVerificationResult';
@@ -31,6 +31,8 @@ import { getBaseUrl } from "../PublicPaths";
 import { UserInvitedContributorsPane } from "../loc/invited-contributor/InvitedContributorsPane";
 import LocsDashboard from 'src/loc/dashboard/LocsDashboard';
 import IdentityLocCreation from "./IdentityLocCreation";
+import CollectionLocRequest from "../loc/CollectionLocRequest";
+import CollectionLocCreation from "../loc/CollectionLocCreation";
 
 export const HOME_PATH = USER_PATH;
 
@@ -44,6 +46,8 @@ export const WALLET_RELATIVE_PATH = '/wallet';
 export const VAULT_RELATIVE_PATH = '/vault';
 export const IDENTITY_REQUEST_RELATIVE_PATH = "/loc/identity-request";
 export const IDENTITY_REQUEST_PATH = USER_PATH + IDENTITY_REQUEST_RELATIVE_PATH;
+export const COLLECTION_REQUEST_RELATIVE_PATH = "/loc/collection-request";
+export const COLLECTION_REQUEST_PATH = USER_PATH + COLLECTION_REQUEST_RELATIVE_PATH;
 export const ISSUER_RELATIVE_PATH = '/verified-issuer';
 export const ISSUER_PATH = USER_PATH + ISSUER_RELATIVE_PATH;
 export const ISSUER_DETAILS_RELATIVE_PATH = ISSUER_RELATIVE_PATH + '/:locId';
@@ -175,8 +179,7 @@ export default function UserRouter() {
                 element={ <LocsDashboard
                     title="Transaction LOCs"
                     iconId="loc"
-                    actions={ <LocCreation
-                        locType='Transaction'
+                    actions={ <TransactionLocCreation
                         requestButtonLabel="Request a Transaction Protection"
                     /> }
                     settingsPath={ SETTINGS_PATH }
@@ -190,10 +193,7 @@ export default function UserRouter() {
                 element={ <LocsDashboard
                     title="Collection LOCs"
                     iconId="collection"
-                    actions={ <LocCreation
-                        locType='Collection'
-                        requestButtonLabel="Request a Collection Protection"
-                    /> }
+                    actions={ <CollectionLocCreation/> }
                     settingsPath={ SETTINGS_PATH }
                     locs={ locs["Collection"] }
                     loading={ locsState === undefined || locsState.discarded }
@@ -243,6 +243,9 @@ export default function UserRouter() {
             <Route path="/" element={ accounts.current.accountId.type === "Polkadot" ? <Home /> : <Navigate to={ locRequestsPath('Identity') } /> } />
             <Route path={ IDENTITY_REQUEST_RELATIVE_PATH } element={
                 <IdentityLocRequest backPath={ locRequestsPath('Identity') }/>
+            } />
+            <Route path={ COLLECTION_REQUEST_RELATIVE_PATH } element={
+                <CollectionLocRequest backPath={ locRequestsPath('Collection') }/>
             } />
             <Route path={ ISSUER_RELATIVE_PATH } element={
                 <IssuerDashboard/>
