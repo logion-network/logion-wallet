@@ -4,12 +4,11 @@ import "./BalanceDetails.css";
 
 export interface Props {
     balance: CoinBalance;
-    type: 'arc' | 'linear';
 }
 
 export default function BalanceDetails(props: Props) {
     return (
-        <div className={ `BalanceDetails ${props.type}` }>
+        <div className="BalanceDetails">
             <div className="detail">
                 <div className="label">Available:</div>
                 <div className="amount">

@@ -25,21 +25,8 @@ exports[`renders 1`] = `
   />
   <Route
     element={
-      <Wallet
-        address="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
-        balances={Array []}
-        settingsPath="/legal-officer/settings"
-        transactions={Array []}
-        transactionsPath={[Function]}
-      />
-    }
-    path="/wallet"
-  />
-  <Route
-    element={
       <Transactions
         address="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
-        backPath="/legal-officer/wallet"
         balances={Array []}
         transactions={Array []}
         type="Wallet"

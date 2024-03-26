@@ -2,21 +2,6 @@
     position: relative;
 }
 
-.Gauge.arc .reading {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    background-image: url("../img/gauge.svg");
-    background-size: contain;
-    background-position: center 100%;
-    background-repeat: no-repeat;
-    height: 240px;
-}
-
-.Gauge.arc.light .reading {
-    background-image: url("../img/gauge-light.svg");
-}
-
 .Gauge .reading .value-unit {
     display: flex;
     align-items: baseline;
@@ -47,36 +32,20 @@
     align-items: baseline;
 }
 
-.Gauge.linear:before {
-    content: " ";
-    display: block;
-    background-image: url("../img/linear-gauge.svg");
-    background-size: contain;
-    background-position: center 100%;
-    background-repeat: no-repeat;
-    width: 600px;
-    height: 15px;
-    margin-right: 20px;
-}
-
-.Gauge.linear.light:before {
-    background-image: url("../img/linear-gauge-light.svg");
-}
-
-.Gauge.linear .reading {
+.Gauge .reading {
     margin-right: 40px;
 }
 
-.Gauge.linear .reading .value .integer-part {
+.Gauge .reading .value .integer-part {
     line-height: 1;
 }
 
-.Gauge.linear .reading .value-unit {
+.Gauge .reading .value-unit {
     padding-top: 0;
 }
 
 @media (max-width: 1385px) {
-    .Gauge.linear:before {
+    .Gauge:before {
         width: 200px;
     }
     .Gauge .reading .value .integer-part {

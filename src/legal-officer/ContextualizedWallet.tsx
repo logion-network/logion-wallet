@@ -9,11 +9,11 @@ import {
     HOME_PATH,
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
-    WALLET_PATH,
     locRequestsPath,
     VAULT_OUT_REQUESTS_PATH,
     STATEMENT_OF_FACTS_PATH,
     VOTES_PATH,
+    transactionsPath,
 } from './LegalOfficerPaths';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -70,7 +70,7 @@ export default function ContextualizedWallet() {
             {
                 id: "wallet",
                 text: "Wallet",
-                to: WALLET_PATH,
+                to: transactionsPath("lgnt"),
                 exact: false,
                 icon: {
                     icon: {
@@ -146,7 +146,7 @@ export default function ContextualizedWallet() {
                 menuMiddle={[
                     {
                         id: "vault",
-                        text: "Vault-out Requests",
+                        text: "Vault withdrawals",
                         to: VAULT_OUT_REQUESTS_PATH,
                         exact: true,
                         icon: {

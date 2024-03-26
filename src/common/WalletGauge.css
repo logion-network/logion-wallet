@@ -3,23 +3,18 @@
     justify-content: center;
 }
 
-.WalletGauge.arc .actions {
-    margin-bottom: 30px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .WalletGauge .actions button:nth-child(n+2) {
     margin-left: 25px;
 }
 
-.WalletGauge.linear {
+.WalletGauge {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
 }
 
-.WalletGauge.linear .actions {
+.WalletGauge .actions {
     margin-bottom: 10px;
     flex-shrink: 0;
+    height: 36px;
 }

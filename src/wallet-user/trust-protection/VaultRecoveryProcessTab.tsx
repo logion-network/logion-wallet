@@ -7,7 +7,6 @@ import { CallCallback, useLogionChain } from "../../logion-chain";
 
 import { useCommonContext } from "../../common/CommonContext";
 import Button from "../../common/Button";
-import { AssetNameCell } from "../../common/Wallet";
 import Dialog from "../../common/Dialog";
 import Icon from "../../common/Icon";
 import Table, { Cell, EmptyTableMessage } from "../../common/Table";
@@ -24,6 +23,7 @@ import "./VaultRecoveryProcessTab.css"
 import CoinIcon from "src/components/coin/CoinIcon";
 import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 import AmountCell from "src/common/AmountCell";
+import AssetNameCell from "src/common/AssetNameCell";
 
 interface FormValues {
     legalOfficer: string | null;

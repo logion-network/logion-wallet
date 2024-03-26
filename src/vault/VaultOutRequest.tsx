@@ -82,8 +82,8 @@ export default function VaultOutRequest() {
 
     return (
         <>
-            <Button className="request-vault-out" onClick={ () => setShowDialog(true) } >
-                <Icon icon={ { id: 'vault-out' } } /> Request a vault-out transfer
+            <Button className="request-vault-out" onClick={ () => setShowDialog(true) } slim>
+                <Icon icon={ { id: 'vault-out' } } /> Withdraw from vault
             </Button>
             <Dialog
                 show={ showDialog }

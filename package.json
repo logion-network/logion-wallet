@@ -212,7 +212,8 @@
     "snapshotFormat": {
       "escapeString": true,
       "printBasicPrototype": true
-    }
+    },
+    "workerIdleMemoryLimit": "512MB"
   },
   "babel": {
     "presets": [

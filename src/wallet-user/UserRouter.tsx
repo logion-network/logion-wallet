@@ -10,7 +10,6 @@ import {
 } from '../RootPaths';
 
 import Settings from "../settings/Settings";
-import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
 import { UserLocDetails } from '../loc/LocDetails';
 import DashboardCertificateRouter from "../loc/DashboardCertificateRouter";
@@ -20,7 +19,6 @@ import { useUserContext } from "./UserContext";
 import Home from "./Home";
 import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
-import Vault from "./trust-protection/Vault";
 import { useLogionChain } from '../logion-chain';
 import LocCreation from "./transaction-protection/LocCreation";
 import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
@@ -43,9 +41,7 @@ export const SETTINGS_PATH = USER_PATH + SETTINGS_RELATIVE_PATH;
 export const RECOVERY_RELATIVE_PATH = '/recovery';
 export const RECOVERY_PATH = USER_PATH + RECOVERY_RELATIVE_PATH;
 export const WALLET_RELATIVE_PATH = '/wallet';
-export const WALLET_PATH = USER_PATH + WALLET_RELATIVE_PATH;
 export const VAULT_RELATIVE_PATH = '/vault';
-export const VAULT_PATH = USER_PATH + VAULT_RELATIVE_PATH;
 export const IDENTITY_REQUEST_RELATIVE_PATH = "/loc/identity-request";
 export const IDENTITY_REQUEST_PATH = USER_PATH + IDENTITY_REQUEST_RELATIVE_PATH;
 export const ISSUER_RELATIVE_PATH = '/verified-issuer';
@@ -158,38 +154,20 @@ export default function UserRouter() {
             <Route path={ TRUST_PROTECTION_RELATIVE_PATH } element={ <TrustProtection />} />
             <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ false } /> } />
             <Route path={ RECOVERY_RELATIVE_PATH } element={ <Recovery /> } />
-            <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
-                    transactionsPath={ transactionsPath }
-                    settingsPath={ SETTINGS_PATH }
-                    balances={ balanceState?.balances || [] }
-                    transactions={ balanceState?.transactions || [] }
-                    vaultAddress = { vaultState?.vaultAddress || undefined }
-                    address={ accounts.current.accountId.address }
-                />
-            } />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     address={ accounts!.current?.accountId!.address }
-                    backPath={ WALLET_PATH }
                     balances={ balanceState?.balances || null }
                     transactions={ balanceState?.transactions || null }
                     type="Wallet"
                     vaultAddress={ vaultState?.vaultAddress || undefined }
                 />
             } />
-            <Route path={ VAULT_RELATIVE_PATH } element={ <Vault
-                    transactionsPath={ vaultTransactionsPath }
-                    settingsPath={ SETTINGS_PATH }
-                    balances={ vaultState?.balances || null }
-                    transactions={ vaultState?.transactions || null }
-                    address={ accounts.current.accountId.address }
-                />
-            } />
             <Route path={ VAULT_TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     address={ vaultState?.vaultAddress || "" }
-                    backPath={ VAULT_PATH }
                     balances={ vaultState?.balances || null }
                     transactions={ vaultState?.transactions || null }
                     type="Vault"
+                    vaultAddress={ vaultState?.vaultAddress || undefined }
                 />
             } />
             <Route

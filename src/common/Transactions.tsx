@@ -1,10 +1,10 @@
-import { useParams, useNavigate } from 'react-router';
+import { useParams } from 'react-router';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { Transaction } from '@logion/client/dist/TransactionClient.js';
-import { Coin, CoinBalance } from '@logion/node-api';
+import { CoinBalance } from '@logion/node-api';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
@@ -20,16 +20,17 @@ import AmountCell from './AmountCell';
 import { TransactionStatusCell, TransactionStatusCellDetails } from "./TransactionStatusCell";
 import Loader from './Loader';
 import { useResponsiveContext } from './Responsive';
-import { WalletType } from "./Wallet";
-import VaultOutRequest from "../vault/VaultOutRequest";
 import VaultTransferRequests from './VaultTransferRequests';
 import TransactionType from './TransactionType';
-import CoinName from 'src/components/coin/CoinName';
-import CoinIcon from 'src/components/coin/CoinIcon';
+import CopyPasteButton from './CopyPasteButton';
+import IconTextRow from './IconTextRow';
+import Icon from './Icon';
+import { useMemo } from 'react';
+
+export type WalletType = "Wallet" | "Vault";
 
 export interface Props {
     address: string,
-    backPath: string,
     balances: CoinBalance[] | null,
     transactions: Transaction[] | null,
     type: WalletType,
@@ -39,7 +40,6 @@ export interface Props {
 export default function Transactions(props: Props) {
     const { colorTheme } = useCommonContext();
     const { address, balances, transactions, type, vaultAddress } = props;
-    const navigate = useNavigate();
 
     if (balances === null || transactions === null) {
         return null;
@@ -55,7 +55,6 @@ export default function Transactions(props: Props) {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             } }
-            onBack={ () => navigate(props.backPath) }
         >
             <Content address={ address } balances={ balances } transactions={ transactions } type={ type } vaultAddress={ vaultAddress }/>
         </FullWidthPane>
@@ -74,6 +73,14 @@ function Content(props: ContentProps) {
     const { address, balances, transactions, type, vaultAddress } = props;
     const { coinId } = useParams<"coinId">();
     const { width } = useResponsiveContext();
+
+    const addressTitle = useMemo(() => {
+        if(props.type === "Wallet") {
+            return "Your address";
+        } else {
+            return "Your vault address";
+        }
+    }, [ props.type ]);
 
     if (balances === null || transactions === null) {
         return <Loader />;
@@ -138,8 +145,65 @@ function Content(props: ContentProps) {
         <>
             <Row>
                 <Col>
+                    <Frame
+                        title={ addressTitle }
+                    >
+                        <Row>
+                            <Col>
+                                <Row className="content">
+                                    <p>
+                                    <span>{ props.address }</span>
+                                    <CopyPasteButton value={ props.address } className="small" />
+                                    </p>
+                                </Row>
+                            </Col>
+                            {
+                                props.type === "Vault" &&
+                                <Col className="vault-tip">
+                                    <IconTextRow
+                                        icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
+                                        text={ <p>
+                                            You can use this Vault public address to transfer assets directly to your Vault.<br />
+                                            Once transferred, your assets will be immediately protected by a Legal Officer
+                                            signature-based transfer protocol.
+                                        </p> }
+                                    />
+                                </Col>
+                            }
+                        </Row>
+                    </Frame>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Frame
+                        title="Current balance"
+                    >
+                        <WalletGauge
+                            balance={ balance }
+                            vaultAddress={ vaultAddress }
+                            sendButton={ type === "Wallet" }
+                            sendToVault={ vaultAddress !== undefined }
+                            withdrawFromVault={ type === "Vault" && vaultAddress !== undefined }
+                        />
+                    </Frame>
+                </Col>
+            </Row>
+            { type === "Vault" &&
+                <Row>
+                    <Col className="requests">
+                        <Frame
+                            title="Transfer signature request(s)"
+                        >
+                            <VaultTransferRequests />
+                        </Frame>
+                    </Col>
+                </Row>
+            }
+            <Row>
+                <Col>
                     <Frame className={ `Frame-${ type }` }
-                        title={ <TransactionsFrameTitle coin={ balance.coin } vaultOutButton={ type === "Vault" }/> }
+                        title="Transaction history"
                     >
                         <Table
                             columns={ columns }
@@ -149,80 +213,7 @@ function Content(props: ContentProps) {
                     </Frame>
                 </Col>
             </Row>
-            { type === "Wallet" &&
-                <Row>
-                    <Col>
-                        <Frame
-                            title={ <BalanceFrameTitle coin={ balance.coin } /> }
-                        >
-                            <WalletGauge
-                                balance={ balance }
-                                type='linear'
-                                vaultAddress={ vaultAddress }
-                            />
-                        </Frame>
-                    </Col>
-                </Row>
-            }
-            { type === "Vault" &&
-                <Row>
-                    <Col className="col-xxxl-8 requests">
-                        <Frame
-                            fillHeight
-                            title="Transfer signature request(s)"
-                        >
-                            <VaultTransferRequests />
-                        </Frame>
-                    </Col>
-                    <Col className="col-xxxl-4">
-                        <Frame
-                            fillHeight
-                            title={
-                                <div className="gauge-title">
-                                    <CoinIcon coinId={ balance.coin.id } height="72px" />
-                                    <span>Current <CoinName coinId={ balance.coin.id }/> balance</span>
-                                </div>
-                            }
-                            className="gauge-container"
-                        >
-                            <WalletGauge
-                                balance={ balance }
-                                type='arc'
-                                sendButton={ false }
-                            />
-                        </Frame>
-                    </Col>
-                </Row>
-            }
         </>
-    );
-}
-
-function TransactionsFrameTitle(props: { coin: Coin, vaultOutButton: boolean }) {
-    return (
-        <Row>
-            <Col>
-                <span className="frame-title">
-                    Transaction history: <CoinIcon
-                        coinId={ props.coin.id }
-                        height="36px"
-                    /> <CoinName coinId={ props.coin.id }/> ({ props.coin.symbol })
-                </span>
-            </Col>
-            { props.vaultOutButton &&
-            <Col>
-                <VaultOutRequest/>
-            </Col>
-            }
-        </Row>
-    );
-}
-
-function BalanceFrameTitle(props: {coin: Coin}) {
-    return (
-        <span className="frame-title">
-            Current { props.coin.symbol } balance
-        </span>
     );
 }
 
