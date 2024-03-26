@@ -37,6 +37,8 @@ export interface CommonContext {
     expectNewTransactionState: ExpectNewTransactionState;
     expectNewTransaction: () => void;
     stopExpectNewTransaction: () => void;
+    notificationText?: string;
+    setNotification: (text?: string) => void;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -83,6 +85,7 @@ function initialContextValue(): FullCommonContext {
         },
         expectNewTransaction: () => {},
         stopExpectNewTransaction: () => {},
+        setNotification: () => {},
     }
 }
 
@@ -106,6 +109,8 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_EXPECT_NEW_TRANSACTION'
     | 'STOP_EXPECT_NEW_TRANSACTION'
     | 'SET_STOP_EXPECT_NEW_TRANSACTION'
+    | 'SET_NOTIFICATION'
+    | 'SET_SET_NOTIFICATION'
 ;
 
 interface Action {
@@ -128,6 +133,8 @@ interface Action {
     backendConfig?: ((legalOfficerAddress: string | undefined) => BackendConfig);
     expectNewTransaction?: () => void;
     stopExpectNewTransaction?: () => void;
+    notificationText?: string;
+    setNotification?: (text?: string) => void;
 }
 
 const MAX_REFRESH_COUNT = 12;
@@ -239,6 +246,18 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     refreshCount: 0,
                 },
             };
+        case "SET_NOTIFICATION": {
+            return {
+                ...state,
+                notificationText: action.notificationText,
+            };
+        }
+        case "SET_SET_NOTIFICATION": {
+            return {
+                ...state,
+                setNotification: action.setNotification!,
+            };
+        }
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -421,6 +440,22 @@ export function CommonContextProvider(props: Props) {
             })
         }
     }, [ contextValue.stopExpectNewTransaction, stopExpectNewTransaction ]);
+
+    const setNotification = useCallback((text?: string) => {
+        dispatch({
+            type: "SET_NOTIFICATION",
+            notificationText: text,
+        });
+    }, [ ]);
+
+    useEffect(() => {
+        if(contextValue.setNotification !== setNotification) {
+            dispatch({
+                type: "SET_SET_NOTIFICATION",
+                setNotification,
+            })
+        }
+    }, [ contextValue.setNotification, setNotification ]);
 
     return (
         <CommonContextObject.Provider value={contextValue}>

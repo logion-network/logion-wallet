@@ -1,14 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `
+exports[`AccountAddress renders 1`] = `
 <div
   className="AccountAddress"
 >
   <div
     className="icon"
+    onClick={[Function]}
     style={
       Object {
         "backgroundColor": "#3b6cf4",
+        "cursor": "copy",
       }
     }
   >
