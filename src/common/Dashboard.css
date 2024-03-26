@@ -157,6 +157,13 @@
     padding-bottom: 30px;
 }
 
+.Dashboard .Notifications {
+    position: absolute;
+    top: 130px;
+    right: 35px;
+    width: 280px;
+}
+
 @media (max-width: 1350px) {
     .Dashboard .Sidebar {
         width: 260px;

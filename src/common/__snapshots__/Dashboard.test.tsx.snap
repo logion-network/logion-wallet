@@ -56,6 +56,19 @@ exports[`renders Dashboard 1`] = `
       />
     </div>
   </div>
+  <div
+    className="Notifications"
+  >
+    <Toast
+      autohide={true}
+      bg="dark"
+      delay={3000}
+      onClose={[Function]}
+      show={false}
+    >
+      <ToastBody />
+    </Toast>
+  </div>
 </div>
 `;
 

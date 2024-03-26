@@ -1,11 +1,12 @@
 import { CoinBalance } from "@logion/node-api";
-import { CSSProperties } from 'react';
+import { CSSProperties, useCallback } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import { Account } from './types/Accounts';
 import { useCommonContext } from './CommonContext';
 import Icon from './Icon';
+import { copyToClipBoard } from "./Tools";
 
 import './AccountAddress.css';
 import { Spinner } from "react-bootstrap";
@@ -19,9 +20,17 @@ export interface Props {
 }
 
 export default function AccountAddress(props: Props) {
-    const { colorTheme } = useCommonContext();
+    const { colorTheme, setNotification } = useCommonContext();
 
-    let style: CSSProperties = {};
+    const copyAddress = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.stopPropagation();
+        copyToClipBoard(props.account.accountId.address);
+        setNotification("The address was copied to your clip board");
+    }, [ props.account.accountId.address, setNotification ]);
+
+    let style: CSSProperties = {
+        cursor: "copy"
+    };
     const backgroundIcon = colorTheme.accounts.legalOfficerIcon;
     let foregroundIcon;
     if(props.account.isLegalOfficer) {
@@ -41,6 +50,7 @@ export default function AccountAddress(props: Props) {
             <div
                 className="icon"
                 style={ style }
+                onClick={ copyAddress }
             >
                 <Icon icon={{ id: foregroundIcon }} width="40px" />
             </div>

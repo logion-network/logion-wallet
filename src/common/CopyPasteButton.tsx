@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import Button from "./Button";
 import Icon from "./Icon";
 import { copyToClipBoard } from "./Tools";
@@ -5,6 +6,7 @@ import { copyToClipBoard } from "./Tools";
 import './CopyPasteButton.css';
 import { customClassName } from "./types/Helpers";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { useCommonContext } from "./CommonContext";
 
 export interface Props {
     value?: string | null;
@@ -13,7 +15,15 @@ export interface Props {
 }
 
 export default function CopyPasteButton(props: Props) {
+    const { setNotification } = useCommonContext();
+
+    const copy = useCallback(() => {
+        copyToClipBoard(props.value || "");
+        setNotification("Value was copied to the clip board");
+    }, [ props.value, setNotification ]);
+
     const value = props.value;
+    const className = customClassName("CopyPasteButton", props.className ? props.className : "big");
     if(value) {
         if(props.tooltip) {
             return (
@@ -27,23 +37,20 @@ export default function CopyPasteButton(props: Props) {
                     }
                 >
                     <span className="Button-container">
-                        { renderButton(props) }
+                        <Button onClick={ copy } className={ className }>
+                            <Icon icon={{id: "copy_paste"}} />
+                        </Button>
                     </span>
                 </OverlayTrigger>
             );
         } else {
-            return renderButton(props);
+            return (
+                <Button onClick={ copy } className={ className }>
+                    <Icon icon={{id: "copy_paste"}} />
+                </Button>
+            );
         }
     } else {
         return null;
     }
-}
-
-function renderButton(props: Props) {
-    const className = customClassName("CopyPasteButton", props.className ? props.className : "big");
-    return (
-        <Button onClick={ () => copyToClipBoard(props.value || "") } className={ className }>
-            <Icon icon={{id: "copy_paste"}} />
-        </Button>
-    );
 }

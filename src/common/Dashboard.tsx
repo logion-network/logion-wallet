@@ -1,5 +1,6 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Toast from 'react-bootstrap/Toast';
 
 import { Children } from './types/Helpers';
 import Logo from './Logo';
@@ -159,7 +160,7 @@ export interface Props {
 }
 
 export default function Dashboard(props: Props) {
-    const { colorTheme } = useCommonContext();
+    const { colorTheme, notificationText, setNotification } = useCommonContext();
 
     const inlineCss = `
     .Dashboard .PrimaryArea .table {
@@ -215,6 +216,17 @@ export default function Dashboard(props: Props) {
                 </div>
             </div>
             { props.children }
+            <div className="Notifications">
+                <Toast
+                    show={ notificationText !== undefined }
+                    onClose={ () => setNotification(undefined) }
+                    bg={ colorTheme.type }
+                    autohide
+                    delay={ 3000 }
+                >
+                    <Toast.Body>{ notificationText }</Toast.Body>
+                </Toast>
+            </div>
         </div>
     );
 }
