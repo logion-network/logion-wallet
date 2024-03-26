@@ -16,7 +16,7 @@ import LocStatusCell from '../common/LocStatusCell';
 import ButtonGroup from '../common/ButtonGroup';
 
 
-import { WALLET_PATH, dataLocDetailsPath, identityLocDetailsPath, locDetailsPath, locRequestsPath } from './LegalOfficerPaths';
+import { dataLocDetailsPath, identityLocDetailsPath, locDetailsPath, locRequestsPath, transactionsPath } from './LegalOfficerPaths';
 
 import './Home.css';
 import UserIdentityNameCell from '../common/UserIdentityNameCell';
@@ -103,7 +103,7 @@ export default function Account() {
                                         level={ balanceState.balances[0].level }
                                     />
                                     <Button
-                                        onClick={ () => navigate(WALLET_PATH) }
+                                        onClick={ () => navigate(transactionsPath("lgnt")) }
                                         slim={ true }
                                     >
                                         <Icon icon={ { id: "wallet" } } /> Go to my wallet

@@ -62,12 +62,6 @@
     height: calc(86vh - 620px);
 }
 
-.Transactions .request-vault-out {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-}
-
 .Transactions .gauge-title {
     display: flex;
     justify-content: center;

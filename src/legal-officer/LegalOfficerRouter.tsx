@@ -4,9 +4,6 @@ import {
     RECOVERY_REQUESTS_RELATIVE_PATH,
     SETTINGS_RELATIVE_PATH,
     RECOVERY_DETAILS_RELATIVE_PATH,
-    WALLET_RELATIVE_PATH,
-    WALLET_PATH,
-    transactionsPath,
     TRANSACTIONS_RELATIVE_PATH,
     SETTINGS_PATH,
     locDetailsPath,
@@ -28,7 +25,6 @@ import Home from './Home';
 import RecoveryRequests from './RecoveryRequests';
 import Settings from '../settings/Settings';
 import RecoveryDetails from "./RecoveryDetails";
-import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
 import LocDetails, { VoterLocDetails } from "../loc/LocDetails";
 import IdentityProtection from './transaction-protection/IdentityProtection';
@@ -90,16 +86,8 @@ export default function LegalOfficerRouter() {
             <Route path={ RECOVERY_REQUESTS_RELATIVE_PATH } element={ <RecoveryRequests /> } />
             <Route path={ RECOVERY_DETAILS_RELATIVE_PATH } element={ <RecoveryDetails /> } />
             <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ true } missingSettings={ missingSettings !== undefined } /> } />
-            <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
-                transactionsPath={ transactionsPath }
-                settingsPath={ SETTINGS_PATH }
-                balances={ balanceState?.balances || [] }
-                transactions={ balanceState?.transactions || [] }
-                address={ accounts.current.accountId.address }
-            />} />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     address={ accounts!.current!.accountId.address }
-                    backPath={ WALLET_PATH }
                     balances={ balanceState?.balances || [] }
                     transactions={ balanceState?.transactions || [] }
                     type="Wallet"

@@ -16,12 +16,14 @@ import Alert from './Alert';
 import './WalletGauge.css';
 import BalanceDetails from './BalanceDetails';
 import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';
+import VaultOutRequest from 'src/vault/VaultOutRequest';
 
 export interface Props {
     balance: CoinBalance,
-    type: 'arc' | 'linear',
     vaultAddress?: string,
-    sendButton?: boolean
+    sendButton: boolean,
+    sendToVault: boolean,
+    withdrawFromVault: boolean,
 }
 
 interface TransferDialogState {
@@ -88,20 +90,20 @@ export default function WalletGauge(props: Props) {
     }
 
     return (
-        <div className={ "WalletGauge " + props.type }>
+        <div className="WalletGauge">
             <Gauge
                 readingIntegerPart={ props.balance.available.coefficient.toInteger() }
                 readingDecimalPart={ props.balance.available.coefficient.toFixedPrecisionDecimals(2) }
                 unit={ props.balance.available.prefix.symbol + Lgnt.CODE }
                 level={ props.balance.level }
-                type={ props.type }
             />
             <BalanceDetails
                 balance={ props.balance }
-                type={ props.type }
             />
-            { (sendButton === undefined || sendButton) &&
+            { (sendButton || props.sendToVault || props.withdrawFromVault) &&
             <div className="actions">
+                {
+                    sendButton &&
                     <Button slim onClick={ () => {
                         setTransferDialogState({
                             title: `Transfer ${ Lgnt.CODE }s`,
@@ -111,7 +113,9 @@ export default function WalletGauge(props: Props) {
                     } }>
                         <Icon icon={ { id: 'send' } } /> Send
                     </Button>
-                { vaultAddress !== undefined &&
+                }
+                {
+                    props.sendToVault && vaultAddress !== undefined &&
                     <Button slim onClick={ () => {
                         setDestination(vaultAddress);
                         setTransferDialogState({
@@ -122,6 +126,10 @@ export default function WalletGauge(props: Props) {
                     } }>
                         <Icon icon={ { id: 'vault-in' } } /> Send to Vault
                     </Button>
+                }
+                {
+                    props.withdrawFromVault &&
+                    <VaultOutRequest/>
                 }
             </div>
             }

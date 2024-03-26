@@ -9,10 +9,10 @@ import UserRouter, {
     TRUST_PROTECTION_PATH,
     SETTINGS_PATH,
     RECOVERY_PATH,
-    WALLET_PATH,
     locRequestsPath,
-    VAULT_PATH,
     ISSUER_PATH,
+    transactionsPath,
+    vaultTransactionsPath,
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
@@ -51,7 +51,7 @@ export default function ContextualizedWallet() {
         menuTop.push({
             id: "wallet",
             text: "Wallet",
-            to: WALLET_PATH,
+            to: transactionsPath("lgnt"),
             exact: false,
             icon: {
                 icon: {
@@ -64,7 +64,7 @@ export default function ContextualizedWallet() {
         menuTop.push({
             id: "vault",
             text: "Vault",
-            to: VAULT_PATH,
+            to: vaultTransactionsPath("lgnt"),
             exact: false,
             icon: {
                 icon: {

@@ -12,7 +12,6 @@ import { BalanceState } from '@logion/client/dist/Balance.js';
 test('renders null with missing data', () => {
     const result = shallowRender(<Transactions
         address="123"
-        backPath={ "back" }
         balances={ [] }
         transactions={ [] }
         type="Wallet"
@@ -28,7 +27,6 @@ test('renders with all data', () => {
     } as BalanceState);
     const result = shallowRender(<Transactions
         address="123"
-        backPath={ "back" }
         balances={ [] }
         transactions={ [] }
         type="Wallet"
@@ -44,7 +42,6 @@ test('renders failed transaction', () => {
     } as BalanceState);
     const result = shallowRender(<Transactions
         address="123"
-        backPath={ "back" }
         balances={ [] }
         transactions={ [] }
         type="Wallet"

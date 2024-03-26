@@ -1,7 +1,6 @@
-import { Transaction } from "@logion/client/dist/TransactionClient.js";
+import { Transaction } from "@logion/client";
 
 import { Cell } from "./Table";
-import { WalletType } from "./Wallet";
 import {
     PalletLogionLocCall,
     PalletLogionVaultCall,
@@ -10,6 +9,7 @@ import {
     PalletLoAuthorityListCall,
     PalletMultisigCall
 } from "@polkadot/types/lookup";
+import { WalletType } from "./Transactions";
 
 export interface Props {
     transaction: Transaction;

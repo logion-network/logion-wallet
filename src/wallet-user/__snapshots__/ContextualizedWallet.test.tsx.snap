@@ -88,7 +88,7 @@ exports[`ContextualizedWallet Given connected and account, then renders with rou
         "id": "wallet",
         "onClick": [Function],
         "text": "Wallet",
-        "to": "/user/wallet",
+        "to": "/user/wallet/lgnt",
       },
       Object {
         "disabled": true,
@@ -105,7 +105,7 @@ exports[`ContextualizedWallet Given connected and account, then renders with rou
         "id": "vault",
         "onClick": [Function],
         "text": "Vault",
-        "to": "/user/vault",
+        "to": "/user/vault/lgnt",
       },
       Object {
         "exact": false,
@@ -252,7 +252,7 @@ exports[`ContextualizedWallet Given disconnected and accounts then empty 1`] = `
         "id": "wallet",
         "onClick": [Function],
         "text": "Wallet",
-        "to": "/user/wallet",
+        "to": "/user/wallet/lgnt",
       },
       Object {
         "disabled": true,
@@ -269,7 +269,7 @@ exports[`ContextualizedWallet Given disconnected and accounts then empty 1`] = `
         "id": "vault",
         "onClick": [Function],
         "text": "Vault",
-        "to": "/user/vault",
+        "to": "/user/vault/lgnt",
       },
       Object {
         "exact": false,

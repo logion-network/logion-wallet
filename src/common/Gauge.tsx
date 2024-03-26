@@ -6,7 +6,6 @@ export interface Props {
     readingDecimalPart?: string,
     unit: string,
     level: number,
-    type: 'arc' | 'linear',
 }
 
 const RED: string = '#ea1f46';
@@ -26,7 +25,7 @@ export default function Gauge(props: Props) {
     }
 
     return (
-        <div className={ `Gauge ${props.type} ${colorTheme.type}` }>
+        <div className={ `Gauge ${colorTheme.type}` }>
             <div className="reading">
                 <div className="value-unit">
                     <div className="value"

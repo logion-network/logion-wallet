@@ -11,7 +11,7 @@ export default function VaultOutRequests() {
 
     return (
         <FullWidthPane
-            mainTitle="Vault-out transfer request management"
+            mainTitle="Vault withdrawal request management"
             titleIcon={ {
                 icon: {
                     id: "vault-big"

@@ -36,7 +36,7 @@ exports[`renders 1`] = `
         },
         "id": "vault",
         "onClick": [Function],
-        "text": "Vault-out Requests",
+        "text": "Vault withdrawals",
         "to": "/legal-officer/vault",
       },
       Object {
@@ -91,7 +91,7 @@ exports[`renders 1`] = `
         "id": "wallet",
         "onClick": [Function],
         "text": "Wallet",
-        "to": "/legal-officer/wallet",
+        "to": "/legal-officer/wallet/transactions/lgnt",
       },
       Object {
         "disabled": false,

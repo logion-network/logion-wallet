@@ -5,7 +5,6 @@ import { BalanceState } from "@logion/client";
 
 import Table, { EmptyTableMessage } from "../../common/Table";
 import Icon from "../../common/Icon";
-import { AssetNameCell } from "../../common/Wallet";
 import Button from "../../common/Button";
 import Dialog from "../../common/Dialog";
 import Alert from "../../common/Alert";
@@ -17,6 +16,7 @@ import CoinIcon from "src/components/coin/CoinIcon";
 import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 import AmountCell from "src/common/AmountCell";
 import { ExpectNewTransactionStatus, useCommonContext } from "src/common/CommonContext";
+import AssetNameCell from "src/common/AssetNameCell";
 
 interface Props {
     vaultFirst: boolean

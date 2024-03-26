@@ -16,7 +16,7 @@ import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import NetworkWarning from '../common/NetworkWarning';
 import { useLogionChain } from '../logion-chain';
 
-import { SETTINGS_PATH, WALLET_PATH } from './UserRouter';
+import { SETTINGS_PATH, transactionsPath } from './UserRouter';
 
 import './Home.css';
 import TransactionType from 'src/common/TransactionType';
@@ -127,7 +127,7 @@ export function Content() {
                                         level={ balanceState.balances[0].level }
                                     />
                                     <Button
-                                        onClick={ () => navigate(WALLET_PATH) }
+                                        onClick={ () => navigate(transactionsPath("lgnt")) }
                                         slim={ true }
                                     >
                                         <Icon icon={ { id: "wallet" } } /> Go to my wallet
