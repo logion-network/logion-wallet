@@ -13,13 +13,15 @@
 }
 
 .LegalOfficerHome .transactions,
-.LegalOfficerHome .collections {
+.LegalOfficerHome .collections,
+.LegalOfficerHome .withdrawals {
     margin-top: 30px;
 }
 
 .LegalOfficerHome .transactions-button,
 .LegalOfficerHome .identities-button,
-.LegalOfficerHome .collections-button {
+.LegalOfficerHome .collections-button,
+.LegalOfficerHome .withdrawals-button {
     position: absolute;
     top: 25px;
     right: 25px;

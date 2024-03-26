@@ -11,7 +11,7 @@ export default function VaultTransferRequestDetails(props: Props) {
     return (
         <>
             <Detail
-                label="Reason"
+                label="Rejection reason"
                 value={ props.request.decision?.rejectReason || "-" }
             />
         </>

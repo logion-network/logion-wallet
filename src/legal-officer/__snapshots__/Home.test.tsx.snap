@@ -269,6 +269,60 @@ exports[`Home renders 1`] = `
           renderEmpty={[Function]}
         />
       </Frame>
+      <Frame
+        className="withdrawals"
+        title="Last waiting vault withdrawals"
+      >
+        <Button
+          className="withdrawals-button"
+          onClick={[Function]}
+          slim={true}
+        >
+          <Icon
+            icon={
+              Object {
+                "id": "vault",
+              }
+            }
+          />
+           Go to vault withdrawals
+        </Button>
+        <Table
+          columns={
+            Array [
+              Object {
+                "align": "left",
+                "header": "User",
+                "render": [Function],
+                "renderDetails": [Function],
+              },
+              Object {
+                "header": "Type",
+                "render": [Function],
+                "width": "80px",
+              },
+              Object {
+                "align": "right",
+                "header": "Amount",
+                "render": [Function],
+                "width": "120px",
+              },
+              Object {
+                "header": "Status",
+                "render": [Function],
+                "width": "150px",
+              },
+              Object {
+                "header": "Creation date",
+                "render": [Function],
+                "width": "130px",
+              },
+            ]
+          }
+          data={Array []}
+          renderEmpty={[Function]}
+        />
+      </Frame>
     </Col>
   </Row>
 </FullWidthPane>

@@ -4,8 +4,9 @@ import { useUserContext } from "../wallet-user/UserContext";
 import AmountCell from "./AmountCell";
 import LegalOfficerName from "./LegalOfficerNameCell";
 import { useResponsiveContext } from "./Responsive";
-import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
+import Table, { DateTimeCell, EmptyTableMessage } from "./Table";
 import VaultTransferRequestStatusCell from "./VaultTransferRequestStatusCell";
+import VaultTransferRequestDetails from "./VaultTransferDetails";
 
 export default function HandledVaultTransferRequests() {
     const { width } = useResponsiveContext();
@@ -23,11 +24,7 @@ export default function HandledVaultTransferRequests() {
                         header: "Legal Officer",
                         render: request => <LegalOfficerName address={ request.legalOfficerAddress } />,
                         align: 'left',
-                    },
-                    {
-                        header: "Type",
-                        render: () => <Cell content={`${Lgnt.CODE}`} />,
-                        width: '80px',
+                        renderDetails: request => <VaultTransferRequestDetails request={ request } />,
                     },
                     {
                         header: "Amount",

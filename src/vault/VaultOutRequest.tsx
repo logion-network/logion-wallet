@@ -47,7 +47,7 @@ export default function VaultOutRequest() {
                 value: "",
                 unit: Numbers.NONE
             },
-            destination: ""
+            destination: accounts?.current?.accountId.address || "",
         }
     });
 
@@ -92,13 +92,13 @@ export default function VaultOutRequest() {
                     {
                         buttonText: "Cancel",
                         id: "cancel",
-                        buttonVariant: "secondary-polkadot",
+                        buttonVariant: "secondary",
                         callback: close,
                         disabled: extrinsicSubmissionState.inProgress && !extrinsicSubmissionState.isError()
                     },
                     {
-                        buttonText: "Transfer",
-                        id: "transfer",
+                        buttonText: "Withdraw",
+                        id: "withdraw",
                         buttonVariant: "polkadot",
                         type: 'submit',
                         disabled: extrinsicSubmissionState.inProgress
@@ -106,7 +106,7 @@ export default function VaultOutRequest() {
                 ]}
                 onSubmit={ handleSubmit(transferCallback) }
             >
-                <h2>Transfer { Lgnt.CODE }s from your logion Vault</h2>
+                <h2>Withdraw { Lgnt.CODE }s from your logion Vault</h2>
 
                 { !extrinsicSubmissionState.inProgress &&
                 <>
@@ -139,6 +139,7 @@ export default function VaultOutRequest() {
                         }
                         feedback={ errors.destination?.message }
                         colors={ colorTheme.dialog }
+                        help={`The default destination is your regular address, carefully check the destination if you change this value.`}
                     />
 
                     <FormGroup
