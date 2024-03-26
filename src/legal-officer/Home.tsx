@@ -16,7 +16,7 @@ import LocStatusCell from '../common/LocStatusCell';
 import ButtonGroup from '../common/ButtonGroup';
 
 
-import { dataLocDetailsPath, identityLocDetailsPath, locDetailsPath, locRequestsPath, transactionsPath } from './LegalOfficerPaths';
+import { VAULT_OUT_REQUESTS_PATH, dataLocDetailsPath, identityLocDetailsPath, locDetailsPath, locRequestsPath, transactionsPath } from './LegalOfficerPaths';
 
 import './Home.css';
 import UserIdentityNameCell from '../common/UserIdentityNameCell';
@@ -24,8 +24,11 @@ import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import { useLogionChain } from '../logion-chain';
 import TransactionType from 'src/common/TransactionType';
 import { toFeesClass } from "@logion/client/dist/Fees.js";
+import VaultTransferRequestDetails from './vault/VaultTransferDetails';
+import VaultTransferRequestStatusCell from 'src/common/VaultTransferRequestStatusCell';
+import { useResponsiveContext } from 'src/common/Responsive';
 
-const MAX_WAITING_LOCS = 3;
+const MAX_WAITING_SHOWN = 3;
 
 export default function Account() {
     const { accounts } = useLogionChain();
@@ -33,8 +36,9 @@ export default function Account() {
         colorTheme,
         balanceState,
     } = useCommonContext();
-    const { locs, locsState } = useLegalOfficerContext();
+    const { locs, locsState, pendingVaultTransferRequests } = useLegalOfficerContext();
     const navigate = useNavigate();
+    const { width } = useResponsiveContext();
 
     if (!balanceState || accounts === null || locsState === null || locsState.discarded) {
         return <Loader />;
@@ -166,7 +170,7 @@ export default function Account() {
                                     align: 'center',
                                 }
                             ] }
-                            data={ locs["Identity"].workInProgress.slice(0, MAX_WAITING_LOCS) }
+                            data={ locs["Identity"].workInProgress.slice(0, MAX_WAITING_SHOWN) }
                             renderEmpty={ () => <EmptyTableMessage>No waiting LOC yet</EmptyTableMessage> }
                         />
                     </Frame>
@@ -224,7 +228,7 @@ export default function Account() {
                                     align: 'center',
                                 }
                             ] }
-                            data={ locs["Collection"].workInProgress.slice(0, MAX_WAITING_LOCS) }
+                            data={ locs["Collection"].workInProgress.slice(0, MAX_WAITING_SHOWN) }
                             renderEmpty={ () => <EmptyTableMessage>No waiting LOC yet</EmptyTableMessage> }
                         />
                     </Frame>
@@ -282,8 +286,57 @@ export default function Account() {
                                     align: 'center',
                                 }
                             ] }
-                            data={ locs['Transaction'].workInProgress.slice(0, MAX_WAITING_LOCS) }
+                            data={ locs['Transaction'].workInProgress.slice(0, MAX_WAITING_SHOWN) }
                             renderEmpty={ () => <EmptyTableMessage>No waiting LOC yet</EmptyTableMessage> }
+                        />
+                    </Frame>
+
+                    <Frame
+                        className="withdrawals"
+                        title="Last waiting vault withdrawals"
+                    >
+                        <Button
+                            onClick={ () => navigate(VAULT_OUT_REQUESTS_PATH) }
+                            slim={ true }
+                            className="withdrawals-button"
+                        >
+                            <Icon icon={ { id: "vault" } } /> Go to vault withdrawals
+                        </Button>
+                        <Table
+                            columns={ [
+                                {
+                                    header: "User",
+                                    render: request => <UserIdentityNameCell userIdentity={ request.requesterIdentity } />,
+                                    align: "left",
+                                    renderDetails: request => <VaultTransferRequestDetails request={ request }/>
+                                },
+                                {
+                                    header: "Type",
+                                    render: () => <Cell content={`${Lgnt.CODE}`} />,
+                                    width: '80px',
+                                },
+                                {
+                                    header: "Amount",
+                                    render: request => <AmountCell amount={ Lgnt.fromCanonical(BigInt(request.amount)) } />,
+                                    align: 'right',
+                                    width: width({
+                                        onSmallScreen: "100px",
+                                        otherwise: "120px"
+                                    }),
+                                },
+                                {
+                                    header: "Status",
+                                    render: request => <VaultTransferRequestStatusCell status={ request.status } viewer="Legal Officer" />,
+                                    width: '150px',
+                                },
+                                {
+                                    header: "Creation date",
+                                    render: request => <DateTimeCell dateTime={ request.createdOn } />,
+                                    width: '130px',
+                                },
+                            ] }
+                            data={ pendingVaultTransferRequests?.slice(0, MAX_WAITING_SHOWN) || [] }
+                            renderEmpty={ () => <EmptyTableMessage>No waiting withdrawal requests</EmptyTableMessage> }
                         />
                     </Frame>
                 </Col>

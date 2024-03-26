@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Lgnt } from "@logion/node-api";
 import { VaultTransferRequest } from "@logion/client";
 
@@ -11,11 +11,19 @@ import RequestToCancel from "./RequestToCancel";
 import { useResponsiveContext } from "./Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
 import { useUserContext } from "../wallet-user/UserContext";
+import VaultTransferRequestDetails from "./VaultTransferDetails";
+import VaultTransferRequestStatusCell from "./VaultTransferRequestStatusCell";
 
 export default function PendingVaultTransferRequests() {
     const { vaultState } = useUserContext();
     const { width } = useResponsiveContext();
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
+
+    const pendingRequests = useMemo(() => {
+        const pending = vaultState?.pendingVaultTransferRequests || [];
+        const rejected = vaultState?.rejectedVaultTransferRequests || [];
+        return pending.concat(rejected).sort((a, b) => a.createdOn.localeCompare(b.createdOn));
+    }, [ vaultState ]);
 
     if(!vaultState) {
         return null;
@@ -26,19 +34,10 @@ export default function PendingVaultTransferRequests() {
             <Table
                 columns={[
                     {
-                        header: "",
-                        render: () => <Cell content={ <Icon icon={{ id: "pending" }} height="30px" /> } />,
-                        width: "50px",
-                    },
-                    {
                         header: "Legal Officer",
                         render: request => <LegalOfficerName address={ request.legalOfficerAddress } />,
                         align: 'left',
-                    },
-                    {
-                        header: "Type",
-                        render: () => <Cell content={`${Lgnt.CODE}`} />,
-                        width: '80px',
+                        renderDetails: request => <VaultTransferRequestDetails request={ request } />,
                     },
                     {
                         header: "Amount",
@@ -48,6 +47,11 @@ export default function PendingVaultTransferRequests() {
                             onSmallScreen: "100px",
                             otherwise: "120px"
                         }),
+                    },
+                    {
+                        header: "Status",
+                        render: request => <VaultTransferRequestStatusCell status={ request.status } viewer="Wallet User" />,
+                        width: '150px',
                     },
                     {
                         header: "Creation date",
@@ -66,7 +70,7 @@ export default function PendingVaultTransferRequests() {
                         width: '130px',
                     },
                 ]}
-                data={ vaultState!.pendingVaultTransferRequests }
+                data={ pendingRequests }
                 renderEmpty={ () => <EmptyTableMessage>No pending vault-out transfers</EmptyTableMessage> }
             />
             <RequestToCancel

@@ -8,7 +8,7 @@ import { CoinBalance } from '@logion/node-api';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
-import Table, { DateCell, EmptyTableMessage, Column } from './Table';
+import Table, { EmptyTableMessage, Column, DateTimeCell } from './Table';
 
 import { useCommonContext } from './CommonContext';
 
@@ -99,7 +99,7 @@ function Content(props: ContentProps) {
         },
         {
             header: "Transaction date",
-            render: transaction => <DateCell dateTime={ transaction.createdOn } />,
+            render: transaction => <DateTimeCell dateTime={ transaction.createdOn } />,
             width: width({
                 onSmallScreen: "100px",
                 otherwise: "150px"

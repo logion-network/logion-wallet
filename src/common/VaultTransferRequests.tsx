@@ -1,7 +1,6 @@
 import { useState } from "react";
 import HandledVaultTransferRequests from "./HandledVaultTransferRequests";
 import PendingVaultTransferRequests from "./PendingVaultTransferRequests";
-import RejectedVaultTransferRequests from "./RejectedVaultTransferRequests";
 
 import Tabs from "./Tabs";
 
@@ -17,11 +16,6 @@ export default function VaultTransferRequests() {
                     key: "pending",
                     title: "Pending",
                     render: () => <PendingVaultTransferRequests />
-                },
-                {
-                    key: "rejected",
-                    title: "Rejected",
-                    render: () => <RejectedVaultTransferRequests />
                 },
                 {
                     key: "history",

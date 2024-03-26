@@ -82,5 +82,5 @@
 }
 .Transactions .VaultTransferRequests .Table .body {
     overflow-y: auto;
-    height: calc(13vh);
+    max-height: 300px;
 }

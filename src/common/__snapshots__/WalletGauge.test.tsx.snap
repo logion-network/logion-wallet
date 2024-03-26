@@ -87,18 +87,18 @@ exports[`WalletGauge renders 1`] = `
     actions={
       Array [
         Object {
-          "buttonText": "Cancel",
-          "buttonVariant": "secondary-polkadot",
+          "buttonText": "Close",
+          "buttonVariant": "secondary",
           "callback": [Function],
           "disabled": undefined,
-          "id": "cancel",
+          "id": "close",
         },
         Object {
-          "buttonText": "Transfer",
+          "buttonText": "Send",
           "buttonVariant": "polkadot",
           "callback": [Function],
           "disabled": true,
-          "id": "transfer",
+          "id": "send",
         },
       ]
     }

@@ -61,7 +61,7 @@ export default function WalletGauge(props: Props) {
         };
     }, [ amount, destination, unit, mutateBalanceState, signer, expectNewTransaction ]);
 
-    const transferCallback = useCallback(async () => {
+    const sendCallback = useCallback(async () => {
         try {
             await submitCall(transfer);
         } catch(e) {}
@@ -73,7 +73,7 @@ export default function WalletGauge(props: Props) {
         setTransferDialogState(HIDDEN_DIALOG);
     }, [ setDestination, setAmount ]);
 
-    const cancelCallback = useCallback(() => {
+    const closeCallback = useCallback(() => {
         clearFormCallback();
         stopExpectNewTransaction();
         clearSubmissionState();
@@ -81,9 +81,9 @@ export default function WalletGauge(props: Props) {
 
     useEffect(() => {
         if(expectNewTransactionState.status === ExpectNewTransactionStatus.DONE) {
-            cancelCallback();
+            closeCallback();
         }
-    }, [ expectNewTransactionState, cancelCallback ]);
+    }, [ expectNewTransactionState, closeCallback ]);
 
     if(!client) {
         return null;
@@ -106,7 +106,7 @@ export default function WalletGauge(props: Props) {
                     sendButton &&
                     <Button slim onClick={ () => {
                         setTransferDialogState({
-                            title: `Transfer ${ Lgnt.CODE }s`,
+                            title: `Send ${ Lgnt.CODE }s`,
                             destination: true,
                             show: true,
                         });
@@ -119,7 +119,7 @@ export default function WalletGauge(props: Props) {
                     <Button slim onClick={ () => {
                         setDestination(vaultAddress);
                         setTransferDialogState({
-                            title: `Transfer ${ Lgnt.CODE }s to your logion Vault`,
+                            title: `Send ${ Lgnt.CODE }s to your logion Vault`,
                             destination: false,
                             show: true,
                         });
@@ -137,17 +137,17 @@ export default function WalletGauge(props: Props) {
                 show={ transferDialogState.show }
                 actions={ [
                     {
-                        id: 'cancel',
-                        buttonText: "Cancel",
-                        buttonVariant: 'secondary-polkadot',
-                        callback: cancelCallback,
+                        id: 'close',
+                        buttonText: "Close",
+                        buttonVariant: 'secondary',
+                        callback: closeCallback,
                         disabled: extrinsicSubmissionState.inProgress,
                     },
                     {
-                        id: 'transfer',
-                        buttonText: "Transfer",
+                        id: 'send',
+                        buttonText: "Send",
                         buttonVariant: 'polkadot',
-                        callback: transferCallback,
+                        callback: sendCallback,
                         disabled: !extrinsicSubmissionState.canSubmit() || !client.isValidAddress(destination) || isNaN(Number(amount)) || Number(amount) === 0 || destination === accounts!.current!.accountId.address
                     }
                 ] }
