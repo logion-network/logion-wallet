@@ -13,7 +13,7 @@
     "@logion/client": "^0.42.0-1",
     "@logion/client-browser": "^0.3.4",
     "@logion/crossmint": "^0.1.32",
-    "@logion/extension": "^0.7.7",
+    "@logion/extension": "^0.7.8-1",
     "@logion/multiversx": "^0.1.13",
     "@multiversx/sdk-extension-provider": "^2.0.7",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
