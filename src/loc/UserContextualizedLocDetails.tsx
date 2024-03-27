@@ -1,5 +1,5 @@
 import CheckFileFrame from 'src/components/checkfileframe/CheckFileFrame';
-import CertificateAndLimits from "./CertificateAndLimits";
+import CertificateAndDetailsButtons from "./CertificateAndDetailsButtons";
 import { UserCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import ItemImporter from "./ItemImporter";
 import { useUserLocContext } from "./UserLocContext";
@@ -92,7 +92,7 @@ export default function UserContextualizedLocDetails(props: Props) {
                     loc={ loc }
                     detailsPath={ detailsPath }
                 />
-                <CertificateAndLimits
+                <CertificateAndDetailsButtons
                     loc={ loc }
                     viewer="User"
                     isReadOnly={ isReadOnly }

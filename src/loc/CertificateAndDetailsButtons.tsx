@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { LocData } from "@logion/client";
-import { ChainTime } from '@logion/node-api';
 
 import Button from '../common/Button';
 import CopyPasteButton from '../common/CopyPasteButton';
@@ -12,11 +11,10 @@ import { fullCertificateUrl } from '../PublicPaths';
 import NewTabLink from '../common/NewTabLink';
 import StaticLabelValue from '../common/StaticLabelValue';
 
-import './CertificateAndLimits.css';
+import './CertificateAndDetailsButtons.css';
 import StatementOfFactsButton from './statement/StatementOfFactsButton';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import ArchiveButton from "./archive/ArchiveButton";
-import InlineDateTime from 'src/common/InlineDateTime';
 import { useCommonContext, Viewer } from 'src/common/CommonContext';
 import { isLogionIdentityLoc } from "../common/types/ModelTypes";
 import Nominate from "./issuer/Nominate";
@@ -28,6 +26,7 @@ import { ContributionMode } from './types';
 import ViewQrCodeButton from './ViewQrCodeButton';
 import ViewCertificateButton from './ViewCertificateButton';
 import InvitedContributorsButton from "./invited-contributor/InvitedContributorsButton";
+import { CollectionLimits, DEFAULT_LIMITS } from "./CollectionLimitsForm";
 
 export interface Props {
     loc: LocData;
@@ -36,32 +35,31 @@ export interface Props {
     contributionMode?: ContributionMode;
 }
 
-export default function CertificateAndLimits(props: Props) {
+export default function CertificateAndDetailsButtons(props: Props) {
     const { loc } = props;
     const { api, client } = useLogionChain();
     const { backendConfig } = useCommonContext();
 
-    const [ dateLimit, setDateLimit ] = useState<string>();
+    const [ limits, setLimits ] = useState<CollectionLimits>();
     const [ showSettings, setShowSettings ] = useState(false);
 
     const certificateUrl = fullCertificateUrl(loc.id);
 
     useEffect(() => {
-        if(api !== null && loc.collectionParams && loc.collectionParams?.lastBlockSubmission) {
-            (async function() {
-                const chainTime = await (await ChainTime.now(api.polkadot)).atBlock(loc.collectionParams?.lastBlockSubmission!);
-                setDateLimit(new Date(chainTime.currentTime).toISOString());
-            })();
+        if (api && limits === undefined) {
+            CollectionLimits.fromCollectionParams(api, loc.collectionParams)
+                .then(limits => setLimits(limits || DEFAULT_LIMITS))
         }
-    }, [ api, loc ]);
+    }, [ api, limits, loc.collectionParams ]);
 
     const hasVoteFeature = useMemo(() => {
         return backendConfig(loc.ownerAddress).features.vote;
     }, [ loc, backendConfig ]);
 
+    const { dateLimit, dataNumberLimit } = limits || { ...DEFAULT_LIMITS, dataNumberLimit: "-" };
     return (
         <div
-            className="CertificateAndLimits"
+            className="CertificateAndDetailsButtons"
         >
             <Row>
                 <Col>
@@ -73,16 +71,6 @@ export default function CertificateAndLimits(props: Props) {
                         </h2>
                     </div>
                 </Col>
-                {
-                    loc.locType === 'Collection' && loc.collectionParams &&
-                    <Col>
-                        <div className="limits">
-                            <div><strong>Collection Date Limit:</strong> <InlineDateTime dateTime={ dateLimit } dateOnly={ true } /></div>
-                            <div><strong>Collection Item Limit:</strong> { itemLimit(loc) }</div>
-                            <div><strong>Collection Upload Accepted:</strong> { loc.collectionParams.canUpload ? "Yes" : "No" }</div>
-                        </div>
-                    </Col>
-                }
             </Row>
             <Row>
                 <Col>
@@ -112,7 +100,7 @@ export default function CertificateAndLimits(props: Props) {
             {
                 loc.locType === "Collection" && loc.status === "CLOSED" && !loc.voidInfo &&
                 <Dialog
-                    className="CertificateAndLimits"
+                    className="CertificateAndDetailsButtons"
                     actions={[
                         {
                             id: "close",
@@ -160,18 +148,14 @@ export default function CertificateAndLimits(props: Props) {
                     <div className="limits">
                         <h3>Collection limits</h3>
                         <ul>
-                            <li><strong>Date limit:</strong> { dateLimit }</li>
-                            <li><strong>Item number limit:</strong> { itemLimit(loc) }</li>
+                            <li><strong>Date limit:</strong> { dateLimit?.toISOString() || "-" }</li>
+                            <li><strong>Item number limit:</strong> { dataNumberLimit }</li>
                         </ul>
                     </div>
                 </Dialog>
             }
         </div>
     );
-}
-
-function itemLimit(loc: LocData): string {
-    return loc.collectionParams?.maxSize ? loc.collectionParams?.maxSize.toString() : "-";
 }
 
 function showInvitedContributors(props: Props): boolean {

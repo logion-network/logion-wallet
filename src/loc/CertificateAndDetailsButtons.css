@@ -1,0 +1,61 @@
+.CertificateAndDetailsButtons {
+    margin-top: 30px;
+}
+
+.CertificateAndDetailsButtons .url-copy-paste-container {
+    display: flex;
+}
+
+.CertificateAndDetailsButtons .url-copy-paste-container .url-container {
+    max-width: calc(100% - 20px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.CertificateAndDetailsButtons .url-copy-paste-container button {
+    flex-shrink: 0;
+}
+
+.CertificateAndDetailsButtons .CopyPasteButton {
+    margin-left: 10px;
+}
+
+.CertificateAndDetailsButtons .limits {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.CertificateAndDetailsButtons .copy-paste-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.CertificateAndDetailsButtons .arguments,
+.CertificateAndDetailsButtons .limits {
+    text-align: left;
+}
+
+.CertificateAndDetailsButtons .arguments h3,
+.CertificateAndDetailsButtons .limits h3 {
+    font-size: 1rem;
+}
+
+.CertificateAndDetailsButtons .certificate h2 {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 0;
+}
+
+.CertificateAndDetailsButtons .certificate h2 .Button {
+    margin-left: 20px;
+}
+
+.CertificateAndDetailsButtons .buttons-row {
+    margin-top: 20px;
+}

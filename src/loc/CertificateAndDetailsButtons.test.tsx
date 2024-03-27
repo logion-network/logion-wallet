@@ -3,11 +3,11 @@ import { UUID } from "@logion/node-api";
 import { Viewer } from "src/common/CommonContext";
 
 import { shallowRender } from "src/tests";
-import CertificateAndLimits from "./CertificateAndLimits";
+import CertificateAndDetailsButtons from "./CertificateAndDetailsButtons";
 
 jest.mock("../logion-chain");
 
-describe("CertificateAndLimits", () => {
+describe("CertificateAndDetailsButtons", () => {
 
     it("renders certificate and buttons for non-collection LOC and LO", () => {
         const loc = transactionLocMock();
@@ -55,7 +55,7 @@ function transactionLocMock(): LocData {
 }
 
 function testCertiticateAndLimits(loc: LocData, viewer: Viewer) {
-    const element = shallowRender(<CertificateAndLimits loc={ loc } viewer={ viewer } isReadOnly={ false } />);
+    const element = shallowRender(<CertificateAndDetailsButtons loc={ loc } viewer={ viewer } isReadOnly={ false } />);
     expect(element).toMatchSnapshot();
 }
 

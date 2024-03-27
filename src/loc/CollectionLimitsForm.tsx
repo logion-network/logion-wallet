@@ -31,7 +31,7 @@ export class CollectionLimits {
     readonly canUpload: boolean;
 
     areValid(): boolean {
-        return (this.hasDateLimit && (this.dateLimit ? true : false)) || (this.hasDataNumberLimit && (this.dataNumberLimit ? true : false));
+        return (this.hasDateLimit && (this.dateLimit ? true : false)) || (this.hasDataNumberLimit && (!isNaN(parseInt(this.dataNumberLimit))));
     }
 
     async toCollectionParams(api: LogionNodeApiClass): Promise<CollectionParams> {
@@ -52,6 +52,25 @@ export class CollectionLimits {
             lastBlockSubmission: lastBlock,
             maxSize,
         }
+    }
+
+    static async fromCollectionParams(api: LogionNodeApiClass, collectionParams: CollectionParams | undefined): Promise<CollectionLimits | undefined> {
+        if (collectionParams === undefined) {
+            return undefined;
+        }
+        const dataNumberLimit = collectionParams.maxSize?.toString();
+        let dateLimit: Date | null = null;
+        if (collectionParams.lastBlockSubmission) {
+            const chainTime = await (await ChainTime.now(api.polkadot)).atBlock(collectionParams.lastBlockSubmission);
+            dateLimit = new Date(chainTime.currentTime);
+        }
+        return new CollectionLimits({
+            dataNumberLimit: dataNumberLimit !== undefined ? dataNumberLimit : "-",
+            hasDataNumberLimit: dataNumberLimit !== undefined,
+            dateLimit,
+            hasDateLimit: dateLimit !== null,
+            canUpload: collectionParams.canUpload
+        })
     }
 }
 

@@ -256,7 +256,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
       }
     }
   />
-  <CertificateAndLimits
+  <CertificateAndDetailsButtons
     isReadOnly={false}
     loc={
       Object {
@@ -619,7 +619,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
       }
     }
   />
-  <CertificateAndLimits
+  <CertificateAndDetailsButtons
     isReadOnly={false}
     loc={
       Object {
