@@ -1,17 +1,17 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-import { clickByName, typeByLabel } from '../../tests';
-import LocCreation from './LocCreation';
-import { setHasValidIdentityLoc, setLocsState, setMutateLocsState } from "../__mocks__/UserContextMock";
-import { oneLegalOfficer, twoLegalOfficers } from "../../common/TestData";
+import { clickByName, typeByLabel } from '../tests';
+import TransactionLocCreation from './TransactionLocCreation';
+import { setHasValidIdentityLoc, setLocsState, setMutateLocsState } from "../wallet-user/__mocks__/UserContextMock";
+import { oneLegalOfficer, twoLegalOfficers } from "../common/TestData";
 import { DraftRequest, LocsState } from '@logion/client';
 import { UUID } from '@logion/node-api';
-import { navigate } from 'src/__mocks__/ReactRouterMock';
+import { navigate } from '../__mocks__/ReactRouterMock';
 
-jest.mock('../../common/CommonContext');
-jest.mock('../../common/Model');
-jest.mock('../../wallet-user/UserContext');
-jest.mock('../../logion-chain');
+jest.mock('../common/CommonContext');
+jest.mock('../common/Model');
+jest.mock('../wallet-user/UserContext');
+jest.mock('../logion-chain');
 jest.unmock("@logion/client");
 
 const requestButtonLabel = "Request a Transaction Protection"
@@ -96,7 +96,7 @@ describe("LocCreation", () => {
     })
 
     async function openDialog() {
-        render(<LocCreation locType="Transaction" requestButtonLabel={ requestButtonLabel } />);
+        render(<TransactionLocCreation requestButtonLabel={ requestButtonLabel } />);
         await clickByName(requestButtonLabel);
     }
 })

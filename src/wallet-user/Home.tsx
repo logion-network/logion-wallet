@@ -24,10 +24,10 @@ import { useUserContext } from "./UserContext";
 import Shortcut from 'src/components/shortcuts/Shortcut';
 import Shortcuts from 'src/components/shortcuts/Shortcuts';
 import IdentityLocCreation from './IdentityLocCreation';
-import LocCreation from './transaction-protection/LocCreation';
+import TransactionLocCreation from '../loc/TransactionLocCreation';
 import { useMemo } from 'react';
-import { COLLECTION_ART_NFT_TEMPLATE_ID, COLLECTION_REAL_ESTATE_TEMPLATE_ID } from 'src/loc/Template';
 import { toFeesClass } from "@logion/client/dist/Fees.js";
+import CollectionLocCreation from "../loc/CollectionLocCreation";
 
 export default function Account() {
     const { colorTheme } = useCommonContext();
@@ -149,23 +149,19 @@ export function Content() {
                                         text={ <span>Identity<br/><span style={{ display: "inline-block" }}></span></span> }
                                     />}
                                 />
-                                <LocCreation
-                                    locType='Collection'
-                                    templateId={ COLLECTION_REAL_ESTATE_TEMPLATE_ID }
+                                <CollectionLocCreation
                                     renderButton={ onClick => <Shortcut
                                         onClick={ onClick }
                                         iconId="shortcut_realestate"
-                                        text={ <span>Real Estate<br/> Tokenization</span> }
+                                        text={ <span>Collection<br/><span style={{ display: "inline-block" }}></span></span> }
                                         disabled={ legalOfficersWithValidIdentityLoc?.length === 0 }
                                     /> }
                                 />
-                                <LocCreation
-                                    locType='Collection'
-                                    templateId={ COLLECTION_ART_NFT_TEMPLATE_ID }
+                                <TransactionLocCreation
                                     renderButton={ onClick => <Shortcut
                                         onClick={ onClick }
                                         iconId="shortcut_art"
-                                        text={ <span>Art<br/> Tokenization</span> }
+                                        text={ <span>Transaction<br/><span style={{ display: "inline-block" }}></span></span> }
                                         disabled={ legalOfficersWithValidIdentityLoc?.length === 0 }
                                     /> }
                                 />

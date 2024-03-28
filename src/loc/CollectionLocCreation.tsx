@@ -1,28 +1,24 @@
 import { useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
-import { IDENTITY_REQUEST_PATH } from "./UserRouter";
+import { COLLECTION_REQUEST_PATH } from "../wallet-user/UserRouter";
 import Button from '../common/Button';
 
 export interface Props {
-    onSelect?: () => void;
     renderButton?: (onClick: () => void) => React.ReactNode;
 }
 
-export default function IdentityLocCreation(props: Props) {
+export default function CollectionLocCreation(props: Props) {
     const navigate = useNavigate();
 
     const onSelect = useCallback(() => {
-        if(props.onSelect) {
-            props.onSelect();
-        }
-        navigate(IDENTITY_REQUEST_PATH);
-    }, [ props, navigate ]);
+        navigate(COLLECTION_REQUEST_PATH);
+    }, [ navigate ]);
 
     return (
         <>
             {
                 props.renderButton === undefined &&
-                <Button onClick={ onSelect }>Request an Identity Protection</Button>
+                <Button onClick={ onSelect }>Request a Collection Protection</Button>
             }
             {
                 props.renderButton !== undefined &&

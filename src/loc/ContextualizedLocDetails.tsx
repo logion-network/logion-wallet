@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 import { useLocContext } from "./LocContext";
 import CheckFileFrame from 'src/components/checkfileframe/CheckFileFrame';
-import CertificateAndLimits from "./CertificateAndLimits";
+import CertificateAndDetailsButtons from "./CertificateAndDetailsButtons";
 import { LOCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import LocPane from "./LocPane";
 import LocDetailsTab from "./LocDetailsTab";
@@ -59,7 +59,7 @@ export default function ContextualizedLocDetails() {
             />
             {
                 loc.status !== "REVIEW_PENDING" &&
-                <CertificateAndLimits
+                <CertificateAndDetailsButtons
                     loc={ loc }
                     viewer="LegalOfficer"
                     isReadOnly={ isReadOnly }

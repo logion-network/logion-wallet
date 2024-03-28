@@ -212,7 +212,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
         }
       }
     />
-    <CertificateAndLimits
+    <CertificateAndDetailsButtons
       contributionMode="Requester"
       isReadOnly={false}
       loc={
@@ -555,7 +555,7 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
         }
       }
     />
-    <CertificateAndLimits
+    <CertificateAndDetailsButtons
       contributionMode="VerifiedIssuer"
       isReadOnly={false}
       loc={
