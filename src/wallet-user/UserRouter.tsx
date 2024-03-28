@@ -20,7 +20,6 @@ import Home from "./Home";
 import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
 import { useLogionChain } from '../logion-chain';
-import TransactionLocCreation from "../loc/TransactionLocCreation";
 import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
 import IssuerDashboard from "./issuer/IssuerDashboard";
 import IdenfyVerificationResult from './IdenfyVerificationResult';
@@ -30,9 +29,8 @@ import { Navigate } from 'react-router-dom';
 import { getBaseUrl } from "../PublicPaths";
 import { UserInvitedContributorsPane } from "../loc/invited-contributor/InvitedContributorsPane";
 import LocsDashboard from 'src/loc/dashboard/LocsDashboard';
-import IdentityLocCreation from "./IdentityLocCreation";
-import CollectionLocRequest from "../loc/CollectionLocRequest";
-import CollectionLocCreation from "../loc/CollectionLocCreation";
+import LocCreation from "./LocCreation";
+import DataLocRequest from "../loc/DataLocRequest";
 
 export const HOME_PATH = USER_PATH;
 
@@ -44,10 +42,6 @@ export const RECOVERY_RELATIVE_PATH = '/recovery';
 export const RECOVERY_PATH = USER_PATH + RECOVERY_RELATIVE_PATH;
 export const WALLET_RELATIVE_PATH = '/wallet';
 export const VAULT_RELATIVE_PATH = '/vault';
-export const IDENTITY_REQUEST_RELATIVE_PATH = "/loc/identity-request";
-export const IDENTITY_REQUEST_PATH = USER_PATH + IDENTITY_REQUEST_RELATIVE_PATH;
-export const COLLECTION_REQUEST_RELATIVE_PATH = "/loc/collection-request";
-export const COLLECTION_REQUEST_PATH = USER_PATH + COLLECTION_REQUEST_RELATIVE_PATH;
 export const ISSUER_RELATIVE_PATH = '/verified-issuer';
 export const ISSUER_PATH = USER_PATH + ISSUER_RELATIVE_PATH;
 export const ISSUER_DETAILS_RELATIVE_PATH = ISSUER_RELATIVE_PATH + '/:locId';
@@ -78,6 +72,17 @@ export function dataLocDetailsPath(locType: LocType, locId: string) {
 
 export function locRequestsPath(locType: LocType) {
     return USER_PATH + locRequestsRelativePath(locType)
+}
+
+export const REQUEST_LOC_RELATIVE_PATH = '/loc/:locType-request';
+
+function requestLocRelativePath(locType: LocType) {
+    return REQUEST_LOC_RELATIVE_PATH
+        .replace(":locType", locType.toLowerCase())
+}
+
+export function requestLocPath(locType: LocType) {
+    return USER_PATH + requestLocRelativePath(locType)
 }
 
 export function locDetailsPath(locId: string | UUID, locType: LocType) {
@@ -179,9 +184,7 @@ export default function UserRouter() {
                 element={ <LocsDashboard
                     title="Transaction LOCs"
                     iconId="loc"
-                    actions={ <TransactionLocCreation
-                        requestButtonLabel="Request a Transaction Protection"
-                    /> }
+                    actions={ <LocCreation locType="Transaction" /> }
                     settingsPath={ SETTINGS_PATH }
                     locs={ locs["Transaction"] }
                     loading={ locsState === undefined || locsState.discarded }
@@ -193,7 +196,7 @@ export default function UserRouter() {
                 element={ <LocsDashboard
                     title="Collection LOCs"
                     iconId="collection"
-                    actions={ <CollectionLocCreation/> }
+                    actions={ <LocCreation locType="Collection"/> }
                     settingsPath={ SETTINGS_PATH }
                     locs={ locs["Collection"] }
                     loading={ locsState === undefined || locsState.discarded }
@@ -205,7 +208,7 @@ export default function UserRouter() {
                 element={ <LocsDashboard
                     title="Identity LOCs"
                     iconId="identity"
-                    actions={ <IdentityLocCreation/> }
+                    actions={ <LocCreation locType="Identity"/> }
                     settingsPath={ SETTINGS_PATH }
                     locs={ locs["Identity"] }
                     loading={ locsState === undefined || locsState.discarded }
@@ -241,11 +244,14 @@ export default function UserRouter() {
                 />
             } />
             <Route path="/" element={ accounts.current.accountId.type === "Polkadot" ? <Home /> : <Navigate to={ locRequestsPath('Identity') } /> } />
-            <Route path={ IDENTITY_REQUEST_RELATIVE_PATH } element={
+            <Route path={ requestLocRelativePath("Identity") } element={
                 <IdentityLocRequest backPath={ locRequestsPath('Identity') }/>
             } />
-            <Route path={ COLLECTION_REQUEST_RELATIVE_PATH } element={
-                <CollectionLocRequest backPath={ locRequestsPath('Collection') }/>
+            <Route path={ requestLocRelativePath("Collection") } element={
+                <DataLocRequest backPath={ locRequestsPath('Collection') } iconId="collection" locType="Collection"/>
+            } />
+            <Route path={ requestLocRelativePath("Transaction") } element={
+                <DataLocRequest backPath={ locRequestsPath('Transaction') } iconId="loc" locType="Transaction"/>
             } />
             <Route path={ ISSUER_RELATIVE_PATH } element={
                 <IssuerDashboard/>
