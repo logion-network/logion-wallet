@@ -229,7 +229,7 @@ export default function CollectionLocRequestForm(props: Props) {
 
             <ButtonGroup>
                 <Button disabled={ props.legalOfficer === undefined || !limits.areValid() } type="submit"
-                        onClick={ handleSubmit(submit) }>Submit</Button>
+                        onClick={ handleSubmit(submit) }>Create Draft</Button>
             </ButtonGroup>
 
         </>

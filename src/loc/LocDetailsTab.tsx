@@ -235,13 +235,12 @@ export function LocDetailsTabContent(props: ContentProps) {
         await mutateLocState(async current => {
             if(current instanceof RejectedRequest) {
                 const next = await current.rework();
-                navigate(backPath);
                 return next.locsState();
             } else {
                 return current;
             }
         });
-    }, [ mutateLocState, navigate, backPath ]);
+    }, [ mutateLocState ]);
 
     if(!loc) {
         return null;

@@ -24,7 +24,7 @@ describe("CollectionLocRequest", () => {
 
         await selectLegalOfficer();
         await fillInForm();
-        await clickByName("Submit");
+        await clickByName("Create Draft");
 
         await waitFor(() => expect(navigate).toBeCalledWith(`/user/loc/collection/${locId.toString()}`));
     });
@@ -33,20 +33,14 @@ describe("CollectionLocRequest", () => {
 
         setupLocsState([]);
         render(<CollectionLocRequest backPath="back" />);
-        await waitFor(() => {
-            expect(screen.getByRole("button", { name: "Submit" })).toBeDisabled();
-            expect(screen.getByRole("button", { name: "Request an Identity Protection" })).toBeEnabled();
-        });
+        await checkFormDisabled();
     });
 
     it("should disable form submission when no legal officer selected", async  () => {
 
         setupLocsState(twoLegalOfficers);
         render(<CollectionLocRequest backPath="back" />);
-        await waitFor(() => {
-            expect(screen.getByRole("button", { name: "Submit" })).toBeDisabled();
-            expect(screen.getByRole("button", { name: "Request an Identity Protection" })).toBeEnabled();
-        });
+        await checkFormDisabled();
     });
 
     it("should disable form submission when no collection limit selected", async  () => {
@@ -54,13 +48,17 @@ describe("CollectionLocRequest", () => {
         setupLocsState(twoLegalOfficers);
         render(<CollectionLocRequest backPath="back" />);
         await selectLegalOfficer();
-        await waitFor(() => {
-            expect(screen.getByRole("button", { name: "Submit" })).toBeDisabled();
-            expect(screen.getByRole("button", { name: "Request an Identity Protection" })).toBeEnabled();
-        });
+        await checkFormDisabled();
     });
 
 })
+
+async function checkFormDisabled() {
+    await waitFor(() => {
+        expect(screen.getByRole("button", { name: "Create Draft" })).toBeDisabled();
+        expect(screen.getByRole("button", { name: "Request an Identity Protection" })).toBeEnabled();
+    });
+}
 
 function setupLocsState(legalOfficersWithValidIdentityLoc: LegalOfficerClass[]) {
     const draftRequest = {
