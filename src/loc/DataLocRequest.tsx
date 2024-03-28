@@ -8,16 +8,20 @@ import { LegalOfficerClass } from "@logion/client";
 import { useUserContext } from "../wallet-user/UserContext";
 import { useCommonContext } from "../common/CommonContext";
 import CollectionLocRequestForm from "./CollectionLocRequestForm";
-import IdentityLocCreation from "../wallet-user/IdentityLocCreation";
-import "./CollectionLocRequest.css";
+import LocCreation from "../wallet-user/LocCreation";
+import "./DataLocRequest.css";
 import ButtonGroup from "../common/ButtonGroup";
+import TransactionLocRequestForm from "./TransactionLocRequestForm";
 
 export interface Props {
     backPath: string,
+    locType: 'Transaction' | 'Collection'
+    iconId: string,
 }
 
-export default function CollectionLocRequest(props: Props) {
+export default function DataLocRequest(props: Props) {
     const { colorTheme } = useCommonContext();
+    const { locType, iconId } = props;
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficerClass | null>(null);
     const { locsState } = useUserContext();
     const navigate = useNavigate();
@@ -31,9 +35,9 @@ export default function CollectionLocRequest(props: Props) {
 
     return (
         <FullWidthPane
-            className="CollectionLocRequest"
-            mainTitle="Request a Collection Protection"
-            titleIcon={ { icon: { id: "collection" } } }
+            className="DataLocRequest"
+            mainTitle={ `Request a ${ locType } Protection` }
+            titleIcon={ { icon: { id: iconId } } }
             onBack={ () => navigate(props.backPath) }
         >
             <Row>
@@ -59,31 +63,39 @@ export default function CollectionLocRequest(props: Props) {
                                 please request an Identity LOC to the Logion Legal Officer of your choice by
                                 clicking on the related button below:</p>
                             <ButtonGroup>
-                                <IdentityLocCreation />
+                                <LocCreation locType="Identity"/>
                             </ButtonGroup>
                         </Frame>
                     }
                     { legalOfficersWithValidIdentityLoc.length === 0 &&
                         <Frame className="request-id-loc-frame">
-                            <p className="info-text">To submit a Collection LOC request, you must select a Logion Legal
+                            <p className="info-text">To submit a { locType } LOC request, you must select a Logion Legal
                                 Officer who already executed an Identity LOC linked to your Polkadot address.</p>
                             <p className="info-text">Please request an Identity LOC to the Logion Legal Officer of your
                                 choice:</p>
                             <ButtonGroup>
-                                <IdentityLocCreation />
+                                <LocCreation locType="Identity"/>
                             </ButtonGroup>
                         </Frame>
                     }
-            </Col>
-            <Col>
-                <Frame disabled={ legalOfficer === null }>
-                    <CollectionLocRequestForm
-                        colors={ colorTheme.frame }
-                        legalOfficer={ legalOfficer?.address }
-                    />
-                </Frame>
-            </Col>
-        </Row>
-</FullWidthPane>
-)
+                </Col>
+                <Col>
+                    <Frame disabled={ legalOfficer === null }>
+                        { locType === "Collection" &&
+                            <CollectionLocRequestForm
+                                colors={ colorTheme.frame }
+                                legalOfficer={ legalOfficer?.address }
+                            />
+                        }
+                        { locType === "Transaction" &&
+                            <TransactionLocRequestForm
+                                colors={ colorTheme.frame }
+                                legalOfficer={ legalOfficer?.address }
+                            />
+                        }
+                    </Frame>
+                </Col>
+            </Row>
+        </FullWidthPane>
+    )
 }
