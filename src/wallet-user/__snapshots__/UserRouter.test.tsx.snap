@@ -44,8 +44,8 @@ exports[`renders 1`] = `
     element={
       <LocsDashboard
         actions={
-          <TransactionLocCreation
-            requestButtonLabel="Request a Transaction Protection"
+          <LocCreation
+            locType="Transaction"
           />
         }
         iconId="loc"
@@ -69,7 +69,11 @@ exports[`renders 1`] = `
   <Route
     element={
       <LocsDashboard
-        actions={<CollectionLocCreation />}
+        actions={
+          <LocCreation
+            locType="Collection"
+          />
+        }
         iconId="collection"
         loading={true}
         locDetailsPath={[Function]}
@@ -91,7 +95,11 @@ exports[`renders 1`] = `
   <Route
     element={
       <LocsDashboard
-        actions={<IdentityLocCreation />}
+        actions={
+          <LocCreation
+            locType="Identity"
+          />
+        }
         iconId="identity"
         loading={true}
         locDetailsPath={[Function]}
@@ -164,11 +172,23 @@ exports[`renders 1`] = `
   />
   <Route
     element={
-      <CollectionLocRequest
+      <DataLocRequest
         backPath="/user/loc/collection"
+        iconId="collection"
+        locType="Collection"
       />
     }
     path="/loc/collection-request"
+  />
+  <Route
+    element={
+      <DataLocRequest
+        backPath="/user/loc/transaction"
+        iconId="loc"
+        locType="Transaction"
+      />
+    }
+    path="/loc/transaction-request"
   />
   <Route
     element={<IssuerDashboard />}

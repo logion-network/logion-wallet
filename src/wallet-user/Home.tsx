@@ -23,11 +23,9 @@ import TransactionType from 'src/common/TransactionType';
 import { useUserContext } from "./UserContext";
 import Shortcut from 'src/components/shortcuts/Shortcut';
 import Shortcuts from 'src/components/shortcuts/Shortcuts';
-import IdentityLocCreation from './IdentityLocCreation';
-import TransactionLocCreation from '../loc/TransactionLocCreation';
+import LocCreation from './LocCreation';
 import { useMemo } from 'react';
 import { toFeesClass } from "@logion/client/dist/Fees.js";
-import CollectionLocCreation from "../loc/CollectionLocCreation";
 
 export default function Account() {
     const { colorTheme } = useCommonContext();
@@ -142,14 +140,16 @@ export function Content() {
                             <Shortcuts
                                 description={ <span>What shall logion <strong>protect</strong> for you?</span> }
                             >
-                                <IdentityLocCreation
+                                <LocCreation
+                                    locType="Identity"
                                     renderButton={onClick => <Shortcut
                                         onClick={ onClick }
                                         iconId="shortcut_identity"
                                         text={ <span>Identity<br/><span style={{ display: "inline-block" }}></span></span> }
                                     />}
                                 />
-                                <CollectionLocCreation
+                                <LocCreation
+                                    locType="Collection"
                                     renderButton={ onClick => <Shortcut
                                         onClick={ onClick }
                                         iconId="shortcut_realestate"
@@ -157,7 +157,8 @@ export function Content() {
                                         disabled={ legalOfficersWithValidIdentityLoc?.length === 0 }
                                     /> }
                                 />
-                                <TransactionLocCreation
+                                <LocCreation
+                                    locType="Transaction"
                                     renderButton={ onClick => <Shortcut
                                         onClick={ onClick }
                                         iconId="shortcut_art"

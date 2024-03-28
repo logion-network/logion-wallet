@@ -1,86 +1,66 @@
-import { Controller, Control, FieldErrors } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import Form from "react-bootstrap/Form";
-import { Lgnt } from "@logion/node-api";
-
-import { BackgroundAndForegroundColors } from '../common/ColorTheme';
+import { Lgnt, Numbers } from "@logion/node-api";
 import FormGroup from '../common/FormGroup';
-import Select, { OptionType } from '../common/Select';
-
-import { buildOptions } from '../wallet-user/trust-protection/SelectLegalOfficer';
+import AmountControl, { Amount, validateAmount } from 'src/common/AmountControl';
+import CollapsePane from 'src/components/collapsepane/CollapsePane';
+import { BackgroundAndForegroundColors } from "../common/ColorTheme";
+import { useCallback } from "react";
+import { DraftRequest, LocsState } from "@logion/client";
 import { useUserContext } from "../wallet-user/UserContext";
-import AmountControl, { Amount, validateAmount } from '../common/AmountControl';
-import CollapsePane from '../components/collapsepane/CollapsePane';
-import { useState, useEffect } from "react";
+import ButtonGroup from "../common/ButtonGroup";
+import Button from "../common/Button";
+import { locDetailsPath } from "../wallet-user/UserRouter";
+import { useNavigate } from "react-router";
 
 export interface FormValues {
     description: string;
-    legalOfficer: string;
     legalFee: Amount | undefined;
 }
 
 export interface Props {
-    control: Control<FormValues>;
-    errors: FieldErrors<FormValues>;
     colors: BackgroundAndForegroundColors;
-    legalOfficer: string | null;
+    legalOfficer: string | undefined;
 }
 
 export default function TransactionLocRequestForm(props: Props) {
-    const { locsState } = useUserContext();
-    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<string>[]>([]);
-
-    useEffect(() => {
-        if (locsState !== undefined && legalOfficersOptions.length === 0) {
-            buildOptions(locsState.legalOfficersWithValidIdentityLoc)
-                .then(options => setLegalOfficersOptions(options));
+    const { mutateLocsState } = useUserContext();
+    const navigate = useNavigate();
+    const { control, handleSubmit, formState: { errors } } = useForm<FormValues>({
+        defaultValues: {
+            description: "",
+            legalFee: undefined,
         }
-    }, [ legalOfficersOptions, locsState ]);
+    });
 
-    if(locsState === undefined) {
-        return null;
-    }
+    const submit = useCallback(async (formValues: FormValues) => {
+
+        let draftRequest: DraftRequest;
+        await mutateLocsState(async (locsState: LocsState) => {
+            draftRequest = await locsState!.requestTransactionLoc({
+                legalOfficerAddress: props.legalOfficer!,
+                description: formValues.description,
+                draft: true,
+                template: undefined,
+                legalFee: formValues.legalFee ? Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.legalFee.value, formValues.legalFee.unit)) : undefined,
+            }) as DraftRequest;
+            return draftRequest.locsState();
+        })
+        navigate(locDetailsPath(draftRequest!.data().id, "Transaction"));
+
+    }, [ mutateLocsState, props.legalOfficer, navigate ]);
 
     return (
         <>
-            <FormGroup
-                id={ `locOwner` }
-                label="Please select a Logion Legal Officer who already executed an Identity LOC linked to your Polkadot address:"
-                control={
-                    <Controller
-                        name="legalOfficer"
-                        control={ props.control }
-                        defaultValue=""
-                        rules={{
-                            required: 'You must select a Legal Officer',
-                            minLength: {
-                                value: 1,
-                                message: 'You must select a Legal Officer'
-                            },
-
-                        }}
-                        render={({ field }) => (
-                            <Select
-                                isInvalid={ !!props.errors.legalOfficer?.message }
-                                options={ legalOfficersOptions }
-                                value={ field.value }
-                                onChange={ field.onChange }
-                            />
-                        )}
-                      />
-                }
-                feedback={ props.errors.legalOfficer?.message }
-                colors={ props.colors }
-            />
-
             <FormGroup
                 id="locDescription"
                 label="Description"
                 control={
                     <Controller
                         name="description"
-                        control={ props.control }
+                        control={ control }
                         defaultValue=""
-                        rules={{
+                        rules={ {
                             required: 'The description is required',
                             minLength: {
                                 value: 3,
@@ -90,20 +70,20 @@ export default function TransactionLocRequestForm(props: Props) {
                                 value: 40,
                                 message: 'The description must contain at most 40 characters'
                             }
-                        }}
-                        render={({ field }) => (
+                        } }
+                        render={ ({ field }) => (
                             <Form.Control
-                                isInvalid={!!props.errors.description?.message}
+                                isInvalid={ !!errors.description?.message }
                                 type="text" placeholder="e.g. XYZ"
                                 data-testid="description"
                                 aria-describedby="locDescription"
                                 { ...field }
                             />
-                        )}
-                      />
+                        ) }
+                    />
                 }
                 colors={ props.colors }
-                feedback={ props.errors.description?.message }
+                feedback={ errors.description?.message }
             />
 
             <CollapsePane
@@ -115,21 +95,21 @@ export default function TransactionLocRequestForm(props: Props) {
                     control={
                         <Controller
                             name="legalFee"
-                            control={ props.control }
-                            rules={{
+                            control={ control }
+                            rules={ {
                                 validate: validateAmount
-                            }}
+                            } }
                             render={ ({ field }) => (
                                 <AmountControl
-                                    isInvalid={ !!props.errors.legalFee?.message }
+                                    isInvalid={ !!errors.legalFee?.message }
                                     value={ field.value }
                                     onChange={ field.onChange }
                                     placeholder="A custom legal fee"
                                 />
-                            )}
+                            ) }
                         />
                     }
-                    feedback={ props.errors.legalFee?.message }
+                    feedback={ errors.legalFee?.message }
                     colors={ props.colors }
                     help={
                         `If you leave the field empty, the default legal fee (2000 ${ Lgnt.CODE }) is charged on LOC opening.
@@ -137,6 +117,12 @@ export default function TransactionLocRequestForm(props: Props) {
                     }
                 />
             </CollapsePane>
+
+            <ButtonGroup>
+                <Button disabled={ props.legalOfficer === undefined } type="submit"
+                        onClick={ handleSubmit(submit) }>Create Draft</Button>
+            </ButtonGroup>
+
         </>
     )
 }

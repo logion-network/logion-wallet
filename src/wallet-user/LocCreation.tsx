@@ -1,28 +1,35 @@
 import { useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
-import { IDENTITY_REQUEST_PATH } from "./UserRouter";
+import { requestLocPath } from "./UserRouter";
 import Button from '../common/Button';
+import { LocType } from "@logion/node-api";
 
 export interface Props {
     onSelect?: () => void;
     renderButton?: (onClick: () => void) => React.ReactNode;
+    locType: LocType;
 }
 
-export default function IdentityLocCreation(props: Props) {
+export default function LocCreation(props: Props) {
+    const { locType } = props;
     const navigate = useNavigate();
 
     const onSelect = useCallback(() => {
         if(props.onSelect) {
             props.onSelect();
         }
-        navigate(IDENTITY_REQUEST_PATH);
+        navigate(requestLocPath(props.locType));
     }, [ props, navigate ]);
+
+    const aProtection = locType === "Identity" ?
+        `an Identity Protection` :
+        `a ${ locType } Protection`;
 
     return (
         <>
             {
                 props.renderButton === undefined &&
-                <Button onClick={ onSelect }>Request an Identity Protection</Button>
+                <Button onClick={ onSelect }>Request { aProtection }</Button>
             }
             {
                 props.renderButton !== undefined &&
