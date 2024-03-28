@@ -32,7 +32,6 @@ import { createDocumentTemplateItem, createLinkTemplateItem, createMetadataTempl
 import { useLogionChain } from "src/logion-chain";
 import { CollectionInfo } from "./CollectionInfo";
 import { TransactionInfo } from "./TransactionInfo";
-import { locDetailsPath } from "../wallet-user/UserRouter";
 
 export interface Props {
     loc: LocData;
@@ -236,13 +235,12 @@ export function LocDetailsTabContent(props: ContentProps) {
         await mutateLocState(async current => {
             if(current instanceof RejectedRequest) {
                 const next = await current.rework();
-                navigate(locDetailsPath(current.locId, current.data().locType));
                 return next.locsState();
             } else {
                 return current;
             }
         });
-    }, [ mutateLocState, navigate ]);
+    }, [ mutateLocState ]);
 
     if(!loc) {
         return null;
