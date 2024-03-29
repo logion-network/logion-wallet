@@ -3,16 +3,16 @@ import { DraftRequest, LocsState } from "@logion/client";
 import { render, waitFor, screen, getByText } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { GUILLAUME, oneLegalOfficer } from "../../common/TestData";
-import { shallowRender, clickByName } from "../../tests";
+import { GUILLAUME, oneLegalOfficer } from "../common/TestData";
+import { shallowRender, clickByName } from "../tests";
 import IdentityLocRequest from "./IdentityLocRequest";
-import { fillInForm } from "../../components/identity/IdentityFormTestHelper";
-import { setMutateLocsState, setHasValidIdentityLoc, setLocsState } from "../__mocks__/UserContextMock";
-import { navigate, setSearchParams } from 'src/__mocks__/ReactRouterMock';
+import { fillInForm } from "../components/identity/IdentityFormTestHelper";
+import { setMutateLocsState, setHasValidIdentityLoc, setLocsState } from "../wallet-user/__mocks__/UserContextMock";
+import { navigate, setSearchParams } from '../__mocks__/ReactRouterMock';
 
-jest.mock('../UserContext');
-jest.mock('../../logion-chain');
-jest.mock('../../common/CommonContext');
+jest.mock('../wallet-user/UserContext');
+jest.mock('../logion-chain');
+jest.mock('../common/CommonContext');
 
 describe("IdentityLocRequest", () => {
 

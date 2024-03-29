@@ -1,22 +1,22 @@
-import Button from "../../common/Button";
+import Button from "../common/Button";
 import { useState, useCallback, useMemo } from "react";
-import IdentityForm, { FormValues } from "../../components/identity/IdentityForm";
+import IdentityForm, { FormValues } from "../components/identity/IdentityForm";
 import { useForm } from "react-hook-form";
-import { useCommonContext } from "../../common/CommonContext";
-import SelectLegalOfficer from "./SelectLegalOfficer";
+import { useCommonContext } from "../common/CommonContext";
+import SelectLegalOfficer from "../wallet-user/trust-protection/SelectLegalOfficer";
 import { LegalOfficerClass, LocsState, UserIdentity, PostalAddress, DraftRequest } from "@logion/client";
-import { useUserContext } from "../UserContext";
+import { useUserContext } from "../wallet-user/UserContext";
 import Form from "react-bootstrap/Form";
-import Frame from "../../common/Frame";
-import { useLogionChain } from "../../logion-chain";
-import { FullWidthPane } from "../../common/Dashboard";
+import Frame from "../common/Frame";
+import { useLogionChain } from "../logion-chain";
+import { FullWidthPane } from "../common/Dashboard";
 import { useNavigate } from "react-router";
 import { Row, Col } from "react-bootstrap";
-import FormGroup from "src/common/FormGroup";
+import FormGroup from "../common/FormGroup";
 import './IdentityLocRequest.css';
-import { locDetailsPath } from "../UserRouter";
-import IconTextRow from "src/common/IconTextRow";
-import Icon from "src/common/Icon";
+import { locDetailsPath } from "../wallet-user/UserRouter";
+import IconTextRow from "../common/IconTextRow";
+import Icon from "../common/Icon";
 import { UUID } from "@logion/node-api";
 
 export interface Props {

@@ -20,7 +20,7 @@ import Home from "./Home";
 import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
 import { useLogionChain } from '../logion-chain';
-import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
+import IdentityLocRequest from "../loc/IdentityLocRequest";
 import IssuerDashboard from "./issuer/IssuerDashboard";
 import IdenfyVerificationResult from './IdenfyVerificationResult';
 import { UserDocumentClaimHistory, UserTokensRecordDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
