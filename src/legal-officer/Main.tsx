@@ -1,7 +1,7 @@
 import { useLogionChain } from '../logion-chain';
 
 import { LegalOfficerContextProvider } from './LegalOfficerContext';
-import ContextualizedWallet from './ContextualizedWallet';
+import LegalOfficerDashboard from './LegalOfficerDashboard';
 
 export default function LegalOfficerWallet() {
     const { injectedAccounts } = useLogionChain();
@@ -12,7 +12,7 @@ export default function LegalOfficerWallet() {
 
     return (
         <LegalOfficerContextProvider>
-            <ContextualizedWallet />
+            <LegalOfficerDashboard />
         </LegalOfficerContextProvider>
     );
 }

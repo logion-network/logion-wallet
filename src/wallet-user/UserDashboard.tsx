@@ -18,7 +18,7 @@ import {
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
 
-export default function ContextualizedWallet() {
+export default function UserDashboard() {
     const { accounts, api } = useLogionChain();
     const { colorTheme, refresh } = useCommonContext();
     const { refreshRequests, vaultState, locsState } = useUserContext();

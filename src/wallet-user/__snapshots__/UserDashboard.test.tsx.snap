@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ContextualizedWallet Given connected and account, then renders with router 1`] = `
+exports[`UserDashboard Given connected and account, then renders with router 1`] = `
 <Dashboard
   menuBottom={
     Array [
@@ -162,9 +162,9 @@ exports[`ContextualizedWallet Given connected and account, then renders with rou
 </Dashboard>
 `;
 
-exports[`ContextualizedWallet Given connected and no account then renders without router 1`] = `null`;
+exports[`UserDashboard Given connected and no account then renders without router 1`] = `null`;
 
-exports[`ContextualizedWallet Given disconnected and accounts then empty 1`] = `
+exports[`UserDashboard Given disconnected and accounts then empty 1`] = `
 <Dashboard
   menuBottom={
     Array [

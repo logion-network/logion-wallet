@@ -4,13 +4,13 @@ jest.mock('../logion-chain');
 jest.mock('../common/CommonContext');
 jest.mock('./UserContext');
 
-import ContextualizedWallet from './ContextualizedWallet';
+import UserDashboard from './UserDashboard';
 import { setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
 import { shallowRender } from '../tests';
 import { LocsState } from "@logion/client";
 import { mockValidPolkadotAccountId, api } from 'src/__mocks__/LogionMock';
 
-describe("ContextualizedWallet", () => {
+describe("UserDashboard", () => {
 
     setLocsState({} as LocsState)
 
@@ -25,12 +25,12 @@ describe("ContextualizedWallet", () => {
                 }
             }
         });
-    
-        const tree = shallowRender(<ContextualizedWallet />);
-    
+
+        const tree = shallowRender(<UserDashboard />);
+
         expect(tree).toMatchSnapshot();
     });
-    
+
     test('Given connected and account, then renders with router', () => {
         setContextMock({
             api: api.object(),
@@ -41,8 +41,8 @@ describe("ContextualizedWallet", () => {
             }
         });
 
-        const tree = shallowRender(<ContextualizedWallet />);
-    
+        const tree = shallowRender(<UserDashboard />);
+
         expect(tree).toMatchSnapshot();
     });
 
@@ -51,9 +51,9 @@ describe("ContextualizedWallet", () => {
             api: api.object(),
             accounts: null
         });
-    
-        const tree = shallowRender(<ContextualizedWallet />);
-    
+
+        const tree = shallowRender(<UserDashboard />);
+
         expect(tree).toMatchSnapshot();
-    }); 
+    });
 });

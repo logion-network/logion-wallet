@@ -22,7 +22,7 @@ import { useLogionChain } from '../logion-chain';
 import WarningDialog from 'src/common/WarningDialog';
 import { MenuItemData } from 'src/common/MenuItem';
 
-export default function ContextualizedWallet() {
+export default function LegalOfficerDashboard() {
     const { accounts } = useLogionChain();
     const { colorTheme, refresh, availableLegalOfficers, backendConfig } = useCommonContext();
     const { refreshRequests, missingSettings, refreshLocs, refreshVotes } = useLegalOfficerContext();
