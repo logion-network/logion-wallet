@@ -2,32 +2,32 @@ import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { Lgnt } from '@logion/node-api';
 
-import { useCommonContext } from "../common/CommonContext";
-import { FullWidthPane } from '../common/Dashboard';
-import Icon from '../common/Icon';
-import Frame from '../common/Frame';
-import Loader from '../common/Loader';
-import Table, { DateCell, EmptyTableMessage } from '../common/Table';
-import TransferAmountCell, { transferBalance } from '../common/TransferAmountCell';
-import AmountCell from '../common/AmountCell';
-import Reading from '../common/Reading';
-import Button from '../common/Button';
-import { TransactionStatusCell } from "../common/TransactionStatusCell";
-import NetworkWarning from '../common/NetworkWarning';
-import { useLogionChain } from '../logion-chain';
+import { useCommonContext } from "../../common/CommonContext";
+import { FullWidthPane } from '../../common/Dashboard';
+import Icon from '../../common/Icon';
+import Frame from '../../common/Frame';
+import Loader from '../../common/Loader';
+import Table, { DateCell, EmptyTableMessage } from '../../common/Table';
+import TransferAmountCell, { transferBalance } from '../../common/TransferAmountCell';
+import AmountCell from '../../common/AmountCell';
+import Reading from '../../common/Reading';
+import Button from '../../common/Button';
+import { TransactionStatusCell } from "../../common/TransactionStatusCell";
+import NetworkWarning from '../../common/NetworkWarning';
+import { useLogionChain } from '../../logion-chain';
 
-import { SETTINGS_PATH, transactionsPath } from './UserRouter';
+import { SETTINGS_PATH, transactionsPath } from '../UserRouter';
 
 import './Home.css';
-import TransactionType from 'src/common/TransactionType';
-import { useUserContext } from "./UserContext";
-import Shortcut from 'src/components/shortcuts/Shortcut';
-import Shortcuts from 'src/components/shortcuts/Shortcuts';
-import LocCreation from './LocCreation';
+import TransactionType from '../../common/TransactionType';
+import { useUserContext } from "../UserContext";
+import Shortcut from '../../components/shortcuts/Shortcut';
+import Shortcuts from '../../components/shortcuts/Shortcuts';
+import LocCreation from '../LocCreation';
 import { useMemo } from 'react';
 import { toFeesClass } from "@logion/client/dist/Fees.js";
 
-export default function Account() {
+export default function Home() {
     const { colorTheme } = useCommonContext();
 
     return (

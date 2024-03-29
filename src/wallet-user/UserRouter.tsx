@@ -16,7 +16,7 @@ import DashboardCertificateRouter from "../loc/DashboardCertificateRouter";
 import { useCommonContext } from "../common/CommonContext";
 
 import { useUserContext } from "./UserContext";
-import Home from "./Home";
+import Home from "./home/Home";
 import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
 import { useLogionChain } from '../logion-chain';

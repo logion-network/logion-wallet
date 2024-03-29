@@ -30,7 +30,7 @@ import { useResponsiveContext } from 'src/common/Responsive';
 
 const MAX_WAITING_SHOWN = 3;
 
-export default function Account() {
+export default function Home() {
     const { accounts } = useLogionChain();
     const {
         colorTheme,
