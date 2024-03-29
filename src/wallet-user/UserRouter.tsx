@@ -39,7 +39,7 @@ import Recovery from "./trust-protection/Recovery";
 import { useLogionChain } from '../logion-chain';
 import IdentityLocRequest from "../loc/IdentityLocRequest";
 import IssuerDashboard from "./issuer/IssuerDashboard";
-import IdenfyVerificationResult from './IdenfyVerificationResult';
+import IdenfyVerificationResult from './idenfy/IdenfyVerificationResult';
 import { UserDocumentClaimHistory, UserTokensRecordDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
 import { UserTokensRecordPane } from 'src/loc/record/TokensRecordPane';
 import { Navigate } from 'react-router-dom';

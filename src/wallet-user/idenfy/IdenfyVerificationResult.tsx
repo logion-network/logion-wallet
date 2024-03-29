@@ -1,14 +1,14 @@
 import { LocType, UUID } from "@logion/node-api";
 import { useMemo } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import Button from "src/common/Button";
-import { useCommonContext } from "src/common/CommonContext";
-import { FullWidthPane } from "src/common/Dashboard";
-import Frame from "src/common/Frame";
-import Icon from "src/common/Icon";
-import IconTextRow from "src/common/IconTextRow";
+import Button from "../../common/Button";
+import { useCommonContext } from "../../common/CommonContext";
+import { FullWidthPane } from "../../common/Dashboard";
+import Frame from "../../common/Frame";
+import Icon from "../../common/Icon";
+import IconTextRow from "../../common/IconTextRow";
 import "./IdenfyVerificationResult.css";
-import { PARAM_RESULT, PARAM_LOC_ID } from "./UserPaths";
+import { PARAM_RESULT, PARAM_LOC_ID } from "../UserPaths";
 
 export interface Props {
     detailsPath: (locId: UUID, type: LocType) => string;
