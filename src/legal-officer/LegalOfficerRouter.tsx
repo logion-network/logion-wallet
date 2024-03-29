@@ -22,9 +22,9 @@ import {
 } from './LegalOfficerPaths';
 
 import Home from './home/Home';
-import RecoveryRequests from './RecoveryRequests';
+import RecoveryRequests from './recovery/RecoveryRequests';
 import Settings from '../settings/Settings';
-import RecoveryDetails from "./RecoveryDetails";
+import RecoveryDetails from "./recovery/RecoveryDetails";
 import Transactions from "../common/Transactions";
 import LocDetails, { VoterLocDetails } from "../loc/LocDetails";
 import IdentityProtection from './transaction-protection/IdentityProtection';

@@ -1,13 +1,13 @@
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 
-import { Col } from '../common/Grid';
-import Detail from "../common/Detail";
+import { Col } from '../../common/Grid';
+import Detail from "../../common/Detail";
 
 export interface ProtectionRequestDetailsProps {
     request : ProtectionRequest,
 }
 
-export default function ProtectionRequestDetails(props: ProtectionRequestDetailsProps) {
+export default function RecoveryRequestDetails(props: ProtectionRequestDetailsProps) {
 
     return (
         <>

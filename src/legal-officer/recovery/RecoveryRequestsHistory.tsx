@@ -1,8 +1,8 @@
-import Table, { Cell, EmptyTableMessage, DateTimeCell, CopyPasteCell } from '../common/Table';
+import Table, { Cell, EmptyTableMessage, DateTimeCell, CopyPasteCell } from '../../common/Table';
 
-import { useLegalOfficerContext } from './LegalOfficerContext';
-import ProtectionRequestStatus from './ProtectionRequestStatus';
-import ProtectionRequestDetails from './ProtectionRequestDetails';
+import { useLegalOfficerContext } from '../LegalOfficerContext';
+import RecoveryRequestStatus from './RecoveryRequestStatus';
+import RecoveryRequestDetails from './RecoveryRequestDetails';
 
 
 export default function RecoveryRequestsHistory() {
@@ -26,12 +26,12 @@ export default function RecoveryRequestsHistory() {
                         header: "Last name",
                         render: request => <Cell content={ request.userIdentity.lastName }/>,
                         width: "200px",
-                        renderDetails: request => <ProtectionRequestDetails request={ request } />,
+                        renderDetails: request => <RecoveryRequestDetails request={ request } />,
                         align: 'left',
                     },
                     {
                         header: "Status",
-                        render: request => <ProtectionRequestStatus status={ request.status } />,
+                        render: request => <RecoveryRequestStatus status={ request.status } />,
                         width: "170px",
                         splitAfter: true,
                     },

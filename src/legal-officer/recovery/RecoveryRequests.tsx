@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import Tabs from '../common/Tabs';
-import { FullWidthPane } from '../common/Dashboard';
+import Tabs from '../../common/Tabs';
+import { FullWidthPane } from '../../common/Dashboard';
 
-import PendingProtectionRequests from './PendingProtectionRequests';
+import PendingRecoveryRequests from './PendingRecoveryRequests';
 import RecoveryRequestsHistory from './RecoveryRequestsHistory';
 import './RecoveryRequests.css';
-import { getQueryParam } from '../common/QueryString';
+import { getQueryParam } from '../../common/QueryString';
 
 export default function RecoveryRequests() {
     const location = useLocation();
@@ -31,7 +31,7 @@ export default function RecoveryRequests() {
                     {
                         key: "pending",
                         title: "Pending",
-                        render: () => <PendingProtectionRequests recovery={ true } />
+                        render: () => <PendingRecoveryRequests />
                     },
                     {
                         key: "history",

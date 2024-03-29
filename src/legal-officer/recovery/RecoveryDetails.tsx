@@ -2,25 +2,25 @@ import { useEffect, useState, useCallback } from "react";
 import { Col, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 
-import { useCommonContext } from "../common/CommonContext";
-import { useLegalOfficerContext } from "./LegalOfficerContext";
-import { FullWidthPane } from "../common/Dashboard";
+import { useCommonContext } from "../../common/CommonContext";
+import { useLegalOfficerContext } from "../LegalOfficerContext";
+import { FullWidthPane } from "../../common/Dashboard";
 import { useParams, useNavigate } from 'react-router';
-import { RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
-import Button from "../common/Button";
-import { acceptProtectionRequest, rejectProtectionRequest } from "../loc/Model";
-import { fetchRecoveryInfo } from "./Model";
-import { RecoveryInfo } from "./Types";
-import AccountInfo from "../common/AccountInfo";
-import Alert from "../common/Alert";
-import Frame from "../common/Frame";
+import { RECOVERY_REQUESTS_PATH } from "../LegalOfficerPaths";
+import Button from "../../common/Button";
+import { acceptProtectionRequest, rejectProtectionRequest } from "../../loc/Model";
+import { fetchRecoveryInfo } from "../Model";
+import { RecoveryInfo } from "../Types";
+import AccountInfo from "../../common/AccountInfo";
+import Alert from "../../common/Alert";
+import Frame from "../../common/Frame";
 import "./RecoveryDetails.css"
-import Spacer from "../common/Spacer";
-import Icon from "../common/Icon";
-import Dialog from "../common/Dialog";
-import { CallCallback, useLogionChain } from '../logion-chain';
-import ButtonGroup from "../common/ButtonGroup";
-import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';
+import Spacer from "../../common/Spacer";
+import Icon from "../../common/Icon";
+import Dialog from "../../common/Dialog";
+import { CallCallback, useLogionChain } from '../../logion-chain';
+import ButtonGroup from "../../common/ButtonGroup";
+import ExtrinsicSubmissionStateView from '../../ExtrinsicSubmissionStateView';
 
 enum Visible {
     NONE,

@@ -1,15 +1,15 @@
 import { ProtectionRequestStatus as ProtectionRequestStatusType } from '@logion/client/dist/RecoveryClient.js';
 
-import Icon from "../common/Icon";
-import { ORANGE, GREEN, RED, YELLOW } from "../common/ColorTheme";
+import Icon from "../../common/Icon";
+import { ORANGE, GREEN, RED, YELLOW } from "../../common/ColorTheme";
 
-import './ProtectionRequestStatus.css';
+import './RecoveryRequestStatus.css';
 
 export interface Props {
     status: ProtectionRequestStatusType,
 }
 
-export default function ProtectionRequestStatus(props: Props) {
+export default function RecoveryRequestStatus(props: Props) {
 
     let icon;
     let status;
@@ -41,7 +41,7 @@ export default function ProtectionRequestStatus(props: Props) {
 
     return (
         <span
-            className="ProtectionRequestStatus"
+            className="RecoveryRequestStatus"
             style={{
                 borderColor: statusColor
             }}
