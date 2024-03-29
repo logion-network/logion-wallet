@@ -3,7 +3,7 @@ import { useState, useCallback, useMemo } from "react";
 import IdentityForm, { FormValues } from "../components/identity/IdentityForm";
 import { useForm } from "react-hook-form";
 import { useCommonContext } from "../common/CommonContext";
-import SelectLegalOfficer from "../wallet-user/trust-protection/SelectLegalOfficer";
+import SelectLegalOfficer from "../wallet-user/protection/SelectLegalOfficer";
 import { LegalOfficerClass, LocsState, UserIdentity, PostalAddress, DraftRequest } from "@logion/client";
 import { useUserContext } from "../wallet-user/UserContext";
 import Form from "react-bootstrap/Form";

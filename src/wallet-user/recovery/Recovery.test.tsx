@@ -4,10 +4,10 @@ jest.unmock("@logion/client");
 import {shallowRender} from "../../tests";
 import Recovery from "./Recovery";
 import { setProtectionState } from '../__mocks__/UserContextMock';
-import { PENDING_RECOVERY_REQUESTS, ACCEPTED_RECOVERY_REQUESTS, ACTIVATED_RECOVERY_REQUESTS } from "./TestData";
+import { PENDING_RECOVERY_REQUESTS, ACCEPTED_RECOVERY_REQUESTS, ACTIVATED_RECOVERY_REQUESTS } from "../protection/TestData";
 import { PendingProtection, AcceptedProtection, PendingRecovery, ClaimedRecovery } from "@logion/client";
 import { RecoverySharedState } from "@logion/client/dist/Recovery.js";
-import { GUILLAUME, PATRICK } from "src/common/TestData";
+import { GUILLAUME, PATRICK } from "../../common/TestData";
 
 test("renders", () => {
     setProtectionState(undefined);

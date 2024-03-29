@@ -18,12 +18,12 @@ import ButtonGroup from "../../common/ButtonGroup";
 
 import { useUserContext } from "../UserContext";
 
-import { buildOptions } from "./SelectLegalOfficer";
+import { buildOptions } from "../protection/SelectLegalOfficer";
 import "./VaultRecoveryProcessTab.css"
-import CoinIcon from "src/components/coin/CoinIcon";
-import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
-import AmountCell from "src/common/AmountCell";
-import AssetNameCell from "src/common/AssetNameCell";
+import CoinIcon from "../../components/coin/CoinIcon";
+import ExtrinsicSubmissionStateView from "../../ExtrinsicSubmissionStateView";
+import AmountCell from "../../common/AmountCell";
+import AssetNameCell from "../../common/AssetNameCell";
 
 interface FormValues {
     legalOfficer: string | null;

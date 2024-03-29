@@ -1,8 +1,8 @@
 import { useUserContext } from "../UserContext";
 
 import GoToTrustProtection from './GoToTrustProtection';
-import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
-import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
+import CreateProtectionRequestForm from "../protection/CreateProtectionRequestForm";
+import ProtectionRecoveryRequest from '../protection/ProtectionRecoveryRequest';
 import RecoveryProcess from './RecoveryProcess';
 import {
     AcceptedProtection,

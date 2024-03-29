@@ -12,11 +12,11 @@ import IconTextRow from "../../common/IconTextRow";
 
 import { CallCallback, useLogionChain } from "../../logion-chain";
 import { useUserContext } from "../UserContext";
-import CoinIcon from "src/components/coin/CoinIcon";
-import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
-import AmountCell from "src/common/AmountCell";
-import { ExpectNewTransactionStatus, useCommonContext } from "src/common/CommonContext";
-import AssetNameCell from "src/common/AssetNameCell";
+import CoinIcon from "../../components/coin/CoinIcon";
+import ExtrinsicSubmissionStateView from "../../ExtrinsicSubmissionStateView";
+import AmountCell from "../../common/AmountCell";
+import { ExpectNewTransactionStatus, useCommonContext } from "../../common/CommonContext";
+import AssetNameCell from "../../common/AssetNameCell";
 
 interface Props {
     vaultFirst: boolean

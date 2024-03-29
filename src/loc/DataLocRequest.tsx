@@ -1,6 +1,6 @@
 import { FullWidthPane } from "../common/Dashboard";
 import Frame from "../common/Frame";
-import SelectLegalOfficer from "../wallet-user/trust-protection/SelectLegalOfficer";
+import SelectLegalOfficer from "../wallet-user/protection/SelectLegalOfficer";
 import { Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useState, useMemo } from "react";
