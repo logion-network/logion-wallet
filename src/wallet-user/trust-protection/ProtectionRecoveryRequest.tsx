@@ -17,7 +17,7 @@ import { useCommonContext } from '../../common/CommonContext';
 import NetworkWarning from '../../common/NetworkWarning';
 
 import { useUserContext } from '../UserContext';
-import { SETTINGS_PATH } from '../UserRouter';
+import { SETTINGS_PATH } from '../UserPaths';
 
 import SelectLegalOfficer from './SelectLegalOfficer';
 

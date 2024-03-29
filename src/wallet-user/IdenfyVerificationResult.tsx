@@ -8,7 +8,7 @@ import Frame from "src/common/Frame";
 import Icon from "src/common/Icon";
 import IconTextRow from "src/common/IconTextRow";
 import "./IdenfyVerificationResult.css";
-import { PARAM_RESULT, PARAM_LOC_ID } from "./UserRouter";
+import { PARAM_RESULT, PARAM_LOC_ID } from "./UserPaths";
 
 export interface Props {
     detailsPath: (locId: UUID, type: LocType) => string;

@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 import { Row, Col } from "react-bootstrap";
 import FormGroup from "../common/FormGroup";
 import './IdentityLocRequest.css';
-import { locDetailsPath } from "../wallet-user/UserRouter";
+import { locDetailsPath } from "../wallet-user/UserPaths";
 import IconTextRow from "../common/IconTextRow";
 import Icon from "../common/Icon";
 import { UUID } from "@logion/node-api";

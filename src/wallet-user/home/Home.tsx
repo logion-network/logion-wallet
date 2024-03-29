@@ -16,14 +16,14 @@ import { TransactionStatusCell } from "../../common/TransactionStatusCell";
 import NetworkWarning from '../../common/NetworkWarning';
 import { useLogionChain } from '../../logion-chain';
 
-import { SETTINGS_PATH, transactionsPath } from '../UserRouter';
+import { SETTINGS_PATH, transactionsPath } from '../UserPaths';
 
 import './Home.css';
 import TransactionType from '../../common/TransactionType';
 import { useUserContext } from "../UserContext";
 import Shortcut from '../../components/shortcuts/Shortcut';
 import Shortcuts from '../../components/shortcuts/Shortcuts';
-import LocCreation from '../LocCreation';
+import LocRequestButton from '../../components/locrequest/LocRequestButton';
 import { useMemo } from 'react';
 import { toFeesClass } from "@logion/client/dist/Fees.js";
 
@@ -140,7 +140,7 @@ export function Content() {
                             <Shortcuts
                                 description={ <span>What shall logion <strong>protect</strong> for you?</span> }
                             >
-                                <LocCreation
+                                <LocRequestButton
                                     locType="Identity"
                                     renderButton={onClick => <Shortcut
                                         onClick={ onClick }
@@ -148,7 +148,7 @@ export function Content() {
                                         text={ <span>Identity<br/><span style={{ display: "inline-block" }}></span></span> }
                                     />}
                                 />
-                                <LocCreation
+                                <LocRequestButton
                                     locType="Collection"
                                     renderButton={ onClick => <Shortcut
                                         onClick={ onClick }
@@ -157,7 +157,7 @@ export function Content() {
                                         disabled={ legalOfficersWithValidIdentityLoc?.length === 0 }
                                     /> }
                                 />
-                                <LocCreation
+                                <LocRequestButton
                                     locType="Transaction"
                                     renderButton={ onClick => <Shortcut
                                         onClick={ onClick }

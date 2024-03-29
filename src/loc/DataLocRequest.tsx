@@ -8,7 +8,7 @@ import { LegalOfficerClass } from "@logion/client";
 import { useUserContext } from "../wallet-user/UserContext";
 import { useCommonContext } from "../common/CommonContext";
 import CollectionLocRequestForm from "./CollectionLocRequestForm";
-import LocCreation from "../wallet-user/LocCreation";
+import LocRequestButton from "../components/locrequest/LocRequestButton";
 import "./DataLocRequest.css";
 import ButtonGroup from "../common/ButtonGroup";
 import TransactionLocRequestForm from "./TransactionLocRequestForm";
@@ -63,7 +63,7 @@ export default function DataLocRequest(props: Props) {
                                 please request an Identity LOC to the Logion Legal Officer of your choice by
                                 clicking on the related button below:</p>
                             <ButtonGroup>
-                                <LocCreation locType="Identity"/>
+                                <LocRequestButton locType="Identity"/>
                             </ButtonGroup>
                         </Frame>
                     }
@@ -74,7 +74,7 @@ export default function DataLocRequest(props: Props) {
                             <p className="info-text">Please request an Identity LOC to the Logion Legal Officer of your
                                 choice:</p>
                             <ButtonGroup>
-                                <LocCreation locType="Identity"/>
+                                <LocRequestButton locType="Identity"/>
                             </ButtonGroup>
                         </Frame>
                     }

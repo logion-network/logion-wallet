@@ -1,7 +1,7 @@
 import { UUID } from "@logion/node-api";
 import { useParams } from "react-router-dom";
 import { locDetailsPath } from "src/legal-officer/LegalOfficerPaths";
-import { ISSUER_PATH, locDetailsPath as userLocDetailsPath } from "src/wallet-user/UserRouter";
+import { ISSUER_PATH, locDetailsPath as userLocDetailsPath } from "src/wallet-user/UserPaths";
 import { LegalOfficerLocContextProvider } from "../LegalOfficerLocContext";
 import { useLocContext } from "../LocContext";
 import LocPane from "../LocPane";

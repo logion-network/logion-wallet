@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
-import { requestLocPath } from "./UserRouter";
-import Button from '../common/Button';
+import { requestLocPath } from "../../wallet-user/UserPaths";
+import Button from '../../common/Button';
 import { LocType } from "@logion/node-api";
 
 export interface Props {
@@ -10,7 +10,7 @@ export interface Props {
     locType: LocType;
 }
 
-export default function LocCreation(props: Props) {
+export default function LocRequestButton(props: Props) {
     const { locType } = props;
     const navigate = useNavigate();
 

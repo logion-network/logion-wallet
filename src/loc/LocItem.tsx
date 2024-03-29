@@ -24,7 +24,7 @@ import { Child } from "src/common/types/Helpers";
 import ViewFileButton from "src/common/ViewFileButton";
 import { documentClaimHistoryPath } from "src/legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl } from "src/PublicPaths";
-import { documentClaimHistoryPath as userDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
+import { documentClaimHistoryPath as userDocumentClaimHistoryPath } from "src/wallet-user/UserPaths";
 import LocLinkDetails from "./LocLinkDetails";
 import LocPrivateFileDetails from "./LocPrivateFileDetails";
 import LocPublicDataDetails from "./LocPublicDataDetails";

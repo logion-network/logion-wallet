@@ -4,7 +4,7 @@ import { FullWidthPane } from '../../common/Dashboard';
 import Alert from '../../common/Alert';
 import Button from '../../common/Button';
 
-import { RECOVERY_PATH } from '../UserRouter';
+import { RECOVERY_PATH } from '../UserPaths';
 
 export default function GoToRecovery() {
     const navigate = useNavigate();

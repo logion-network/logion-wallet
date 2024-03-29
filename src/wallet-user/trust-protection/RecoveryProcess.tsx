@@ -6,7 +6,7 @@ import Tabs from '../../common/Tabs';
 import Icon from '../../common/Icon';
 import NetworkWarning from '../../common/NetworkWarning';
 
-import { SETTINGS_PATH } from '../UserRouter';
+import { SETTINGS_PATH } from '../UserPaths';
 import { useUserContext } from '../UserContext';
 
 import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";

@@ -5,7 +5,7 @@ import Alert from '../../common/Alert';
 import Button from '../../common/Button';
 import { useCommonContext } from '../../common/CommonContext';
 
-import { TRUST_PROTECTION_PATH } from '../UserRouter';
+import { TRUST_PROTECTION_PATH } from '../UserPaths';
 
 import './GoToTrustProtection.css';
 import Frame from '../../common/Frame';

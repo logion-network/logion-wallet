@@ -13,7 +13,7 @@ import { useCommonContext } from "../../common/CommonContext";
 
 import { useUserContext } from "../UserContext";
 import { CallCallback, useLogionChain } from '../../logion-chain';
-import { SETTINGS_PATH } from '../UserRouter';
+import { SETTINGS_PATH } from '../UserPaths';
 
 import LegalOfficers from './LegalOfficers';
 

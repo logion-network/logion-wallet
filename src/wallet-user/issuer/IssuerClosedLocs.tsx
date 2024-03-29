@@ -15,7 +15,7 @@ import { merge } from "./IssuerUtils";
 import Icon from "src/common/Icon";
 import "./IssuerClosedLocs.css";
 import { useNavigate } from "react-router-dom";
-import { issuerTokensRecordPath } from "../UserRouter";
+import { issuerTokensRecordPath } from '../UserPaths';
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 export default function IssuerClosedLocs() {

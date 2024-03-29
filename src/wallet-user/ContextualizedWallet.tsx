@@ -4,7 +4,8 @@ import { useLogionChain } from '../logion-chain';
 
 import Dashboard from '../common/Dashboard';
 
-import UserRouter, {
+import UserRouter from "./UserRouter";
+import {
     HOME_PATH,
     TRUST_PROTECTION_PATH,
     SETTINGS_PATH,
@@ -13,7 +14,7 @@ import UserRouter, {
     ISSUER_PATH,
     transactionsPath,
     vaultTransactionsPath,
-} from "./UserRouter";
+} from "./UserPaths";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
 

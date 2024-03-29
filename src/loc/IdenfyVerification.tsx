@@ -3,7 +3,7 @@ import { useCallback } from "react";
 import Button from "src/common/Button";
 import Frame from "src/common/Frame";
 import { useLocContext } from "./LocContext";
-import { resumeAfterIDenfyProcessUrl } from "../wallet-user/UserRouter";
+import { resumeAfterIDenfyProcessUrl } from "../wallet-user/UserPaths";
 
 export default function IdenfyVerification() {
     const { loc, mutateLocState } = useLocContext();
