@@ -217,7 +217,7 @@ export default function WalletGauge(props: Props) {
                         <Spinner animation="border" />
                         <p>Transfer successful, waiting for the transaction to be finalized.</p>
                         <p>Note that this may take up to 30 seconds. If you want to proceed, you can safely
-                            click on cancel but your transaction may not show up yet.</p>
+                            click on close but your transaction may not show up yet.</p>
                     </Alert>
                 }
             </Dialog>
