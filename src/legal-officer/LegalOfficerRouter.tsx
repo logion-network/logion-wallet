@@ -21,7 +21,7 @@ import {
     INVITED_CONTRIBUTORS_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
-import Home from './Home';
+import Home from './home/Home';
 import RecoveryRequests from './RecoveryRequests';
 import Settings from '../settings/Settings';
 import RecoveryDetails from "./RecoveryDetails";

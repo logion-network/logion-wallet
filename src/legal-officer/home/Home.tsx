@@ -1,32 +1,32 @@
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { Lgnt } from '@logion/node-api';
-import { useLegalOfficerContext } from "./LegalOfficerContext";
-import { useCommonContext } from "../common/CommonContext";
-import { FullWidthPane } from '../common/Dashboard';
-import Icon from '../common/Icon';
-import Frame from '../common/Frame';
-import Loader from '../common/Loader';
-import Table, { ActionCell, Cell, DateCell, DateTimeCell, EmptyTableMessage } from '../common/Table';
-import TransferAmountCell, { transferBalance } from '../common/TransferAmountCell';
-import AmountCell from '../common/AmountCell';
-import Reading from '../common/Reading';
-import Button from '../common/Button';
-import LocStatusCell from '../common/LocStatusCell';
-import ButtonGroup from '../common/ButtonGroup';
+import { useLegalOfficerContext } from "../LegalOfficerContext";
+import { useCommonContext } from "../../common/CommonContext";
+import { FullWidthPane } from '../../common/Dashboard';
+import Icon from '../../common/Icon';
+import Frame from '../../common/Frame';
+import Loader from '../../common/Loader';
+import Table, { ActionCell, Cell, DateCell, DateTimeCell, EmptyTableMessage } from '../../common/Table';
+import TransferAmountCell, { transferBalance } from '../../common/TransferAmountCell';
+import AmountCell from '../../common/AmountCell';
+import Reading from '../../common/Reading';
+import Button from '../../common/Button';
+import LocStatusCell from '../../common/LocStatusCell';
+import ButtonGroup from '../../common/ButtonGroup';
 
 
-import { VAULT_OUT_REQUESTS_PATH, dataLocDetailsPath, identityLocDetailsPath, locDetailsPath, locRequestsPath, transactionsPath } from './LegalOfficerPaths';
+import { VAULT_OUT_REQUESTS_PATH, dataLocDetailsPath, identityLocDetailsPath, locDetailsPath, locRequestsPath, transactionsPath } from '../LegalOfficerPaths';
 
 import './Home.css';
-import UserIdentityNameCell from '../common/UserIdentityNameCell';
-import { TransactionStatusCell } from "../common/TransactionStatusCell";
-import { useLogionChain } from '../logion-chain';
-import TransactionType from 'src/common/TransactionType';
+import UserIdentityNameCell from '../../common/UserIdentityNameCell';
+import { TransactionStatusCell } from "../../common/TransactionStatusCell";
+import { useLogionChain } from '../../logion-chain';
+import TransactionType from '../../common/TransactionType';
 import { toFeesClass } from "@logion/client/dist/Fees.js";
-import VaultTransferRequestDetails from './vault/VaultTransferDetails';
-import VaultTransferRequestStatusCell from 'src/common/VaultTransferRequestStatusCell';
-import { useResponsiveContext } from 'src/common/Responsive';
+import VaultTransferRequestDetails from '../vault/VaultTransferDetails';
+import VaultTransferRequestStatusCell from '../../common/VaultTransferRequestStatusCell';
+import { useResponsiveContext } from '../../common/Responsive';
 
 const MAX_WAITING_SHOWN = 3;
 
