@@ -44,11 +44,6 @@ export function UserLocDetails(props: UserLocDetailsProps) {
     )
 }
 
-export interface VoterLocDetailsProps {
-    backPath: string;
-    detailsPath: (locId: UUID, type: LocType) => string;
-}
-
 export function VoterLocDetails(props: LocDetailsProps) {
     const locId: UUID = new UUID(useParams<"locId">().locId);
     return (

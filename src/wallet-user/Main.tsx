@@ -1,7 +1,7 @@
 import { useLogionChain } from '../logion-chain';
 
 import { UserContextProvider } from "./UserContext";
-import ContextualizedWallet from './ContextualizedWallet';
+import UserDashboard from './UserDashboard';
 
 export default function Wallet() {
     const { allAccounts } = useLogionChain();
@@ -12,7 +12,7 @@ export default function Wallet() {
 
     return (
         <UserContextProvider>
-            <ContextualizedWallet />
+            <UserDashboard />
         </UserContextProvider>
     );
 }

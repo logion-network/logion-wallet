@@ -12,7 +12,7 @@ import { useUserContext } from "../wallet-user/UserContext";
 import ButtonGroup from "../common/ButtonGroup";
 import Button from "../common/Button";
 import { useLogionChain } from "../logion-chain";
-import { locDetailsPath } from "../wallet-user/UserRouter";
+import { locDetailsPath } from "../wallet-user/UserPaths";
 import { useNavigate } from "react-router";
 
 export interface FormValues {

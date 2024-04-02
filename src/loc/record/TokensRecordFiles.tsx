@@ -5,7 +5,7 @@ import { tokensRecordDocumentClaimHistoryPath } from "../../legal-officer/LegalO
 import {
     tokensRecordDocumentClaimHistoryPath as requesterTokensRecordDocumentClaimHistoryPath,
     issuerTokensRecordDocumentClaimHistoryPath
-} from "../../wallet-user/UserRouter";
+} from "../../wallet-user/UserPaths";
 import { useLocContext } from "../LocContext";
 import ViewFileButton from "../../common/ViewFileButton";
 import { getTokensRecordFileSource } from "../FileModel";

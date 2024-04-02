@@ -9,7 +9,7 @@ import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFram
 import ItemFiles, { DeliveredFile } from "src/components/itemfiles/ItemFiles";
 import { locDetailsPath, tokensRecordPath } from "src/legal-officer/LegalOfficerPaths";
 import { useLogionChain } from "src/logion-chain";
-import { locDetailsPath as userLocDetailsPath, tokensRecordPath as requesterTokensRecordPath, issuerTokensRecordPath } from "src/wallet-user/UserRouter";
+import { locDetailsPath as userLocDetailsPath, tokensRecordPath as requesterTokensRecordPath, issuerTokensRecordPath } from "src/wallet-user/UserPaths";
 import { CheckLatestDeliveryResponse, getAllCollectionFileDeliveries, getTokensRecordDeliveries, getTokensRecordFileSource } from "./FileModel";
 import { LegalOfficerLocContextProvider } from "./LegalOfficerLocContext";
 import { useLocContext } from "./LocContext";

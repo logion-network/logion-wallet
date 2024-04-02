@@ -6,7 +6,7 @@ import Icon from "src/common/Icon";
 import { tokensRecordPath } from "src/legal-officer/LegalOfficerPaths";
 import { useLocContext } from "../LocContext";
 import { ContributionMode } from "../types";
-import { tokensRecordPath as requesterTokensRecordPath, issuerTokensRecordPath } from "src/wallet-user/UserRouter";
+import { tokensRecordPath as requesterTokensRecordPath, issuerTokensRecordPath } from "src/wallet-user/UserPaths";
 
 export default function TokensRecordButton(props: { contributionMode?: ContributionMode }) {
     const { viewer } = useCommonContext();

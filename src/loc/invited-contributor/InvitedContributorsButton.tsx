@@ -4,7 +4,7 @@ import Button from "src/common/Button";
 import { useCommonContext } from "src/common/CommonContext";
 import { invitedContributorsPath as legalOfficerInvitedContributorsPath } from "src/legal-officer/LegalOfficerPaths";
 import { useLocContext } from "../LocContext";
-import { invitedContributorsPath as requesterInvitedContributorsPath } from "src/wallet-user/UserRouter";
+import { invitedContributorsPath as requesterInvitedContributorsPath } from "src/wallet-user/UserPaths";
 
 export default function InvitedContributorsButton() {
     const { viewer } = useCommonContext();

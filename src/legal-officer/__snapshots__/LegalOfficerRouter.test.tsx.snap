@@ -181,7 +181,7 @@ exports[`renders 1`] = `
     path="/loc/:locType/:locId/records/:recordId/claims/:hash"
   />
   <Route
-    element={<Account />}
+    element={<Home />}
     path=""
   />
   <Route

@@ -5,7 +5,7 @@ import { useState, useCallback } from "react";
 import Button from "../../common/Button";
 import { useUserLocContext } from "../UserLocContext";
 import Dialog from "../../common/Dialog";
-import { locRequestsPath } from "../../wallet-user/UserRouter";
+import { locRequestsPath } from "../../wallet-user/UserPaths";
 
 type Status = 'Idle' | 'Confirming' | 'Requesting' | 'Requested';
 

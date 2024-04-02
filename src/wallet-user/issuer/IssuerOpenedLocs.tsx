@@ -7,7 +7,7 @@ import LegalOfficerName from '../../common/LegalOfficerNameCell';
 import ButtonGroup from "../../common/ButtonGroup";
 import Button from "../../common/Button";
 import Loader from '../../common/Loader';
-import { issuerDetailsPath } from '../UserRouter';
+import { issuerDetailsPath } from '../UserPaths';
 import { useResponsiveContext } from '../../common/Responsive';
 import UserIdentityNameCell from "../../common/UserIdentityNameCell";
 import { LocData } from "@logion/client";

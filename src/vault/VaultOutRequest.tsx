@@ -13,7 +13,7 @@ import Icon from "../common/Icon";
 import Select, { OptionType } from "../common/Select";
 import { CallCallback, useLogionChain } from "../logion-chain";
 
-import { buildOptions } from '../wallet-user/trust-protection/SelectLegalOfficer';
+import { buildOptions } from '../wallet-user/protection/SelectLegalOfficer';
 import { useUserContext } from "../wallet-user/UserContext";
 import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
