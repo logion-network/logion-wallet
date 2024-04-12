@@ -170,7 +170,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                             let linkData: LinkData | undefined;
                             if(link) {
                                 templateLinks.add(link.nature.validValue());
-                                linkData = await getLinkData(accounts?.current?.accountId.address, locState.locsState(), link, detailsPath, client);
+                                linkData = await getLinkData(accounts?.current?.accountId, locState.locsState(), link, detailsPath, client);
                             }
                             items.push(createLinkTemplateItem(linkTemplate, link, linkData));
                         }

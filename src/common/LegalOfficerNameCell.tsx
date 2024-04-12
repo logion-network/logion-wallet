@@ -1,8 +1,9 @@
+import { ValidAccountId } from "@logion/node-api";
 import { useLogionChain } from '../logion-chain';
 import { Cell } from './Table';
 
 export interface Props {
-    address: string;
+    address: ValidAccountId;
 }
 
 export default function LegalOfficerName(props: Props) {

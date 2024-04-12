@@ -54,10 +54,7 @@ function createRequestToAccept(locType: LocType): LocData {
     return {
         id: new UUID(),
         ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId.address,
-        requesterAddress: {
-            address: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            type: "Polkadot"
-        } as ValidAccountId,
+        requesterAccountId: ValidAccountId.polkadot("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
         description: "LOC description",
         status: "REVIEW_PENDING",
         createdOn: "2021-09-20T15:52:00.000",

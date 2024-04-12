@@ -6,7 +6,7 @@ import { HashString } from "@logion/client";
 import { FileItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
-import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
+import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 
 describe("LocPublishPrivateFileButton", () => {
 
@@ -15,7 +15,7 @@ describe("LocPublishPrivateFileButton", () => {
         {
             type: "Document",
             status: "DRAFT",
-            submitter: mockValidPolkadotAccountId("file-submitter"),
+            submitter: TEST_WALLET_USER,
             timestamp: null,
             newItem: false,
             template: false,

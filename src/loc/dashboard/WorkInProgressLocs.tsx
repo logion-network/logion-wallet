@@ -25,7 +25,7 @@ export default function WorkInProgressLocs(props: Props) {
         if(viewer === "User") {
             result.push({
                 header: "Legal officer",
-                render: locData => <LegalOfficerName address={ locData.ownerAddress } />,
+                render: locData => <LegalOfficerName address={ locData.ownerAccountId } />,
                 renderDetails: locData => <WorkInProgressLocDetails locData={ locData } />,
                 align: 'left',
             });

@@ -3,8 +3,8 @@ import { LocData, HashString, fromIsoString } from "@logion/client";
 
 export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
     return {
-        ownerAddress: loc.owner,
-        requesterAddress: loc.requesterAddress,
+        ownerAccountId: loc.owner,
+        requesterAccountId: loc.requesterAccountId,
         requesterLocId: loc.requesterLocId,
         description: "Description",
         locType: loc.locType,

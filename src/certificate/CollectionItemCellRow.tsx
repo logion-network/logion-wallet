@@ -1,5 +1,5 @@
 import { CheckHashResult, CollectionItem, Token } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { UUID, ValidAccountId } from "@logion/node-api";
 
 import CertificateCell from "./CertificateCell";
 import { Row } from "../common/Grid";
@@ -13,7 +13,7 @@ import { CertificateItemDetails } from "src/components/certificateitemdetails/Ce
 
 export interface Props {
     locId: UUID,
-    owner: string,
+    owner: ValidAccountId,
     item: CollectionItem;
     checkResult: CheckHashResult | undefined;
     isVoid: boolean;

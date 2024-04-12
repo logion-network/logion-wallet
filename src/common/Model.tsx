@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
-import { LocData } from '@logion/client';
-import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient.js';
+import { LocData, ProtectionRequest, ProtectionRequestStatus } from '@logion/client';
+import { ValidAccountId } from "@logion/node-api";
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
@@ -18,6 +18,6 @@ export async function fetchProtectionRequests(
     return response.data.requests;
 }
 
-export function isGrantedAccess(address: string | undefined, loc: LocData): boolean {
-    return loc.ownerAddress === address || loc.requesterAddress === address;
+export function isGrantedAccess(address: ValidAccountId | undefined, loc: LocData): boolean {
+    return loc.ownerAccountId.equals(address) || (loc.requesterAccountId?.equals(address) || false);
 }

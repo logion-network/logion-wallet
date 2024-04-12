@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { Lgnt } from "@logion/node-api";
+import { Lgnt, ValidAccountId } from "@logion/node-api";
 import { VaultTransferRequest } from "@logion/client";
 
 import { CallCallback, useLogionChain } from "../../logion-chain";
@@ -36,7 +36,7 @@ export default function PendingVaultTransferRequests() {
     const [ requestToAccept, setRequestToAccept ] = useState<VaultTransferRequest | null>(null);
 
     const onApprovalSuccessCallback = useCallback(async () => {
-        const legalOfficer = requestToAccept!.legalOfficerAddress;
+        const legalOfficer = ValidAccountId.polkadot(requestToAccept!.legalOfficerAddress);
         const api = new VaultApi(axiosFactory!(legalOfficer), legalOfficer);
         await api.acceptVaultTransferRequest(requestToAccept!.id);
         setRequestToAccept(null);
@@ -44,16 +44,16 @@ export default function PendingVaultTransferRequests() {
     }, [ requestToAccept, axiosFactory, setRequestToAccept, refreshRequests ]);
 
     const acceptRequestCallback = useCallback(async () => {
-        const signerId = accounts!.current!.accountId.address;
+        const signerId = accounts!.current!.accountId;
         const amount = Lgnt.fromCanonical(BigInt(requestToAccept!.amount));
-        const config = await api!.queries.getRecoveryConfig(requestToAccept!.origin);
+        const config = await api!.queries.getRecoveryConfig(ValidAccountId.polkadot(requestToAccept!.origin));
         if(!config) {
             throw new Error("Cannot approve vault transfer for requester without recovery configured");
         }
-        const vault = api!.vault(requestToAccept!.origin, config.legalOfficers);
+        const vault = api!.vault(ValidAccountId.polkadot(requestToAccept!.origin), config.legalOfficers);
         const submittable = await vault.tx.approveVaultTransfer({
             signerId,
-            destination: requestToAccept!.destination,
+            destination: ValidAccountId.polkadot(requestToAccept!.destination),
             amount,
             block: BigInt(requestToAccept!.block),
             index: requestToAccept!.index,
@@ -74,7 +74,7 @@ export default function PendingVaultTransferRequests() {
     }, [ accounts, api, requestToAccept, submitCall, onApprovalSuccessCallback, clearSubmissionState, signer ]);
 
     const rejectRequestCallback = useCallback(async () => {
-        const legalOfficer = requestToReject!.legalOfficerAddress;
+        const legalOfficer = ValidAccountId.polkadot(requestToReject!.legalOfficerAddress);
         const api = new VaultApi(axiosFactory!(legalOfficer), legalOfficer);
         await api.rejectVaultTransferRequest(requestToReject!.id, reason);
         setRequestToReject(null);

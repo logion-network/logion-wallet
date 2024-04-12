@@ -17,7 +17,14 @@ exports[`renders failed transaction 1`] = `
   }
 >
   <Content
-    address="123"
+    account={
+      ValidAccountId {
+        "anyAccountId": AnyAccountId {
+          "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+          "type": "Polkadot",
+        },
+      }
+    }
     balances={Array []}
     transactions={Array []}
     type="Wallet"
@@ -42,7 +49,14 @@ exports[`renders null with missing data 1`] = `
   }
 >
   <Content
-    address="123"
+    account={
+      ValidAccountId {
+        "anyAccountId": AnyAccountId {
+          "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+          "type": "Polkadot",
+        },
+      }
+    }
     balances={Array []}
     transactions={Array []}
     type="Wallet"
@@ -67,7 +81,14 @@ exports[`renders with all data 1`] = `
   }
 >
   <Content
-    address="123"
+    account={
+      ValidAccountId {
+        "anyAccountId": AnyAccountId {
+          "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+          "type": "Polkadot",
+        },
+      }
+    }
     balances={Array []}
     transactions={Array []}
     type="Wallet"

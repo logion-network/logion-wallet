@@ -73,11 +73,11 @@ exports[`LocPublishLinkButton renders 1`] = `
       "commonData": Object {
         "newItem": false,
         "status": "DRAFT",
-        "submitter": Object {
-          "address": "link-submitter",
-          "equals": [Function],
-          "toKey": [Function],
-          "type": "Polkadot",
+        "submitter": ValidAccountId {
+          "anyAccountId": AnyAccountId {
+            "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+            "type": "Polkadot",
+          },
         },
         "template": false,
         "timestamp": null,

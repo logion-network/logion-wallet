@@ -25,10 +25,10 @@ export default function LocTemplateItems(props: Props) {
         return null;
     }
 
-    const currentAddress = accounts?.current?.accountId.address;
+    const currentAccount = accounts?.current?.accountId;
     const columns = buildItemTableColumns({
         contributionMode: props.contributionMode,
-        currentAddress,
+        currentAccount,
         renderActions,
         viewer,
         loc,

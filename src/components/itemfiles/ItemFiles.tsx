@@ -100,7 +100,7 @@ export default function ItemFiles(props: Props) {
                         header: "Source",
                         render: file => <Cell content={
                             <ViewFileButton
-                                nodeOwner={ props.collectionLoc.ownerAddress }
+                                nodeOwner={ props.collectionLoc.ownerAccountId }
                                 fileName={ file.name.validValue() }
                                 downloader={ () => props.downloader(file.hash) }
                             />

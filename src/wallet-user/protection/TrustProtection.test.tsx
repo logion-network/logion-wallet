@@ -51,7 +51,7 @@ test("renders protected", () => {
         allRequests: ACTIVATED_PROTECTION_REQUESTS,
         selectedLegalOfficers: [ PATRICK, GUILLAUME ],
         recoveryConfig: {
-            legalOfficers: [ PATRICK.address, GUILLAUME.address ]
+            legalOfficers: [ PATRICK.account, GUILLAUME.account ]
         }
     } as unknown as RecoverySharedState);
     setProtectionState(protectionState);

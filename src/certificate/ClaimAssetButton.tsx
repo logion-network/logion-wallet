@@ -1,5 +1,5 @@
 import { Token, CollectionItem, TokensRecord, TypedFile } from "@logion/client";
-import { UUID, Hash } from "@logion/node-api";
+import { UUID, Hash, ValidAccountId } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { useState, useEffect } from "react";
 import ViewFileButton from "../common/ViewFileButton";
@@ -24,7 +24,7 @@ export interface ClaimedFile {
 
 export interface Props {
     locId: UUID,
-    owner: string,
+    owner: ValidAccountId,
     item: CollectionItem,
     record?: TokensRecord,
     file: ClaimedFile,

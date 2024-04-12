@@ -7,13 +7,13 @@ import {
     Votes,
     ProtectionRequest,
 } from '@logion/client';
+import { LocType, LegalOfficerData, ValidAccountId } from "@logion/node-api";
 
 import { fetchProtectionRequests } from '../common/Model';
 import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 import { useLogionChain } from '../logion-chain';
 import { VaultApi } from '../vault/VaultApi';
-import { LocType, LegalOfficerData } from "@logion/node-api";
 import { DateTime } from "luxon";
 import { fetchAllLocsParams } from 'src/loc/LegalOfficerLocContext';
 import { Locs, getLocsMap } from 'src/loc/Locs';
@@ -63,7 +63,7 @@ export interface LegalOfficerContext {
 }
 
 interface FullLegalOfficerContext extends LegalOfficerContext {
-    dataAddress: string | null;
+    dataAddress: ValidAccountId | null;
     callRefreshLocs: boolean;
     callRefreshRequests: boolean;
     callRefreshSettings: boolean;
@@ -132,7 +132,7 @@ type ActionType =
 
 interface Action {
     type: ActionType;
-    dataAddress?: string;
+    dataAddress?: ValidAccountId;
     locsState?: LocsState;
     pendingProtectionRequests?: ProtectionRequest[];
     protectionRequestsHistory?: ProtectionRequest[];
@@ -333,7 +333,7 @@ export function LegalOfficerContextProvider(props: Props) {
     const isReadyLegalOfficer = useMemo(() => {
         return accounts !== null && accounts !== undefined
             && accounts.current !== null && accounts.current !== undefined
-            && client && client.allLegalOfficers.find(legalOfficer => legalOfficer.address === accounts.current?.accountId.address && legalOfficer.node) !== undefined
+            && client && client.allLegalOfficers.find(legalOfficer => legalOfficer.account.equals(accounts.current?.accountId) && legalOfficer.node) !== undefined
     }, [ accounts, client ]);
 
     useEffect(() => {
@@ -353,9 +353,9 @@ export function LegalOfficerContextProvider(props: Props) {
         if(accounts !== null && accounts.current !== undefined
             && client !== null && client.isTokenValid(now)
             && axiosFactory
-            && accounts.current.accountId.address !== contextValue.dataAddress) {
+            && !accounts.current.accountId.equals(contextValue.dataAddress)) {
 
-            const dataAddress = accounts.current.accountId.address;
+            const dataAddress = accounts.current.accountId;
             let axios: AxiosInstance | undefined;
             if(isReadyLegalOfficer) {
                 axios = axiosFactory(dataAddress);
@@ -369,7 +369,7 @@ export function LegalOfficerContextProvider(props: Props) {
     }, [ accounts, client, contextValue.dataAddress, contextValue.axios, axiosFactory, isReadyLegalOfficer, contextValue.legalOfficer ]);
 
     useEffect(() => {
-        if(contextValue.legalOfficer && contextValue.legalOfficer.address === contextValue.dataAddress && contextValue.legalOfficer?.node
+        if(contextValue.legalOfficer && contextValue.legalOfficer.account.equals(contextValue.dataAddress) && contextValue.legalOfficer?.node
             && !isReadyLegalOfficer
             && !contextValue.reconnected) {
 
@@ -404,15 +404,13 @@ export function LegalOfficerContextProvider(props: Props) {
                     type: "REFRESH_LOCS_CALLED"
                 });
 
-                const currentAccount = accounts.current;
-                const currentAddress = currentAccount.accountId.address;
                 const legalOfficer = contextValue.legalOfficer;
                 const locsState = await client.locsState(fetchAllLocsParams(legalOfficer));
                 const locs = getLocsMap(locsState, "LegalOfficer");
 
                 dispatch({
                     type: "SET_LOCS_DATA",
-                    dataAddress: currentAddress,
+                    dataAddress: accounts.current.accountId,
                     locsState,
                     locs,
                 });
@@ -442,11 +440,11 @@ export function LegalOfficerContextProvider(props: Props) {
             dispatch({
                 type: "REFRESH_SETTINGS_CALLED"
             });
-            const currentAddress = accounts.current.accountId.address;
+            const currentAddress = accounts.current.accountId;
             const onchainSettings = await api.queries.getLegalOfficerData(currentAddress);
             let legalOfficer: LegalOfficer | undefined = contextValue.legalOfficer;
             if(!legalOfficer) {
-                legalOfficer = client?.allLegalOfficers.find(legalOfficer => legalOfficer.address === currentAddress);
+                legalOfficer = client?.allLegalOfficers.find(legalOfficer => legalOfficer.account.equals(currentAddress));
             }
             if(legalOfficer) {
                 legalOfficer.node = onchainSettings.hostData?.baseUrl || "";
@@ -479,7 +477,7 @@ export function LegalOfficerContextProvider(props: Props) {
 
     const updateSettingCallback = useCallback(async (id: string, value: string): Promise<void> => {
         const axios = axiosFactory!(contextValue.dataAddress!);
-        await updateSetting(axios, contextValue.dataAddress!, id, value);
+        await updateSetting(axios, contextValue.dataAddress!.address, id, value);
         dispatch({
             type: "UPDATE_SETTING",
             id,
@@ -503,13 +501,13 @@ export function LegalOfficerContextProvider(props: Props) {
             dispatch({
                 type: "REFRESH_REQUESTS_CALLED"
             });
-            const currentAddress = accounts.current.accountId.address;
+            const currentAddress = accounts.current.accountId;
 
             (async function() {
                 const axios = axiosFactory(currentAddress);
 
                 const allRequests = await fetchProtectionRequests(axios, {
-                    legalOfficerAddress: currentAddress,
+                    legalOfficerAddress: currentAddress.address,
                 });
                 const pendingProtectionRequests = allRequests.filter(request => ["PENDING"].includes(request.status) && !request.isRecovery);
                 const activatedProtectionRequests = allRequests.filter(request => ["ACTIVATED"].includes(request.status));
@@ -524,12 +522,12 @@ export function LegalOfficerContextProvider(props: Props) {
                 );
 
                 const allVaultTransferRequestsResult = (await new VaultApi(axios, currentAddress).getVaultTransferRequests({
-                    legalOfficerAddress: currentAddress,
+                    legalOfficerAddress: currentAddress.address,
                 })).sort((a, b) => b.createdOn.localeCompare(a.createdOn));
                 const pendingVaultTransferRequests = allVaultTransferRequestsResult.filter(request => request.status === "PENDING");
                 const vaultTransferRequestsHistory = allVaultTransferRequestsResult.filter(request => [ "CANCELLED", "REJECTED_CANCELLED", "REJECTED", "ACCEPTED" ].includes(request.status));
 
-                const settings = await getSettings(axios, currentAddress);
+                const settings = await getSettings(axios, currentAddress.address);
 
                 dispatch({
                     type: "SET_REQUESTS_DATA",
@@ -570,11 +568,11 @@ export function LegalOfficerContextProvider(props: Props) {
                 type: "REFRESH_LEGAL_OFFICER_CALLED"
             });
 
-            const currentAddress = accounts.current.accountId.address;
+            const currentAddress = accounts.current.accountId;
 
             (async function() {
                 const onchainSettings = await api.queries.getLegalOfficerData(currentAddress);
-                const legalOfficer = (await client.directoryClient.getLegalOfficers()).find(legalOfficer => legalOfficer.address === currentAddress);
+                const legalOfficer = (await client.directoryClient.getLegalOfficers()).find(legalOfficer => legalOfficer.account.equals(currentAddress));
                 const missingSettings = getMissingSettings(legalOfficer, onchainSettings);
                 dispatch({
                     type: "SET_LEGAL_OFFICER",
@@ -617,7 +615,7 @@ export function LegalOfficerContextProvider(props: Props) {
                     type: "REFRESH_VOTES_CALLED"
                 });
 
-                const currentAddress = accounts.current.accountId.address;
+                const currentAddress = accounts.current.accountId;
                 const votes = await client.voter.getVotes();
 
                 dispatch({

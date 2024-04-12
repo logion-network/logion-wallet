@@ -59,7 +59,7 @@ export function UserCollectionLocItemChecker(props: Props) {
             collectionLoc={ collectionLoc }
             collectionItem={ collectionItem }
             collectionItemFunction={ collectionItemFunction }
-            axiosFactory={ () => client.getLegalOfficer(collectionLoc.ownerAddress).buildAxiosToNode() }
+            axiosFactory={ () => client.getLegalOfficer(collectionLoc.ownerAccountId).buildAxiosToNode() }
             collectionItems={ collectionItems }
         />)
 }

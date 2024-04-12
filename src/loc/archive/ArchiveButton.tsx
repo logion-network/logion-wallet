@@ -69,7 +69,7 @@ export default function ArchiveButton() {
                         id: "submit",
                         callback: () => openFiles({
                             files,
-                            nodeOwner: locData.ownerAddress,
+                            nodeOwner: locData.ownerAccountId,
                             axiosFactory
                         }),
                         buttonText: 'Download',

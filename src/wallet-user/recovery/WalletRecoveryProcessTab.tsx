@@ -153,7 +153,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
                         transfer { amountToRecover.coefficient.toFixedPrecision(2) }&nbsp;
                         { amountToRecover.prefix.symbol }
                         { recoveredCoinBalance?.coin.symbol }
-                        <br />from account { protectionState?.protectionParameters.recoveredAddress || "" }
+                        <br />from account { protectionState?.protectionParameters.recoveredAccount?.address || "" }
                         <br />to account { accounts?.current?.accountId.address }.
                     </p>
                 }

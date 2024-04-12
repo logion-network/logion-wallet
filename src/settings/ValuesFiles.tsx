@@ -21,7 +21,7 @@ export function ValuesFiles() {
     const [ newSettings, setNewSettings ] = useState<Record<string, string>>({});
     const [ uploading, setUploading ] = useState<Record<string, boolean>>({});
 
-    const legalOfficer = accounts?.current?.accountId.address;
+    const legalOfficer = accounts?.current?.accountId;
     const fileSelectedCallback = useCallback(async (file: File, fileId: LoFileId) => {
         setUploading({
             ...uploading,
@@ -30,7 +30,7 @@ export function ValuesFiles() {
         try {
             await addLoFile({
                 axios: axiosFactory!(legalOfficer),
-                legalOfficer: legalOfficer!,
+                legalOfficer: legalOfficer!.address,
                 file: HashOrContent.fromContent(new BrowserFile(file, file.name)),
                 fileId
             });

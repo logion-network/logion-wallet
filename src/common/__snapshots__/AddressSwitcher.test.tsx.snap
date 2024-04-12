@@ -23,11 +23,11 @@ exports[`AddressSwitcher renders 1`] = `
         <AccountAddress
           account={
             Object {
-              "accountId": Object {
-                "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-                "equals": [Function],
-                "toKey": [Function],
-                "type": "Polkadot",
+              "accountId": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                  "type": "Polkadot",
+                },
               },
               "isLegalOfficer": false,
               "name": "name authenticated",
@@ -58,11 +58,11 @@ exports[`AddressSwitcher renders 1`] = `
         <AccountAddress
           account={
             Object {
-              "accountId": Object {
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "equals": [Function],
-                "toKey": [Function],
-                "type": "Polkadot",
+              "accountId": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
               },
               "isLegalOfficer": true,
               "name": "name unauthenticated",

@@ -54,7 +54,7 @@ export function LocItems(props: LocItemsProps) {
     } else {
         let columns: Column<LocItem>[] = buildItemTableColumns({
             contributionMode: props.contributionMode,
-            currentAddress: accounts?.current?.accountId.address,
+            currentAccount: accounts?.current?.accountId,
             viewer: props.viewer,
             loc,
             locState,

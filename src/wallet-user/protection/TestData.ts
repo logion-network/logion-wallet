@@ -27,23 +27,23 @@ export const PENDING_PROTECTION_REQUESTS = [ PENDING_PROTECTION_REQUEST1, PENDIN
 
 export const PROTECTION_REQUEST: ProtectionRequest = ACTIVATED_PROTECTION_REQUEST1;
 
-export const ACTIVATED_RECOVERY_REQUEST1: ProtectionRequest = createProtectionRequest("request1", DEFAULT_LEGAL_OFFICER.address, ANOTHER_LEGAL_OFFICER.address, "ACTIVATED", true, "toRecover", IDENTITY_LOC_ID);
+export const ACTIVATED_RECOVERY_REQUEST1: ProtectionRequest = createProtectionRequest("request1", DEFAULT_LEGAL_OFFICER.address, ANOTHER_LEGAL_OFFICER.address, "ACTIVATED", true, TEST_WALLET_USER.address, IDENTITY_LOC_ID);
 
-export const ACTIVATED_RECOVERY_REQUEST2: ProtectionRequest = createProtectionRequest("request2", ANOTHER_LEGAL_OFFICER.address, DEFAULT_LEGAL_OFFICER.address, "ACTIVATED", true, "toRecover", IDENTITY_LOC_ID);
+export const ACTIVATED_RECOVERY_REQUEST2: ProtectionRequest = createProtectionRequest("request2", ANOTHER_LEGAL_OFFICER.address, DEFAULT_LEGAL_OFFICER.address, "ACTIVATED", true, TEST_WALLET_USER.address, IDENTITY_LOC_ID);
 
 export const ACTIVATED_RECOVERY_REQUESTS = [ ACTIVATED_RECOVERY_REQUEST1, ACTIVATED_RECOVERY_REQUEST2 ];
 
-export const PENDING_RECOVERY_REQUEST1: ProtectionRequest = createProtectionRequest("request1", DEFAULT_LEGAL_OFFICER.address, ANOTHER_LEGAL_OFFICER.address, "PENDING", true, "toRecover", IDENTITY_LOC_ID);
+export const PENDING_RECOVERY_REQUEST1: ProtectionRequest = createProtectionRequest("request1", DEFAULT_LEGAL_OFFICER.address, ANOTHER_LEGAL_OFFICER.address, "PENDING", true, TEST_WALLET_USER.address, IDENTITY_LOC_ID);
 
-export const PENDING_RECOVERY_REQUEST2: ProtectionRequest = createProtectionRequest("request2", ANOTHER_LEGAL_OFFICER.address, DEFAULT_LEGAL_OFFICER.address, "PENDING", true, "toRecover", IDENTITY_LOC_ID);
+export const PENDING_RECOVERY_REQUEST2: ProtectionRequest = createProtectionRequest("request2", ANOTHER_LEGAL_OFFICER.address, DEFAULT_LEGAL_OFFICER.address, "PENDING", true, TEST_WALLET_USER.address, IDENTITY_LOC_ID);
 
 export const PENDING_RECOVERY_REQUESTS = [ PENDING_RECOVERY_REQUEST1, PENDING_RECOVERY_REQUEST2 ];
 
 export const RECOVERY_REQUEST: ProtectionRequest = ACTIVATED_RECOVERY_REQUEST1;
 
-export const ACCEPTED_RECOVERY_REQUEST1: ProtectionRequest = createProtectionRequest("request1", DEFAULT_LEGAL_OFFICER.address, ANOTHER_LEGAL_OFFICER.address, "ACCEPTED", true, "toRecover", IDENTITY_LOC_ID);
+export const ACCEPTED_RECOVERY_REQUEST1: ProtectionRequest = createProtectionRequest("request1", DEFAULT_LEGAL_OFFICER.address, ANOTHER_LEGAL_OFFICER.address, "ACCEPTED", true, TEST_WALLET_USER.address, IDENTITY_LOC_ID);
 
-export const ACCEPTED_RECOVERY_REQUEST2: ProtectionRequest = createProtectionRequest("request2", ANOTHER_LEGAL_OFFICER.address, DEFAULT_LEGAL_OFFICER.address, "ACCEPTED", true, "toRecover", IDENTITY_LOC_ID);
+export const ACCEPTED_RECOVERY_REQUEST2: ProtectionRequest = createProtectionRequest("request2", ANOTHER_LEGAL_OFFICER.address, DEFAULT_LEGAL_OFFICER.address, "ACCEPTED", true, TEST_WALLET_USER.address, IDENTITY_LOC_ID);
 
 export const ACCEPTED_RECOVERY_REQUESTS = [ ACCEPTED_RECOVERY_REQUEST1, ACCEPTED_RECOVERY_REQUEST2 ];
 
@@ -53,7 +53,7 @@ function createProtectionRequest(
     otherLegalOfficerAddress: string,
     status: ProtectionRequestStatus,
     isRecovery:boolean,
-    addressToRecover:string | null,
+    addressToRecover: string | null,
     requesterIdentityLoc: string,
 ): ProtectionRequest {
     return {

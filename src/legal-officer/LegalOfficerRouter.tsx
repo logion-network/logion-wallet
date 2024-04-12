@@ -61,7 +61,7 @@ export default function LegalOfficerRouter() {
         return null;
     }
 
-    const currentLegalOfficerUnavailable = availableLegalOfficers.find(node => node.address === accounts?.current?.accountId.address) === undefined;
+    const currentLegalOfficerUnavailable = availableLegalOfficers.find(node => node.account.equals(accounts?.current?.accountId)) === undefined;
     if(nodesDown.length > 0 && currentLegalOfficerUnavailable) {
         return (
             <FullWidthPane
@@ -87,7 +87,7 @@ export default function LegalOfficerRouter() {
             <Route path={ RECOVERY_DETAILS_RELATIVE_PATH } element={ <RecoveryDetails /> } />
             <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ true } missingSettings={ missingSettings !== undefined } /> } />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
-                    address={ accounts!.current!.accountId.address }
+                    account={ accounts!.current!.accountId }
                     balances={ balanceState?.balances || [] }
                     transactions={ balanceState?.transactions || [] }
                     type="Wallet"

@@ -2,12 +2,13 @@ import { shallowRender } from "src/tests";
 import LegalFeeAmount from "./LegalFeeAmount";
 import { LocData } from "@logion/client";
 import { Lgnt } from "@logion/node-api";
+import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 
 describe("LegalFeeAmount", () => {
 
     it("renders for Logion identity requester", () => {
         const loc = {
-            requesterAddress: undefined,
+            
         } as unknown as LocData;
         const element = shallowRender(<LegalFeeAmount loc={ loc } />);
         expect(element).toMatchSnapshot();
@@ -15,7 +16,7 @@ describe("LegalFeeAmount", () => {
 
     it("renders default for Polkadot requester", () => {
         const loc = {
-            requesterAddress: {},
+            requesterAccountId: TEST_WALLET_USER,
             fees: {
 
             },
@@ -26,7 +27,7 @@ describe("LegalFeeAmount", () => {
 
     it("renders custom for Polkadot requester", () => {
         const loc = {
-            requesterAddress: {},
+            requesterAccountId: TEST_WALLET_USER,
             fees: {
                 legalFee: Lgnt.from(200n),
             },

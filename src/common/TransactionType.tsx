@@ -1,4 +1,5 @@
 import { Transaction } from "@logion/client";
+import { ValidAccountId } from "@logion/node-api";
 
 import { Cell } from "./Table";
 import {
@@ -14,8 +15,8 @@ import { WalletType } from "./Transactions";
 export interface Props {
     transaction: Transaction;
     walletType: WalletType;
-    vaultAddress?: string;
-    address: string;
+    vaultAccount?: ValidAccountId;
+    account?: ValidAccountId;
 }
 
 type FormerLogionLocMethod = "createLoc";
@@ -111,9 +112,9 @@ export default function TransactionType(props: Props) {
 export function buildTransactionType(props: Props): string {
     let baseType;
     if(props.walletType === "Wallet") {
-        baseType = enrichTransactionType(props.transaction, props.address, props.vaultAddress);
+        baseType = enrichTransactionType(props.transaction, props.account, props.vaultAccount);
     } else {
-        baseType = transactionType(props.transaction, props.address);
+        baseType = transactionType(props.transaction, props.account);
     }
     if(props.transaction.type === "EXTRINSIC" || props.transaction.type === "VAULT_OUT") {
         return baseType;
@@ -126,22 +127,22 @@ export function buildTransactionType(props: Props): string {
     }
 }
 
-function enrichTransactionType(transaction: Transaction, address: string, vaultAddress?: string): string {
-    if (transaction.transferDirection === 'Sent' && transaction.to === vaultAddress) {
+function enrichTransactionType(transaction: Transaction, account?: ValidAccountId, vaultAccount?: ValidAccountId): string {
+    if (transaction.transferDirection === 'Sent' && transaction.to === vaultAccount?.address) {
         return "Sent to my vault"
     } else {
-        return transactionType(transaction, address);
+        return transactionType(transaction, account);
     }
 }
 
-export function transactionType(transaction: Transaction, address: string): string {
+export function transactionType(transaction: Transaction, account?: ValidAccountId): string {
     const palletMethods = allMethods[transaction.pallet];
     if (palletMethods !== undefined && palletMethods[transaction.method] !== undefined) {
         return palletMethods[transaction.method]
     } else {
         if (transaction.pallet === "balances") {
             if (transaction.method.startsWith("transfer")) {
-                if (transaction.from === address) {
+                if (transaction.from.equals(account)) {
                     return "Sent";
                 } else {
                     return "Received";

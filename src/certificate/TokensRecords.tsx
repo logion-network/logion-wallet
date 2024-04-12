@@ -1,8 +1,8 @@
 import { TokensRecord, UploadableItemFile, Token, CollectionItem, CheckHashResult } from "@logion/client";
+import { UUID, ValidAccountId } from "@logion/node-api";
 import MenuIcon from "../common/MenuIcon";
 import InlineDateTime from "../common/InlineDateTime";
 import "./TokensRecords.css";
-import { UUID } from "@logion/node-api";
 import ClaimAssetButton from "./ClaimAssetButton";
 import { Row } from "../common/Grid";
 import { Col } from "react-bootstrap";
@@ -10,7 +10,7 @@ import { customClassName } from "src/common/types/Helpers";
 
 export interface TokensRecordsProps {
     locId: UUID,
-    owner: string,
+    owner: ValidAccountId,
     collectionItem: CollectionItem,
     tokenForDownload: Token | undefined,
     tokensRecords: TokensRecord[];
@@ -59,7 +59,7 @@ function TokensRecordCell(props: TokensRecordCellProps) {
             <TRCell label="Timestamp">
                 <InlineDateTime dateTime={ tokensRecord.addedOn } />
             </TRCell>
-            <TRCell label="Issuer">{ tokensRecord.issuer }</TRCell>
+            <TRCell label="Issuer">{ tokensRecord.issuer.address }</TRCell>
             { tokensRecord.files.map(tokensRecordFile => (
                 <TokensRecordFileCell { ...props } tokensRecordFile={ tokensRecordFile }/>
             )) }

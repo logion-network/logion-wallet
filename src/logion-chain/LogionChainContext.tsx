@@ -43,7 +43,7 @@ export function isSuccessful(result: ISubmittableResult): boolean {
     return !result.dispatchError && SIGN_AND_SEND_STRATEGY.canUnsub(result);
 }
 
-export type AxiosFactory = (legalOfficerAddress: string | undefined, token?: Token) => AxiosInstance;
+export type AxiosFactory = (legalOfficerAddress: ValidAccountId | undefined, token?: Token) => AxiosInstance;
 
 export type CallCallback = (result: ISubmittableResult) => void;
 
@@ -249,7 +249,7 @@ export interface LogionChainContextType {
     isCurrentAuthenticated: () => boolean,
     authenticate: (address: ValidAccountId[]) => Promise<void>,
     authenticateAddress: (address: ValidAccountId, signer?: RawSigner) => Promise<LogionClient | undefined>,
-    getOfficer?: (address: string | undefined) => LegalOfficerClass | undefined,
+    getOfficer?: (address: ValidAccountId | undefined) => LegalOfficerClass | undefined,
     saveOfficer?: (legalOfficer: LegalOfficer) => Promise<void>,
     reconnect: () => void,
     tryEnableMetaMask: () => Promise<void>,
@@ -364,9 +364,9 @@ function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
     if(authenticatedClient === undefined) {
         return () => axios.create();
     } else {
-        return (owner?: string, token?: Token): AxiosInstance => {
-            const legalOfficer = authenticatedClient.legalOfficers.find(legalOfficer => legalOfficer.address === owner)!;
-            const axios = authenticatedClient.buildAxios(legalOfficer);
+        return (owner?: ValidAccountId, token?: Token): AxiosInstance => {
+            const legalOfficer = authenticatedClient.legalOfficers.find(legalOfficer => legalOfficer.account.equals(owner))!;
+            const axios = legalOfficer.buildAxiosToNode();
             if (token) {
                 axios.interceptors.request.use((config) => {
                     if (!config.headers) {
@@ -389,7 +389,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
         case 'CONNECT_SUCCESS': {
             const partialState = buildClientHelpers(action.client!, state.allAccounts || [], action.registeredLegalOfficers!);
             if(state.client && partialState.accounts.current) {
-                storeCurrentAddress(state.client.logionApi, partialState.accounts.current.accountId);
+                storeCurrentAddress(partialState.accounts.current.accountId);
             }
             return {
                 ...state,
@@ -415,7 +415,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             if(state.client) {
                 const partialState = buildClientHelpers(state.client, allAccounts || [], registeredLegalOfficers || new Set());
                 if(partialState.accounts.current) {
-                    storeCurrentAddress(state.client.logionApi, partialState.accounts.current.accountId);
+                    storeCurrentAddress(partialState.accounts.current.accountId);
                 }
                 partialStateOrEmpty = partialState;
             }
@@ -438,8 +438,8 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             };
 
         case 'SELECT_ADDRESS': {
-            storeCurrentAddress(state.client!.logionApi, action.newAddress!);
-            const client = state.client!.withCurrentAddress(action.newAddress!);
+            storeCurrentAddress(action.newAddress!);
+            const client = state.client!.withCurrentAccount(action.newAddress!);
             return {
                 ...state,
                 ...buildClientHelpers(client, state.allAccounts || [], state.registeredLegalOfficers!),
@@ -456,7 +456,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             clearAll();
             const client = state.client!.logout();
             clearInterval(state.timer!);
-            clearCurrentAddress(client.logionApi);
+            clearCurrentAddress();
             return {
                 ...state,
                 timer: undefined,
@@ -507,7 +507,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                 storeTokens(client.tokens);
                 const partialState = buildClientHelpers(client, state.allAccounts || [], action.registeredLegalOfficers!);
                 if(state.client && partialState.accounts.current) {
-                    storeCurrentAddress(state.client.logionApi, partialState.accounts.current.accountId);
+                    storeCurrentAddress(partialState.accounts.current.accountId);
                 }
                 return {
                     ...state,
@@ -604,20 +604,20 @@ function buildClientHelpers(
 ): {
     axiosFactory: AxiosFactory,
     isCurrentAuthenticated: () => boolean,
-    getOfficer: (owner: string | undefined) => LegalOfficerClass | undefined,
+    getOfficer: (owner: ValidAccountId | undefined) => LegalOfficerClass | undefined,
     saveOfficer: (legalOfficer: LegalOfficer) => Promise<void>,
     accounts: Accounts,
     client: LogionClient,
 } {
-    const accounts = buildAccounts(allAccounts, client.currentAddress, client, legalOfficers);
+    const accounts = buildAccounts(allAccounts, client.currentAccount, client, legalOfficers);
     let updatedClient = client;
-    if(accounts.current && (!client.currentAddress || !accounts.current?.accountId.equals(client.currentAddress))) {
-        updatedClient = client.withCurrentAddress(accounts.current.accountId);
+    if(accounts.current && (!client.currentAccount || !accounts.current?.accountId.equals(client.currentAccount))) {
+        updatedClient = client.withCurrentAccount(accounts.current.accountId);
     }
     return {
         axiosFactory: buildAxiosFactory(client),
         isCurrentAuthenticated: () => client.isTokenValid(DateTime.now()),
-        getOfficer: address => client.allLegalOfficers.find(legalOfficer => legalOfficer.address === address),
+        getOfficer: accountId => client.allLegalOfficers.find(legalOfficer => legalOfficer.account.equals(accountId)),
         saveOfficer: legalOfficer => client.directoryClient.createOrUpdate(legalOfficer),
         accounts,
         client: updatedClient,
@@ -709,11 +709,11 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 let client = logionClient.useTokens(startupTokens);
 
                 if(startupTokens.length > 0 && accounts.length > 0) {
-                    let candidates = [ loadCurrentAddress(api) || undefined, toValidAccountId(api, accounts[0]) ];
+                    let candidates = [ loadCurrentAddress() || undefined, toValidAccountId(api, accounts[0]) ];
                     const now = DateTime.now();
                     let currentAddress = candidates.find(address => startupTokens.isAuthenticated(now, address));
                     if(currentAddress) {
-                        client = client.withCurrentAddress(currentAddress);
+                        client = client.withCurrentAccount(currentAddress);
                     }
                 }
 
@@ -800,8 +800,8 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
         }
 
         let client = await state.client.authenticate(addresses, state.signer);
-        if(!client.currentAddress) {
-            client = client.withCurrentAddress(addresses[0]);
+        if(!client.currentAccount) {
+            client = client.withCurrentAccount(addresses[0]);
         }
         dispatch({
             type: 'RESET_CLIENT',
@@ -815,7 +815,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
             return undefined;
         }
         let client = await state.client.authenticate([ address ], signer ? signer : state.signer);
-        client = client.withCurrentAddress(address);
+        client = client.withCurrentAccount(address);
         dispatch({
             type: 'RESET_CLIENT',
             client,
@@ -1018,7 +1018,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
 async function buildLegalOfficersSet(client: LogionClient, accounts: InjectedAccount[]): Promise<Set<string>> {
     const legalOfficersSet = new Set<string>();
     for(const account of accounts) {
-        if(account.type !== "ethereum" && account.type !== "ecdsa" && await client.isRegisteredLegalOfficer(account.address)) {
+        if(account.type !== "ethereum" && account.type !== "ecdsa" && await client.isRegisteredLegalOfficer(ValidAccountId.polkadot(account.address))) {
             legalOfficersSet.add(account.address);
         }
     }

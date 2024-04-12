@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 import { LegalOfficer, Token, HashOrContent, downloadFile, TypedFile } from "@logion/client";
-import { Hash } from "@logion/node-api";
+import { Hash, ValidAccountId } from "@logion/node-api";
 import { BrowserFile } from "@logion/client-browser";
 
 export const LO_FILE_IDS = [ 'oath-logo', 'header-logo', 'seal' ];
@@ -14,7 +14,7 @@ export const LO_FILE_DESCRIPTION: Record<LoFileId, string> = {
 }
 
 export function loFileUrl(legalOfficer: LegalOfficer, file: LoFileId, token: Token): string {
-    return `${ legalOfficer.node }/api/lo-file/${ legalOfficer.address }/${ file }?jwt_token=${ token.value }`;
+    return `${ legalOfficer.node }/api/lo-file/${ legalOfficer.account.address }/${ file }?jwt_token=${ token.value }`;
 }
 
 interface HasLocId {
@@ -36,7 +36,7 @@ export interface CheckOwnershipParameters extends HasLocId, HasCollectionItem {}
 export async function getLoFile(
     parameters: {
         axios: AxiosInstance,
-        legalOfficer: string,
+        legalOfficer: ValidAccountId,
         fileId: LoFileId,
     },
 ): Promise<TypedFile> {

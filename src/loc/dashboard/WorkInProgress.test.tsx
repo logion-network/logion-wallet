@@ -1,6 +1,7 @@
 import { shallowRender } from "src/tests";
 import WorkInProgressLocs from "./WorkInProgressLocs";
 import { LocRequestState, LocRequestStatus } from "@logion/client";
+import { ValidAccountId } from "@logion/node-api";
 import { DateTime } from "luxon";
 import { PATRICK } from "src/common/TestData";
 import { setViewer } from "src/common/__mocks__/CommonContextMock";
@@ -13,7 +14,7 @@ describe("WorkInProgressLocs", () => {
         setViewer("User");
         const locs = [
             mockLoc({
-                ownerAddress: PATRICK.address,
+                ownerAccountId: PATRICK.account,
                 createdOn: DateTime.fromISO("2024-03-19T16:00:00Z", {zone: 'utc'}),
                 status: "REVIEW_PENDING",
             }),
@@ -37,7 +38,7 @@ describe("WorkInProgressLocs", () => {
 });
 
 function mockLoc(args: {
-    ownerAddress?: string,
+    ownerAccountId?: ValidAccountId,
     userIdentity?: object,
     status: LocRequestStatus,
     createdOn: DateTime,

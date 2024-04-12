@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { Numbers, Lgnt } from "@logion/node-api";
+import { Numbers, Lgnt, ValidAccountId } from "@logion/node-api";
 import { VaultState } from "@logion/client";
 
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";
@@ -18,7 +18,7 @@ import { useUserContext } from "../wallet-user/UserContext";
 import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 interface FormValues {
-    legalOfficer: string;
+    legalOfficer: ValidAccountId | null;
     amount: Amount;
     destination: string;
 }
@@ -29,12 +29,12 @@ export default function VaultOutRequest() {
     const { protectionState, mutateVaultState } = useUserContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
-    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<string>[]>([]);
+    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<ValidAccountId>[]>([]);
 
     useEffect(() => {
         if (legalOfficersOptions.length === 0 && protectionState && availableLegalOfficers) {
-            const protectingLegalOfficers = protectionState.protectionParameters.legalOfficers.map(legalOfficer => legalOfficer.address);
-            const candidates = availableLegalOfficers.filter(legalOfficer => protectingLegalOfficers.includes(legalOfficer.address));
+            const protectingLegalOfficers = protectionState.protectionParameters.legalOfficers.map(legalOfficer => legalOfficer.account.address);
+            const candidates = availableLegalOfficers.filter(legalOfficer => protectingLegalOfficers.includes(legalOfficer.account.address));
             buildOptions(candidates)
                 .then(options => setLegalOfficersOptions(options));
         }
@@ -42,7 +42,7 @@ export default function VaultOutRequest() {
 
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
-            legalOfficer: "",
+            legalOfficer: null,
             amount: {
                 value: "",
                 unit: Numbers.NONE
@@ -60,9 +60,9 @@ export default function VaultOutRequest() {
         const call = async (callback: CallCallback) => {
             await mutateVaultState(async (state: VaultState) => {
                 return await state.createVaultTransferRequest({
-                    legalOfficer: getOfficer!(formValues!.legalOfficer)!,
+                    legalOfficer: getOfficer!(formValues!.legalOfficer!)!,
                     amount: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.amount.value, formValues.amount.unit)),
-                    destination: formValues.destination,
+                    destination: ValidAccountId.polkadot(formValues.destination),
                     signer: signer!,
                     callback,
                 });
@@ -154,7 +154,6 @@ export default function VaultOutRequest() {
                                 }}
                                 render={ ({ field }) => (
                                     <AmountControl
-                                        //@ts-ignore
                                         isInvalid={ !!errors.amount?.message }
                                         value={ field.value }
                                         onChange={ field.onChange }
@@ -163,7 +162,6 @@ export default function VaultOutRequest() {
                                 )}
                             />
                         }
-                        //@ts-ignore
                         feedback={ errors.amount?.message }
                         colors={ colorTheme.dialog }
                     />

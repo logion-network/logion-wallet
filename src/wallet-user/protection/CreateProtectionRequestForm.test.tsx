@@ -37,7 +37,7 @@ describe("CreateProtectionRequestForm", () => {
 
         await clickByName("Proceed");
 
-        await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
+        await waitFor(() => expect(createProtectionRequest).toHaveBeenCalledWith(
             expect.objectContaining({
                 legalOfficers: twoLegalOfficers,
             })
@@ -48,13 +48,13 @@ describe("CreateProtectionRequestForm", () => {
         setLocsState(LOCS_STATE);
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 
-        await userEvent.type(screen.getByLabelText("Address to Recover"), 'toRecover');
+        await userEvent.type(screen.getByLabelText("Address to Recover"), TEST_WALLET_USER2.address);
 
         await selectLegalOfficers();
 
         await clickByName("Proceed");
 
-        await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
+        await waitFor(() => expect(createProtectionRequest).toHaveBeenCalledWith(
             expect.objectContaining({
                 legalOfficers: twoLegalOfficers,
             })
@@ -73,7 +73,7 @@ describe("CreateProtectionRequestForm", () => {
 
         await clickByName("Proceed");
 
-        await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
+        await waitFor(() => expect(createProtectionRequest).toHaveBeenCalledWith(
             expect.objectContaining({
                 legalOfficers: twoLegalOfficers,
             })
@@ -96,11 +96,11 @@ const LOCS_STATE = {
         "Identity": [
             {
                 locId: "fda29870-3ac3-4448-9b34-7bb01a7fe2a4",
-                data: () => ({ ownerAddress: PATRICK.address }),
+                data: () => ({ ownerAccountId: PATRICK.account }),
             },
             {
                 locId: "210f0bbc-fd3f-41da-8154-543f591c06eb",
-                data: () => ({ ownerAddress: GUILLAUME.address }),
+                data: () => ({ ownerAccountId: GUILLAUME.account }),
             }
         ]
     }

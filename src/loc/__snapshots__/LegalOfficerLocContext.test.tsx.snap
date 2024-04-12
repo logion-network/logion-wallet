@@ -8,8 +8,13 @@ exports[`LegalOfficerLocContextProvider renders 1`] = `
     Object {
       "legalOfficers": Array [
         Object {
+          "account": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+              "type": "Polkadot",
+            },
+          },
           "additionalDetails": "",
-          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
           "name": "Patrick Gielen",
           "node": "http://logion.patrick.com",
           "nodeId": "",
@@ -36,7 +41,7 @@ exports[`LegalOfficerLocContextProvider renders 1`] = `
           "Identity",
           "Transaction",
         ],
-        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "ownerAddress": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
         "statuses": Array [
           "CLOSED",
           "OPEN",

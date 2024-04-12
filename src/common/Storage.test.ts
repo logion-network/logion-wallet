@@ -17,8 +17,8 @@ describe("Tokens storage", () => {
         const tokens = new AccountTokens(
             api.object(),
             {
-                "Polkadot:abc": {
-                    value: "token-abc",
+                "Polkadot:vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz": {
+                    value: "token-vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
                     expirationDateTime: DateTime.fromISO(expirationDateTime, {zone: 'utc'})
                 }
             }
@@ -26,8 +26,8 @@ describe("Tokens storage", () => {
 
         storeTokens(tokens);
 
-        expect(JSON.parse(window.localStorage["token.Polkadot:abc"])).toEqual({
-            value: "token-abc",
+        expect(JSON.parse(window.localStorage["token.Polkadot:vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"])).toEqual({
+            value: "token-vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
             expirationDateTime
         });
     });
@@ -37,8 +37,8 @@ describe("Tokens storage", () => {
         const tokens = new AccountTokens(
             api.object(),
             {
-                "Polkadot:abc": {
-                    value: "token-abc",
+                "Polkadot:vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz": {
+                    value: "token-vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
                     expirationDateTime: DateTime.fromISO(expirationDateTime, {zone: 'utc'})
                 }
             }
@@ -55,8 +55,8 @@ describe("Tokens storage", () => {
         const tokens = new AccountTokens(
             api.object(),
             {
-                "Polkadot:abc": {
-                    value: "token-abc",
+                "Polkadot:vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz": {
+                    value: "token-vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
                     expirationDateTime: DateTime.fromISO(expirationDateTime)
                 }
             }
@@ -73,8 +73,8 @@ describe("Tokens storage", () => {
         const tokens = new AccountTokens(
             api.object(),
             {
-                "Polkadot:abc": {
-                    value: "token-abc",
+                "Polkadot:vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz": {
+                    value: "token-vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
                     expirationDateTime: DateTime.fromISO(expirationDateTime)
                 }
             }

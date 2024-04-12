@@ -48,12 +48,17 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
       "links": Array [],
       "locType": "Identity",
       "metadata": Array [],
-      "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-      "requesterAddress": Object {
-        "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        "equals": [Function],
-        "toKey": [Function],
-        "type": "Polkadot",
+      "ownerAccountId": ValidAccountId {
+        "anyAccountId": AnyAccountId {
+          "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+          "type": "Polkadot",
+        },
+      },
+      "requesterAccountId": ValidAccountId {
+        "anyAccountId": AnyAccountId {
+          "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+          "type": "Polkadot",
+        },
       },
       "requesterLocId": undefined,
       "status": "OPEN",
@@ -70,8 +75,13 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
     contributionMode="Requester"
     legalOfficer={
       Object {
+        "account": ValidAccountId {
+          "anyAccountId": AnyAccountId {
+            "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+            "type": "Polkadot",
+          },
+        },
         "additionalDetails": "",
-        "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "name": "Patrick Gielen",
         "node": "http://logion.patrick.com",
         "nodeId": "",
@@ -137,12 +147,17 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
         "links": Array [],
         "locType": "Identity",
         "metadata": Array [],
-        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-        "requesterAddress": Object {
-          "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-          "equals": [Function],
-          "toKey": [Function],
-          "type": "Polkadot",
+        "ownerAccountId": ValidAccountId {
+          "anyAccountId": AnyAccountId {
+            "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+            "type": "Polkadot",
+          },
+        },
+        "requesterAccountId": ValidAccountId {
+          "anyAccountId": AnyAccountId {
+            "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+            "type": "Polkadot",
+          },
         },
         "requesterLocId": undefined,
         "status": "OPEN",
@@ -199,12 +214,17 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
           "links": Array [],
           "locType": "Identity",
           "metadata": Array [],
-          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "requesterAddress": Object {
-            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "ownerAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+              "type": "Polkadot",
+            },
+          },
+          "requesterAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+              "type": "Polkadot",
+            },
           },
           "requesterLocId": undefined,
           "status": "OPEN",
@@ -260,12 +280,17 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
           "links": Array [],
           "locType": "Identity",
           "metadata": Array [],
-          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "requesterAddress": Object {
-            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "ownerAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+              "type": "Polkadot",
+            },
+          },
+          "requesterAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+              "type": "Polkadot",
+            },
           },
           "requesterLocId": undefined,
           "status": "OPEN",
@@ -320,12 +345,17 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
           "links": Array [],
           "locType": "Identity",
           "metadata": Array [],
-          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "requesterAddress": Object {
-            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "ownerAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+              "type": "Polkadot",
+            },
+          },
+          "requesterAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+              "type": "Polkadot",
+            },
           },
           "requesterLocId": undefined,
           "status": "OPEN",
@@ -390,12 +420,17 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
       "links": Array [],
       "locType": "Identity",
       "metadata": Array [],
-      "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-      "requesterAddress": Object {
-        "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        "equals": [Function],
-        "toKey": [Function],
-        "type": "Polkadot",
+      "ownerAccountId": ValidAccountId {
+        "anyAccountId": AnyAccountId {
+          "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+          "type": "Polkadot",
+        },
+      },
+      "requesterAccountId": ValidAccountId {
+        "anyAccountId": AnyAccountId {
+          "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+          "type": "Polkadot",
+        },
       },
       "requesterLocId": undefined,
       "status": "OPEN",
@@ -413,8 +448,13 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
     contributionMode="VerifiedIssuer"
     legalOfficer={
       Object {
+        "account": ValidAccountId {
+          "anyAccountId": AnyAccountId {
+            "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+            "type": "Polkadot",
+          },
+        },
         "additionalDetails": "",
-        "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "name": "Patrick Gielen",
         "node": "http://logion.patrick.com",
         "nodeId": "",
@@ -480,12 +520,17 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
         "links": Array [],
         "locType": "Identity",
         "metadata": Array [],
-        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-        "requesterAddress": Object {
-          "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-          "equals": [Function],
-          "toKey": [Function],
-          "type": "Polkadot",
+        "ownerAccountId": ValidAccountId {
+          "anyAccountId": AnyAccountId {
+            "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+            "type": "Polkadot",
+          },
+        },
+        "requesterAccountId": ValidAccountId {
+          "anyAccountId": AnyAccountId {
+            "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+            "type": "Polkadot",
+          },
         },
         "requesterLocId": undefined,
         "status": "OPEN",
@@ -542,12 +587,17 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
           "links": Array [],
           "locType": "Identity",
           "metadata": Array [],
-          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "requesterAddress": Object {
-            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "ownerAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+              "type": "Polkadot",
+            },
+          },
+          "requesterAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+              "type": "Polkadot",
+            },
           },
           "requesterLocId": undefined,
           "status": "OPEN",
@@ -603,12 +653,17 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
           "links": Array [],
           "locType": "Identity",
           "metadata": Array [],
-          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "requesterAddress": Object {
-            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "ownerAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+              "type": "Polkadot",
+            },
+          },
+          "requesterAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+              "type": "Polkadot",
+            },
           },
           "requesterLocId": undefined,
           "status": "OPEN",
@@ -663,12 +718,17 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
           "links": Array [],
           "locType": "Identity",
           "metadata": Array [],
-          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "requesterAddress": Object {
-            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "ownerAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+              "type": "Polkadot",
+            },
+          },
+          "requesterAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+              "type": "Polkadot",
+            },
           },
           "requesterLocId": undefined,
           "status": "OPEN",

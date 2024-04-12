@@ -77,7 +77,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
             legalOfficer2Status = 'ACTIVATED';
         }
 
-        const forAccount = protectionParameters.isRecovery ? ` for account ${protectionParameters.recoveredAddress}` : "";
+        const forAccount = protectionParameters.isRecovery ? ` for account ${protectionParameters.recoveredAccount?.address}` : "";
 
         const mainTitle = protectionParameters.isRecovery && !protectionParameters.isClaimed ? "Recovery" : "My Logion Protection";
         let subTitle;
@@ -134,7 +134,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     <Header
                         icon="activated"
                         color={ GREEN }
-                        text={`You are now ready to claim the access to address ${protectionParameters.recoveredAddress}.`}
+                        text={`You are now ready to claim the access to address ${protectionParameters.recoveredAccount?.address}.`}
                     />
                 );
             } else {

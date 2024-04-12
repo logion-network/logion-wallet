@@ -1,11 +1,12 @@
 import { LegalOfficer, PostalAddress, UserIdentity } from '@logion/client';
 import { LegalOfficerClass } from "@logion/client/dist/Types.js";
-import { Transaction } from '@logion/client/dist/TransactionClient.js';
+import { Transaction } from '@logion/client';
 import { Coin, CoinBalance, Numbers, Lgnt } from '@logion/node-api';
 
 import { ColorTheme, rgbaToHex } from './ColorTheme';
 
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, A_THIRD_LEGAL_OFFICER } from "../__mocks__/LogionMock";
+import { TEST_WALLET_USER, TEST_WALLET_USER2 } from 'src/wallet-user/TestData';
 export { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, A_THIRD_LEGAL_OFFICER };
 
 export const DEFAULT_IDENTITY: UserIdentity = {
@@ -135,8 +136,8 @@ export const DEFAULT_COIN_BALANCE: CoinBalance = {
 
 export const DEFAULT_TRANSACTION: Transaction = {
     id: "id",
-    from: "from",
-    to: "to",
+    from: TEST_WALLET_USER,
+    to: TEST_WALLET_USER2,
     pallet: "pallet",
     method: "method",
     transferValue: "420",
@@ -165,7 +166,7 @@ export const DEFAULT_FAILED_TRANSACTION:Transaction = {
 
 export const PATRICK: LegalOfficer = {
     name: "Patrick Gielen",
-    address: DEFAULT_LEGAL_OFFICER.address,
+    account: DEFAULT_LEGAL_OFFICER,
     additionalDetails: "",
     userIdentity: {
         firstName: "Patrick",
@@ -188,7 +189,7 @@ export const PATRICK: LegalOfficer = {
 
 export const GUILLAUME: LegalOfficer = {
     name: "Guillaume Grain",
-    address: ANOTHER_LEGAL_OFFICER.address,
+    account: ANOTHER_LEGAL_OFFICER,
     additionalDetails: "",
     userIdentity: {
         firstName: "Patrick",
@@ -211,7 +212,7 @@ export const GUILLAUME: LegalOfficer = {
 
 export const ALAIN: LegalOfficer = {
     name: "Alain Barland",
-    address: A_THIRD_LEGAL_OFFICER.address,
+    account: A_THIRD_LEGAL_OFFICER,
     additionalDetails: "",
     userIdentity: {
         firstName: "Patrick",

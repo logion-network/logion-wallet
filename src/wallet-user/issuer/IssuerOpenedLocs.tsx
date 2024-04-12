@@ -33,7 +33,7 @@ export default function IssuerOpenedLocs() {
             columns={ [
                 {
                     "header": "Legal Officer",
-                    render: locData => <LegalOfficerName address={ locData.ownerAddress } />,
+                    render: locData => <LegalOfficerName address={ locData.ownerAccountId } />,
                     align: 'left',
                 },
                 {

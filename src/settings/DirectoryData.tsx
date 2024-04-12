@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 import { LegalOfficer } from "@logion/client";
+import { ValidAccountId } from "@logion/node-api";
 
 import Button from "../common/Button";
 import { GREEN, ORANGE, RED } from "../common/ColorTheme";
@@ -35,8 +36,8 @@ export default function DirectoryData() {
     const { legalOfficer, refreshLegalOfficer, missingSettings } = useLegalOfficerContext();
 
     useEffect(() => {
-        if(legalOfficer?.address !== getValues().address && (legalOfficer || missingSettings?.directory)) {
-            setValue("address", legalOfficer?.address || "");
+        if(legalOfficer?.account.address !== getValues().address && (legalOfficer || missingSettings?.directory)) {
+            setValue("address", legalOfficer?.account.address || "");
             setValue("additionalDetails", legalOfficer?.additionalDetails || "");
 
             setValue("firstName", legalOfficer?.userIdentity.firstName || "");
@@ -371,7 +372,7 @@ export default function DirectoryData() {
 
 function toLegalOfficer(formValues: FormValues): LegalOfficer {
     return {
-        address: formValues.address,
+        account: ValidAccountId.polkadot(formValues.address),
         additionalDetails: formValues.additionalDetails,
         name: "",
         node: "",

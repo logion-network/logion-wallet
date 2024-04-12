@@ -6,7 +6,7 @@ import { UUID, Hash } from "@logion/node-api";
 import { MetadataItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
-import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
+import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 
 describe("LocPublishPublicDataButton", () => {
 
@@ -15,7 +15,7 @@ describe("LocPublishPublicDataButton", () => {
         {
             type: "Data",
             status: "DRAFT",
-            submitter: mockValidPolkadotAccountId("data-submitter"),
+            submitter: TEST_WALLET_USER,
             timestamp: null,
             newItem: false,
             template: false,

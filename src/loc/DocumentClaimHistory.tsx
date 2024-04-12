@@ -39,7 +39,7 @@ export default function DocumentClaimHistory(props: Props) {
     useEffect(() => {
         if(axiosFactory && loc && hash && deliveries === undefined) {
             (async function() {
-                const deliveries = await props.getFileDeliveries(axiosFactory(loc.ownerAddress), loc);
+                const deliveries = await props.getFileDeliveries(axiosFactory(loc.ownerAccountId), loc);
                 setDeliveries(deliveries);
             })();
         }

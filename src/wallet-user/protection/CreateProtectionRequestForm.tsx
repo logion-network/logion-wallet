@@ -1,4 +1,5 @@
 import { LocsState, LogionClient } from "@logion/client";
+import { ValidAccountId, AnyAccountId } from "@logion/node-api";
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -28,7 +29,7 @@ export function getLegalOfficerAndLocs(locsState: LocsState | undefined, client:
         for(const loc of closedIdentityLocs) {
             list.push({
                 loc: loc.locId,
-                legalOfficer: client.getLegalOfficer(loc.data().ownerAddress),
+                legalOfficer: client.getLegalOfficer(loc.data().ownerAccountId),
             });
         }
         return list;
@@ -69,7 +70,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     legalOfficer1!.legalOfficer,
                     legalOfficer2!.legalOfficer,
                 ],
-                addressToRecover: props.isRecovery ? addressToRecover : undefined,
+                addressToRecover: props.isRecovery ? ValidAccountId.polkadot(addressToRecover) : undefined,
                 callback,
                 requesterIdentityLoc1: legalOfficer1!.loc,
                 requesterIdentityLoc2: legalOfficer2!.loc,
@@ -101,10 +102,11 @@ export default function CreateProtectionRequestForm(props: Props) {
         if(!props.isRecovery) {
             setAddressToRecoverError("");
         } else {
-            if(client !== null && client.isValidAddress(addressToRecover)) {
+            const account = new AnyAccountId(addressToRecover, "Polkadot");
+            if(client !== null && account.isValid()) {
                 setAddressToRecoverError("Checking recovery config...");
                 (async function() {
-                    if(await client.isProtected(addressToRecover)) {
+                    if(await client.isProtected(account.toValidAccountId())) {
                         setAddressToRecoverError("");
                     } else {
                         setAddressToRecoverError("This SS58 address is not set up for recovery");

@@ -1,8 +1,8 @@
 import { Numbers } from "@logion/node-api";
-import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 import { shallowRender } from '../tests';
 
 import AccountAddress from './AccountAddress';
+import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 
 describe("AccountAddress", () => {
 
@@ -21,7 +21,7 @@ describe("AccountAddress", () => {
                 }}
                 account={{
                     name: "Name 1",
-                    accountId: mockValidPolkadotAccountId("address1"),
+                    accountId: TEST_WALLET_USER,
                     isLegalOfficer: false,
                 }}
                 disabled={ false }

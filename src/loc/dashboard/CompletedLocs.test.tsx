@@ -1,3 +1,4 @@
+import { ValidAccountId } from "@logion/node-api";
 import { shallowRender } from "src/tests";
 import CompletedLocs from "./CompletedLocs";
 import { LocRequestState, LocRequestStatus } from "@logion/client";
@@ -13,12 +14,12 @@ describe("CompletedLocs", () => {
         setViewer("User");
         const locs = [
             mockLoc({
-                ownerAddress: PATRICK.address,
+                ownerAccountId: PATRICK.account,
                 closedOn: DateTime.fromISO("2024-03-19T16:00:00Z", {zone: 'utc'}),
                 status: "CLOSED",
             }),
             mockLoc({
-                ownerAddress: PATRICK.address,
+                ownerAccountId: PATRICK.account,
                 closedOn: DateTime.fromISO("2024-03-19T16:00:00Z", {zone: 'utc'}),
                 status: "OPEN",
                 voidInfo: {},
@@ -49,7 +50,7 @@ describe("CompletedLocs", () => {
 });
 
 function mockLoc(args: {
-    ownerAddress?: string,
+    ownerAccountId?: ValidAccountId,
     userIdentity?: object,
     status: LocRequestStatus,
     closedOn: DateTime,

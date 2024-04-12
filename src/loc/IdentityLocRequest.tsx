@@ -43,8 +43,8 @@ export default function IdentityLocRequest(props: Props) {
     const { accounts } = useLogionChain();
     const navigate = useNavigate();
     const legalOfficersWithoutValidIdentityLoc = useMemo(() => {
-        const legalOfficersWithValidIdentityLoc = locsState?.legalOfficersWithValidIdentityLoc.map(lo => lo.address);
-        return availableLegalOfficers?.filter(lo => legalOfficersWithValidIdentityLoc?.includes(lo.address) === false)
+        const legalOfficersWithValidIdentityLoc = locsState?.legalOfficersWithValidIdentityLoc.map(lo => lo.account.address);
+        return availableLegalOfficers?.filter(lo => legalOfficersWithValidIdentityLoc?.includes(lo.account.address) === false)
     }, [ locsState?.legalOfficersWithValidIdentityLoc, availableLegalOfficers ]);
     const [ sponsorshipId, setSponsorshipId ] = useState<UUID>();
     const [ invalidSponsorshipId, setInvalidSponsorshipId ] = useState<string>();
@@ -81,7 +81,7 @@ export default function IdentityLocRequest(props: Props) {
         let draftRequest: DraftRequest;
         await mutateLocsState(async (locsState: LocsState) => {
             draftRequest = await locsState.requestIdentityLoc({
-                legalOfficerAddress: legalOfficer.address,
+                legalOfficerAccountId: legalOfficer.account,
                 description: `KYC ${ userIdentity.firstName } ${ userIdentity.lastName } - ${ accounts.current?.accountId.toKey() }`,
                 userIdentity,
                 userPostalAddress,

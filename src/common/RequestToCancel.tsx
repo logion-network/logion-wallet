@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { VaultState, VaultTransferRequest } from "@logion/client";
+import { ValidAccountId } from "@logion/node-api";
 
 import Dialog from "./Dialog";
 import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
@@ -24,7 +25,7 @@ export default function RequestToCancel(props: Props) {
             await mutateVaultState(async (vaultState: VaultState) => {
                 if(client && props.requestToCancel !== null && signer) {
                     return vaultState.cancelVaultTransferRequest(
-                        client.getLegalOfficer(props.requestToCancel.legalOfficerAddress),
+                        client.getLegalOfficer(ValidAccountId.polkadot(props.requestToCancel.legalOfficerAddress)),
                         props.requestToCancel,
                         signer,
                         callback

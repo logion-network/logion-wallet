@@ -65,10 +65,10 @@ exports[`LocPublicDataDetails renders 1`] = `
       />
     </LocItemDetail>
     <LocItemDetail
-      copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+      copyButtonText="vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
       label="Submitter ID"
     >
-      5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+      vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz
     </LocItemDetail>
     <LocItemDetail
       label="Public data"

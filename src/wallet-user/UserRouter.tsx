@@ -63,19 +63,19 @@ export default function UserRouter() {
             <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ false } /> } />
             <Route path={ RECOVERY_RELATIVE_PATH } element={ <Recovery /> } />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
-                    address={ accounts!.current?.accountId!.address }
+                    account={ accounts!.current?.accountId! }
                     balances={ balanceState?.balances || null }
                     transactions={ balanceState?.transactions || null }
                     type="Wallet"
-                    vaultAddress={ vaultState?.vaultAddress || undefined }
+                    vaultAddress={ vaultState?.vaultAccount || undefined }
                 />
             } />
             <Route path={ VAULT_TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
-                    address={ vaultState?.vaultAddress || "" }
+                    account={ vaultState?.vaultAccount }
                     balances={ vaultState?.balances || null }
                     transactions={ vaultState?.transactions || null }
                     type="Vault"
-                    vaultAddress={ vaultState?.vaultAddress || undefined }
+                    vaultAddress={ vaultState?.vaultAccount || undefined }
                 />
             } />
             <Route

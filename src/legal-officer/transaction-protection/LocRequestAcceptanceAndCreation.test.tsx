@@ -7,7 +7,7 @@ jest.mock("../../loc/LocContext");
 
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { UUID, Fees } from '@logion/node-api';
+import { UUID, Fees, ValidAccountId } from '@logion/node-api';
 import { LocData } from '@logion/client';
 
 import { shallowRender, typeByLabel } from '../../tests';
@@ -95,8 +95,8 @@ describe("LocRequestAcceptance", () => {
 
 const REQUEST = {
     id: new UUID(),
-    ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId,
-    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+    ownerAccountId: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId,
+    requesterAccountId: ValidAccountId.polkadot("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
     description: "LOC description",
     status: "REQUESTED",
     createdOn: "2021-09-20T15:52:00.000",
@@ -108,8 +108,8 @@ const REQUEST = {
 
 const COLLECTION_LOC_REQUEST = {
     id: new UUID(),
-    ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId,
-    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+    ownerAccountId: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId,
+    requesterAccountId: ValidAccountId.polkadot("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
     description: "LOC description",
     status: "REQUESTED",
     createdOn: "2021-09-20T15:52:00.000",

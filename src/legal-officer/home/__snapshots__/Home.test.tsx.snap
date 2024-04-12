@@ -62,14 +62,24 @@ exports[`Home renders 1`] = `
                       "inclusion": "125000",
                       "total": "125000",
                     },
-                    "from": "from",
+                    "from": ValidAccountId {
+                      "anyAccountId": AnyAccountId {
+                        "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                        "type": "Polkadot",
+                      },
+                    },
                     "id": "id",
                     "method": "method",
                     "pallet": "pallet",
                     "reserved": "0",
                     "successful": true,
                     "tip": "0",
-                    "to": "to",
+                    "to": ValidAccountId {
+                      "anyAccountId": AnyAccountId {
+                        "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                        "type": "Polkadot",
+                      },
+                    },
                     "total": "125420",
                     "transferDirection": "Sent",
                     "transferValue": "420",

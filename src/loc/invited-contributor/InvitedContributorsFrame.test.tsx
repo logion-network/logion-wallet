@@ -2,7 +2,6 @@ import { setLocState } from "../__mocks__/LocContextMock";
 import { waitFor, screen, render } from "@testing-library/react";
 import { OpenLoc } from "../../__mocks__/LogionClientMock";
 import InvitedContributorsFrame from "./InvitedContributorsFrame";
-import { mockValidAccountId } from "../../__mocks__/LogionMock";
 import { ValidAccountId } from "@logion/node-api";
 
 jest.mock("../LocContext");
@@ -25,8 +24,8 @@ describe("InvitedContributorsFrame", () => {
 
     it("renders 2 rows", async () => {
         const invitedContributors = [
-            mockValidAccountId("5EnzoqHHGgQ9CEsZtWGYEAf6fdhW9tctgkGctbDEcKN8JCbV", "Polkadot"),
-            mockValidAccountId("5FEiK5Kwu3cCiTuy4sv4k3rEdPc7dt1KHyLbGAHNnYgXkqps", "Polkadot")
+            ValidAccountId.polkadot("5EnzoqHHGgQ9CEsZtWGYEAf6fdhW9tctgkGctbDEcKN8JCbV"),
+            ValidAccountId.polkadot("5FEiK5Kwu3cCiTuy4sv4k3rEdPc7dt1KHyLbGAHNnYgXkqps"),
         ];
         setupInvitedContributors(invitedContributors);
         render(<InvitedContributorsFrame/>);

@@ -8,6 +8,7 @@ import './ViewFileButton.css';
 import { Children, customClassName } from "./types/Helpers";
 import { useLogionChain, AxiosFactory } from "../logion-chain";
 import { MimeType, Token, TypedFile } from "@logion/client";
+import { ValidAccountId } from "@logion/node-api";
 import { useCallback, useMemo, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
@@ -17,7 +18,7 @@ export interface FileInfo {
 }
 
 export interface ViewFileProps extends FileInfo {
-    nodeOwner: string;
+    nodeOwner: ValidAccountId;
     token?: Token;
     children?: Children;
     limitIconSize?: boolean;
@@ -105,7 +106,7 @@ export default function ViewFileButton(props: ViewFileProps) {
 }
 
 export interface DownloadFilesParams {
-    nodeOwner: string;
+    nodeOwner: ValidAccountId;
     files: FileInfo[];
     axiosFactory: AxiosFactory
 }

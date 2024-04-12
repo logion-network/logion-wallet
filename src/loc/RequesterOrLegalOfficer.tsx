@@ -27,30 +27,30 @@ export default function RequesterOrLegalOfficer(props: Props) {
                 >
                     { loc.userIdentity?.firstName || "" } { loc.userIdentity?.lastName || "" }
                     {
-                        loc.requesterAddress !== null && loc.requesterAddress !== undefined &&
+                        loc.requesterAccountId !== null && loc.requesterAccountId !== undefined &&
                         <>
                             <OverlayTrigger
                                 placement="top"
                                 delay={ 500 }
                                 overlay={
-                                    <Tooltip id={ loc.requesterAddress.toKey() }>{ loc.requesterAddress.address }</Tooltip>
+                                    <Tooltip id={ loc.requesterAccountId.toKey() }>{ loc.requesterAccountId.address }</Tooltip>
                                 }
                             >
                                 <span><br /> <>
                                 {
                                     loc.identityLocId &&
-                                    <NewTabLink href={ identityLocDetailsPath(loc.identityLocId!.toString()) }>{ loc.requesterAddress.address }</NewTabLink>
+                                    <NewTabLink href={ identityLocDetailsPath(loc.identityLocId!.toString()) }>{ loc.requesterAccountId.address }</NewTabLink>
                                 }
                                 {
                                     loc.identityLocId === undefined &&
-                                    loc.requesterAddress.address
+                                    loc.requesterAccountId.address
                                 }</>
                                 </span>
                             </OverlayTrigger>
                         </>
                     }
                     {
-                        loc.requesterAddress === undefined && loc.requesterLocId !== undefined &&
+                        loc.requesterAccountId === undefined && loc.requesterLocId !== undefined &&
                         <span><br />
                         <NewTabLink
                             href={ detailsPath(loc.requesterLocId, 'Identity') }
@@ -75,8 +75,8 @@ export default function RequesterOrLegalOfficer(props: Props) {
                             delay={ 500 }
                             overlay={
                                 <Tooltip
-                                    id={ loc?.ownerAddress }>{ loc?.ownerAddress }</Tooltip> }>
-                            <span><br /> { loc?.ownerAddress }</span>
+                                    id={ loc?.ownerAccountId.address }>{ loc?.ownerAccountId.address }</Tooltip> }>
+                            <span><br /> { loc?.ownerAccountId.address }</span>
                         </OverlayTrigger>
                 </LocItemDetail>
             }

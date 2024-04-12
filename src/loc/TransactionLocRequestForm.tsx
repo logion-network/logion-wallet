@@ -1,6 +1,6 @@
 import { Controller, useForm } from 'react-hook-form';
 import Form from "react-bootstrap/Form";
-import { Lgnt, Numbers } from "@logion/node-api";
+import { Lgnt, Numbers, ValidAccountId } from "@logion/node-api";
 import FormGroup from '../common/FormGroup';
 import AmountControl, { Amount, validateAmount } from 'src/common/AmountControl';
 import CollapsePane from 'src/components/collapsepane/CollapsePane';
@@ -20,7 +20,7 @@ export interface FormValues {
 
 export interface Props {
     colors: BackgroundAndForegroundColors;
-    legalOfficer: string | undefined;
+    legalOfficer: ValidAccountId | undefined;
 }
 
 export default function TransactionLocRequestForm(props: Props) {
@@ -38,7 +38,7 @@ export default function TransactionLocRequestForm(props: Props) {
         let draftRequest: DraftRequest;
         await mutateLocsState(async (locsState: LocsState) => {
             draftRequest = await locsState!.requestTransactionLoc({
-                legalOfficerAddress: props.legalOfficer!,
+                legalOfficerAccountId: props.legalOfficer!,
                 description: formValues.description,
                 draft: true,
                 template: undefined,

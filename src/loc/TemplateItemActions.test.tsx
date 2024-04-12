@@ -107,7 +107,8 @@ function givenOpenLoc() {
     setLocRequest({
         id: new UUID("c34b8164-9c4a-41d5-9228-37273da97435"),
         status: "OPEN",
-        requesterAddress: TEST_WALLET_USER,
+        requesterAccountId: TEST_WALLET_USER,
+        ownerAccountId: DEFAULT_LEGAL_OFFICER,
         locType: "Transaction",
     });
 }

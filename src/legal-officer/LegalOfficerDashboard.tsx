@@ -38,11 +38,11 @@ export default function LegalOfficerDashboard() {
     }, [ refresh, refreshRequests, refreshLocs, refreshVotes ]);
 
     const currentLegalOfficerUnavailable = useMemo(
-        () => availableLegalOfficers?.find(node => node.address === accounts?.current?.accountId.address) === undefined,
+        () => availableLegalOfficers?.find(node => node.account.equals(accounts?.current?.accountId)) === undefined,
     [ availableLegalOfficers, accounts ]);
 
     const hasVoteFeature = useMemo(() => {
-        return backendConfig(accounts?.current?.accountId.address).features.vote;
+        return backendConfig(accounts?.current?.accountId).features.vote;
     }, [ accounts, backendConfig ]);
 
     if(accounts === null || availableLegalOfficers === undefined) {

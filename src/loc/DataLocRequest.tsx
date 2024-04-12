@@ -84,13 +84,13 @@ export default function DataLocRequest(props: Props) {
                         { locType === "Collection" &&
                             <CollectionLocRequestForm
                                 colors={ colorTheme.frame }
-                                legalOfficer={ legalOfficer?.address }
+                                legalOfficer={ legalOfficer?.account }
                             />
                         }
                         { locType === "Transaction" &&
                             <TransactionLocRequestForm
                                 colors={ colorTheme.frame }
-                                legalOfficer={ legalOfficer?.address }
+                                legalOfficer={ legalOfficer?.account }
                             />
                         }
                     </Frame>

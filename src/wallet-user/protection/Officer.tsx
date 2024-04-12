@@ -38,7 +38,7 @@ export default function Officer(props: Props) {
         border = `1px solid ${props.borderColor}`;
     }
 
-    const polkadotAddress = props.officer?.address ? props.officer?.address : "";
+    const polkadotAddress = props.officer?.account.address ? props.officer?.account.address : "";
     return (
         <div className="Officer"
              style={ {

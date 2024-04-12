@@ -32,8 +32,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
           label="Legal Officer N°1"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -64,8 +69,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -92,8 +102,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -120,8 +135,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -152,8 +172,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -190,8 +215,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
           label="Legal Officer N°2"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -222,8 +252,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -250,8 +285,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -278,8 +318,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -310,8 +355,13 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -419,7 +469,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
     <Header
       color="#37ad4b"
       icon="activated"
-      text="You are now ready to claim the access to address toRecover."
+      text="You are now ready to claim the access to address vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz."
     />
     <ButtonGroup
       className="Claim"
@@ -443,8 +493,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
           label="Legal Officer N°1"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -475,8 +530,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -503,8 +563,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -531,8 +596,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -563,8 +633,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -601,8 +676,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
           label="Legal Officer N°2"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -633,8 +713,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -661,8 +746,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -689,8 +779,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -721,8 +816,13 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -840,8 +940,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
           label="Legal Officer N°1"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -872,8 +977,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -900,8 +1010,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -928,8 +1043,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -960,8 +1080,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -998,8 +1123,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
           label="Legal Officer N°2"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -1030,8 +1160,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1058,8 +1193,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1086,8 +1226,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1118,8 +1263,13 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -1227,7 +1377,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
     <Header
       color="#37ad4b"
       icon="activated"
-      text="You are now ready to claim the access to address toRecover."
+      text="You are now ready to claim the access to address vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz."
     />
     <ButtonGroup
       className="Claim"
@@ -1251,8 +1401,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
           label="Legal Officer N°1"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -1283,8 +1438,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1311,8 +1471,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1339,8 +1504,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1371,8 +1541,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -1409,8 +1584,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
           label="Legal Officer N°2"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -1441,8 +1621,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1469,8 +1654,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1497,8 +1687,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1529,8 +1724,13 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -1650,8 +1850,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
           label="Legal Officer N°1"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -1682,8 +1887,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1710,8 +1920,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1738,8 +1953,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1770,8 +1990,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -1808,8 +2033,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
           label="Legal Officer N°2"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -1840,8 +2070,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1868,8 +2103,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1896,8 +2136,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -1928,8 +2173,13 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -2038,7 +2288,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
     <Header
       color="#ff9b3f"
       icon="pending"
-      text="Your Logion Recovery request  for account toRecover has been submitted for review. Your Legal Officers will contact you
+      text="Your Logion Recovery request  for account vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz has been submitted for review. Your Legal Officers will contact you
                         as soon as possible to finalize the procedure."
     />
     <ExtrinsicSubmissionStateView />
@@ -2052,8 +2302,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
           label="Legal Officer N°1"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -2084,8 +2339,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -2112,8 +2372,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -2140,8 +2405,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -2172,8 +2442,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -2210,8 +2485,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
           label="Legal Officer N°2"
           legalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },
@@ -2242,8 +2522,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -2270,8 +2555,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "workload": 1,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -2298,8 +2588,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -2330,8 +2625,13 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
           mode="view"
           otherLegalOfficer={
             TestLegalOfficer {
+              "account": ValidAccountId {
+                "anyAccountId": AnyAccountId {
+                  "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+                  "type": "Polkadot",
+                },
+              },
               "additionalDetails": "",
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "axiosFactory": Object {
                 "buildAxiosInstance": [MockFunction],
               },

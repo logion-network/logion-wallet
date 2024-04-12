@@ -80,7 +80,7 @@ async function uploadCsv(): Promise<any> {
             return Promise.resolve(undefined);
         },
         data: () => ({
-            requesterAddress: TEST_WALLET_USER,
+            requesterAccountId: TEST_WALLET_USER,
             collectionCanUpload: false,
             id: new UUID("6a7954ca-910d-48c5-857f-c3dca3f98e34"),
         }),
