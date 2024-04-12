@@ -1,3 +1,4 @@
+import { ValidAccountId } from "@logion/node-api";
 import { useEffect, useState, useCallback } from "react";
 import { Col, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
@@ -41,26 +42,26 @@ export default function RecoveryDetails() {
 
     useEffect(() => {
         if (recoveryInfo === null && axiosFactory !== undefined) {
-            const currentAddress = accounts!.current!.accountId.address;
-            fetchRecoveryInfo(axiosFactory(currentAddress)!, requestId!)
+            const currentAccount = accounts!.current!.accountId;
+            fetchRecoveryInfo(axiosFactory(currentAccount)!, requestId!)
                 .then(recoveryInfo => setRecoveryInfo(recoveryInfo));
         }
     }, [ axiosFactory, accounts, recoveryInfo, setRecoveryInfo, requestId ]);
 
-    const alreadyVouched = useCallback(async (lost: string, rescuer: string, currentAddress: string) => {
+    const alreadyVouched = useCallback(async (lost: ValidAccountId, rescuer: ValidAccountId, currentAddress: ValidAccountId) => {
         const activeRecovery = await api?.queries.getActiveRecovery(
             lost,
             rescuer
         );
 
-        return !!(activeRecovery && activeRecovery.legalOfficers.find(lo => lo === currentAddress));
+        return !!(activeRecovery && activeRecovery.legalOfficers.find(lo => lo.equals(currentAddress)));
 
     }, [ api ]);
 
     const accept = useCallback(async () => {
-        const currentAddress = accounts!.current!.accountId.address;
-        const lost = recoveryInfo!.accountToRecover!.requesterAddress;
-        const rescuer = recoveryInfo!.recoveryAccount.requesterAddress;
+        const currentAddress = accounts!.current!.accountId;
+        const lost = ValidAccountId.polkadot(recoveryInfo!.accountToRecover!.requesterAddress);
+        const rescuer = ValidAccountId.polkadot(recoveryInfo!.recoveryAccount.requesterAddress);
 
         if (await alreadyVouched(lost, rescuer, currentAddress)) {
             await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
@@ -70,8 +71,8 @@ export default function RecoveryDetails() {
             navigate(RECOVERY_REQUESTS_PATH);
         } else {
             const submittable = api!.polkadot.tx.recovery.vouchRecovery(
-                lost,
-                rescuer,
+                lost.address,
+                rescuer.address,
             );
             const call = async (callback: CallCallback) => {
                 await signer?.signAndSend({
@@ -95,9 +96,9 @@ export default function RecoveryDetails() {
 
     const doReject = useCallback(() => {
         (async function() {
-            const currentAddress = accounts!.current!.accountId.address;
-            await rejectProtectionRequest(axiosFactory!(currentAddress)!, {
-                legalOfficerAddress: currentAddress,
+            const currentAccount = accounts!.current!.accountId;
+            await rejectProtectionRequest(axiosFactory!(currentAccount)!, {
+                legalOfficerAddress: currentAccount.address,
                 requestId: requestId!,
                 rejectReason,
             });

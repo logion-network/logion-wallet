@@ -410,7 +410,7 @@ exports[`LOLocItems renders with single draft item 1`] = `
                   <span
                     className="value"
                   >
-                    5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+                    vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr
                   </span>
                 </div>
                 <div
@@ -694,7 +694,7 @@ exports[`UserLocItems renders with single draft item 1`] = `
               style={Object {}}
             >
               <div>
-                5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
+                vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h
               </div>
             </div>
           </div>
@@ -875,7 +875,7 @@ exports[`UserLocItems renders with single draft item 1`] = `
                   <span
                     className="value"
                   >
-                    5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
+                    vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h
                   </span>
                 </div>
                 <div

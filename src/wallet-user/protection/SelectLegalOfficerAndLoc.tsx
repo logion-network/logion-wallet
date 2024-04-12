@@ -101,7 +101,7 @@ export default function SelectLegalOfficerAndLoc(props: Props) {
                         label={ label }
                         control={
                             <Select
-                                isInvalid={ props.legalOfficerAndLoc === null || (props.otherLegalOfficerAndLoc !== null && props.legalOfficerAndLoc.legalOfficer.address === props.otherLegalOfficerAndLoc.legalOfficer.address) }
+                                isInvalid={ props.legalOfficerAndLoc === null || (props.otherLegalOfficerAndLoc !== null && props.legalOfficerAndLoc.legalOfficer.account.equals(props.otherLegalOfficerAndLoc.legalOfficer.account)) }
                                 options={ legalOfficersOptions }
                                 value={ props.legalOfficerAndLoc !== null ? props.legalOfficerAndLoc.loc.toString() : null}
                                 onChange={ value => props.setLegalOfficerAndLoc!(legalOfficersByLocId[value!] || null) }

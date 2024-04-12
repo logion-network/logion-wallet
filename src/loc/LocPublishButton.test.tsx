@@ -4,10 +4,10 @@ import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock"
 import { clickByName } from "../tests";
 import LocPublishButton from "./LocPublishButton";
 import { MetadataItem } from "./LocItem";
-import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 import { HashString } from "@logion/client";
 import { NO_SUBMISSION, SUCCESSFUL_SUBMISSION, setExtrinsicSubmissionState } from "src/logion-chain/__mocks__/LogionChainMock";
 import { expectSubmitting } from "src/test/Util";
+import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 
 jest.mock("./LocContext");
 jest.unmock("@logion/client");
@@ -22,7 +22,7 @@ describe("LocPublishButton", () => {
             {
                 type: "Data",
                 status: "DRAFT",
-                submitter: mockValidPolkadotAccountId("data-submitter"),
+                submitter: TEST_WALLET_USER,
                 timestamp: null,
                 newItem: false,
                 template: false,
@@ -62,7 +62,7 @@ describe("LocPublishButton", () => {
             {
                 type: "Data",
                 status: "DRAFT",
-                submitter: mockValidPolkadotAccountId("data-submitter"),
+                submitter: TEST_WALLET_USER,
                 timestamp: null,
                 newItem: false,
                 template: false,

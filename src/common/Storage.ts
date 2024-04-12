@@ -33,7 +33,7 @@ const token: MultiStorable<Token> = {
 
 export function storeTokens(tokens: AccountTokens) {
     clearTokens();
-    for (const address of tokens.addresses) {
+    for (const address of tokens.accounts) {
         storeMulti(token, address.toKey(), tokens.get(address))
     }
 }
@@ -50,14 +50,8 @@ export function loadTokens(api: LogionNodeApiClass): AccountTokens {
 class CurrentAddressStorable implements SingleStorable<ValidAccountId> {
     key = "currentAddress";
 
-    constructor(api: LogionNodeApiClass) {
-        this.api = api;
-    }
-
-    private api: LogionNodeApiClass;
-
     fromValue(value: string) {
-        return ValidAccountId.parseKey(this.api.polkadot, value);
+        return ValidAccountId.parseKey(value);
     }
 
     toValue(obj: ValidAccountId): string {
@@ -65,16 +59,16 @@ class CurrentAddressStorable implements SingleStorable<ValidAccountId> {
     }
 }
 
-export function storeCurrentAddress(api: LogionNodeApiClass, address: ValidAccountId) {
-    storeSingle(new CurrentAddressStorable(api), address)
+export function storeCurrentAddress(address: ValidAccountId) {
+    storeSingle(new CurrentAddressStorable(), address)
 }
 
-export function clearCurrentAddress(api: LogionNodeApiClass) {
-    clearSingle(new CurrentAddressStorable(api));
+export function clearCurrentAddress() {
+    clearSingle(new CurrentAddressStorable());
 }
 
-export function loadCurrentAddress(api: LogionNodeApiClass): ValidAccountId | undefined {
-    return loadSingle(new CurrentAddressStorable(api));
+export function loadCurrentAddress(): ValidAccountId | undefined {
+    return loadSingle(new CurrentAddressStorable());
 }
 
 const sofParams: SingleStorable<SofParams> = newSingleJsonStorable<SofParams>("SofParams")

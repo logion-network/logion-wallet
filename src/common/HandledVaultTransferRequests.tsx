@@ -1,4 +1,4 @@
-import { Lgnt } from "@logion/node-api";
+import { Lgnt, ValidAccountId } from "@logion/node-api";
 
 import { useUserContext } from "../wallet-user/UserContext";
 import AmountCell from "./AmountCell";
@@ -22,7 +22,7 @@ export default function HandledVaultTransferRequests() {
                 columns={[
                     {
                         header: "Legal Officer",
-                        render: request => <LegalOfficerName address={ request.legalOfficerAddress } />,
+                        render: request => <LegalOfficerName address={ ValidAccountId.polkadot(request.legalOfficerAddress) } />,
                         align: 'left',
                         renderDetails: request => <VaultTransferRequestDetails request={ request } />,
                     },

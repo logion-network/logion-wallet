@@ -42,7 +42,7 @@ exports[`renders and compares with different data 1`] = `
           onChange={[Function]}
           readOnly={true}
           type="text"
-          value="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+          value="vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
         />
       </div>
     </div>
@@ -550,7 +550,7 @@ exports[`renders and compares with same data 1`] = `
           onChange={[Function]}
           readOnly={true}
           type="text"
-          value="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+          value="vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
         />
       </div>
     </div>
@@ -1058,7 +1058,7 @@ exports[`renders without comparison 1`] = `
           onChange={[Function]}
           readOnly={true}
           type="text"
-          value="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+          value="vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
         />
       </div>
     </div>

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "
 import { DateTime } from 'luxon';
 import { LegalOfficerClass, BalanceState, LogionClient, Endpoint } from "@logion/client";
 import { InjectedAccount } from "@logion/extension";
+import { ValidAccountId } from "@logion/node-api";
 
 import { useLogionChain } from '../logion-chain';
 import { Children } from './types/Helpers';
@@ -27,13 +28,13 @@ export interface CommonContext {
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
     refresh: (clearOnRefresh: boolean) => void;
-    nodesUp: Endpoint[];
-    nodesDown: Endpoint[];
+    nodesUp: LegalOfficerEndpoint[];
+    nodesDown: LegalOfficerEndpoint[];
     availableLegalOfficers: LegalOfficerClass[] | undefined;
     mutateBalanceState: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>,
     viewer: Viewer;
     setViewer: ((viewer: Viewer) => void) | null;
-    backendConfig: ((legalOfficerAddress: string | undefined) => BackendConfig);
+    backendConfig: ((legalOfficerAddress: ValidAccountId | undefined) => BackendConfig);
     expectNewTransactionState: ExpectNewTransactionState;
     expectNewTransaction: () => void;
     stopExpectNewTransaction: () => void;
@@ -123,14 +124,14 @@ interface Action {
     refresh?: (clearOnRefresh?: boolean) => void;
     refreshAddress?: string;
     clearOnRefresh?: boolean;
-    nodesUp?: Endpoint[];
-    nodesDown?: Endpoint[];
+    nodesUp?: LegalOfficerEndpoint[];
+    nodesDown?: LegalOfficerEndpoint[];
     availableLegalOfficers?: LegalOfficerClass[];
     mutateBalanceState?: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>;
     client?: LogionClient;
     viewer?: Viewer;
     setViewer?: (viewer: Viewer) => void;
-    backendConfig?: ((legalOfficerAddress: string | undefined) => BackendConfig);
+    backendConfig?: ((legalOfficerAddress: ValidAccountId | undefined) => BackendConfig);
     expectNewTransaction?: () => void;
     stopExpectNewTransaction?: () => void;
     notificationText?: string;
@@ -319,15 +320,15 @@ export function CommonContextProvider(props: Props) {
                 for(let i = 0; i < configPromises.length; ++i) {
                     const promiseResult = configPromises[i];
                     if(promiseResult.status === 'fulfilled') {
-                        backendConfigs[client.legalOfficers[i].address] = promiseResult.value;
+                        backendConfigs[client.legalOfficers[i].account.address] = promiseResult.value;
                     }
                 }
 
-                const backendConfig = (legalOfficerAddress: string | undefined) => {
-                    if(!legalOfficerAddress || !(legalOfficerAddress in backendConfigs)) {
+                const backendConfig = (legalOfficerAddress: ValidAccountId | undefined) => {
+                    if(!legalOfficerAddress || !(legalOfficerAddress.address in backendConfigs)) {
                         return DEFAULT_BACKEND_CONFIG;
                     } else {
-                        return backendConfigs[legalOfficerAddress];
+                        return backendConfigs[legalOfficerAddress.address];
                     }
                 };
 

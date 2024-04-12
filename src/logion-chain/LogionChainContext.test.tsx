@@ -36,7 +36,7 @@ function expectConnectedAndReadyState(result: RenderResult) {
 }
 
 const INJECTED_ACCOUNT = {
-    address: DEFAULT_USER_ACCOUNT.accountId,
+    address: DEFAULT_USER_ACCOUNT.accountId.address,
     meta: {
         name: DEFAULT_USER_ACCOUNT.name
     }

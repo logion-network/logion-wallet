@@ -22,12 +22,12 @@ import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
 import { BalanceState } from "@logion/client/dist/Balance.js";
 import { LocsState } from "@logion/client";
-import { UUID, LocType } from "@logion/node-api";
+import { UUID, LocType, ValidAccountId } from "@logion/node-api";
 import { Locs, getLocsMap } from "src/loc/Locs";
 
 export interface CreateProtectionRequestParams {
     legalOfficers: LegalOfficerClass[],
-    addressToRecover?: string,
+    addressToRecover?: ValidAccountId,
     callback: SignCallback,
     requesterIdentityLoc1: UUID,
     requesterIdentityLoc2: UUID,
@@ -358,7 +358,7 @@ export function UserContextProvider(props: Props) {
                     payload: {
                         legalOfficer1: params.legalOfficers[0],
                         legalOfficer2: params.legalOfficers[1],
-                        recoveredAddress: params.addressToRecover,
+                        recoveredAccount: params.addressToRecover,
                         requesterIdentityLoc1: params.requesterIdentityLoc1,
                         requesterIdentityLoc2: params.requesterIdentityLoc2,
                     },

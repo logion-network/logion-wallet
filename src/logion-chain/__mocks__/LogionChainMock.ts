@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 import { LegalOfficer } from '@logion/client';
+import { ValidAccountId } from "@logion/node-api";
 import { DEFAULT_LEGAL_OFFICER, legalOfficers } from 'src/common/TestData';
 import { TEST_WALLET_USER } from 'src/wallet-user/TestData';
 import { AxiosInstance } from 'axios';
@@ -18,8 +19,8 @@ export let authenticate = jest.fn();
 
 export let saveOfficer = jest.fn();
 
-function getOfficer(address: string | undefined): LegalOfficer | undefined {
-    return legalOfficers.find(legalOfficer => legalOfficer.address === address);
+function getOfficer(account: ValidAccountId | undefined): LegalOfficer | undefined {
+    return legalOfficers.find(legalOfficer => legalOfficer.account.equals(account));
 }
 
 export let selectAddress = jest.fn();

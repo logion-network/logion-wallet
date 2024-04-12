@@ -80,7 +80,12 @@ exports[`WorkInProgressLocs renders for user 1`] = `
     Array [
       Object {
         "createdOn": "2024-03-19T16:00:00.000Z",
-        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "ownerAccountId": ValidAccountId {
+          "anyAccountId": AnyAccountId {
+            "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+            "type": "Polkadot",
+          },
+        },
         "status": "REVIEW_PENDING",
       },
     ]

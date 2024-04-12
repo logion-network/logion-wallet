@@ -114,9 +114,8 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     useEffect(() => {
         if (getOfficer !== undefined
             && accounts?.current?.accountId !== undefined
-            && (!legalOfficer || accounts.current.accountId.address !== legalOfficer.address)) {
-            const polkadotAddress = accounts.current.accountId.address;
-            const legalOfficer = getOfficer(polkadotAddress);
+            && (!legalOfficer || !accounts.current.accountId.equals(legalOfficer.account))) {
+            const legalOfficer = getOfficer(accounts.current.accountId);
             setLegalOfficer(legalOfficer);
         }
     }, [ getOfficer, accounts, legalOfficer ]);
@@ -125,7 +124,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
         if (props.item && locData && deliveries === undefined) {
             setDeliveries(null);
             (async function() {
-                const deliveries = await getAllDeliveries(axiosFactory!(locData.ownerAddress), {
+                const deliveries = await getAllDeliveries(axiosFactory!(locData.ownerAccountId), {
                     locId: locData.id.toString(),
                     collectionItemId: props.item!.id
                 });
@@ -138,7 +137,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
         if(props.item && locData && collectionDeliveries === undefined) {
             setCollectionDeliveries(null);
             (async function() {
-                const deliveries = await getAllCollectionDeliveries(axiosFactory!(locData.ownerAddress), {
+                const deliveries = await getAllCollectionDeliveries(axiosFactory!(locData.ownerAccountId), {
                     locId: locData.id.toString(),
                 });
                 setCollectionDeliveries(deliveries);
@@ -154,7 +153,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 setTokensRecords(records);
                 const deliveries: Record<string, ItemDeliveriesResponse> = {};
                 for (const record of records) {
-                    deliveries[record.id.toHex()] = await getTokensRecordDeliveries(axiosFactory!(locData.ownerAddress), {
+                    deliveries[record.id.toHex()] = await getTokensRecordDeliveries(axiosFactory!(locData.ownerAccountId), {
                         locId: locData.id.toString(),
                         recordId: record.id,
                     })
@@ -174,7 +173,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
             && sofParams.locId !== locData.id.toDecimalString()
             && (tokensRecords !== undefined && tokensRecords !== null)
             && tokensRecordFileDeliveries) {
-            const requester = locData.requesterAddress ? locData.requesterAddress.address : locData.requesterLocId?.toDecimalString() || "";
+            const requester = locData.requesterAccountId ? locData.requesterAccountId.address : locData.requesterLocId?.toDecimalString() || "";
             setSofParams({
                 ...PLACEHOLDERS,
                 locId: locData.id.toDecimalString(),
@@ -221,7 +220,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                             badgeUrl: creativeCommonsBadges[props.item.creativeCommons.parameters],
                         } : undefined,
                 } : undefined),
-                polkadotAddress: legalOfficer.address,
+                polkadotAddress: legalOfficer.account.address,
                 postalAddressLine1: legalOfficer.postalAddress.company || "",
                 postalAddressLine2: legalOfficer.postalAddress.line1 || "",
                 postalAddressLine3: legalOfficer.postalAddress.line2 || "",
@@ -240,7 +239,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 tokensRecords: tokensRecords.map(record => ({
                     id: record.id.toHex(),
                     description: record.description.validValue(),
-                    issuer: record.issuer,
+                    issuer: record.issuer.address,
                     addedOn: record.addedOn,
                     files: record.files.map(file => ({
                         hash: file.hash.toHex(),
@@ -347,7 +346,6 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                     previewPath={ STATEMENT_OF_FACTS_PATH }
                     relatedLocPath={ containingLoc ? locDetailsPath(containingLoc!.id, containingLoc!.locType) : "" }
                     locId={ locData!.id }
-                    nodeOwner={ locData.ownerAddress }
                 />
             </Dialog>
         </>

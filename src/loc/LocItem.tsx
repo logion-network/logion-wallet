@@ -262,7 +262,7 @@ export function buildItemTableColumns(args: {
     loc: LocData,
     locState: LocRequestState,
     width: (rule: Rules) => string,
-    currentAddress: string | undefined,
+    currentAccount: ValidAccountId | undefined,
     contributionMode: ContributionMode | undefined,
     viewer: Viewer,
     renderActions: (locItem: LocItem) => ReactNode,
@@ -271,7 +271,7 @@ export function buildItemTableColumns(args: {
         loc,
         locState,
         width,
-        currentAddress,
+        currentAccount,
         contributionMode,
         viewer,
         renderActions,
@@ -305,9 +305,9 @@ export function buildItemTableColumns(args: {
                 <>
                     <span className="item-type">{ locItem.type }</span> {
                         locItem.type === 'Document' &&
-                        canViewFile(viewer, currentAddress, locItem, contributionMode) &&
+                        canViewFile(viewer, currentAccount, locItem, contributionMode) &&
                         <ViewFileButton
-                            nodeOwner={ loc.ownerAddress }
+                            nodeOwner={ loc.ownerAccountId }
                             fileName={ locItem.as<FileData>().fileName }
                             downloader={ () => locState?.getFile(locItem.as<FileData>().hash) }
                         />
@@ -318,7 +318,7 @@ export function buildItemTableColumns(args: {
         },
         {
             header: "Submitted by",
-            render: locItem => <SubmitterName loc={ loc } submitter={ locItem.submitter?.address } />,
+            render: locItem => <SubmitterName loc={ loc } submitter={ locItem.submitter } />,
         }
     ];
 
@@ -364,8 +364,8 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
     )
 }
 
-function canViewFile(viewer: Viewer, address: string | undefined, item: LocItem, contributionMode?: ContributionMode): boolean {
-    return item.hasData() && (contributionMode !== 'VerifiedIssuer' || item.submitterOrThrow.address === address) && (viewer === "User" || item.status !== "DRAFT");
+function canViewFile(viewer: Viewer, address: ValidAccountId | undefined, item: LocItem, contributionMode?: ContributionMode): boolean {
+    return item.hasData() && (contributionMode !== 'VerifiedIssuer' || item.submitterOrThrow.equals(address)) && (viewer === "User" || item.status !== "DRAFT");
 }
 
 export function documentClaimHistory(viewer: Viewer, loc: LocData | null, hash: Hash) {
@@ -430,7 +430,7 @@ export function canAdd(viewer: Viewer, loc: LocData) {
     return (viewer === "User" && (!loc.voidInfo && (loc.status === "DRAFT" || loc.status === "OPEN")))
         || (viewer === "LegalOfficer"
             && (!loc.voidInfo && loc.status === "OPEN")
-            && ( loc.requesterAddress === undefined || loc.requesterAddress.type !== "Polkadot"));
+            && ( loc.requesterAccountId === undefined || loc.requesterAccountId.type !== "Polkadot"));
 }
 
 type ActorType = "Owner" | ContributionMode;
@@ -444,8 +444,8 @@ function getActorType(viewer: Viewer, contributionMode?: ContributionMode): Acto
 }
 
 function getSubmitterType(loc: LocData, item: LocItem): ActorType {
-    const submittedByOwner = item?.submitter?.address === loc.ownerAddress && item?.submitter?.type === "Polkadot";
-    const submittedByRequester = loc.requesterAddress !== undefined && item.submitter !== undefined && loc.requesterAddress.equals(item.submitter);
+    const submittedByOwner = loc.ownerAccountId.equals(item?.submitter);
+    const submittedByRequester = loc.requesterAccountId !== undefined && loc.requesterAccountId.equals(item.submitter);
 
     if (submittedByOwner) {
         return "Owner";
@@ -465,7 +465,7 @@ export function canPublish(viewer: Viewer, loc: LocData, item: LocItem, contribu
 
     const submitterType = getSubmitterType(loc, item);
 
-    const publishedByOwner = submitterType === "Owner" || loc.requesterAddress === undefined || loc.requesterAddress.type !== "Polkadot";
+    const publishedByOwner = submitterType === "Owner" || loc.requesterAccountId === undefined || loc.requesterAccountId.type !== "Polkadot";
 
     const publishable = item.status === "REVIEW_ACCEPTED";
 
@@ -505,7 +505,7 @@ export function canReview(viewer: Viewer, loc: LocData, item: LocItem) {
 }
 
 export async function getLinkData(
-    address: string | undefined,
+    address: ValidAccountId | undefined,
     locsState: LocsState,
     link: MergedLink,
     detailsPath: (id: UUID, locType: LocType) => string,

@@ -27,8 +27,13 @@ exports[`IdentityLocRequest renders 1`] = `
           legalOfficers={
             Array [
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvWaxNDdzuX5N3qSvGMtjdHcQdw1TAcPNgx4S1Utd3MTxYeN",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
@@ -55,8 +60,13 @@ exports[`IdentityLocRequest renders 1`] = `
                 "workload": 3,
               },
               TestLegalOfficer {
+                "account": ValidAccountId {
+                  "anyAccountId": AnyAccountId {
+                    "address": "vQvZF2YMgKuQhzfF7T3xDjHjuEmcPSUVEoUDPy1mzuSXzFgca",
+                    "type": "Polkadot",
+                  },
+                },
                 "additionalDetails": "",
-                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },

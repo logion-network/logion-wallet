@@ -112,7 +112,7 @@ export default function Certificate() {
 
     useEffect(() => {
         if (client !== null && legalOfficer === null && loc) {
-            setLegalOfficer(client.legalOfficers.find(legalOfficer => legalOfficer.address === loc.data.ownerAddress) || null);
+            setLegalOfficer(client.legalOfficers.find(legalOfficer => legalOfficer.account.equals(loc.data.ownerAccountId)) || null);
         }
     }, [ client, legalOfficer, setLegalOfficer, loc ]);
 
@@ -188,7 +188,7 @@ export default function Certificate() {
         return (
             <div className="Certificate">
                 <CertificateCell md={ 4 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
-                <CertificateCell md={ 4 } label="UNKNOWN OFFICER">{ loc.data.ownerAddress }</CertificateCell>
+                <CertificateCell md={ 4 } label="UNKNOWN OFFICER">{ loc.data.ownerAccountId.address }</CertificateCell>
             </div>
         )
     }
@@ -351,9 +351,9 @@ export default function Certificate() {
                     <CertificateDateTimeCell md={ 3 } label="Closing Date" dateTime={ loc.data.closedOn } />
                 </Row>
                 <Row className="preamble-footer">
-                    { loc.data.requesterAddress &&
+                    { loc.data.requesterAccountId &&
                         <CertificateCell md={ 6 } label="Requester">
-                            { loc.data.requesterAddress.address }
+                            { loc.data.requesterAccountId.address }
                         </CertificateCell>
                     }
                     { loc.data.requesterLocId &&
@@ -386,7 +386,7 @@ export default function Certificate() {
                 { collectionItem !== null &&
                     <CollectionItemCellRow
                         locId={ locId }
-                        owner={ legalOfficer.address }
+                        owner={ legalOfficer.account }
                         item={ collectionItem! }
                         checkResult={ checkResult }
                         isVoid={ loc.data.voidInfo !== undefined }
@@ -396,7 +396,7 @@ export default function Certificate() {
                 { tokensRecords !== null &&
                     <TokensRecords
                         locId={ locId }
-                        owner={ legalOfficer.address }
+                        owner={ legalOfficer.account }
                         collectionItem={ collectionItem! }
                         tokenForDownload={ tokenForDownload }
                         tokensRecords={ tokensRecords }
@@ -498,7 +498,7 @@ function FileCellRow(props: { loc: LocData, files: MergedFile[], checkResult: Ch
                                     name: validValueOrHex(file.nature),
                                     type: "Collection",
                                 }}
-                                owner={ props.loc.ownerAddress }
+                                owner={ props.loc.ownerAccountId }
                                 tokenForDownload={ props.tokenForDownload }
                             />
                         </div>

@@ -6,7 +6,7 @@ import { UUID } from "@logion/node-api";
 import { LinkItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishLinkButton from "./LocPublishLinkButton";
-import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
+import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 
 describe("LocPublishLinkButton", () => {
 
@@ -15,7 +15,7 @@ describe("LocPublishLinkButton", () => {
         {
             type: "Linked LOC",
             status: "DRAFT",
-            submitter: mockValidPolkadotAccountId("link-submitter"),
+            submitter: TEST_WALLET_USER,
             timestamp: null,
             newItem: false,
             template: false,

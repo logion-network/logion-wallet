@@ -4,7 +4,7 @@ import { PATRICK } from "src/common/TestData";
 
 import { shallowRender } from "src/tests"
 import { TEST_WALLET_USER } from "src/wallet-user/TestData";
-import { CLOSED_IDENTITY_LOC_ID } from "src/__mocks__/LogionMock";
+import { CLOSED_IDENTITY_LOC_ID, DEFAULT_LEGAL_OFFICER } from "src/__mocks__/LogionMock";
 import RequesterOrLegalOfficer from "./RequesterOrLegalOfficer";
 
 describe("RequesterOrLegalOfficer", () => {
@@ -39,7 +39,8 @@ describe("RequesterOrLegalOfficer", () => {
 })
 
 const locWithPolkadotRequester = {
-    requesterAddress: TEST_WALLET_USER,
+    ownerAccountId: DEFAULT_LEGAL_OFFICER,
+    requesterAccountId: TEST_WALLET_USER,
     requesterLocId: UUID.fromDecimalStringOrThrow(CLOSED_IDENTITY_LOC_ID),
     userIdentity: {
         firstName: "John",
@@ -49,6 +50,7 @@ const locWithPolkadotRequester = {
 } as unknown as LocData;
 
 const locWithLogionRequester = {
+    ownerAccountId: DEFAULT_LEGAL_OFFICER,
     requesterLocId: UUID.fromDecimalStringOrThrow(CLOSED_IDENTITY_LOC_ID),
     userIdentity: {
         firstName: "John",

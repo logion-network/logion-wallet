@@ -56,7 +56,7 @@ function currentOrDefaultAddress(
     if(authenticatedClient === undefined) {
         return undefined;
     }
-    const loggedAddresses = authenticatedClient.tokens.addresses;
+    const loggedAddresses = authenticatedClient.tokens.accounts;
     if(currentAddress !== undefined) {
         return currentAddress;
     } else if(loggedAddresses.length > 0) {

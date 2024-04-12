@@ -4,7 +4,7 @@ import { TEST_WALLET_USER } from "../wallet-user/TestData";
 export { toIsoString, fromIsoString } from "@logion/client/dist/DateTimeUtil.js";
 import { api } from "./LogionMock";
 import { VerifiedIssuerWithSelect } from "@logion/client/dist/Loc";
-import { Hash } from "@logion/node-api";
+import { Hash, ValidAccountId } from "@logion/node-api";
 import { TokensRecord } from "@logion/client";
 
 export const axiosMock = {
@@ -22,18 +22,18 @@ export class LogionClient {
         return this;
     }
 
-    withCurrentAddress() {
+    withCurrentAccount() {
         return this;
     }
 
     tokens = new AccountTokens();
 
-    isLegalOfficer(address: string) {
-        return address === PATRICK.address || address === GUILLAUME.address || address === ALAIN.address;
+    isLegalOfficer(address: ValidAccountId) {
+        return address.equals(PATRICK.account) || address.equals(GUILLAUME.account) || address.equals(ALAIN.account);
     }
 
-    isRegisteredLegalOfficer(address: string) {
-        return address === PATRICK.address || address === GUILLAUME.address || address === ALAIN.address;
+    isRegisteredLegalOfficer(address: ValidAccountId) {
+        return address.equals(PATRICK.account) || address.equals(GUILLAUME.account) || address.equals(ALAIN.account);
     }
 
     legalOfficers = threeLegalOfficers;
@@ -68,16 +68,17 @@ export class LogionClient {
         },
         findCollectionLocItemById: () => { isAuthenticatedTokenOwner: () => true },
     };
-    currentAddress = TEST_WALLET_USER;
+
+    currentAccount = TEST_WALLET_USER;
 
     logionApi = api.object();
 
-    getLegalOfficer(address: string) {
-        if(address === PATRICK.address) {
+    getLegalOfficer(address: ValidAccountId) {
+        if(address.equals(PATRICK.account)) {
             return threeLegalOfficers[0];
-        } else if(address === GUILLAUME.address) {
+        } else if(address.equals(GUILLAUME.account)) {
             return threeLegalOfficers[1];
-        } else if(address === ALAIN.address) {
+        } else if(address.equals(ALAIN.account)) {
             return threeLegalOfficers[2];
         } else {
             throw new Error();
@@ -99,9 +100,9 @@ export class AccountTokens {
         return this;
     }
 
-    addresses = [ TEST_WALLET_USER ];
+    accounts = [ TEST_WALLET_USER ];
 
-    get(account: any) {
+    get(account: ValidAccountId) {
         return ({
             value: `some-token-value-for-${account.address}`,
             expirationDateTime: DateTime.now().plus({hours: 1})

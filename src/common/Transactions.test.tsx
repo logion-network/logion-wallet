@@ -8,10 +8,11 @@ import { setBalanceState } from './__mocks__/CommonContextMock';
 import { setParams } from '../__mocks__/ReactRouterMock';
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION, DEFAULT_FAILED_TRANSACTION } from './TestData';
 import { BalanceState } from '@logion/client/dist/Balance.js';
+import { TEST_WALLET_USER } from 'src/wallet-user/TestData';
 
 test('renders null with missing data', () => {
     const result = shallowRender(<Transactions
-        address="123"
+        account={ TEST_WALLET_USER }
         balances={ [] }
         transactions={ [] }
         type="Wallet"
@@ -26,7 +27,7 @@ test('renders with all data', () => {
         transactions: [ DEFAULT_TRANSACTION ],
     } as BalanceState);
     const result = shallowRender(<Transactions
-        address="123"
+        account={ TEST_WALLET_USER }
         balances={ [] }
         transactions={ [] }
         type="Wallet"
@@ -41,7 +42,7 @@ test('renders failed transaction', () => {
         transactions: [ DEFAULT_FAILED_TRANSACTION ],
     } as BalanceState);
     const result = shallowRender(<Transactions
-        address="123"
+        account={ TEST_WALLET_USER }
         balances={ [] }
         transactions={ [] }
         type="Wallet"

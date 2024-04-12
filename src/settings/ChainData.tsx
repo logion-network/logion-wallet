@@ -1,4 +1,4 @@
-import { Region } from "@logion/node-api";
+import { Region, ValidAccountId } from "@logion/node-api";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { flushSync } from "react-dom";
@@ -38,11 +38,11 @@ export default function ChainData() {
             setDone(undefined);
             flushSync(() => setSignAndSubmit(null)); // Reset
 
-            const legalOfficerAddress = accounts.current.accountId.address;
+            const legalOfficerAddress = accounts.current.accountId;
             const legalOfficerData = api.adapters.toPalletLoAuthorityListLegalOfficerDataHost({ nodeId, baseUrl, region });
             const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
                 signerId: legalOfficerAddress,
-                submittable: api.polkadot.tx.loAuthorityList.updateLegalOfficer(legalOfficerAddress, legalOfficerData),
+                submittable: api.polkadot.tx.loAuthorityList.updateLegalOfficer(legalOfficerAddress.address, legalOfficerData),
                 callback: setResult,
                 errorCallback: setError,
             });
@@ -126,7 +126,7 @@ export default function ChainData() {
                     <Col>
                         <StaticLabelValue
                             label="Host address"
-                            value={ onchainSettings.hostAddress || "" }
+                            value={ onchainSettings.hostAccount?.address || "" }
                         />
                     </Col>
                 </Row>
@@ -160,7 +160,7 @@ export default function ChainData() {
                                 },
                                 {
                                     header: "Name",
-                                    render: guest => <Cell content={ getOfficer ? getOfficer(guest)?.name || "-" : "-" } />
+                                    render: guest => <Cell content={ getOfficer ? getOfficer(ValidAccountId.polkadot(guest))?.name || "-" : "-" } />
                                 },
                             ]}
                             data={ onchainSettings.guests || [] }

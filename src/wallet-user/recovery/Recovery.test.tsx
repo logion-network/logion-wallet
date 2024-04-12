@@ -48,7 +48,7 @@ test("renders protected but not claimed", () => {
         allRequests: ACCEPTED_RECOVERY_REQUESTS,
         selectedLegalOfficers: [ PATRICK, GUILLAUME ],
         recoveryConfig: {
-            legalOfficers: [ PATRICK.address, GUILLAUME.address ]
+            legalOfficers: [ PATRICK.account, GUILLAUME.account ]
         }
     } as unknown as RecoverySharedState));
 
@@ -64,7 +64,7 @@ test("renders protected and claimed", () => {
         allRequests: ACCEPTED_RECOVERY_REQUESTS,
         selectedLegalOfficers: [ PATRICK, GUILLAUME ],
         recoveryConfig: {
-            legalOfficers: [ PATRICK.address, GUILLAUME.address ]
+            legalOfficers: [ PATRICK.account, GUILLAUME.account ]
         },
         recoveredAddress: ACTIVATED_RECOVERY_REQUESTS[0].addressToRecover!
     } as unknown as RecoverySharedState));

@@ -18,7 +18,7 @@ import {
     ACCEPTED_PROTECTION_REQUESTS,
     ACCEPTED_RECOVERY_REQUESTS,
 } from './TestData';
-import { DEFAULT_SHARED_STATE, setProtectionState, activateProtection } from '../__mocks__/UserContextMock';
+import { DEFAULT_SHARED_STATE, setProtectionState } from '../__mocks__/UserContextMock';
 import { AcceptedProtection, ActiveProtection, ClaimedRecovery, PendingProtection, PendingRecovery } from '@logion/client';
 import { twoLegalOfficers } from 'src/common/TestData';
 import { SUCCESSFUL_SUBMISSION, setExtrinsicSubmissionState } from 'src/logion-chain/__mocks__/LogionChainMock';

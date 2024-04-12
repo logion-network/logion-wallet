@@ -151,7 +151,7 @@ export const PAID_BY_SPONSOR = "paid by sponsor";
 export const PAID_BY_LEGAL_OFFICER = "paid by legal officer";
 
 export function geInclusionFeePaidBy(loc: LocData, item: LocItem) {
-    return item.submitter?.type === "Polkadot" && item.submitter?.address === loc.ownerAddress ? PAID_BY_LEGAL_OFFICER : PAID_BY_SUBMITTER;
+    return item.submitter?.type === "Polkadot" && item.submitter?.equals(loc.ownerAccountId) ? PAID_BY_LEGAL_OFFICER : PAID_BY_SUBMITTER;
 }
 
 export const PAID_BY_SUBMITTER = "paid by submitter";

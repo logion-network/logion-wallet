@@ -1,4 +1,5 @@
 import { LocData, VerifiedIssuer } from "@logion/client";
+import { ValidAccountId } from "@logion/node-api";
 import { Cell } from "./Table";
 import LegalOfficerName from "./LegalOfficerNameCell";
 import Icon from "./Icon";
@@ -7,7 +8,7 @@ import Tooltip from "react-bootstrap/Tooltip";
 
 export interface Props {
     loc: LocData
-    submitter: string | undefined;
+    submitter: ValidAccountId | undefined;
 }
 
 interface Identity {
@@ -15,17 +16,17 @@ interface Identity {
     lastName: string;
 }
 
-function format(identity: Identity | undefined, address: string | undefined): string {
-    return identity ? identity.firstName + " " + identity.lastName : address || "-";
+function format(identity: Identity | undefined, account: ValidAccountId | undefined): string {
+    return identity ? identity.firstName + " " + identity.lastName : account?.address || "-";
 }
 
-function findIssuer(loc: LocData, address: string): VerifiedIssuer | undefined {
-    return loc.issuers.find(issuer => issuer.address === address);
+function findIssuer(loc: LocData, account: ValidAccountId): VerifiedIssuer | undefined {
+    return loc.issuers.find(issuer => issuer.account.equals(account));
 }
 
 export default function SubmitterName(props: Props) {
     const { loc, submitter } = props;
-    if (submitter === loc.ownerAddress) {
+    if (submitter && loc.ownerAccountId.equals(submitter)) {
         return (
             <LegalOfficerName address={ submitter } />
         )
@@ -36,7 +37,7 @@ export default function SubmitterName(props: Props) {
                 <div>
                     { format(identity, submitter) }
                     {
-                        submitter && submitter !== loc.requesterAddress?.address &&
+                        submitter && !submitter.equals(loc.requesterAccountId) &&
                         <IssuerBadge />
                     }
                 </div>
@@ -46,8 +47,8 @@ export default function SubmitterName(props: Props) {
     }
 }
 
-function getIdentity(submitter: string | undefined, loc: LocData): Identity | undefined {
-    if(submitter === loc.requesterAddress?.address) {
+function getIdentity(submitter: ValidAccountId | undefined, loc: LocData): Identity | undefined {
+    if(submitter?.equals(loc.requesterAccountId)) {
         return loc.userIdentity;
     } else if(submitter) {
         return findIssuer(loc, submitter);

@@ -46,7 +46,7 @@ export default function Authenticate(props: Props) {
         const newItem = await client.public.findCollectionLocItemById({ locId, itemId: item.id });
         const isOwner = newItem && await newItem.isAuthenticatedTokenOwner();
         if (isOwner) {
-            setTokenForDownload(client.tokens.get(client.currentAddress));
+            setTokenForDownload(client.tokens.get(client.currentAccount));
             setStatus('OWNER_OK');
         } else {
             setStatus('OWNER_KO');

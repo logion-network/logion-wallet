@@ -10,6 +10,7 @@ import Certificate from './Certificate';
 import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { PATRICK } from 'src/common/TestData';
 import { URLSearchParams } from 'url';
+import { TEST_WALLET_USER } from 'src/wallet-user/TestData';
 
 jest.mock("react-router");
 jest.mock("react-router-dom");
@@ -95,7 +96,7 @@ describe("Certificate", () => {
 
         await waitFor(() => expect(screen.getByText("Legal Officer Case")).toBeVisible());
         expect(screen.getByText("Tokens record")).toBeVisible();
-        expect(screen.getByText(mockTRCellContent(tokensRecord.issuer))).toBeVisible();
+        expect(screen.getByText(mockTRCellContent(tokensRecord.issuer.address))).toBeVisible();
         expect(screen.getByText(mockTRCellContent(tokensRecord.description.validValue()))).toBeVisible();
         expect(screen.getByText(mockTRCellContent(tokensRecord.files[0].contentType.validValue()))).toBeVisible();
         expect(screen.getByText(tokensRecord.files[0].name.validValue())).toBeVisible();
@@ -127,7 +128,7 @@ function mockPublicLoc(locId: UUID): PublicLoc {
     return {
         data: {
             id: locId,
-            ownerAddress: PATRICK.address,
+            ownerAccountId: PATRICK.account,
             files: [],
             metadata: [],
             links: [],
@@ -205,7 +206,7 @@ function mockTokensRecord(): ClientTokensRecord {
         id: Hash.of("record-id"),
         description: HashString.fromValue("Record Description"),
         addedOn: "2022-08-23T07:27:46.128Z",
-        issuer: "record-issuer",
+        issuer: TEST_WALLET_USER,
         files: [ {
             name: HashString.fromValue("record-file-name.txt"),
             hash: Hash.of("record-file-content"),

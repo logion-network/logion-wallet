@@ -10,7 +10,7 @@ export default function LegalOfficerRow(props: { legalOfficer: LegalOfficer }) {
     return (
         <Col className="legal-officer-row">
             <CertificateCell md={ 6 } label="Legal Officer (owner)">
-                { props.legalOfficer.address }
+                { props.legalOfficer.account.address }
             </CertificateCell>
             <Row>
                 <CertificateCell md={ 2 } label="">

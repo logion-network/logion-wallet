@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor, getByRole } from '@testing-library/react';
-import { Numbers, CoinBalance } from "@logion/node-api";
+import { Numbers, CoinBalance, ValidAccountId } from "@logion/node-api";
 
 import { mutateRecoveredBalanceState, setProtectionState, setRecoveredBalanceState } from '../__mocks__/UserContextMock';
 
@@ -14,10 +14,10 @@ jest.mock('../../common/CommonContext');
 jest.mock('../UserContext');
 
 test("Recovered tokens can be transferred", async () => {
-    const recoveredAccountId = "5GEZAeYtVZPEEmCT66scGoWS4Jd7AWJdXeNyvxC3LxKP8jCn";
+    const recoveredAccountId = ValidAccountId.polkadot("5GEZAeYtVZPEEmCT66scGoWS4Jd7AWJdXeNyvxC3LxKP8jCn");
     const protectionState = {
         protectionParameters: {
-            recoveredAddress: recoveredAccountId,
+            recoveredAccount: recoveredAccountId,
         } as ProtectionParameters
     } as unknown as ClaimedRecovery;
     setProtectionState(protectionState);

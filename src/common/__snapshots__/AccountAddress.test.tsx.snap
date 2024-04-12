@@ -54,10 +54,10 @@ exports[`AccountAddress renders 1`] = `
         delay={500}
         overlay={
           <Tooltip
-            id="tooltip-Polkadot:address1"
+            id="tooltip-Polkadot:vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
             placement="right"
           >
-            address1
+            vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz
           </Tooltip>
         }
         placement="bottom"
@@ -69,7 +69,7 @@ exports[`AccountAddress renders 1`] = `
         }
       >
         <span>
-          address1
+          vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz
         </span>
       </OverlayTrigger>
     </div>

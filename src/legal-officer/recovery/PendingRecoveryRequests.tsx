@@ -43,11 +43,11 @@ export default function PendingRecoveryRequests() {
     }, [ setReviewState ]);
 
     const rejectAndCloseModal = useCallback(() => {
-        const currentAddress = accounts!.current!.accountId.address;
+        const currentAddress = accounts!.current!.accountId;
         (async function () {
             const requestId = reviewState.request!.id;
             await rejectProtectionRequest(axiosFactory!(currentAddress)!, {
-                legalOfficerAddress: currentAddress,
+                legalOfficerAddress: currentAddress.address,
                 requestId,
                 rejectReason,
             });
@@ -57,7 +57,7 @@ export default function PendingRecoveryRequests() {
     }, [ axiosFactory, reviewState, accounts, rejectReason, setReviewState, refreshRequests ]);
 
     const acceptAndCloseModal = useCallback(async () => {
-        const currentAddress = accounts!.current!.accountId.address;
+        const currentAddress = accounts!.current!.accountId;
         const requestId = reviewState.request!.id;
         await acceptProtectionRequest(axiosFactory!(currentAddress)!, { requestId });
         setReviewState(NO_REVIEW_STATE);

@@ -3,8 +3,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import { Transaction } from '@logion/client/dist/TransactionClient.js';
-import { CoinBalance } from '@logion/node-api';
+import { Transaction } from '@logion/client';
+import { CoinBalance, ValidAccountId } from '@logion/node-api';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
@@ -30,16 +30,16 @@ import { useMemo } from 'react';
 export type WalletType = "Wallet" | "Vault";
 
 export interface Props {
-    address: string,
+    account?: ValidAccountId,
     balances: CoinBalance[] | null,
     transactions: Transaction[] | null,
     type: WalletType,
-    vaultAddress?: string,
+    vaultAddress?: ValidAccountId,
 }
 
 export default function Transactions(props: Props) {
     const { colorTheme } = useCommonContext();
-    const { address, balances, transactions, type, vaultAddress } = props;
+    const { account, balances, transactions, type, vaultAddress } = props;
 
     if (balances === null || transactions === null) {
         return null;
@@ -56,21 +56,21 @@ export default function Transactions(props: Props) {
                 background: colorTheme.topMenuItems.iconGradient,
             } }
         >
-            <Content address={ address } balances={ balances } transactions={ transactions } type={ type } vaultAddress={ vaultAddress }/>
+            <Content account={ account } balances={ balances } transactions={ transactions } type={ type } vaultAccount={ vaultAddress }/>
         </FullWidthPane>
     );
 }
 
 interface ContentProps {
-    address: string,
+    account?: ValidAccountId,
     balances: CoinBalance[],
     transactions: Transaction[],
     type: WalletType,
-    vaultAddress?: string,
+    vaultAccount?: ValidAccountId,
 }
 
 function Content(props: ContentProps) {
-    const { address, balances, transactions, type, vaultAddress } = props;
+    const { account, balances, transactions, type, vaultAccount } = props;
     const { coinId } = useParams<"coinId">();
     const { width } = useResponsiveContext();
 
@@ -108,11 +108,11 @@ function Content(props: ContentProps) {
         {
             header: <FromToHeader />,
             render: transaction => <FromToCell from={ transaction.from }
-                                               to={ transaction.to } />,
+                                               to={ transaction.to || null } />,
         },
         {
             header: "Transaction type",
-            render: transaction => <TransactionType transaction={ transaction } walletType={ props.type } address={ props.address } vaultAddress={ props.vaultAddress } />,
+            render: transaction => <TransactionType transaction={ transaction } walletType={ props.type } account={ props.account } vaultAccount={ props.vaultAccount } />,
             width: width({
                 onSmallScreen: "180px",
                 otherwise: "250px"
@@ -120,7 +120,7 @@ function Content(props: ContentProps) {
         },
         {
             header: "Amount",
-            render: transaction => <TransferAmountCell amount={ transferBalance(address, transaction) } />,
+            render: transaction => <TransferAmountCell amount={ transferBalance(account, transaction) } />,
             align: 'right',
             width: width({
                 onSmallScreen: "100px",
@@ -132,7 +132,7 @@ function Content(props: ContentProps) {
     if(props.type === 'Wallet') {
         columns.push({
             header: "Paid fees",
-            render: transaction => <AmountCell amount={ fees(address, transaction) } />,
+            render: transaction => <AmountCell amount={ fees(account, transaction) } />,
             align: 'right',
             width: width({
                 onSmallScreen: "80px",
@@ -152,8 +152,8 @@ function Content(props: ContentProps) {
                             <Col>
                                 <Row className="content">
                                     <p>
-                                    <span>{ props.address }</span>
-                                    <CopyPasteButton value={ props.address } className="small" />
+                                    <span>{ props.account?.address || "" }</span>
+                                    <CopyPasteButton value={ props.account?.address || "" } className="small" />
                                     </p>
                                 </Row>
                             </Col>
@@ -181,10 +181,10 @@ function Content(props: ContentProps) {
                     >
                         <WalletGauge
                             balance={ balance }
-                            vaultAddress={ vaultAddress }
+                            vaultAccount={ vaultAccount }
                             sendButton={ type === "Wallet" }
-                            sendToVault={ vaultAddress !== undefined }
-                            withdrawFromVault={ type === "Vault" && vaultAddress !== undefined }
+                            sendToVault={ vaultAccount !== undefined }
+                            withdrawFromVault={ type === "Vault" && vaultAccount !== undefined }
                         />
                     </Frame>
                 </Col>
@@ -228,8 +228,8 @@ function FromToHeader() {
 }
 
 interface FromToCellProps {
-    from: string,
-    to: string | null,
+    from: ValidAccountId,
+    to: ValidAccountId | null,
 }
 
 function FromToCell(props: FromToCellProps) {
@@ -239,23 +239,23 @@ function FromToCell(props: FromToCellProps) {
               placement="bottom"
               delay={ 500 }
               overlay={
-                <Tooltip id={`tooltip-${props.from}`}>
-                  { props.from }
+                <Tooltip id={`tooltip-${props.from.address}`}>
+                  { props.from.address }
                 </Tooltip>
               }
             >
-                <span className="from">{ props.from }</span>
+                <span className="from">{ props.from.address }</span>
             </OverlayTrigger>
             <OverlayTrigger
               placement="bottom"
               delay={ 500 }
               overlay={
-                <Tooltip id={`tooltip-${props.to}`}>
-                  { props.to }
+                <Tooltip id={`tooltip-${props.to?.address}`}>
+                  { props.to?.address }
                 </Tooltip>
               }
             >
-                <span className="to">{ props.to !== null ? props.to : "-" }</span>
+                <span className="to">{ props.to !== null ? props.to.address : "-" }</span>
             </OverlayTrigger>
         </div>
     );

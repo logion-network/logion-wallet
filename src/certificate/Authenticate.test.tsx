@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { clickByName, shallowRender } from '../tests';
-import { UUID, Hash } from "@logion/node-api";
+import { UUID, Hash, AnyAccountId, ValidAccountId } from "@logion/node-api";
 import { HashString, ClientToken } from "@logion/client";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { setMetamaskEnabled } from '../__mocks__/LogionExtensionMock';
@@ -8,7 +8,6 @@ import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { CollectionItem, UploadableItemFile, Token, ItemTokenWithRestrictedType } from '@logion/client';
 import Authenticate, { Props } from "./Authenticate";
 import { LogionClient } from 'src/__mocks__/LogionClientMock';
-import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 jest.mock('../logion-chain');
 
@@ -23,7 +22,7 @@ describe("Authenticate with Metamask", () => {
     it("gets token for rightful owner of item", () => testOwnershipCheckSuccess(
         metamaskAssetProps,
         { token: "some-token-value-for-0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84" },
-        "0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84"
+        new AnyAccountId("0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84", "Ethereum").toValidAccountId(),
     ));
     it("does not get token if anyone else", () => testOwnershipCheckFailure(metamaskAssetProps));
 })
@@ -38,7 +37,7 @@ describe("Authenticate with Crossmint", () => {
     it("gets token for rightful owner of item", async () => testOwnershipCheckSuccess(
         crossmintAssetProps,
         { token: "some-token-value-for-0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84" },
-        "0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84"
+        new AnyAccountId("0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84", "Ethereum").toValidAccountId(),
     ));
     it("does not get token if anyone else", async () => testOwnershipCheckFailure(crossmintAssetProps));
 })
@@ -52,8 +51,8 @@ describe("Authenticate with Polkadot", () => {
     it("renders button for restricted delivery of item asset", () => testRender(polkadotAssetProps))
     it("gets token for rightful owner of item", async () => testOwnershipCheckSuccess(
         polkadotAssetProps,
-        { token: "some-token-value-for-5FniDvPw22DMW1TLee9N8zBjzwKXaKB2DcvZZCQU5tjmv1kb" },
-        "5FniDvPw22DMW1TLee9N8zBjzwKXaKB2DcvZZCQU5tjmv1kb"
+        { token: "some-token-value-for-vQw1WXnZU4fCjzyXJqyrnojstSK4YFbtviVKRrBQeydk9je4F" },
+        ValidAccountId.polkadot("vQw1WXnZU4fCjzyXJqyrnojstSK4YFbtviVKRrBQeydk9je4F"),
     ));
     it("does not get token if anyone else", async () => testOwnershipCheckFailure(crossmintAssetProps));
 })
@@ -85,7 +84,7 @@ const item = {
 
 const ownerToken: ItemTokenWithRestrictedType = {
     type: "owner",
-    id: "5FniDvPw22DMW1TLee9N8zBjzwKXaKB2DcvZZCQU5tjmv1kb",
+    id: "vQw1WXnZU4fCjzyXJqyrnojstSK4YFbtviVKRrBQeydk9je4F",
     issuance: 1n,
 };
 
@@ -160,9 +159,9 @@ function expectTokenSet(value: string) {
     expect(tokenForDownload?.value).toEqual(value);
 }
 
-function mockForCheckSuccess(address: string) {
+function mockForCheckSuccess(address: ValidAccountId) {
     const clientMock = new LogionClient();
-    clientMock.currentAddress = mockValidPolkadotAccountId(address);
+    clientMock.currentAccount = address;
     const item = {
         isAuthenticatedTokenOwner: () => true,
     };
@@ -185,7 +184,7 @@ async function testOwnershipCheckFailure(props: Props) {
     await expectOwnershipCheckFailure();
 }
 
-async function testOwnershipCheckSuccess(props: Props, params: { token: string }, address: string) {
+async function testOwnershipCheckSuccess(props: Props, params: { token: string }, address: ValidAccountId) {
     mockForCheckSuccess(address);
     await renderAndClaim(props);
     if (props.walletType === 'POLKADOT') {

@@ -1,4 +1,4 @@
-import { LocType, UUID } from "@logion/node-api";
+import { LocType, UUID, ValidAccountId } from "@logion/node-api";
 import { render, screen, waitFor } from "@testing-library/react";
 
 import { LocRequestFragment } from "../common/types/ModelTypes";
@@ -137,7 +137,7 @@ function mockLegalOfficerCreateLoc(requesterLocId?: UUID) {
     const openLoc = {
         locId: new UUID("556f4128-4fc3-4fdc-a543-74e6230911c4"),
         data: () => ({
-            ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            ownerAccountId: ValidAccountId.polkadot("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"),
             requesterLocId,
             description: "LOC description",
             status: "OPEN"

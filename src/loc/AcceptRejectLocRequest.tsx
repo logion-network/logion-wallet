@@ -48,7 +48,7 @@ export default function AcceptRejectLocRequest(props: Props) {
     };
 
     const isAccept = useMemo(() =>
-        props.loc.requesterAddress?.type === "Polkadot"
+        props.loc.requesterAccountId?.type === "Polkadot"
     , [ props.loc ]);
 
     const question = useMemo(() =>

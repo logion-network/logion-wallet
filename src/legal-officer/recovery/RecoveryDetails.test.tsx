@@ -5,7 +5,7 @@ jest.mock("../Model");
 jest.mock("../LegalOfficerContext");
 jest.mock("../../logion-chain");
 
-import { LegalOfficerCase } from "@logion/node-api";
+import { LegalOfficerCase, ValidAccountId } from "@logion/node-api";
 import { SubmittableExtrinsic } from "@polkadot/api-base/types";
 import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -19,7 +19,7 @@ import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../../lo
 import { setParams, navigate } from '../../__mocks__/ReactRouterMock';
 import { refreshRequests } from '../__mocks__/LegalOfficerContextMock';
 import { It, Mock } from 'moq.ts';
-import { mockValidPolkadotAccountId, setupApiMock, CLOSED_IDENTITY_LOC_ID } from '../../__mocks__/LogionMock';
+import { setupApiMock } from '../../__mocks__/LogionMock';
 
 describe("RecoveryDetails", () => {
 
@@ -41,7 +41,7 @@ describe("RecoveryDetails", () => {
             const loc = new Mock<LegalOfficerCase>();
             loc.setup(instance => instance.closed).returns(true);
             loc.setup(instance => instance.locType).returns("Identity");
-            loc.setup(instance => instance.requesterAddress).returns(mockValidPolkadotAccountId(protectionRequest.requesterAddress));
+            loc.setup(instance => instance.requesterAccountId).returns(ValidAccountId.polkadot(protectionRequest.requesterAddress));
             api.setup(instance => instance.queries.getLegalOfficerCase(It.IsAny())).returnsAsync(loc.object());
 
             const submittable = new Mock<SubmittableExtrinsic<"promise">>();

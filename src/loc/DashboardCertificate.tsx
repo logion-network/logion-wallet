@@ -38,7 +38,7 @@ export default function DashboardCertificate() {
         if(loc && itemId && deliveries === undefined) {
             (async function() {
                 const deliveries = await getAllDeliveries(
-                    axiosFactory!(loc?.ownerAddress),
+                    axiosFactory!(loc?.ownerAccountId),
                     {
                         locId: loc.id.toString(),
                         collectionItemId: Hash.fromHex(itemId)

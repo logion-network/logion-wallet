@@ -1,3 +1,4 @@
+import { ValidAccountId } from "@logion/node-api";
 import { Col, Row } from 'react-bootstrap';
 import { FullWidthPane } from '../common/Dashboard';
 import Frame from '../common/Frame';
@@ -101,8 +102,8 @@ export default function SettingsPane(props: Props) {
                                 <p className="wrong-version">The following logion nodes are temporarily unavailable:</p>
                                 <ul className="wrong-version">
                                 {
-                                    nodesDown.map(endpoint => getOfficer(endpoint.url)).filter(legalOfficer => legalOfficer !== null).map(legalOfficer =>
-                                        <li key={ legalOfficer!.address }>{ legalOfficer!.name }</li>
+                                    nodesDown.map(endpoint => getOfficer(ValidAccountId.polkadot(endpoint.legalOfficer))).filter(legalOfficer => legalOfficer !== null).map(legalOfficer =>
+                                        <li key={ legalOfficer!.account.address }>{ legalOfficer!.name }</li>
                                     )
                                 }
                                 </ul>

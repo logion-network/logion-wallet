@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import { useCallback } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import { UUID, LegalOfficerCase, Hash } from '@logion/node-api';
+import { UUID, LegalOfficerCase, Hash, ValidAccountId } from '@logion/node-api';
 import {
     LocData,
     PublicApi,
@@ -18,7 +18,6 @@ import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mocks__/LogionClientMock";
 import {
-    mockValidPolkadotAccountId,
     api,
     CLOSED_IDENTITY_LOC,
     CLOSED_IDENTITY_LOC_ID,
@@ -163,7 +162,7 @@ function Reader() {
     return (
         <div>
             <p>{ locData.id.toString() }</p>
-            <p>{ locData.ownerAddress }</p>
+            <p>{ locData.ownerAccountId.address }</p>
             <ul>
                 {
                     locItems.map((item, index) => <li key={ index }>
@@ -177,7 +176,7 @@ function Reader() {
 
 async function thenReaderDisplaysLocRequestAndItems() {
     await waitFor(() => expect(screen.getByText(UUID.fromDecimalString(CLOSED_IDENTITY_LOC_ID)!.toString())).toBeVisible());
-    expect(screen.getByText(CLOSED_IDENTITY_LOC.owner)).toBeVisible();
+    expect(screen.getByText(CLOSED_IDENTITY_LOC.owner.address)).toBeVisible();
     for(let i = 0; i < CLOSED_IDENTITY_LOC.files.length; ++i) {
         await waitFor(() => expect(screen.getByText(`File ${i}`)).toBeVisible());
     }
@@ -246,7 +245,7 @@ function givenDraftItems() {
     _locData.metadata.push({
         addedOn: DateTime.now(),
         name: metadataName,
-        submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
+        submitter: OPEN_IDENTITY_LOC.owner,
         value: HashString.fromValue("Some value"),
         published: false,
         status: "DRAFT",
@@ -257,7 +256,7 @@ function givenDraftItems() {
         hash: Hash.of("new-hash"),
         addedOn: DateTime.now(),
         name: "New file",
-        submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
+        submitter: OPEN_IDENTITY_LOC.owner,
         nature: HashString.fromValue("Some nature"),
         published: false,
         restrictedDelivery: false,
@@ -271,7 +270,7 @@ function givenDraftItems() {
         addedOn: DateTime.now(),
         nature: HashString.fromValue("New link"),
         target: _linkedLocData.id,
-        submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
+        submitter: OPEN_IDENTITY_LOC.owner,
         published: false,
         status: "DRAFT",
         acknowledgedByOwner: false,

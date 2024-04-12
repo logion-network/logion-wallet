@@ -11,6 +11,7 @@ import { Hash, UUID } from "@logion/node-api";
 import { TokensRecord } from "@logion/client/dist/TokensRecord";
 import { setLocState } from "../__mocks__/LocContextMock";
 import { ClosedCollectionLoc } from "../../__mocks__/LogionClientMock";
+import { TEST_WALLET_USER2 } from "src/wallet-user/TestData";
 
 describe("TokensRecordFrame", () => {
 
@@ -64,7 +65,7 @@ function mockTokensRecord(idSeed: string): TokensRecord {
         id: Hash.of(idSeed),
         description: HashString.fromValue("Record Description"),
         addedOn: "2022-08-23T07:27:46.128Z",
-        issuer: "record-issuer",
+        issuer: TEST_WALLET_USER2,
         files: [ {
             name: HashString.fromValue("record-file-name.txt"),
             hash: Hash.of("record-file-content"),

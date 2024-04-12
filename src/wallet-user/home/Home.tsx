@@ -95,12 +95,12 @@ export function Content() {
                                         },
                                         {
                                             header: "Transaction type",
-                                            render: transaction => <TransactionType address={ accounts.current!.accountId.address } transaction={ transaction } walletType="Wallet" />,
+                                            render: transaction => <TransactionType account={ accounts.current!.accountId } transaction={ transaction } walletType="Wallet" />,
                                         },
                                         {
                                             header: "Amount",
                                             render: transaction => <TransferAmountCell
-                                                amount={ transferBalance(accounts!.current!.accountId.address, transaction) } />,
+                                                amount={ transferBalance(accounts!.current!.accountId, transaction) } />,
                                             align: 'right',
                                             width: "120px",
                                         },

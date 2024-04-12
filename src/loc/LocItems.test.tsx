@@ -155,7 +155,7 @@ describe("UserLocItems", () => {
 
 const REQUESTER_ACCOUNT: Account = {
     name: "name",
-    accountId: OPEN_IDENTITY_LOC.requesterAddress!,
+    accountId: OPEN_IDENTITY_LOC.requesterAccountId!,
     isLegalOfficer: false,
     token: {
         value: "token",

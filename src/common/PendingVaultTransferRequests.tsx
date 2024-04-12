@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Lgnt } from "@logion/node-api";
+import { Lgnt, ValidAccountId } from "@logion/node-api";
 import { VaultTransferRequest } from "@logion/client";
 
 import AmountCell from "./AmountCell";
@@ -35,7 +35,7 @@ export default function PendingVaultTransferRequests() {
                 columns={[
                     {
                         header: "Legal Officer",
-                        render: request => <LegalOfficerName address={ request.legalOfficerAddress } />,
+                        render: request => <LegalOfficerName address={ ValidAccountId.polkadot(request.legalOfficerAddress) } />,
                         align: 'left',
                         renderDetails: request => <VaultTransferRequestDetails request={ request } />,
                     },

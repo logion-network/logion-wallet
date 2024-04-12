@@ -24,7 +24,7 @@ export default function WaitingLocs(props: Props) {
         if(viewer === "User") {
             result.push({
                 header: "Legal officer",
-                render: locData => <LegalOfficerName address={ locData.ownerAddress } />,
+                render: locData => <LegalOfficerName address={ locData.ownerAccountId } />,
                 align: 'left',
             });
         } else {

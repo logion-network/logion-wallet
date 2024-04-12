@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { Form, Spinner, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { BalanceState } from '@logion/client';
-import { Numbers, CoinBalance, Lgnt } from '@logion/node-api';
+import { Numbers, CoinBalance, Lgnt, ValidAccountId } from '@logion/node-api';
 
 import { CallCallback, useLogionChain } from '../logion-chain';
 
@@ -20,7 +20,7 @@ import VaultOutRequest from 'src/vault/VaultOutRequest';
 
 export interface Props {
     balance: CoinBalance,
-    vaultAddress?: string,
+    vaultAccount?: ValidAccountId,
     sendButton: boolean,
     sendToVault: boolean,
     withdrawFromVault: boolean,
@@ -45,14 +45,14 @@ export default function WalletGauge(props: Props) {
     const [ amount, setAmount ] = useState("");
     const [ unit, setUnit ] = useState(Numbers.NONE);
     const [ transferDialogState, setTransferDialogState ] = useState<TransferDialogState>(HIDDEN_DIALOG);
-    const { vaultAddress, sendButton } = props;
+    const { vaultAccount, sendButton } = props;
 
     const transfer = useMemo(() => {
         return async (callback: CallCallback) => {
             await mutateBalanceState(async (state: BalanceState) => {
                 return await state.transfer({
                     amount: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(amount, unit)),
-                    destination,
+                    destination: ValidAccountId.polkadot(destination),
                     callback,
                     signer: signer!
                 });
@@ -115,9 +115,9 @@ export default function WalletGauge(props: Props) {
                     </Button>
                 }
                 {
-                    props.sendToVault && vaultAddress !== undefined &&
+                    props.sendToVault && vaultAccount !== undefined &&
                     <Button slim onClick={ () => {
-                        setDestination(vaultAddress);
+                        setDestination(vaultAccount.address);
                         setTransferDialogState({
                             title: `Send ${ Lgnt.CODE }s to your logion Vault`,
                             destination: false,

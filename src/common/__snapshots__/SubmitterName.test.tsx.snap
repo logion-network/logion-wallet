@@ -2,7 +2,14 @@
 
 exports[`SubmitterName renders when submitter is Legal Officer 1`] = `
 <LegalOfficerName
-  address="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+  address={
+    ValidAccountId {
+      "anyAccountId": AnyAccountId {
+        "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+        "type": "Polkadot",
+      },
+    }
+  }
 />
 `;
 

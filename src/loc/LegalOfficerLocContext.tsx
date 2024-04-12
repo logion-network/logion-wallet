@@ -19,7 +19,7 @@ export function fetchAllLocsParams(legalOfficer: LegalOfficer): FetchAllLocsPara
     return {
         legalOfficers: [ legalOfficer ],
         spec: {
-            ownerAddress: legalOfficer.address,
+            ownerAddress: legalOfficer.account.address,
             locTypes: [ "Collection", "Identity", "Transaction" ],
             statuses: [ "CLOSED", "OPEN", "REVIEW_REJECTED", "REVIEW_PENDING", "REVIEW_ACCEPTED" ]
         },

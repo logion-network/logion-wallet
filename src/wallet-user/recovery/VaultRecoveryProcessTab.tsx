@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { CoinBalance, Numbers, Lgnt } from "@logion/node-api";
+import { CoinBalance, Numbers, Lgnt, ValidAccountId } from "@logion/node-api";
 import { ProtectionState, VaultState, VaultTransferRequest } from "@logion/client";
 
 import { CallCallback, useLogionChain } from "../../logion-chain";
@@ -35,7 +35,7 @@ enum Status {
 }
 
 function legalOfficers(protectionState: ProtectionState): string[] {
-    return protectionState.protectionParameters.states.map(state => state.legalOfficer.address);
+    return protectionState.protectionParameters.states.map(state => state.legalOfficer.account.address);
 }
 
 export default function VaultRecoveryProcessTab() {
@@ -44,15 +44,15 @@ export default function VaultRecoveryProcessTab() {
     const { colorTheme, availableLegalOfficers } = useCommonContext();
     const { protectionState, vaultState, mutateRecoveredVaultState, recoveredVaultState } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
-    const [ legalOfficer, setLegalOfficer ] = useState<string | null>(null);
+    const [ legalOfficer, setLegalOfficer ] = useState<ValidAccountId | null>(null);
     const [ status, setStatus ] = useState<Status>(Status.IDLE);
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
-    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<string>[]>([]);
+    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<ValidAccountId>[]>([]);
 
     useEffect(() => {
         if (legalOfficersOptions.length === 0 && protectionState && availableLegalOfficers) {
             const addresses = legalOfficers(protectionState);
-            const candidates = availableLegalOfficers.filter(legalOfficer => addresses.includes(legalOfficer.address));
+            const candidates = availableLegalOfficers.filter(legalOfficer => addresses.includes(legalOfficer.account.address));
             buildOptions(candidates)
                 .then(options => setLegalOfficersOptions(options));
         }
@@ -97,7 +97,7 @@ export default function VaultRecoveryProcessTab() {
                 return await recoveredVaultState.createVaultTransferRequest({
                     legalOfficer: getOfficer!(legalOfficer!)!,
                     amount: Lgnt.fromPrefixedNumber(amount),
-                    destination: vaultState!.vaultAddress,
+                    destination: vaultState!.vaultAccount,
                     signer: signer!,
                     callback,
                 });
@@ -115,7 +115,7 @@ export default function VaultRecoveryProcessTab() {
         const call = async (callback: CallCallback) => {
             await mutateRecoveredVaultState(async (vaultState: VaultState) => {
                 return await vaultState.cancelVaultTransferRequest(
-                    getOfficer!(requestToCancel!.legalOfficerAddress)!,
+                    getOfficer!(ValidAccountId.polkadot(requestToCancel!.legalOfficerAddress))!,
                     requestToCancel!,
                     signer!,
                     callback,
@@ -257,8 +257,8 @@ export default function VaultRecoveryProcessTab() {
                         transfer of { amountToRecover.coefficient.toFixedPrecision(2) }&nbsp;
                         { amountToRecover.prefix.symbol }
                         { recoveredCoinBalance?.coin.symbol }
-                        <br />from account { recoveredVaultState?.vaultAddress }
-                        <br />to account { vaultState.vaultAddress }.
+                        <br />from account { recoveredVaultState?.vaultAccount.address }
+                        <br />to account { vaultState.vaultAccount.address }.
                     </p>
                 </>
                 }

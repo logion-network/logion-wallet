@@ -1,6 +1,7 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { LegalOfficerClass } from "@logion/client";
+import { ValidAccountId } from "@logion/node-api";
 import { ProtectionRequestStatus } from "@logion/client/dist/RecoveryClient.js";
 
 import { ORANGE, GREEN, RED, YELLOW, BackgroundAndForegroundColors } from "../../common/ColorTheme";
@@ -16,19 +17,19 @@ import { useState, useEffect } from "react";
 
 export type Mode = 'select' | 'view';
 
-export async function buildOptions(legalOfficers: LegalOfficerClass[]): Promise<OptionType<string>[]> {
-    const options: Promise<OptionType<string>>[] = [];
+export async function buildOptions(legalOfficers: LegalOfficerClass[]): Promise<OptionType<ValidAccountId>[]> {
+    const options: Promise<OptionType<ValidAccountId>>[] = [];
     for (const legalOfficer of legalOfficers) {
         options.push(buildOption(legalOfficer));
     }
     return await Promise.all(options);
 }
 
-async function buildOption(legalOfficer: LegalOfficerClass): Promise<OptionType<string>> {
+async function buildOption(legalOfficer: LegalOfficerClass): Promise<OptionType<ValidAccountId>> {
     const promisedWorkload = legalOfficer.getWorkload();
     return promisedWorkload.then(workload => ({
         label: legalOfficer.name + (workload !== undefined ? ` (workload: ${ workload })` : ""),
-        value: legalOfficer.address,
+        value: legalOfficer.account,
     }))
 }
 
@@ -51,11 +52,11 @@ export default function SelectLegalOfficer(props: Props) {
     const colors = props.colors !== undefined ? props.colors : colorTheme.frame;
     const feedback = props.feedback ? props.feedback : "Required and different from other legal officer";
     const { label } = props;
-    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<string>[]>([]);
+    const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<ValidAccountId>[]>([]);
 
     const legalOfficersByAddress: Record<string, LegalOfficerClass> = {};
     props.legalOfficers.forEach(legalOfficer => {
-        legalOfficersByAddress[legalOfficer.address] = legalOfficer;
+        legalOfficersByAddress[legalOfficer.account.address] = legalOfficer;
     });
 
     useEffect(() => {
@@ -106,10 +107,10 @@ export default function SelectLegalOfficer(props: Props) {
                         label={ label }
                         control={
                             <Select
-                                isInvalid={ props.legalOfficer === null || (props.otherLegalOfficer !== null && props.legalOfficer.address === props.otherLegalOfficer.address) }
+                                isInvalid={ props.legalOfficer === null || (props.otherLegalOfficer !== null && props.legalOfficer.account.equals(props.otherLegalOfficer.account)) }
                                 options={ legalOfficersOptions }
-                                value={ props.legalOfficer !== null ? props.legalOfficer.address : null}
-                                onChange={ value => props.setLegalOfficer!(legalOfficersByAddress[value!] || null) }
+                                value={ props.legalOfficer !== null ? props.legalOfficer.account : null}
+                                onChange={ value => props.setLegalOfficer!(legalOfficersByAddress[value!.address] || null) }
                                 disabled={ props.mode === "view" }
                                 statusColor={ statusColor }
                             />

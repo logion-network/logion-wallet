@@ -9,7 +9,6 @@ import './StatementOfFactsSummary.css';
 
 export interface Props {
     locId: UUID,
-    nodeOwner: string,
     previewPath: string;
     relatedLocPath: string;
 }

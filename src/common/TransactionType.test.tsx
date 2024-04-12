@@ -1,6 +1,7 @@
+import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 import { shallowRender } from "../tests";
 import TransactionType from "./TransactionType";
-import { Transaction } from "@logion/client/dist/TransactionClient.js";
+import { Transaction } from "@logion/client";
 
 describe("TransactionType", () => {
 
@@ -10,7 +11,7 @@ describe("TransactionType", () => {
             method: "addCollectionItem",
             type: "EXTRINSIC",
         } as Transaction;
-        const result = shallowRender(<TransactionType transaction={ transaction } walletType="Wallet" address="" />);
+        const result = shallowRender(<TransactionType transaction={ transaction } walletType="Wallet" account={ TEST_WALLET_USER } />);
         expect(result).toMatchSnapshot();
     })
 
@@ -20,7 +21,7 @@ describe("TransactionType", () => {
             method: "unknownMethod",
             type: "EXTRINSIC",
         } as Transaction;
-        const result = shallowRender(<TransactionType transaction={ transaction } walletType="Wallet" address="" />);
+        const result = shallowRender(<TransactionType transaction={ transaction } walletType="Wallet" account={ TEST_WALLET_USER } />);
         expect(result).toMatchSnapshot();
     })
 })

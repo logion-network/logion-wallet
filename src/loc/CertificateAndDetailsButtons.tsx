@@ -53,7 +53,7 @@ export default function CertificateAndDetailsButtons(props: Props) {
     }, [ api, limits, loc.collectionParams ]);
 
     const hasVoteFeature = useMemo(() => {
-        return backendConfig(loc.ownerAddress).features.vote;
+        return backendConfig(loc.ownerAccountId).features.vote;
     }, [ loc, backendConfig ]);
 
     const { dateLimit, dataNumberLimit } = limits || { ...DEFAULT_LIMITS, dataNumberLimit: "-" };
@@ -84,9 +84,9 @@ export default function CertificateAndDetailsButtons(props: Props) {
 
                             { loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <IssuerSelectionButton/> }
                             { loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && loc.status ==='OPEN' && <IssuerSelectionButton/> }
-                            { loc.locType === 'Identity' && props.viewer === 'LegalOfficer' && !isLogionIdentityLoc({ ...loc, requesterAddress: loc.requesterAddress?.address }) && loc.requesterAddress?.type === "Polkadot" && loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
+                            { loc.locType === 'Identity' && props.viewer === 'LegalOfficer' && !isLogionIdentityLoc({ ...loc, requesterAddress: loc.requesterAccountId?.address }) && loc.requesterAccountId?.type === "Polkadot" && loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
 
-                            { loc.locType === 'Identity' && !isLogionIdentityLoc({ ...loc, requesterAddress: loc.requesterAddress?.address }) && props.viewer === 'LegalOfficer' && loc.status === "CLOSED" && hasVoteFeature && !loc.voteId && !props.isReadOnly && <RequestVoteButton/> }
+                            { loc.locType === 'Identity' && !isLogionIdentityLoc({ ...loc, requesterAddress: loc.requesterAccountId?.address }) && props.viewer === 'LegalOfficer' && loc.status === "CLOSED" && hasVoteFeature && !loc.voteId && !props.isReadOnly && <RequestVoteButton/> }
 
                             { loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <ArchiveButton/> }
                             { loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && !props.isReadOnly && <ArchiveButton/> }
@@ -135,7 +135,7 @@ export default function CertificateAndDetailsButtons(props: Props) {
                     <StaticLabelValue
                         label='Signature will be executed by the following public key'
                         value={
-                            <p>{ loc.requesterAddress?.address }</p>
+                            <p>{ loc.requesterAccountId?.address }</p>
                         }
                     />
 

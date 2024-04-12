@@ -29,7 +29,7 @@ export default function IssuerSelectionCheckbox(props: Props) {
         const call = async (callback: CallCallback) => mutateLocState(async current => {
             if(signer && (current instanceof OpenLoc || current instanceof ClosedCollectionLoc)) {
                 const params = {
-                    issuer: issuerSelection.address,
+                    issuer: issuerSelection.account,
                     signer,
                     callback,
                 };

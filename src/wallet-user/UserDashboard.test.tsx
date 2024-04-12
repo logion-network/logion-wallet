@@ -8,13 +8,14 @@ import UserDashboard from './UserDashboard';
 import { setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
 import { shallowRender } from '../tests';
 import { LocsState } from "@logion/client";
-import { mockValidPolkadotAccountId, api } from 'src/__mocks__/LogionMock';
+import { api } from 'src/__mocks__/LogionMock';
+import { TEST_WALLET_USER } from "./TestData";
 
 describe("UserDashboard", () => {
 
     setLocsState({} as LocsState)
 
-    const accountId = mockValidPolkadotAccountId("address");
+    const accountId = TEST_WALLET_USER;
 
     test('Given disconnected and accounts then empty', () => {
         setContextMock({

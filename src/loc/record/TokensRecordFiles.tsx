@@ -54,7 +54,7 @@ function TokensRecordFileCell(props: Props & { loc: LocData, file: UploadableIte
             <Col md={ 5 } className="ButtonContainer">
                 <ButtonGroup>
                     <ViewFileButton
-                        nodeOwner={ loc.ownerAddress }
+                        nodeOwner={ loc.ownerAccountId }
                         fileName={ file.name.validValue() }
                         downloader={ (axios) => getTokensRecordFileSource(axios, {
                             locId: loc.id.toString(),

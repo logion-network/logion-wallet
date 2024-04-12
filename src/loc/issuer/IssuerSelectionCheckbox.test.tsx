@@ -3,6 +3,7 @@ import IssuerSelectionCheckbox from "./IssuerSelectionCheckbox";
 import { clickByName, expectNoDialogVisible } from "../../tests";
 import userEvent from "@testing-library/user-event";
 import { VerifiedIssuerWithSelect } from "@logion/client";
+import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 
 jest.mock("../LocContext");
 jest.mock("../../logion-chain");
@@ -14,7 +15,7 @@ describe("IssuerSelectionCheckbox", () => {
             firstName: "Scott",
             lastName: "Tiger",
             identityLocId: "123",
-            address: "address-123",
+            account: TEST_WALLET_USER,
             selected,
         }
     }

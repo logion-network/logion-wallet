@@ -19,7 +19,6 @@ import {
 } from "@logion/client";
 import { LocType, ValidAccountId } from "@logion/node-api";
 import { Mock } from 'moq.ts';
-import { PATRICK, GUILLAUME, ALAIN } from "../../common/TestData";
 
 export let createTokenRequest = () => null;
 
@@ -45,7 +44,7 @@ export const DEFAULT_SHARED_STATE: SharedState = {
     networkState: {} as NetworkState<LegalOfficerEndpoint>,
     nodeApi: api.object(),
     tokens: {} as AccountTokens,
-    currentAddress: {
+    currentAccount: {
         address: TEST_WALLET_USER,
         type: "Polkadot"
     } as unknown as ValidAccountId,

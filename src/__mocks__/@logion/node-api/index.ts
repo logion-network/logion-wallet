@@ -9,6 +9,8 @@ export {
     Hash,
     Lgnt,
     LgntFormatter,
+    ValidAccountId,
+    AnyAccountId,
 } from "@logion/node-api";
 
 export type {

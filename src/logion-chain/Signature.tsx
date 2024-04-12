@@ -1,4 +1,5 @@
 import { ExtensionSigner } from '@logion/extension';
+import { ValidAccountId } from "@logion/node-api";
 import { ISubmittableResult } from '@polkadot/types/types';
 import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 
@@ -9,7 +10,7 @@ export type SignAndSendCallback = (result: SignedTransaction) => void;
 export type ErrorCallback = (error: any) => void;
 
 export interface ExtrinsicSignatureParameters {
-    signerId: string,
+    signerId: ValidAccountId,
     callback: SignAndSendCallback,
     errorCallback: ErrorCallback
     submittable: SubmittableExtrinsic,

@@ -38,7 +38,7 @@ export default function IssuerClosedLocs() {
                 columns={ [
                     {
                         "header": "Legal Officer",
-                        render: locData => <LegalOfficerName address={ locData.ownerAddress } />,
+                        render: locData => <LegalOfficerName address={ locData.ownerAccountId } />,
                         align: 'left',
                     },
                     {

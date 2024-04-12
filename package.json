@@ -10,10 +10,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@creativecommons/cc-assets": "^0.1.0",
-    "@logion/client": "^0.42.0",
+    "@logion/client": "^0.43.0-3",
     "@logion/client-browser": "^0.3.4",
     "@logion/crossmint": "^0.1.32",
-    "@logion/extension": "^0.7.8",
+    "@logion/extension": "^0.8.0-1",
     "@logion/multiversx": "^0.1.13",
     "@multiversx/sdk-extension-provider": "^2.0.7",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",

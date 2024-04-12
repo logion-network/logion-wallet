@@ -29,10 +29,10 @@ exports[`LocPrivateFileDetails renders 0-sized file 1`] = `
         N/A
       </LocItemDetail>
       <LocItemDetail
-        copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+        copyButtonText="vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
         label="Submitter ID"
       >
-        5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+        vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz
       </LocItemDetail>
       <LocItemDetail
         copyButtonText="0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a"
@@ -97,10 +97,10 @@ exports[`LocPrivateFileDetails renders 1`] = `
         4
       </LocItemDetail>
       <LocItemDetail
-        copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+        copyButtonText="vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
         label="Submitter ID"
       >
-        5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+        vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz
       </LocItemDetail>
       <LocItemDetail
         copyButtonText="0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a"

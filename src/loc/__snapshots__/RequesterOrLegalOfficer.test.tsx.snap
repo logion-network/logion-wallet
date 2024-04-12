@@ -13,8 +13,11 @@ exports[`RequesterOrLegalOfficer renders LO in charge for User 1`] = `
       delay={500}
       overlay={
         <Tooltip
+          id="vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr"
           placement="right"
-        />
+        >
+          vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr
+        </Tooltip>
       }
       placement="top"
       trigger={
@@ -27,6 +30,7 @@ exports[`RequesterOrLegalOfficer renders LO in charge for User 1`] = `
       <span>
         <br />
          
+        vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr
       </span>
     </OverlayTrigger>
   </LocItemDetail>
@@ -77,10 +81,10 @@ exports[`RequesterOrLegalOfficer renders polkadot requester for LO 1`] = `
         delay={500}
         overlay={
           <Tooltip
-            id="Polkadot:5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+            id="Polkadot:vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
             placement="right"
           >
-            5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+            vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz
           </Tooltip>
         }
         placement="top"
@@ -95,7 +99,7 @@ exports[`RequesterOrLegalOfficer renders polkadot requester for LO 1`] = `
           <br />
            
           <React.Fragment>
-            5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+            vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz
           </React.Fragment>
         </span>
       </OverlayTrigger>

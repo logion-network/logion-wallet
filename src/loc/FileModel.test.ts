@@ -21,7 +21,7 @@ describe("FileModel", () => {
             value: "some-token",
         } as Token;
         const url = loFileUrl(PATRICK, file, token);
-        expect(url).toBe(`${ PATRICK.node }/api/lo-file/${ PATRICK.address }/${ file }?jwt_token=${ token.value }`);
+        expect(url).toBe(`${ PATRICK.node }/api/lo-file/${ PATRICK.account.address }/${ file }?jwt_token=${ token.value }`);
     })
 
     it("downloads LO file", async () => {
@@ -33,7 +33,7 @@ describe("FileModel", () => {
             }),
         } as unknown as AxiosInstance;
 
-        const legalOfficer = DEFAULT_LEGAL_OFFICER.address;
+        const legalOfficer = DEFAULT_LEGAL_OFFICER;
         const fileId = "header-logo";
         await getLoFile({
             axios,
@@ -41,7 +41,7 @@ describe("FileModel", () => {
             fileId,
         });
 
-        expect(axios.get).toBeCalledWith(
+        expect(axios.get).toHaveBeenCalledWith(
             `/api/lo-file/${legalOfficer}/${fileId}`,
             expect.objectContaining({
                 responseType: "blob"
@@ -67,7 +67,7 @@ describe("FileModel", () => {
             hash,
         });
 
-        expect(axios.get).toBeCalledWith(
+        expect(axios.get).toHaveBeenCalledWith(
             `/api/collection/${ locId }/${ collectionItemId.toHex() }/files/${ hash.toHex() }`,
             expect.objectContaining({
                 responseType: "blob"
@@ -89,7 +89,7 @@ describe("FileModel", () => {
             locId,
         });
 
-        expect(axios.get).toBeCalledWith(
+        expect(axios.get).toHaveBeenCalledWith(
             `/api/loc-request/${ locId }`,
             expect.objectContaining({
                 responseType: "blob"
@@ -112,7 +112,7 @@ describe("FileModel", () => {
             file: HashOrContent.fromContent(new BrowserFile(file, file.name)),
         });
 
-        expect(axios.put).toBeCalledWith(
+        expect(axios.put).toHaveBeenCalledWith(
             `/api/lo-file/${ legalOfficer }/${ fileId }`,
             expect.any(FormData),
             expect.objectContaining({ headers: { "Content-Type": "multipart/form-data" } }),
@@ -134,7 +134,7 @@ describe("FileModel", () => {
             collectionItemId,
         });
 
-        expect(axios.get).toBeCalledWith(`/api/collection/${ locId }/${ collectionItemId.toHex() }/latest-deliveries`);
+        expect(axios.get).toHaveBeenCalledWith(`/api/collection/${ locId }/${ collectionItemId.toHex() }/latest-deliveries`);
         expect(deliveries).toBe(expectedData);
     })
 
@@ -153,7 +153,7 @@ describe("FileModel", () => {
             collectionItemId,
         });
 
-        expect(axios.get).toBeCalledWith(`/api/collection/${ locId }/${ collectionItemId.toHex() }/all-deliveries`);
+        expect(axios.get).toHaveBeenCalledWith(`/api/collection/${ locId }/${ collectionItemId.toHex() }/all-deliveries`);
         expect(deliveries).toBe(expectedData);
     })
 })

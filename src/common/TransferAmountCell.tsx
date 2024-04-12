@@ -1,5 +1,5 @@
-import { Transaction } from "@logion/client/dist/TransactionClient.js";
-import { Lgnt, LgntFormatter } from "@logion/node-api";
+import { Transaction } from "@logion/client";
+import { Lgnt, LgntFormatter, ValidAccountId } from "@logion/node-api";
 
 import { GREEN, RED } from "./ColorTheme";
 import Icon from "./Icon";
@@ -46,27 +46,27 @@ export default function TransferAmountCell(props: Props) {
     }
 }
 
-export function transferBalance(address: string, transaction: Transaction): Lgnt {
+export function transferBalance(account: ValidAccountId | undefined, transaction: Transaction): Lgnt {
     const amount = Lgnt.fromCanonical(BigInt(transaction.transferValue));
-    if(transaction.from === address) {
+    if(transaction.from.equals(account)) {
         return amount.negate();
     } else {
         return amount;
     }
 }
 
-export function fees(address: string, transaction: Transaction): Lgnt {
+export function fees(account: ValidAccountId | undefined, transaction: Transaction): Lgnt {
     const amount = toFeesClass(transaction.fees)?.totalFee || Lgnt.zero();
-    if(transaction.from === address) {
+    if(transaction.from.equals(account)) {
         return amount;
     } else {
         return Lgnt.zero();
     }
 }
 
-export function deposit(address: string, transaction: Transaction): Lgnt {
+export function deposit(account: ValidAccountId | undefined, transaction: Transaction): Lgnt {
     const amount = Lgnt.fromCanonical(BigInt(transaction.reserved));
-    if(transaction.from === address) {
+    if(transaction.from.equals(account)) {
         return amount;
     } else {
         return Lgnt.zero();

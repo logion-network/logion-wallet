@@ -63,11 +63,11 @@ exports[`TemplateItemActions Links are read-only for issuer when acknowledged 1`
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -136,11 +136,11 @@ exports[`TemplateItemActions Links are read-only for issuer when acknowledged 1`
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -225,11 +225,11 @@ exports[`TemplateItemActions Links are read-only for owner when acknowledged 1`]
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -298,11 +298,11 @@ exports[`TemplateItemActions Links are read-only for owner when acknowledged 1`]
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -387,11 +387,11 @@ exports[`TemplateItemActions Links are read-only for requester when published 1`
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -460,11 +460,11 @@ exports[`TemplateItemActions Links are read-only for requester when published 1`
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -551,11 +551,11 @@ exports[`TemplateItemActions Links can be acknowledged by issuer when published 
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -624,11 +624,11 @@ exports[`TemplateItemActions Links can be acknowledged by issuer when published 
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -704,11 +704,11 @@ exports[`TemplateItemActions Links can be acknowledged by owner when published 1
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -777,11 +777,11 @@ exports[`TemplateItemActions Links can be acknowledged by owner when published 1
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -857,11 +857,11 @@ exports[`TemplateItemActions Links can be published by requester when approved 1
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -930,11 +930,11 @@ exports[`TemplateItemActions Links can be published by requester when approved 1
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -1010,11 +1010,11 @@ exports[`TemplateItemActions Links can be published by requester when approved a
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -1083,11 +1083,11 @@ exports[`TemplateItemActions Links can be published by requester when approved a
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -1160,11 +1160,11 @@ exports[`TemplateItemActions Links can be reviewed by owner when submitted 1`] =
           "rejectReason": undefined,
           "reviewedOn": undefined,
           "status": "REVIEW_PENDING",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "submitter": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+              "type": "Polkadot",
+            },
           },
           "template": true,
           "timestamp": null,
@@ -1232,11 +1232,11 @@ exports[`TemplateItemActions Links can be reviewed by owner when submitted 1`] =
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_PENDING",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -1305,11 +1305,11 @@ exports[`TemplateItemActions Links can be reviewed by owner when submitted 1`] =
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_PENDING",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -1471,11 +1471,11 @@ exports[`TemplateItemActions Links can be submitted for review or cleared by iss
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -1541,11 +1541,11 @@ exports[`TemplateItemActions Links can be submitted for review or cleared by iss
           "rejectReason": undefined,
           "reviewedOn": undefined,
           "status": "DRAFT",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "submitter": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+              "type": "Polkadot",
+            },
           },
           "template": true,
           "timestamp": null,
@@ -1613,11 +1613,11 @@ exports[`TemplateItemActions Links can be submitted for review or cleared by iss
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -1698,11 +1698,11 @@ exports[`TemplateItemActions Links can be submitted for review or cleared by req
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -1768,11 +1768,11 @@ exports[`TemplateItemActions Links can be submitted for review or cleared by req
           "rejectReason": undefined,
           "reviewedOn": undefined,
           "status": "DRAFT",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "submitter": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+              "type": "Polkadot",
+            },
           },
           "template": true,
           "timestamp": null,
@@ -1840,11 +1840,11 @@ exports[`TemplateItemActions Links can be submitted for review or cleared by req
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -1957,11 +1957,11 @@ exports[`TemplateItemActions Private files are read-only for issuer when acknowl
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -2067,11 +2067,11 @@ exports[`TemplateItemActions Private files are read-only for issuer when acknowl
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -2193,11 +2193,11 @@ exports[`TemplateItemActions Private files are read-only for owner when acknowle
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -2303,11 +2303,11 @@ exports[`TemplateItemActions Private files are read-only for owner when acknowle
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -2429,11 +2429,11 @@ exports[`TemplateItemActions Private files are read-only for requester when publ
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -2539,11 +2539,11 @@ exports[`TemplateItemActions Private files are read-only for requester when publ
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -2667,11 +2667,11 @@ exports[`TemplateItemActions Private files can be acknowledged by issuer when pu
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -2777,11 +2777,11 @@ exports[`TemplateItemActions Private files can be acknowledged by issuer when pu
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -2894,11 +2894,11 @@ exports[`TemplateItemActions Private files can be acknowledged by owner when pub
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -3004,11 +3004,11 @@ exports[`TemplateItemActions Private files can be acknowledged by owner when pub
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -3121,11 +3121,11 @@ exports[`TemplateItemActions Private files can be published by requester when ap
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -3231,11 +3231,11 @@ exports[`TemplateItemActions Private files can be published by requester when ap
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -3348,11 +3348,11 @@ exports[`TemplateItemActions Private files can be published by requester when ap
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -3458,11 +3458,11 @@ exports[`TemplateItemActions Private files can be published by requester when ap
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -3572,11 +3572,11 @@ exports[`TemplateItemActions Private files can be reviewed by owner when submitt
           "rejectReason": undefined,
           "reviewedOn": undefined,
           "status": "REVIEW_PENDING",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "submitter": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+              "type": "Polkadot",
+            },
           },
           "template": true,
           "timestamp": null,
@@ -3681,11 +3681,11 @@ exports[`TemplateItemActions Private files can be reviewed by owner when submitt
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_PENDING",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -3791,11 +3791,11 @@ exports[`TemplateItemActions Private files can be reviewed by owner when submitt
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_PENDING",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -3994,11 +3994,11 @@ exports[`TemplateItemActions Private files can be submitted for review or cleare
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -4101,11 +4101,11 @@ exports[`TemplateItemActions Private files can be submitted for review or cleare
           "rejectReason": undefined,
           "reviewedOn": undefined,
           "status": "DRAFT",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "submitter": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+              "type": "Polkadot",
+            },
           },
           "template": true,
           "timestamp": null,
@@ -4210,11 +4210,11 @@ exports[`TemplateItemActions Private files can be submitted for review or cleare
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -4332,11 +4332,11 @@ exports[`TemplateItemActions Private files can be submitted for review or cleare
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -4439,11 +4439,11 @@ exports[`TemplateItemActions Private files can be submitted for review or cleare
           "rejectReason": undefined,
           "reviewedOn": undefined,
           "status": "DRAFT",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "submitter": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+              "type": "Polkadot",
+            },
           },
           "template": true,
           "timestamp": null,
@@ -4548,11 +4548,11 @@ exports[`TemplateItemActions Private files can be submitted for review or cleare
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -4665,11 +4665,11 @@ exports[`TemplateItemActions Public data are read-only for issuer when acknowled
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -4775,11 +4775,11 @@ exports[`TemplateItemActions Public data are read-only for issuer when acknowled
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -4901,11 +4901,11 @@ exports[`TemplateItemActions Public data are read-only for owner when acknowledg
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -5011,11 +5011,11 @@ exports[`TemplateItemActions Public data are read-only for owner when acknowledg
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "ACKNOWLEDGED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -5137,11 +5137,11 @@ exports[`TemplateItemActions Public data are read-only for requester when publis
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -5247,11 +5247,11 @@ exports[`TemplateItemActions Public data are read-only for requester when publis
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -5375,11 +5375,11 @@ exports[`TemplateItemActions Public data can be acknowledged by issuer when publ
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -5485,11 +5485,11 @@ exports[`TemplateItemActions Public data can be acknowledged by issuer when publ
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -5602,11 +5602,11 @@ exports[`TemplateItemActions Public data can be acknowledged by owner when publi
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -5712,11 +5712,11 @@ exports[`TemplateItemActions Public data can be acknowledged by owner when publi
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "PUBLISHED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -5829,11 +5829,11 @@ exports[`TemplateItemActions Public data can be published by requester when appr
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -5939,11 +5939,11 @@ exports[`TemplateItemActions Public data can be published by requester when appr
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -6056,11 +6056,11 @@ exports[`TemplateItemActions Public data can be published by requester when appr
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -6166,11 +6166,11 @@ exports[`TemplateItemActions Public data can be published by requester when appr
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_ACCEPTED",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -6280,11 +6280,11 @@ exports[`TemplateItemActions Public data can be reviewed by owner when submitted
           "rejectReason": undefined,
           "reviewedOn": undefined,
           "status": "REVIEW_PENDING",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "submitter": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+              "type": "Polkadot",
+            },
           },
           "template": true,
           "timestamp": null,
@@ -6389,11 +6389,11 @@ exports[`TemplateItemActions Public data can be reviewed by owner when submitted
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_PENDING",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -6499,11 +6499,11 @@ exports[`TemplateItemActions Public data can be reviewed by owner when submitted
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "REVIEW_PENDING",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -6702,11 +6702,11 @@ exports[`TemplateItemActions Public data can be submitted for review or cleared 
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -6809,11 +6809,11 @@ exports[`TemplateItemActions Public data can be submitted for review or cleared 
           "rejectReason": undefined,
           "reviewedOn": undefined,
           "status": "DRAFT",
-          "submitter": Object {
-            "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "submitter": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+              "type": "Polkadot",
+            },
           },
           "template": true,
           "timestamp": null,
@@ -6918,11 +6918,11 @@ exports[`TemplateItemActions Public data can be submitted for review or cleared 
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5EBxoSssqNo23FvsDeUxjyQScnfEiGxJaNwuwqBH2Twe35BX",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -7040,11 +7040,11 @@ exports[`TemplateItemActions Public data can be submitted for review or cleared 
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,
@@ -7147,11 +7147,11 @@ exports[`TemplateItemActions Public data can be submitted for review or cleared 
           "rejectReason": undefined,
           "reviewedOn": undefined,
           "status": "DRAFT",
-          "submitter": Object {
-            "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-            "equals": [Function],
-            "toKey": [Function],
-            "type": "Polkadot",
+          "submitter": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+              "type": "Polkadot",
+            },
           },
           "template": true,
           "timestamp": null,
@@ -7256,11 +7256,11 @@ exports[`TemplateItemActions Public data can be submitted for review or cleared 
             "rejectReason": undefined,
             "reviewedOn": undefined,
             "status": "DRAFT",
-            "submitter": Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-              "equals": [Function],
-              "toKey": [Function],
-              "type": "Polkadot",
+            "submitter": ValidAccountId {
+              "anyAccountId": AnyAccountId {
+                "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+                "type": "Polkadot",
+              },
             },
             "template": true,
             "timestamp": null,

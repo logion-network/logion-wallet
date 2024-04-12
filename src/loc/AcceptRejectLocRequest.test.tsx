@@ -1,12 +1,11 @@
 import { LocData } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { UUID, ValidAccountId } from "@logion/node-api";
 import { getByText, render, screen, waitFor } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../logion-chain/__mocks__/LogionChainMock';
 import { shallowRender } from "../tests";
 import AcceptRejectLocRequest from "./AcceptRejectLocRequest";
-import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 jest.mock("../logion-chain");
 jest.mock('./Model');
@@ -21,8 +20,8 @@ describe("AcceptRejectLocRequest", () => {
     it("renders pending requests", () => {
         const tree = shallowRender(<AcceptRejectLocRequest loc={{
             id: new UUID(REQUEST_ID),
-            ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
+            ownerAccountId: ValidAccountId.polkadot("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"),
+            requesterAccountId: ValidAccountId.polkadot("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
             status: "REVIEW_PENDING",
             files: [],
             metadata: [],
@@ -34,8 +33,8 @@ describe("AcceptRejectLocRequest", () => {
     it("Click on reject and confirm rejects request", async () => {
         render(<AcceptRejectLocRequest loc={{
             id: new UUID(REQUEST_ID),
-            ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
+            ownerAccountId: ValidAccountId.polkadot("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"),
+            requesterAccountId: ValidAccountId.polkadot("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
             status: "REVIEW_PENDING",
             files: [],
             metadata: [],
@@ -56,8 +55,8 @@ describe("AcceptRejectLocRequest", () => {
     it("opens acceptance process when click on accept", async () => {
         const tree = render(<AcceptRejectLocRequest loc={{
             id: new UUID(REQUEST_ID),
-            legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+            ownerAccountId: ValidAccountId.polkadot("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"),
+            requesterAccountId: ValidAccountId.polkadot("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
             requestedTokenName: "TOKEN1",
             bars: 1,
             status: "PENDING",
