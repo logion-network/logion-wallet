@@ -1,23 +1,18 @@
-import { Row } from "../../common/Grid";
+import { LocData } from "@logion/client";
 import { Col } from "react-bootstrap";
+
+import { Row } from "../../common/Grid";
 import Detail from "../../common/Detail";
-import { PersonalInfoProps } from "./type";
-import { LocRequestStatus } from "@logion/client/dist/LocClient.js";
 
 import "./PersonalInfo.css";
 import LegalEntity from "./LegalEntity";
 
-interface PersonalAndStatusInfoProps extends PersonalInfoProps {
-    status: LocRequestStatus,
-    seal?: string
-}
-
-export function PersonalInfo(props: { personalAndStatusInfo: PersonalAndStatusInfoProps }) {
-    const { requesterAddress, userIdentity, userPostalAddress, status, seal, company } = props.personalAndStatusInfo;
+export function PersonalInfo(props: { personalAndStatusInfo: LocData }) {
+    const { requesterAccountId, userIdentity, userPostalAddress, status, seal, company } = props.personalAndStatusInfo;
     const padding = "/";
     return (
         <div className="PersonalInfo">
-            <p className="title">Identity data (not publicly available) submitted by the following account address: <strong>{ requesterAddress?.address || padding }</strong></p>
+            <p className="title">Identity data (not publicly available) submitted by the following account address: <strong>{ requesterAccountId?.address || padding }</strong></p>
             <Row>
                 <Col>
                     <LegalEntity

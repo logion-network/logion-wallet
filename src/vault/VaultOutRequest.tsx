@@ -18,18 +18,19 @@ import { useUserContext } from "../wallet-user/UserContext";
 import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
 interface FormValues {
-    legalOfficer: ValidAccountId | null;
     amount: Amount;
     destination: string;
 }
 
 export default function VaultOutRequest() {
-    const { api, accounts, getOfficer, signer, client, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
+    const { accounts, getOfficer, signer, client, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { availableLegalOfficers, colorTheme } = useCommonContext();
     const { protectionState, mutateVaultState } = useUserContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
     const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<ValidAccountId>[]>([]);
+    const [ legalOfficer, setLegalOfficer ] = useState<ValidAccountId | null>(null);
+    const [ legalOfficerError, setLegalOfficerError ] = useState<string>();
 
     useEffect(() => {
         if (legalOfficersOptions.length === 0 && protectionState && availableLegalOfficers) {
@@ -38,11 +39,10 @@ export default function VaultOutRequest() {
             buildOptions(candidates)
                 .then(options => setLegalOfficersOptions(options));
         }
-    }, [ accounts, api, availableLegalOfficers, legalOfficersOptions, setLegalOfficersOptions, protectionState ]);
+    }, [ availableLegalOfficers, legalOfficersOptions, protectionState ]);
 
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
-            legalOfficer: null,
             amount: {
                 value: "",
                 unit: Numbers.NONE
@@ -57,10 +57,15 @@ export default function VaultOutRequest() {
     }, [ reset ]);
 
     const transferCallback = useCallback(async (formValues: FormValues) => {
+        if(!legalOfficer) {
+            setLegalOfficerError("You must select a Legal Officer");
+            return;
+        }
+
         const call = async (callback: CallCallback) => {
             await mutateVaultState(async (state: VaultState) => {
                 return await state.createVaultTransferRequest({
-                    legalOfficer: getOfficer!(formValues!.legalOfficer!)!,
+                    legalOfficer: getOfficer!(legalOfficer!)!,
                     amount: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.amount.value, formValues.amount.unit)),
                     destination: ValidAccountId.polkadot(formValues.destination),
                     signer: signer!,
@@ -74,7 +79,7 @@ export default function VaultOutRequest() {
         } finally {
             clearSubmissionState();
         }
-    }, [ getOfficer, mutateVaultState, signer, submitCall, clearSubmissionState, close ]);
+    }, [ getOfficer, mutateVaultState, signer, submitCall, clearSubmissionState, close, legalOfficer ]);
 
     if(availableLegalOfficers === undefined || !client) {
         return null;
@@ -170,28 +175,14 @@ export default function VaultOutRequest() {
                         id="legalOfficer"
                         label="Legal officer"
                         control={
-                            <Controller
-                                name="legalOfficer"
-                                control={ control }
-                                rules={{
-                                    required: 'You must select a Legal Officer',
-                                    minLength: {
-                                        value: 1,
-                                        message: 'You must select a Legal Officer'
-                                    },
-
-                                }}
-                                render={({ field }) => (
-                                    <Select
-                                        isInvalid={ !!errors.legalOfficer?.message }
-                                        options={ legalOfficersOptions }
-                                        value={ field.value }
-                                        onChange={ field.onChange }
-                                    />
-                                )}
+                            <Select
+                                isInvalid={ !!legalOfficerError }
+                                options={ legalOfficersOptions }
+                                value={ legalOfficer }
+                                onChange={ value => { setLegalOfficerError(undefined) ; setLegalOfficer(value) } }
                             />
                         }
-                        feedback={ errors.legalOfficer?.message }
+                        feedback={ legalOfficerError }
                         colors={ colorTheme.dialog }
                     />
                 </>

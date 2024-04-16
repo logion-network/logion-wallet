@@ -270,7 +270,7 @@ export default function ImportItems() {
                         <Button
                             variant="polkadot"
                             onClick={ importAll }
-                            disabled={ extrinsicSubmissionState.inProgress }
+                            disabled={ getNotSubmitted(items) === 0 || extrinsicSubmissionState.inProgress }
                         >
                             <Icon icon={{id: "import_items"}} height="23px" /> Import all
                         </Button>

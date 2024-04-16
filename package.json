@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@creativecommons/cc-assets": "^0.1.0",
-    "@logion/client": "^0.43.0-3",
+    "@logion/client": "^0.43.0-4",
     "@logion/client-browser": "^0.3.4",
     "@logion/crossmint": "^0.1.32",
     "@logion/extension": "^0.8.0-1",
