@@ -4,7 +4,5 @@
     "rpcEndpoints": [
         "ws://localhost:9944"
     ],
-    "crossmintApiKey": "",
-    "logionClassification": "",
-    "creativeCommons": ""
+    "crossmintApiKey": ""
 }

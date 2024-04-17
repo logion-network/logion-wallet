@@ -3216,15 +3216,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/client@npm:^0.43.0-4":
-  version: 0.43.0-4
-  resolution: "@logion/client@npm:0.43.0-4"
+"@logion/client@npm:^0.43.0-5":
+  version: 0.43.0-5
+  resolution: "@logion/client@npm:0.43.0-5"
   dependencies:
-    "@logion/node-api": ^0.29.0-5
+    "@logion/node-api": ^0.29.0-6
     axios: ^1.6.7
     luxon: ^3.4.4
     mime-db: ^1.52.0
-  checksum: dceb958b5b00d8d27feb0526900634c194230e63bca78b5f617c320422d73878858e50decf981d1569864f5faffe322170f5483d32ddb23ca89c1666d32c5a47
+  checksum: 9774f9712e044283b23e47e8c5f53ef1831d823fa3e94e86c9fa5271c7b62dbd0749a6adf7d11f9c58855615ad4073f99dc95c3110e51792c7b1f8c95fd8d938
   languageName: node
   linkType: hard
 
@@ -3280,7 +3280,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/node-api@npm:^0.29.0-5":
+"@logion/node-api@npm:^0.29.0-6":
   version: 0.29.0-6
   resolution: "@logion/node-api@npm:0.29.0-6"
   dependencies:
@@ -12105,7 +12105,7 @@ __metadata:
     "@babel/preset-react": ^7.23.3
     "@babel/preset-typescript": ^7.23.3
     "@creativecommons/cc-assets": ^0.1.0
-    "@logion/client": ^0.43.0-4
+    "@logion/client": ^0.43.0-5
     "@logion/client-browser": ^0.3.4
     "@logion/crossmint": ^0.1.32
     "@logion/extension": ^0.8.0-1

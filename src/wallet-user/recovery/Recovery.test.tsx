@@ -6,6 +6,7 @@ import Recovery from "./Recovery";
 import { setProtectionState } from '../__mocks__/UserContextMock';
 import { PENDING_RECOVERY_REQUESTS, ACCEPTED_RECOVERY_REQUESTS, ACTIVATED_RECOVERY_REQUESTS } from "../protection/TestData";
 import { PendingProtection, AcceptedProtection, PendingRecovery, ClaimedRecovery } from "@logion/client";
+import { ValidAccountId } from "@logion/node-api";
 import { RecoverySharedState } from "@logion/client/dist/Recovery.js";
 import { GUILLAUME, PATRICK } from "../../common/TestData";
 
@@ -66,7 +67,7 @@ test("renders protected and claimed", () => {
         recoveryConfig: {
             legalOfficers: [ PATRICK.account, GUILLAUME.account ]
         },
-        recoveredAddress: ACTIVATED_RECOVERY_REQUESTS[0].addressToRecover!
+        recoveredAccount: ValidAccountId.polkadot(ACTIVATED_RECOVERY_REQUESTS[0].addressToRecover!),
     } as unknown as RecoverySharedState));
 
     const tree = shallowRender(<Recovery />)
