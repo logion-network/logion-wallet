@@ -108,101 +108,99 @@ exports[`WalletGauge renders 1`] = `
     <h3>
       
     </h3>
-    <React.Fragment>
-      <FormGroup
-        colors={
-          Object {
-            "background": "#0c163d",
-            "borderColor": "#e6007a",
-            "foreground": "#ffffff",
-          }
+    <FormGroup
+      colors={
+        Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
+          "foreground": "#ffffff",
         }
-        control={
+      }
+      control={
+        <FormControl
+          isInvalid={false}
+          onChange={[Function]}
+          placeholder="The beneficiary's SS58 address"
+          type="text"
+          value=""
+        />
+      }
+      id="destination"
+      label="Destination"
+    />
+    <FormGroup
+      colors={
+        Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
+          "foreground": "#ffffff",
+        }
+      }
+      control={
+        <InputGroup
+          hasValidation={true}
+        >
           <FormControl
             isInvalid={false}
             onChange={[Function]}
-            placeholder="The beneficiary's SS58 address"
+            placeholder="The amount to transfer"
             type="text"
             value=""
           />
-        }
-        id="destination"
-        label="Destination"
-      />
-      <FormGroup
-        colors={
-          Object {
-            "background": "#0c163d",
-            "borderColor": "#e6007a",
-            "foreground": "#ffffff",
-          }
-        }
-        control={
-          <InputGroup
-            hasValidation={true}
+          <DropdownButton
+            id="input-group-dropdown-1"
+            title="LGNT"
           >
-            <FormControl
-              isInvalid={false}
-              onChange={[Function]}
-              placeholder="The amount to transfer"
-              type="text"
-              value=""
-            />
-            <DropdownButton
-              id="input-group-dropdown-1"
-              title="LGNT"
+            <DropdownItem
+              onClick={[Function]}
             >
-              <DropdownItem
-                onClick={[Function]}
-              >
-                LGNT
-              </DropdownItem>
-              <DropdownItem
-                onClick={[Function]}
-              >
-                mLGNT
-              </DropdownItem>
-              <DropdownItem
-                onClick={[Function]}
-              >
-                µLGNT
-              </DropdownItem>
-              <DropdownItem
-                onClick={[Function]}
-              >
-                nLGNT
-              </DropdownItem>
-              <DropdownItem
-                onClick={[Function]}
-              >
-                pLGNT
-              </DropdownItem>
-              <DropdownItem
-                onClick={[Function]}
-              >
-                fLGNT
-              </DropdownItem>
-              <DropdownItem
-                onClick={[Function]}
-              >
-                aLGNT
-              </DropdownItem>
-            </DropdownButton>
-            <Feedback
-              type="invalid"
+              LGNT
+            </DropdownItem>
+            <DropdownItem
+              onClick={[Function]}
             >
-              Please enter a valid amount.
-            </Feedback>
-          </InputGroup>
-        }
-        id="amount"
-        label="Amount"
-        noFeedback={true}
-      />
-      <ExtrinsicSubmissionStateView
-        successMessage="Transfer successful."
-      />
-    </React.Fragment>
+              mLGNT
+            </DropdownItem>
+            <DropdownItem
+              onClick={[Function]}
+            >
+              µLGNT
+            </DropdownItem>
+            <DropdownItem
+              onClick={[Function]}
+            >
+              nLGNT
+            </DropdownItem>
+            <DropdownItem
+              onClick={[Function]}
+            >
+              pLGNT
+            </DropdownItem>
+            <DropdownItem
+              onClick={[Function]}
+            >
+              fLGNT
+            </DropdownItem>
+            <DropdownItem
+              onClick={[Function]}
+            >
+              aLGNT
+            </DropdownItem>
+          </DropdownButton>
+          <Feedback
+            type="invalid"
+          >
+            Please enter a valid amount.
+          </Feedback>
+        </InputGroup>
+      }
+      id="amount"
+      label="Amount"
+      noFeedback={true}
+    />
+    <ExtrinsicSubmissionStateView
+      successMessage="Transfer successful."
+    />
   </Dialog>
 </div>
 `;

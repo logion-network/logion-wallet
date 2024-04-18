@@ -327,7 +327,7 @@ exports[`LOLocItems renders with single draft item 1`] = `
                 >
                   <button
                     className="Button btn btn-polkadot"
-                    disabled={false}
+                    disabled={true}
                     onClick={[Function]}
                     style={
                       Object {
@@ -792,7 +792,7 @@ exports[`UserLocItems renders with single draft item 1`] = `
                 >
                   <button
                     className="Button btn btn-polkadot"
-                    disabled={false}
+                    disabled={true}
                     onClick={[Function]}
                     style={
                       Object {

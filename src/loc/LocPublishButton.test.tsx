@@ -21,7 +21,7 @@ describe("LocPublishButton", () => {
         const locItem = new MetadataItem(
             {
                 type: "Data",
-                status: "DRAFT",
+                status: "REVIEW_ACCEPTED",
                 submitter: TEST_WALLET_USER,
                 timestamp: null,
                 newItem: false,
@@ -61,7 +61,7 @@ describe("LocPublishButton", () => {
         const locItem = new MetadataItem(
             {
                 type: "Data",
-                status: "DRAFT",
+                status: "REVIEW_ACCEPTED",
                 submitter: TEST_WALLET_USER,
                 timestamp: null,
                 newItem: false,

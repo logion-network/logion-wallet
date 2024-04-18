@@ -64,9 +64,9 @@ export default function RequestToCancel(props: Props) {
             ]}
             size="lg"
         >
-            <h2>Cancel vault-out transfer</h2>
+            <h2>Cancel vault withdrawal</h2>
 
-            <p>This will cancel the vault-out transfer. Your Legal Officer will be notified.</p>
+            <p>This will cancel the vault withdrawal. Your Legal Officer will be notified.</p>
 
             <ExtrinsicSubmissionStateView />
         </Dialog>

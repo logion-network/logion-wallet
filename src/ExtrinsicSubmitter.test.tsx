@@ -21,8 +21,8 @@ describe("ExtrinsicSubmitter", () => {
         />);
     
         expect(screen.getByRole('generic')).toBeEmptyDOMElement();
-        expect(onSuccess).not.toBeCalled();
-        expect(onError).not.toBeCalled();
+        expect(onSuccess).not.toHaveBeenCalled();
+        expect(onError).not.toHaveBeenCalled();
     });
 
     it("is initially showing submitting", async () => {
@@ -39,8 +39,8 @@ describe("ExtrinsicSubmitter", () => {
         />);
     
         await waitFor(() => expectSubmitting());
-        expect(onSuccess).not.toBeCalled();
-        expect(onError).not.toBeCalled();
+        expect(onSuccess).not.toHaveBeenCalled();
+        expect(onError).not.toHaveBeenCalled();
     });
 
     it("shows error and calls onError", async () => {
@@ -57,8 +57,8 @@ describe("ExtrinsicSubmitter", () => {
         />);
 
         await waitFor(() => expect(screen.getByText("Submission failed: error")).toBeInTheDocument());
-        expect(onSuccess).not.toBeCalled();
-        expect(onError).toBeCalled();
+        expect(onSuccess).not.toHaveBeenCalled();
+        expect(onError).toHaveBeenCalled();
     });
 
     it("shows progress", async () => {
@@ -75,8 +75,8 @@ describe("ExtrinsicSubmitter", () => {
         />);
     
         await waitFor(() => expect(screen.getByText("Current status: undefined")).toBeInTheDocument());
-        expect(onSuccess).not.toBeCalled();
-        expect(onError).not.toBeCalled();
+        expect(onSuccess).not.toHaveBeenCalled();
+        expect(onError).not.toHaveBeenCalled();
     });
 
     it("shows success and calls onSuccess", async () => {
@@ -93,8 +93,8 @@ describe("ExtrinsicSubmitter", () => {
         />);
     
         await waitFor(() => expect(screen.getByText("Submission successful.")).toBeInTheDocument());
-        expect(onSuccess).toBeCalledWith("extrinsicId");
-        expect(onError).not.toBeCalled();
+        expect(onSuccess).toHaveBeenCalledWith("extrinsicId");
+        expect(onError).not.toHaveBeenCalled();
     });
 });
 

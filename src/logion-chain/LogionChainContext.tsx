@@ -3,10 +3,10 @@ import {
     LegalOfficer,
     LegalOfficerClass,
     LogionClient,
-    DefaultSignAndSendStrategy,
     Token,
     RawSigner,
     ISubmittableResult,
+    SignAndSendStrategy,
 } from '@logion/client';
 import {
     allMetamaskAccounts,
@@ -37,10 +37,16 @@ import { BrowserAxiosFileUploader, newLogionClient } from '@logion/client-browse
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
-export const SIGN_AND_SEND_STRATEGY = new DefaultSignAndSendStrategy();
+class FrontendSignAndSendStrategy implements SignAndSendStrategy {
+
+    canUnsub(result: ISubmittableResult): boolean {
+        return result.isInBlock;
+    }
+}
+export const SIGN_AND_SEND_STRATEGY = new FrontendSignAndSendStrategy();
 
 export function isSuccessful(result: ISubmittableResult): boolean {
-    return !result.dispatchError && SIGN_AND_SEND_STRATEGY.canUnsub(result);
+    return result.dispatchError === undefined && SIGN_AND_SEND_STRATEGY.canUnsub(result);
 }
 
 export type AxiosFactory = (legalOfficerAddress: ValidAccountId | undefined, token?: Token) => AxiosInstance;
@@ -965,7 +971,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 (result) => {
                     if(result !== null) {
                         dispatch({ type: "SET_SUBMITTABLE_RESULT", result });
-                        if(!result.dispatchError && SIGN_AND_SEND_STRATEGY.canUnsub(result)) {
+                        if(isSuccessful(result)) {
                             dispatch({ type: "SET_SUBMISSION_ENDED" });
                         }
                     }

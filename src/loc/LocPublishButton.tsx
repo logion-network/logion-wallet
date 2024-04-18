@@ -34,7 +34,7 @@ export default function LocPublishButton(props: PublishProps) {
     }, [ submitCall, call ]);
 
     useEffect(() => {
-        if(fees === undefined) {
+        if(fees === undefined && props.locItem.status === "REVIEW_ACCEPTED") {
             setFees(null);
             (async function() {
                 setFees(await props.feesEstimator());
