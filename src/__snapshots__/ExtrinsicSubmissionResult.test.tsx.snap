@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Finalized result, no error 1`] = `
+exports[`Done result, no error 1`] = `
 <div
   className="ExtrinsicSubmissionResult"
 >
@@ -20,7 +20,7 @@ exports[`Finalized result, no error 1`] = `
 </div>
 `;
 
-exports[`Finalized result, no error, custom message 1`] = `
+exports[`Done result, no error, custom message 1`] = `
 <div
   className="ExtrinsicSubmissionResult"
 >
@@ -34,6 +34,49 @@ exports[`Finalized result, no error, custom message 1`] = `
     }
   >
     Success
+  </div>
+</div>
+`;
+
+exports[`In progress result, error 1`] = `
+<div
+  className="ExtrinsicSubmissionResult"
+>
+  <div
+    className="Alert danger"
+    style={
+      Object {
+        "backgroundColor": undefined,
+        "color": "#e11a25",
+      }
+    }
+  >
+    <p>
+      Submission failed: error
+    </p>
+  </div>
+</div>
+`;
+
+exports[`In progress result, no error 1`] = `
+<div
+  className="ExtrinsicSubmissionResult"
+>
+  <div
+    className="Alert polkadot"
+    style={
+      Object {
+        "backgroundColor": "#e6007a",
+        "color": "white",
+      }
+    }
+  >
+    <div
+      className="spinner-border"
+    />
+    <p>
+      Current status: Ready
+    </p>
   </div>
 </div>
 `;
@@ -91,49 +134,6 @@ exports[`No result, no error 1`] = `
   >
     <p>
       Submitting...
-    </p>
-  </div>
-</div>
-`;
-
-exports[`Non-finalized result, error 1`] = `
-<div
-  className="ExtrinsicSubmissionResult"
->
-  <div
-    className="Alert danger"
-    style={
-      Object {
-        "backgroundColor": undefined,
-        "color": "#e11a25",
-      }
-    }
-  >
-    <p>
-      Submission failed: error
-    </p>
-  </div>
-</div>
-`;
-
-exports[`Non-finalized result, no error 1`] = `
-<div
-  className="ExtrinsicSubmissionResult"
->
-  <div
-    className="Alert polkadot"
-    style={
-      Object {
-        "backgroundColor": "#e6007a",
-        "color": "white",
-      }
-    }
-  >
-    <div
-      className="spinner-border"
-    />
-    <p>
-      Current status: Ready
     </p>
   </div>
 </div>

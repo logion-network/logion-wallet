@@ -53,7 +53,7 @@ export default function VaultTransferRequestsHistory() {
                     },
                 ]}
                 data={ vaultTransferRequestsHistory }
-                renderEmpty={ () => <EmptyTableMessage>No pending vault-out transfers</EmptyTableMessage> }
+                renderEmpty={ () => <EmptyTableMessage>No pending vault withdrawals</EmptyTableMessage> }
             />
         </>
     );

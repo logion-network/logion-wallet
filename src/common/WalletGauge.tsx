@@ -1,5 +1,5 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
-import { Form, Spinner, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
+import { useState, useCallback, useMemo } from 'react';
+import { Form, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { BalanceState } from '@logion/client';
 import { Numbers, CoinBalance, Lgnt, ValidAccountId } from '@logion/node-api';
 
@@ -10,7 +10,7 @@ import Button from './Button';
 import Icon from './Icon';
 import Dialog from './Dialog';
 import FormGroup from './FormGroup';
-import { ExpectNewTransactionStatus, useCommonContext } from './CommonContext';
+import { useCommonContext } from './CommonContext';
 import Alert from './Alert';
 
 import './WalletGauge.css';
@@ -40,12 +40,13 @@ const HIDDEN_DIALOG: TransferDialogState = {
 
 export default function WalletGauge(props: Props) {
     const { accounts, signer, client, submitCall, extrinsicSubmissionState, clearSubmissionState } = useLogionChain();
-    const { colorTheme, mutateBalanceState, expectNewTransaction, expectNewTransactionState, stopExpectNewTransaction } = useCommonContext();
+    const { colorTheme, mutateBalanceState } = useCommonContext();
     const [ destination, setDestination ] = useState("");
     const [ amount, setAmount ] = useState("");
     const [ unit, setUnit ] = useState(Numbers.NONE);
     const [ transferDialogState, setTransferDialogState ] = useState<TransferDialogState>(HIDDEN_DIALOG);
     const { vaultAccount, sendButton } = props;
+    const [ done, setDone ] = useState(false);
 
     const transfer = useMemo(() => {
         return async (callback: CallCallback) => {
@@ -57,9 +58,9 @@ export default function WalletGauge(props: Props) {
                     signer: signer!
                 });
             });
-            expectNewTransaction();
+            setDone(true);
         };
-    }, [ amount, destination, unit, mutateBalanceState, signer, expectNewTransaction ]);
+    }, [ amount, destination, unit, mutateBalanceState, signer ]);
 
     const sendCallback = useCallback(async () => {
         try {
@@ -75,15 +76,9 @@ export default function WalletGauge(props: Props) {
 
     const closeCallback = useCallback(() => {
         clearFormCallback();
-        stopExpectNewTransaction();
         clearSubmissionState();
-    }, [ clearFormCallback, stopExpectNewTransaction, clearSubmissionState ]);
-
-    useEffect(() => {
-        if(expectNewTransactionState.status === ExpectNewTransactionStatus.DONE) {
-            closeCallback();
-        }
-    }, [ expectNewTransactionState, closeCallback ]);
+        setDone(false);
+    }, [ clearFormCallback, clearSubmissionState ]);
 
     if(!client) {
         return null;
@@ -148,76 +143,71 @@ export default function WalletGauge(props: Props) {
                         buttonText: "Send",
                         buttonVariant: 'polkadot',
                         callback: sendCallback,
-                        disabled: !extrinsicSubmissionState.canSubmit() || !client.isValidAddress(destination) || isNaN(Number(amount)) || Number(amount) === 0 || destination === accounts!.current!.accountId.address
+                        disabled: done || !extrinsicSubmissionState.canSubmit() || !client.isValidAddress(destination) || isNaN(Number(amount)) || Number(amount) === 0 || destination === accounts!.current!.accountId.address
                     }
                 ] }
                 size="lg"
             >
                 <h3>{ transferDialogState.title }</h3>
-                {
-                    expectNewTransactionState.status === ExpectNewTransactionStatus.IDLE &&
-                    <>
-                        { transferDialogState.destination &&
-                            <FormGroup
-                                id="destination"
-                                label="Destination"
-                                control={ <Form.Control
-                                    isInvalid={ destination !== "" && (!client.isValidAddress(destination) || destination === accounts!.current!.accountId.address) }
-                                    type="text"
-                                    placeholder="The beneficiary's SS58 address"
-                                    value={ destination }
-                                    onChange={ value => setDestination(value.target.value) }
-                                /> }
-                                colors={ colorTheme.dialog }
-                            />
-                        }
-                        <FormGroup
-                            id="amount"
-                            label="Amount"
-                            noFeedback={ true }
-                            control={
-                                <InputGroup hasValidation>
-                                    <Form.Control
-                                        isInvalid={ amount !== "" && isNaN(Number(amount)) }
-                                        type="text"
-                                        placeholder="The amount to transfer"
-                                        value={ amount }
-                                        onChange={ value => setAmount(value.target.value) }
-                                    />
-                                    <DropdownButton
-                                        title={ `${ unit.symbol }${ Lgnt.CODE }` }
-                                        id="input-group-dropdown-1"
-                                    >{
-                                        [
-                                            Numbers.NONE,
-                                            Numbers.MILLI,
-                                            Numbers.MICRO,
-                                            Numbers.NANO,
-                                            Numbers.PICO,
-                                            Numbers.FEMTO,
-                                            Numbers.ATTO
-                                        ].map(unit => <Dropdown.Item key={ unit.symbol }
-                                                                        onClick={ () => setUnit(unit) }>{ `${ unit.symbol }${ Lgnt.CODE }` }</Dropdown.Item>)
-                                    }</DropdownButton>
-                                    <Form.Control.Feedback type="invalid">
-                                        Please enter a valid amount.
-                                    </Form.Control.Feedback>
-                                </InputGroup>
-                            }
-                            colors={ colorTheme.dialog }
-                        />
-                        <ExtrinsicSubmissionStateView
-                            successMessage="Transfer successful."
-                        />
-                    </>
+                { transferDialogState.destination &&
+                    <FormGroup
+                        id="destination"
+                        label="Destination"
+                        control={ <Form.Control
+                            isInvalid={ destination !== "" && (!client.isValidAddress(destination) || destination === accounts!.current!.accountId.address) }
+                            type="text"
+                            placeholder="The beneficiary's SS58 address"
+                            value={ destination }
+                            onChange={ value => setDestination(value.target.value) }
+                        /> }
+                        colors={ colorTheme.dialog }
+                    />
                 }
+                <FormGroup
+                    id="amount"
+                    label="Amount"
+                    noFeedback={ true }
+                    control={
+                        <InputGroup hasValidation>
+                            <Form.Control
+                                isInvalid={ amount !== "" && isNaN(Number(amount)) }
+                                type="text"
+                                placeholder="The amount to transfer"
+                                value={ amount }
+                                onChange={ value => setAmount(value.target.value) }
+                            />
+                            <DropdownButton
+                                title={ `${ unit.symbol }${ Lgnt.CODE }` }
+                                id="input-group-dropdown-1"
+                            >{
+                                [
+                                    Numbers.NONE,
+                                    Numbers.MILLI,
+                                    Numbers.MICRO,
+                                    Numbers.NANO,
+                                    Numbers.PICO,
+                                    Numbers.FEMTO,
+                                    Numbers.ATTO
+                                ].map(unit => <Dropdown.Item key={ unit.symbol }
+                                                                onClick={ () => setUnit(unit) }>{ `${ unit.symbol }${ Lgnt.CODE }` }</Dropdown.Item>)
+                            }</DropdownButton>
+                            <Form.Control.Feedback type="invalid">
+                                Please enter a valid amount.
+                            </Form.Control.Feedback>
+                        </InputGroup>
+                    }
+                    colors={ colorTheme.dialog }
+                />
+                <ExtrinsicSubmissionStateView
+                    successMessage="Transfer successful."
+                />
                 {
-                    expectNewTransactionState.status === ExpectNewTransactionStatus.WAITING_NEW_TRANSACTION &&
-                    <Alert variant="info">
-                        <Spinner animation="border" />
-                        <p>Transfer successful, waiting for the transaction to be finalized.</p>
-                        <p>Note that this may take up to 30 seconds. If you want to proceed, you can safely
-                            click on close but your transaction may not show up yet.</p>
+                    done &&
+                    <Alert
+                        variant='info'
+                    >
+                        It may take some time (up to 1 minute) before the transaction actually shows up
+                        in your history.
                     </Alert>
                 }
             </Dialog>

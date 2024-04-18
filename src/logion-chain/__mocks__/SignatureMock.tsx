@@ -19,7 +19,7 @@ export function resetSubmitting() {
 }
 
 export function finalizeSubmission() {
-    signAndSendCallback!(mockSubmittableResult(true, "finalized"));
+    signAndSendCallback!(mockSubmittableResult(true, "isInBlock"));
 }
 
 export function failSubmission() {
@@ -30,11 +30,11 @@ export function setSignAndSend(fn: any) {
     signAndSend = fn;
 }
 
-export function mockSubmittableResult(isFinalized: boolean, statusType?: string, isError?: boolean): ISubmittableResult {
+export function mockSubmittableResult(isInBlock: boolean, statusType?: string, isError?: boolean): ISubmittableResult {
     const result: unknown = {
-        isFinalized,
+        isInBlock,
         status: {
-            isFinalized,
+            isInBlock,
             type: statusType,
             asInBlock: {
                 toString: () => "some-hex"

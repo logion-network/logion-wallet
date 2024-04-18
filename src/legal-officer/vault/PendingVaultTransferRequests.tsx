@@ -155,7 +155,7 @@ export default function PendingVaultTransferRequests() {
                     },
                 ]}
                 data={ pendingVaultTransferRequests }
-                renderEmpty={ () => <EmptyTableMessage>No pending vault-out transfers</EmptyTableMessage> }
+                renderEmpty={ () => <EmptyTableMessage>No pending vault withdrawals</EmptyTableMessage> }
             />
             <Dialog
                 show={ requestToAccept !== null }
@@ -177,7 +177,7 @@ export default function PendingVaultTransferRequests() {
                 ]}
                 size="xl"
             >
-                <h2>Accepting vault-out transfer</h2>
+                <h2>Accepting vault withdrawal</h2>
 
                 <p>You are about to accept and sign a transfer authorization from the user's Vault.</p>
 
@@ -236,7 +236,7 @@ export default function PendingVaultTransferRequests() {
                 ]}
                 size="lg"
             >
-                <h2>Reject vault-out transfer</h2>
+                <h2>Reject vault withdrawal</h2>
 
                 <FormGroup
                     id="reason"

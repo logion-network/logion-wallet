@@ -110,13 +110,15 @@ export const SUCCESSFUL_SUBMISSION: unknown = {
     getError: () => null,
     getResult: () => ({
         status: {
-            isFinalized: true,
-        }
+            isInBlock: true,
+        },
+        isInBlock: true,
     }),
     result: {
         status: {
-            isFinalized: true,
-        }
+            isInBlock: true,
+        },
+        isInBlock: true,
     },
     callEnded: true,
     submitted: true,
@@ -131,12 +133,12 @@ export const FAILED_SUBMISSION: unknown = {
     getError: () => "error",
     getResult: () => ({
         status: {
-            isFinalized: false,
+            isInBlock: false,
         }
     }),
     result: {
         status: {
-            isFinalized: false,
+            isInBlock: false,
         }
     },
     callEnded: true,
@@ -152,12 +154,12 @@ export const PENDING_SUBMISSION: unknown = {
     getError: () => null,
     getResult: () => ({
         status: {
-            isFinalized: false,
+            isInBlock: false,
         }
     }),
     result: {
         status: {
-            isFinalized: false,
+            isInBlock: false,
         }
     },
 };

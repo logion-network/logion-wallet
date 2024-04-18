@@ -120,6 +120,7 @@ export default function AcknowledgeButton(props: Props) {
             <Button
                 variant="polkadot"
                 onClick={ preview }
+                disabled={ props.locItem.timestamp === null }
             >
                 <Icon icon={{ id: "shield" }} /> Acknowledge
             </Button>
