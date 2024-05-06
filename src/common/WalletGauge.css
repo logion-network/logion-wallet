@@ -18,3 +18,8 @@
     flex-shrink: 0;
     height: 36px;
 }
+
+.TransferDialog .EstimatedFees {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
