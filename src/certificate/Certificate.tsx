@@ -19,11 +19,8 @@ import {
 import { UUID, Hash } from "@logion/node-api";
 
 import { useLogionChain } from "../logion-chain";
-import Button from "../common/Button";
-import MailtoButton from "../common/MailtoButton";
 import Icon from "../common/Icon";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
-import { copyToClipBoard } from "../common/Tools";
 import NewTabLink from "../common/NewTabLink";
 import DangerDialog from "../common/DangerDialog";
 import { LIGHT_MODE } from "../legal-officer/Types";
@@ -63,14 +60,29 @@ export default function Certificate() {
     const [ checkResult, setCheckResult ] = useState<CheckHashResult>();
     const [ collectionItem, setCollectionItem ] = useState<CollectionItem | undefined | null>(null);
     const [ tokenForDownload, setTokenForDownload ] = useState<Token | undefined>(undefined);
-    const [ tokensRecords, setTokensRecords ] = useState<TokensRecord[] | null>(null);
+    const [ tokensRecord, setTokensRecord ] = useState<TokensRecord | null>(null);
 
     const checkHash = useCallback(async (hash: Hash) => {
-        if (loc) {
-            const result = await loc.checkHash(hash, collectionItem?.id);
+        setCheckResult(undefined);
+        if(loc) {
+            const result = await loc.checkHash(hash);
             setCheckResult(result);
         }
-    }, [ loc, setCheckResult, collectionItem?.id ]);
+        if(collectionItem) {
+            const result = collectionItem.checkHash(hash);
+            setCheckResult(result);
+        }
+        if(tokensRecord) {
+            const result = tokensRecord.checkHash(hash);
+            setCheckResult(result);
+        }
+        return {
+            summary: CheckResultType.NEGATIVE,
+            latest: CheckResultType.NEGATIVE,
+            logionOrigin: CheckResultType.NEGATIVE,
+            nftOwnership: CheckResultType.NEGATIVE,
+        };
+    }, [ loc, collectionItem, tokensRecord ]);
 
     useEffect(() => {
         if (loc === undefined && locId !== undefined && client?.legalOfficers !== undefined) {
@@ -91,10 +103,11 @@ export default function Certificate() {
                                 const supersededLoc = await client.public.findLocById({ locId: publicLoc.data.replacerOf });
                                 setSupersededLoc(supersededLoc);
                             }
-                            if (collectionItemIdParam) {
+                            if (collectionItemIdParam || searchParams.has("itemId")) {
+                                const itemId = collectionItemIdParam ? collectionItemIdParam : searchParams.get("itemId") || "";
                                 const collectionItem = await client.public.findCollectionLocItemById({
                                     locId,
-                                    itemId: Hash.fromHex(collectionItemIdParam),
+                                    itemId: Hash.fromHex(itemId),
                                 });
                                 setCollectionItem(collectionItem);
                             }
@@ -117,24 +130,19 @@ export default function Certificate() {
     }, [ client, legalOfficer, setLegalOfficer, loc ]);
 
     useEffect(() => {
-        if (client && tokenForDownload && tokensRecords === null) {
-            client.public.getTokensRecords({ locId, jwtToken: tokenForDownload })
-                .then(setTokensRecords)
-        }
-    }, [ client, locId, tokensRecords, tokenForDownload ]);
-
-    useEffect(() => {
-        if (client && tokensRecordIdParam && tokensRecords === null) {
+        if (client && tokensRecordIdParam && tokensRecord === null) {
             client.public.getTokensRecord({ locId, recordId: Hash.fromHex(tokensRecordIdParam)})
                 .then(tokensRecord => {
                     if (tokensRecord) {
-                        setTokensRecords([ tokensRecord ]);
-                    } else {
-                        setTokensRecords([ ]);
+                        setTokensRecord(tokensRecord);
                     }
                 })
         }
-    }, [ client, locId, tokensRecords, tokensRecordIdParam ]);
+    }, [ client, locId, tokensRecord, tokensRecordIdParam ]);
+
+    const withItemRecord = useMemo(() => 
+        collectionItemIdParam !== undefined || tokensRecordIdParam !== undefined
+    , [ collectionItemIdParam, tokensRecordIdParam ]);
 
     if (!client || loc === undefined) {
         return (
@@ -170,7 +178,7 @@ export default function Certificate() {
         )
     }
 
-    if (tokensRecordIdParam && tokensRecords !== null && tokensRecords.length === 0) {
+    if (tokensRecordIdParam && tokensRecord === null) {
         return (
             <div className="CertificateBox">
                 <Container>
@@ -221,7 +229,7 @@ export default function Certificate() {
         if (isItemFileDelivery(collectionItem)) {
             const result = await collectionItem!.checkCertifiedCopy(hash);
             if (result.summary === CheckResultType.POSITIVE) {
-                const collectionItemFile = collectionItem?.files.find(file => file.hash === result.match?.originalFileHash);
+                const collectionItemFile = collectionItem?.files.find(file => result.match?.originalFileHash.equalTo(file.hash));
                 setCheckResult({ collectionItemFile });
                 return result;
             }
@@ -229,19 +237,17 @@ export default function Certificate() {
         if(loc) {
             const result = await loc.checkCertifiedCopy(hash);
             if (result.summary === CheckResultType.POSITIVE) {
-                const file = loc.data.files.find(file => file.hash === result.match?.originalFileHash);
+                const file = loc.data.files.find(file => result.match?.originalFileHash.equalTo(file.hash));
                 setCheckResult({ file })
                 return result;
             }
         }
-        if(tokensRecords) {
-            for(const record of tokensRecords) {
-                const result = await record.checkCertifiedCopy(hash);
-                if (result.summary === CheckResultType.POSITIVE) {
-                    const recordFile = record.files.find(file => file.hash === result.match?.originalFileHash);
-                    setCheckResult({ recordFile });
-                    return result;
-                }
+        if(tokensRecord) {
+            const result = await tokensRecord.checkCertifiedCopy(hash);
+            if (result.summary === CheckResultType.POSITIVE) {
+                const recordFile = tokensRecord.files.find(file => result.match?.originalFileHash.equalTo(file.hash));
+                setCheckResult({ recordFile });
+                return result;
             }
         }
         return {
@@ -295,7 +301,7 @@ export default function Certificate() {
                 </Container>
             }
             <Container
-                className="Certificate"
+                className={`Certificate${ withItemRecord ? " with-item-record" : ""}`}
                 style={{borderColor: certificateBorderColor}}
             >
                 <div className="background-icon">
@@ -383,7 +389,8 @@ export default function Certificate() {
                 { matrix(loc.data.links, 2).map((links, index) => (
                     <LinkCellRow key={ index } links={ links } />
                 )) }
-                { collectionItem !== null &&
+                <LegalOfficerRow legalOfficer={ legalOfficer } />
+                { collectionItem !== null && tokensRecord === null &&
                     <CollectionItemCellRow
                         locId={ locId }
                         owner={ legalOfficer.account }
@@ -393,28 +400,16 @@ export default function Certificate() {
                         tokenForDownload={ tokenForDownload }
                     />
                 }
-                { tokensRecords !== null &&
+                { tokensRecord !== null &&
                     <TokensRecords
                         locId={ locId }
                         owner={ legalOfficer.account }
                         collectionItem={ collectionItem! }
                         tokenForDownload={ tokenForDownload }
-                        tokensRecords={ tokensRecords }
+                        tokensRecords={[ tokensRecord ]}
                         checkResult={ checkResult }
                     />
                 }
-                <LegalOfficerRow legalOfficer={ legalOfficer } />
-                <Row className="buttons">
-                    <Col xl={ 2 } lg={4} md={4}>
-                        <MailtoButton label="Contact" email={ legalOfficer.userIdentity.email } />
-                    </Col>
-                    <Col xl={ 2 } lg={4} md={4}>
-                        <Button onClick={ () => copyToClipBoard(window.location.href) }>Copy URL</Button>
-                    </Col>
-                    <Col xl={ 2 } lg={4} md={4}>
-                        <a href="https://logion.network" target="_blank" rel="noreferrer">logion.network</a>
-                    </Col>
-                </Row>
                 <DangerDialog
                     show={ voidWarningVisible }
                     size="lg"
@@ -434,7 +429,7 @@ export default function Certificate() {
             <Container className="CertificateCheck">
                 <CheckFileFrame
                     checkHash={ checkHash }
-                    checkResult={ checkResult === undefined ? "NONE" : ( checkResult.file || checkResult.collectionItem || checkResult.metadataItem || checkResult.collectionItemFile ? "POSITIVE" : "NEGATIVE") }
+                    checkResult={ checkResult === undefined ? "NONE" : ( checkResult.file || checkResult.collectionItem || checkResult.metadataItem || checkResult.collectionItemFile || checkResult.recordFile ? "POSITIVE" : "NEGATIVE") }
                     colorTheme={ LIGHT_MODE }
                     context="LOC"
                     checkedItem="confidential document"

@@ -7,6 +7,10 @@
     border: 20px solid #3b6cf4;
 }
 
+.Certificate.container.with-item-record {
+    padding-bottom: 350px;
+}
+
 .Certificate .header {
     margin-bottom: 50px;
 }
