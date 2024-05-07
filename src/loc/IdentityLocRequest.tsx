@@ -42,10 +42,10 @@ export default function IdentityLocRequest(props: Props) {
     const [ invalidCompanyName, setInvalidCompanyName ] = useState<string>();
     const { accounts } = useLogionChain();
     const navigate = useNavigate();
-    const legalOfficersWithoutValidIdentityLoc = useMemo(() => {
-        const legalOfficersWithValidIdentityLoc = locsState?.legalOfficersWithValidIdentityLoc.map(lo => lo.account.address);
-        return availableLegalOfficers?.filter(lo => legalOfficersWithValidIdentityLoc?.includes(lo.account.address) === false)
-    }, [ locsState?.legalOfficersWithValidIdentityLoc, availableLegalOfficers ]);
+    const selectablelegalOfficers = useMemo(() => {
+        const legalOfficersWithNonVoidIdentityLoc = locsState?.legalOfficersWithNonVoidIdentityLoc.map(lo => lo.account.address);
+        return availableLegalOfficers?.filter(lo => legalOfficersWithNonVoidIdentityLoc?.includes(lo.account.address) === false);
+    }, [ locsState?.legalOfficersWithNonVoidIdentityLoc, availableLegalOfficers ]);
     const [ sponsorshipId, setSponsorshipId ] = useState<UUID>();
     const [ invalidSponsorshipId, setInvalidSponsorshipId ] = useState<string>();
 
@@ -120,7 +120,7 @@ export default function IdentityLocRequest(props: Props) {
                         <SelectLegalOfficer
                             legalOfficer={ legalOfficer }
                             legalOfficerNumber={ 1 }
-                            legalOfficers={ legalOfficersWithoutValidIdentityLoc || [] }
+                            legalOfficers={ selectablelegalOfficers || [] }
                             mode="select"
                             otherLegalOfficer={ null }
                             setLegalOfficer={ setLegalOfficer }
