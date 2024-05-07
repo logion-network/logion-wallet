@@ -24,12 +24,15 @@ export default function RequestToCancel(props: Props) {
         const call = async (callback: CallCallback) => {
             await mutateVaultState(async (vaultState: VaultState) => {
                 if(client && props.requestToCancel !== null && signer) {
-                    return vaultState.cancelVaultTransferRequest(
-                        client.getLegalOfficer(ValidAccountId.polkadot(props.requestToCancel.legalOfficerAddress)),
-                        props.requestToCancel,
+                    const legalOfficer = client.getLegalOfficer(ValidAccountId.polkadot(props.requestToCancel.legalOfficerAddress));
+                    return vaultState.cancelVaultTransferRequest({
+                        payload: {
+                            legalOfficer,
+                            request: props.requestToCancel,
+                        },
                         signer,
                         callback
-                    );
+                    });
                 } else {
                     throw new Error();
                 }

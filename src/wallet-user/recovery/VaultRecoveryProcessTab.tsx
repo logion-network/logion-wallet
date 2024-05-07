@@ -95,9 +95,11 @@ export default function VaultRecoveryProcessTab() {
         const call = async (callback: CallCallback) => {
             await mutateRecoveredVaultState(async (recoveredVaultState: VaultState) => {
                 return await recoveredVaultState.createVaultTransferRequest({
-                    legalOfficer: getOfficer!(legalOfficer!)!,
-                    amount: Lgnt.fromPrefixedNumber(amount),
-                    destination: vaultState!.vaultAccount,
+                    payload: {
+                        legalOfficer: getOfficer!(legalOfficer!)!,
+                        amount: Lgnt.fromPrefixedNumber(amount),
+                        destination: vaultState!.vaultAccount,
+                    },
                     signer: signer!,
                     callback,
                 });
@@ -114,12 +116,14 @@ export default function VaultRecoveryProcessTab() {
     const cancelRequestCallback = useCallback(async () => {
         const call = async (callback: CallCallback) => {
             await mutateRecoveredVaultState(async (vaultState: VaultState) => {
-                return await vaultState.cancelVaultTransferRequest(
-                    getOfficer!(ValidAccountId.polkadot(requestToCancel!.legalOfficerAddress))!,
-                    requestToCancel!,
-                    signer!,
+                return await vaultState.cancelVaultTransferRequest({
+                    payload: {
+                        legalOfficer: getOfficer!(ValidAccountId.polkadot(requestToCancel!.legalOfficerAddress))!,
+                        request: requestToCancel!,
+                    },
+                    signer: signer!,
                     callback,
-                );
+                });
             })
         }
         try {

@@ -39,8 +39,10 @@ export default function WalletRecoveryProcessTab(props: Props) {
             await mutateRecoveredBalanceState(async (state: BalanceState) => {
                 return state.transferAll({
                     signer: signer!,
-                    destination: accounts!.current!.accountId.address,
-                    keepAlive: false,
+                    payload: {
+                        destination: accounts!.current!.accountId.address,
+                        keepAlive: false,
+                    },
                     callback,
                 });
             });

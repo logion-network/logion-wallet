@@ -30,6 +30,16 @@ exports[`CreateProtectionRequestForm renders 1`] = `
         </Alert>
       </Frame>
     </Col>
+    <Col>
+      <Frame
+        className="CreateProtectionRequestFormInitiateRecovery"
+        fullHeight={true}
+      >
+        <ExtrinsicSubmissionStateView
+          successMessage="Recovery successfully initiated."
+        />
+      </Frame>
+    </Col>
   </Row>
 </FullWidthPane>
 `;

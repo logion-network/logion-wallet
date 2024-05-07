@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { Numbers, Lgnt, ValidAccountId } from "@logion/node-api";
+import { Numbers, Lgnt, ValidAccountId, Fees } from "@logion/node-api";
 import { VaultState } from "@logion/client";
 
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";
@@ -16,6 +16,7 @@ import { CallCallback, useLogionChain } from "../logion-chain";
 import { buildOptions } from '../wallet-user/protection/SelectLegalOfficer';
 import { useUserContext } from "../wallet-user/UserContext";
 import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
+import EstimatedFees from "../loc/fees/EstimatedFees";
 
 interface FormValues {
     amount: Amount;
@@ -25,12 +26,21 @@ interface FormValues {
 export default function VaultOutRequest() {
     const { accounts, getOfficer, signer, client, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { availableLegalOfficers, colorTheme } = useCommonContext();
-    const { protectionState, mutateVaultState } = useUserContext();
+    const { protectionState, mutateVaultState, vaultState } = useUserContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
     const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<ValidAccountId>[]>([]);
     const [ legalOfficer, setLegalOfficer ] = useState<ValidAccountId | null>(null);
     const [ legalOfficerError, setLegalOfficerError ] = useState<string>();
+    const [ fees, setFees ] = useState<Fees>();
+
+    const createParams = useCallback((formValues: FormValues) => {
+        return {
+            legalOfficer: getOfficer!(legalOfficer!)!,
+            amount: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.amount.value, formValues.amount.unit)),
+            destination: ValidAccountId.polkadot(formValues.destination),
+        }
+    }, [ getOfficer, legalOfficer ]);
 
     useEffect(() => {
         if (legalOfficersOptions.length === 0 && protectionState && availableLegalOfficers) {
@@ -41,7 +51,7 @@ export default function VaultOutRequest() {
         }
     }, [ availableLegalOfficers, legalOfficersOptions, protectionState ]);
 
-    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
+    const { getValues, control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
             amount: {
                 value: "",
@@ -50,6 +60,15 @@ export default function VaultOutRequest() {
             destination: accounts?.current?.accountId.address || "",
         }
     });
+
+    useEffect(() => {
+        if (fees === undefined) {
+            const params = createParams(getValues());
+            vaultState?.estimateFeesCreateVaultTransferRequest(params)
+                .then(setFees);
+        }
+    }, [ createParams, fees, getValues, vaultState ])
+
 
     const close = useCallback(() => {
         reset();
@@ -64,10 +83,9 @@ export default function VaultOutRequest() {
 
         const call = async (callback: CallCallback) => {
             await mutateVaultState(async (state: VaultState) => {
+                const payload = createParams(formValues);
                 return await state.createVaultTransferRequest({
-                    legalOfficer: getOfficer!(legalOfficer!)!,
-                    amount: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(formValues.amount.value, formValues.amount.unit)),
-                    destination: ValidAccountId.polkadot(formValues.destination),
+                    payload,
                     signer: signer!,
                     callback,
                 });
@@ -79,7 +97,7 @@ export default function VaultOutRequest() {
         } finally {
             clearSubmissionState();
         }
-    }, [ getOfficer, mutateVaultState, signer, submitCall, clearSubmissionState, close, legalOfficer ]);
+    }, [ mutateVaultState, signer, submitCall, clearSubmissionState, close, legalOfficer, createParams ]);
 
     if(availableLegalOfficers === undefined || !client) {
         return null;
@@ -187,6 +205,8 @@ export default function VaultOutRequest() {
                     />
                 </>
                 }
+
+                <EstimatedFees fees={ fees }/>
 
                 <ExtrinsicSubmissionStateView />
             </Dialog>

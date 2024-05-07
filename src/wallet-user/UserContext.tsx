@@ -12,25 +12,28 @@ import {
     AcceptedProtection,
     PendingRecovery,
     RejectedRecovery,
+    BalanceState,
+    LocsState,
+    VaultState,
 } from "@logion/client";
-import { VaultState } from "@logion/client";
 
 import { useLogionChain, AxiosFactory } from '../logion-chain';
 import { Children } from '../common/types/Helpers';
 
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
-import { BalanceState } from "@logion/client/dist/Balance.js";
-import { LocsState } from "@logion/client";
-import { UUID, LocType, ValidAccountId } from "@logion/node-api";
+import { UUID, LocType, ValidAccountId, Fees as FeesClass, Fees } from "@logion/node-api";
 import { Locs, getLocsMap } from "src/loc/Locs";
 
-export interface CreateProtectionRequestParams {
+export interface ProtectionRequestParams {
     legalOfficers: LegalOfficerClass[],
     addressToRecover?: ValidAccountId,
-    callback: SignCallback,
     requesterIdentityLoc1: UUID,
     requesterIdentityLoc2: UUID,
+}
+
+export interface CreateProtectionRequestParams extends ProtectionRequestParams {
+    callback: SignCallback,
 }
 
 export interface UserContext {
@@ -38,6 +41,7 @@ export interface UserContext {
     fetchForAddress: string | null,
     refreshRequests: ((clearBeforeRefresh: boolean) => void) | null,
     createProtectionRequest: ((params: CreateProtectionRequestParams) => Promise<void>) | null,
+    estimateFeesCreateProtectionRequest: ((params: ProtectionRequestParams) => Promise<FeesClass>) | null,
     activateProtection: ((callback: SignCallback) => Promise<void>) | null,
     claimRecovery: ((callback: SignCallback) => Promise<void>) | null,
     cancelProtection: () => Promise<void>,
@@ -64,6 +68,7 @@ function initialContextValue(): FullUserContext {
         fetchForAddress: null,
         refreshRequests: null,
         createProtectionRequest: null,
+        estimateFeesCreateProtectionRequest: null,
         activateProtection: null,
         claimRecovery: null,
         cancelProtection: () => Promise.reject(),
@@ -86,6 +91,7 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_DATA'
     | 'SET_REFRESH_REQUESTS_FUNCTION'
     | 'SET_CREATE_PROTECTION_REQUEST_FUNCTION'
+    | 'SET_ESTIMATE_FEES_CREATE_PROTECTION_REQUEST_FUNCTION'
     | 'SET_ACTIVATE_PROTECTION_FUNCTION'
     | 'SET_CLAIM_RECOVERY_FUNCTION'
     | 'SET_CURRENT_AXIOS'
@@ -109,6 +115,7 @@ interface Action {
     protectionState?: ProtectionState,
     refreshRequests?: (clearBeforeRefresh: boolean) => void,
     createProtectionRequest?: (params: CreateProtectionRequestParams) => Promise<void>,
+    estimateFeesCreateProtectionRequest?: (params: ProtectionRequestParams) => Promise<FeesClass>,
     activateProtection?: (callback: SignCallback) => Promise<void>,
     claimRecovery?: (callback: SignCallback) => Promise<void>,
     cancelProtection?: () => Promise<void>,
@@ -173,6 +180,11 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
             return {
                 ...state,
                 createProtectionRequest: action.createProtectionRequest!,
+            };
+        case "SET_ESTIMATE_FEES_CREATE_PROTECTION_REQUEST_FUNCTION":
+            return {
+                ...state,
+                estimateFeesCreateProtectionRequest: action.estimateFeesCreateProtectionRequest!,
             };
         case "SET_ACTIVATE_PROTECTION_FUNCTION":
             return {
@@ -392,6 +404,40 @@ export function UserContextProvider(props: Props) {
             });
         }
     }, [ contextValue, dispatch, createProtectionRequestCallback ]);
+
+    const estimateFeesCreateProtectionRequestCallback = useCallback(async (params: ProtectionRequestParams) => {
+        const protectionState = contextValue.protectionState;
+        if(protectionState instanceof NoProtection) {
+            if(params.addressToRecover !== undefined) {
+                return await protectionState.estimateFeesRequestRecovery({
+                    legalOfficer1: params.legalOfficers[0],
+                    legalOfficer2: params.legalOfficers[1],
+                    recoveredAccount: params.addressToRecover,
+                    requesterIdentityLoc1: params.requesterIdentityLoc1,
+                    requesterIdentityLoc2: params.requesterIdentityLoc2,
+                });
+            } else {
+                return await protectionState.estimateFeesActivateProtection({
+                    legalOfficer1: params.legalOfficers[0],
+                    legalOfficer2: params.legalOfficers[1],
+                    requesterIdentityLoc1: params.requesterIdentityLoc1,
+                    requesterIdentityLoc2: params.requesterIdentityLoc2,
+                });
+            }
+        } else {
+            return Fees.zero()
+        }
+    }, [ contextValue.protectionState ]);
+
+    useEffect(() => {
+        if(contextValue.estimateFeesCreateProtectionRequest !== estimateFeesCreateProtectionRequestCallback) {
+            dispatch({
+                type: "SET_ESTIMATE_FEES_CREATE_PROTECTION_REQUEST_FUNCTION",
+                estimateFeesCreateProtectionRequest: estimateFeesCreateProtectionRequestCallback,
+            });
+        }
+    }, [ contextValue, dispatch, estimateFeesCreateProtectionRequestCallback ]);
+
 
     const activateProtectionCallback = useCallback(async (callback: SignCallback) => {
         const acceptedProtection = contextValue.protectionState as AcceptedProtection;
