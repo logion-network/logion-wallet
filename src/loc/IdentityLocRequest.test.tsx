@@ -7,7 +7,7 @@ import { GUILLAUME, oneLegalOfficer } from "../common/TestData";
 import { shallowRender, clickByName } from "../tests";
 import IdentityLocRequest from "./IdentityLocRequest";
 import { fillInForm } from "../components/identity/IdentityFormTestHelper";
-import { setMutateLocsState, setHasValidIdentityLoc, setLocsState } from "../wallet-user/__mocks__/UserContextMock";
+import { setMutateLocsState, setHasNonVoidIdentityLoc, setLocsState } from "../wallet-user/__mocks__/UserContextMock";
 import { navigate, setSearchParams } from '../__mocks__/ReactRouterMock';
 
 jest.mock('../wallet-user/UserContext');
@@ -21,7 +21,7 @@ describe("IdentityLocRequest", () => {
     beforeEach(() => {
         jest.resetAllMocks();
         setMutateLocsState(mutateLocsState);
-        setHasValidIdentityLoc(oneLegalOfficer);
+        setHasNonVoidIdentityLoc(oneLegalOfficer);
         setSearchParams({
             get: () => undefined,
         })
@@ -75,7 +75,7 @@ describe("IdentityLocRequest", () => {
             }),
         } as DraftRequest;
         const locsState = {
-            legalOfficersWithValidIdentityLoc: [ GUILLAUME ],
+            legalOfficersWithNonVoidIdentityLoc: [ GUILLAUME ],
             requestIdentityLoc: () => Promise.resolve(draftRequest),
         } as unknown as LocsState;
         setLocsState(locsState);

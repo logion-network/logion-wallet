@@ -161,10 +161,9 @@ export function setClosedVerifiedIssuerLocs(transactions: any[], collections: an
     }
 }
 
-
-export function setHasValidIdentityLoc(legalOfficers: LegalOfficerClass[]) {
+export function setHasNonVoidIdentityLoc(legalOfficers: LegalOfficerClass[]) {
     locsState = {
-        legalOfficersWithValidIdentityLoc: legalOfficers
+        legalOfficersWithNonVoidIdentityLoc: legalOfficers
     }
 }
 
