@@ -94,11 +94,20 @@ exports[`Home renders 1`] = `
             <div
               className="reading-container"
             >
-              <Reading
-                level={0.1}
-                readingDecimalPart="00"
-                readingIntegerPart="42"
-                unit="aLGNT"
+              <BalanceReading
+                balance={
+                  Object {
+                    "available": Lgnt {
+                      "canonical": 42n,
+                    },
+                    "reserved": Lgnt {
+                      "canonical": 0n,
+                    },
+                    "total": Lgnt {
+                      "canonical": 42n,
+                    },
+                  }
+                }
               />
               <Button
                 onClick={[Function]}

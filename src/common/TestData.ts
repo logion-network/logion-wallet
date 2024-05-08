@@ -1,7 +1,7 @@
 import { LegalOfficer, PostalAddress, UserIdentity } from '@logion/client';
 import { LegalOfficerClass } from "@logion/client/dist/Types.js";
 import { Transaction } from '@logion/client';
-import { Coin, CoinBalance, Numbers, Lgnt } from '@logion/node-api';
+import { TypesAccountData, Numbers, Lgnt } from '@logion/node-api';
 
 import { ColorTheme, rgbaToHex } from './ColorTheme';
 
@@ -121,17 +121,16 @@ export const COLOR_THEME: ColorTheme = {
     },
 };
 
-export const DEFAULT_COIN: Coin = {
-    id: 'lgnt',
-    symbol: Lgnt.CODE,
+export const DEFAULT_COIN_BALANCE: TypesAccountData = {
+    total: Lgnt.fromCanonical(42n),
+    available: Lgnt.fromCanonical(42n),
+    reserved: Lgnt.zero(),
 };
 
-export const DEFAULT_COIN_BALANCE: CoinBalance = {
-    coin: DEFAULT_COIN,
-    total: new Numbers.PrefixedNumber("42", Numbers.ATTO),
-    available: new Numbers.PrefixedNumber("42", Numbers.ATTO),
-    reserved: new Numbers.PrefixedNumber("0", Numbers.ATTO),
-    level: 0.1,
+export const ZERO_BALANCE: TypesAccountData = {
+    total: Lgnt.zero(),
+    available: Lgnt.zero(),
+    reserved: Lgnt.zero(),
 };
 
 export const DEFAULT_TRANSACTION: Transaction = {

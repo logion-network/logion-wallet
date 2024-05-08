@@ -1,11 +1,10 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { Form, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { BalanceState } from '@logion/client';
-import { Numbers, CoinBalance, Lgnt, ValidAccountId, Fees } from '@logion/node-api';
+import { Numbers, Lgnt, ValidAccountId, Fees, TypesAccountData } from '@logion/node-api';
 
 import { CallCallback, useLogionChain } from '../logion-chain';
 
-import Gauge from './Gauge';
 import Button from './Button';
 import Icon from './Icon';
 import Dialog from './Dialog';
@@ -18,9 +17,10 @@ import BalanceDetails from './BalanceDetails';
 import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';
 import VaultOutRequest from 'src/vault/VaultOutRequest';
 import EstimatedFees from "../loc/fees/EstimatedFees";
+import BalanceGauge from './BalanceGauge';
 
 export interface Props {
-    balance: CoinBalance,
+    balance: TypesAccountData,
     vaultAccount?: ValidAccountId,
     sendButton: boolean,
     sendToVault: boolean,
@@ -113,11 +113,8 @@ export default function WalletGauge(props: Props) {
 
     return (
         <div className="WalletGauge">
-            <Gauge
-                readingIntegerPart={ props.balance.available.coefficient.toInteger() }
-                readingDecimalPart={ props.balance.available.coefficient.toFixedPrecisionDecimals(2) }
-                unit={ props.balance.available.prefix.symbol + Lgnt.CODE }
-                level={ props.balance.level }
+            <BalanceGauge
+                balance={ props.balance }
             />
             <BalanceDetails
                 balance={ props.balance }

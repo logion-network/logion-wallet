@@ -13,7 +13,7 @@ describe("Home", () => {
 
     it("renders", () => {
         setBalanceState({
-            balances: [ DEFAULT_COIN_BALANCE ],
+            balance: DEFAULT_COIN_BALANCE,
             transactions: [ DEFAULT_TRANSACTION ],
         } as BalanceState);
         const tree = shallowRender(<Home />)

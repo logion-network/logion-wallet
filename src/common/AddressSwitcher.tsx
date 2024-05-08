@@ -25,13 +25,7 @@ export default function AddressSwitcher() {
         selectAddressCallback(address);
     }, [ authenticate, selectAddressCallback ]);
 
-    const balance = useMemo(() => {
-        if(balanceState && balanceState.balances.length > 0) {
-            return balanceState.balances[0];
-        } else {
-            return null;
-        }
-    }, [ balanceState ]);
+    const balance = useMemo(() => balanceState?.balance || null, [ balanceState ]);
 
     if(accounts === null || selectAddress === null || accounts.current === undefined) {
         return null;

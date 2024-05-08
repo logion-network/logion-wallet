@@ -12,8 +12,8 @@ import {
     RECOVERY_PATH,
     locRequestsPath,
     ISSUER_PATH,
-    transactionsPath,
-    vaultTransactionsPath,
+    TRANSACTIONS_PATH,
+    VAULT_TRANSACTIONS_PATH,
 } from "./UserPaths";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
@@ -52,7 +52,7 @@ export default function UserDashboard() {
         menuTop.push({
             id: "wallet",
             text: "Wallet",
-            to: transactionsPath("lgnt"),
+            to: TRANSACTIONS_PATH,
             exact: false,
             icon: {
                 icon: {
@@ -65,7 +65,7 @@ export default function UserDashboard() {
         menuTop.push({
             id: "vault",
             text: "Vault",
-            to: vaultTransactionsPath("lgnt"),
+            to: VAULT_TRANSACTIONS_PATH,
             exact: false,
             icon: {
                 icon: {

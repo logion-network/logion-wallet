@@ -29,22 +29,22 @@ exports[`renders 1`] = `
             },
           }
         }
-        balances={Array []}
+        balance={null}
         transactions={null}
         type="Wallet"
       />
     }
-    path="/wallet/:coinId"
+    path="/wallet"
   />
   <Route
     element={
       <Transactions
-        balances={null}
+        balance={null}
         transactions={null}
         type="Vault"
       />
     }
-    path="/vault/:coinId"
+    path="/vault"
   />
   <Route
     element={

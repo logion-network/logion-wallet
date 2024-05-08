@@ -4,16 +4,13 @@ jest.mock("./CommonContext");
 import { shallowRender } from '../tests';
 
 import Transactions from './Transactions';
-import { setBalanceState } from './__mocks__/CommonContextMock';
-import { setParams } from '../__mocks__/ReactRouterMock';
-import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION, DEFAULT_FAILED_TRANSACTION } from './TestData';
-import { BalanceState } from '@logion/client/dist/Balance.js';
+import { DEFAULT_COIN_BALANCE, DEFAULT_FAILED_TRANSACTION, ZERO_BALANCE } from './TestData';
 import { TEST_WALLET_USER } from 'src/wallet-user/TestData';
 
 test('renders null with missing data', () => {
     const result = shallowRender(<Transactions
         account={ TEST_WALLET_USER }
-        balances={ [] }
+        balance={ null }
         transactions={ [] }
         type="Wallet"
     />);
@@ -21,14 +18,9 @@ test('renders null with missing data', () => {
 });
 
 test('renders with all data', () => {
-    setParams({coinId: 'lgnt'});
-    setBalanceState({
-        balances: [ DEFAULT_COIN_BALANCE ],
-        transactions: [ DEFAULT_TRANSACTION ],
-    } as BalanceState);
     const result = shallowRender(<Transactions
         account={ TEST_WALLET_USER }
-        balances={ [] }
+        balance={ DEFAULT_COIN_BALANCE }
         transactions={ [] }
         type="Wallet"
     />);
@@ -36,15 +28,10 @@ test('renders with all data', () => {
 });
 
 test('renders failed transaction', () => {
-    setParams({coinId: 'lgnt'});
-    setBalanceState({
-        balances: [ DEFAULT_COIN_BALANCE ],
-        transactions: [ DEFAULT_FAILED_TRANSACTION ],
-    } as BalanceState);
     const result = shallowRender(<Transactions
         account={ TEST_WALLET_USER }
-        balances={ [] }
-        transactions={ [] }
+        balance={ DEFAULT_COIN_BALANCE }
+        transactions={ [ DEFAULT_FAILED_TRANSACTION ] }
         type="Wallet"
     />);
     expect(result).toMatchSnapshot();

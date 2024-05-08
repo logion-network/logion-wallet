@@ -1,15 +1,14 @@
-import { CoinBalance } from "@logion/node-api";
-import CoinName from "src/components/coin/CoinName";
+import { Lgnt, Numbers } from "@logion/node-api";
 
 export interface Props {
-    balance: CoinBalance;
+    unit: Numbers.UnitPrefix;
 }
 
 export default function AssetNameCell(props: Props) {
 
     return (
         <div className="asset-name-cell">
-            <span className="name"><CoinName coinId={ props.balance.coin.id }/> ({ props.balance.available.prefix.symbol }{ props.balance.coin.symbol })</span>
+            <span className="name">Logion Token ({ props.unit.symbol }{ Lgnt.CODE })</span>
         </div>
     );
 }

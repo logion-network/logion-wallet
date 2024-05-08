@@ -3,11 +3,10 @@ import CoinIcon from "./CoinIcon";
 
 describe("CoinIcon", () => {
 
-    it("renders DOT", () => expectMatchSnapshot("dot"));
-    it("renders LGNT", () => expectMatchSnapshot("lgnt"));
+    it("renders LGNT", () => expectMatchSnapshot());
 });
 
-function expectMatchSnapshot(coindId: string) {
-    const element = render(<CoinIcon coinId={ coindId } height="32px" />);
+function expectMatchSnapshot() {
+    const element = render(<CoinIcon height="32px" />);
     expect(element).toMatchSnapshot();
 }

@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
-import { CoinBalance, Numbers, Lgnt, Fees } from "@logion/node-api";
+import { TypesAccountData, Numbers, Lgnt, Fees } from "@logion/node-api";
 import { BalanceState } from "@logion/client";
 
 import Table, { EmptyTableMessage } from "../../common/Table";
@@ -18,6 +18,8 @@ import AmountCell from "../../common/AmountCell";
 import { ExpectNewTransactionStatus, useCommonContext } from "../../common/CommonContext";
 import AssetNameCell from "../../common/AssetNameCell";
 import EstimatedFees from "../../loc/fees/EstimatedFees";
+import { toOptimizedNumber } from "src/common/Amount";
+import { toUnit } from "src/common/AmountFormat";
 
 interface Props {
     vaultFirst: boolean
@@ -26,7 +28,7 @@ interface Props {
 export default function WalletRecoveryProcessTab(props: Props) {
     const { accounts, signer, submitCall, extrinsicSubmissionState, clearSubmissionState } = useLogionChain();
     const { protectionState, recoveredBalanceState, mutateRecoveredBalanceState } = useUserContext();
-    const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
+    const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<TypesAccountData | null>(null);
     const { expectNewTransaction, expectNewTransactionState, stopExpectNewTransaction } = useCommonContext();
     const [ transferFees, setTransferFees ] = useState<Fees>();
 
@@ -76,9 +78,9 @@ export default function WalletRecoveryProcessTab(props: Props) {
         }
     }, [ expectNewTransactionState, clearFormCallback ]);
 
-    const amountToRecover = recoveredCoinBalance?.available ? recoveredCoinBalance?.available : new Numbers.PrefixedNumber("0", Numbers.NONE)
+    const amountToRecover = recoveredCoinBalance?.available ? toOptimizedNumber(recoveredCoinBalance.available) : new Numbers.PrefixedNumber("0", Numbers.ATTO);
 
-    const coinBalances: CoinBalance[] = recoveredBalanceState ? recoveredBalanceState.balances.filter(balance => balance.available.toNumber() > 0) : [];
+    const coinBalances = recoveredBalanceState?.balance ? [ recoveredBalanceState?.balance ] : [];
     return (
         <>
             <div className="content">
@@ -96,17 +98,17 @@ export default function WalletRecoveryProcessTab(props: Props) {
                     columns={ [
                         {
                             header: "",
-                            render: coinBalance => <CoinIcon coinId={ coinBalance.coin.id } height="36px" />,
+                            render: _ => <CoinIcon height="36px" />,
                             width: "70px",
                         },
                         {
                             header: "Name",
-                            render: coinBalance => <AssetNameCell balance={ coinBalance } />,
+                            render: coinBalance => <AssetNameCell unit={ toUnit(coinBalance.total) } />,
                             align: "left"
                         },
                         {
                             header: "Balance",
-                            render: coinBalance => <AmountCell amount={ Lgnt.fromPrefixedNumber(coinBalance.available) } />,
+                            render: coinBalance => <AmountCell amount={ coinBalance?.total || null } />,
                             width: "300px",
                             align: 'right',
                         },
@@ -169,7 +171,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
                             You are about to
                             transfer { amountToRecover.coefficient.toFixedPrecision(2) }&nbsp;
                             { amountToRecover.prefix.symbol }
-                            { recoveredCoinBalance?.coin.symbol }
+                            { Lgnt.CODE }
                             <br />from account { protectionState?.protectionParameters.recoveredAccount?.address || "" }
                             <br />to account { accounts?.current?.accountId.address }.
                         </p>

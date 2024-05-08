@@ -13,6 +13,7 @@ import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
 import VaultRecoveryProcessTab from "./VaultRecoveryProcessTab";
 
 import './RecoveryProcess.css';
+import { Lgnt } from '@logion/node-api';
 
 interface TabTitleProps {
     iconId: string,
@@ -40,8 +41,8 @@ export default function RecoveryProcess() {
         return null;
     }
 
-    const walletBalances = recoveredBalanceState.balances.filter(balance => balance.available.toNumber() > 0);
-    const vaultBalances = recoveredVaultState.balances.filter(balance => balance.available.toNumber() > 0);
+    const walletBalances = recoveredBalanceState.balance.total.compareTo(Lgnt.zero()) > 0 ? [ recoveredBalanceState.balance ] : [];
+    const vaultBalances = recoveredVaultState.balance.total.compareTo(Lgnt.zero()) > 0 ? [ recoveredVaultState.balance ] : [];
 
     return (
         <FullWidthPane
