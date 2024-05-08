@@ -79,8 +79,6 @@ export default function CreateProtectionRequestForm(props: Props) {
             const params = createParams();
             estimateFeesCreateProtectionRequest(params).then(setFees);
         }
-        if (fees !== undefined && !canSubmit) {
-        }
     }, [ estimateFeesCreateProtectionRequest, createParams, fees, canSubmit ]);
 
     const submit = useCallback(async () => {
