@@ -1,7 +1,7 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { Form, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { BalanceState } from '@logion/client';
-import { Numbers, CoinBalance, Lgnt, ValidAccountId } from '@logion/node-api';
+import { Numbers, CoinBalance, Lgnt, ValidAccountId, Fees } from '@logion/node-api';
 
 import { CallCallback, useLogionChain } from '../logion-chain';
 
@@ -17,6 +17,7 @@ import './WalletGauge.css';
 import BalanceDetails from './BalanceDetails';
 import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';
 import VaultOutRequest from 'src/vault/VaultOutRequest';
+import EstimatedFees from "../loc/fees/EstimatedFees";
 
 export interface Props {
     balance: CoinBalance,
@@ -40,20 +41,45 @@ const HIDDEN_DIALOG: TransferDialogState = {
 
 export default function WalletGauge(props: Props) {
     const { accounts, signer, client, submitCall, extrinsicSubmissionState, clearSubmissionState } = useLogionChain();
-    const { colorTheme, mutateBalanceState } = useCommonContext();
+    const { colorTheme, mutateBalanceState, balanceState } = useCommonContext();
     const [ destination, setDestination ] = useState("");
     const [ amount, setAmount ] = useState("");
     const [ unit, setUnit ] = useState(Numbers.NONE);
     const [ transferDialogState, setTransferDialogState ] = useState<TransferDialogState>(HIDDEN_DIALOG);
     const { vaultAccount, sendButton } = props;
     const [ done, setDone ] = useState(false);
+    const [ fees, setFees ] = useState<Fees>();
+
+    const isValidTransfer = useCallback(() => {
+        return client !== null
+            && client.isValidAddress(destination)
+            && !isNaN(Number(amount))
+            && Number(amount) > 0
+            && !accounts!.current!.accountId.equals({
+                type: "Polkadot",
+                address: destination,
+            })
+    }, [ accounts, amount, client, destination ]);
+
+    useEffect(() => {
+        if (isValidTransfer()) {
+            balanceState?.estimateFeesTransfer({
+                amount: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(amount, unit)),
+                destination: ValidAccountId.polkadot(destination),
+            }).then(setFees);
+        } else {
+            setFees(undefined);
+        }
+    }, [ amount, balanceState, destination, isValidTransfer, unit ]);
 
     const transfer = useMemo(() => {
         return async (callback: CallCallback) => {
             await mutateBalanceState(async (state: BalanceState) => {
                 return await state.transfer({
-                    amount: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(amount, unit)),
-                    destination: ValidAccountId.polkadot(destination),
+                    payload: {
+                        amount: Lgnt.fromPrefixedNumber(new Numbers.PrefixedNumber(amount, unit)),
+                        destination: ValidAccountId.polkadot(destination),
+                    },
                     callback,
                     signer: signer!
                 });
@@ -72,6 +98,7 @@ export default function WalletGauge(props: Props) {
         setDestination("");
         setAmount("");
         setTransferDialogState(HIDDEN_DIALOG);
+        setFees(undefined);
     }, [ setDestination, setAmount ]);
 
     const closeCallback = useCallback(() => {
@@ -129,6 +156,7 @@ export default function WalletGauge(props: Props) {
             </div>
             }
             <Dialog
+                className="TransferDialog"
                 show={ transferDialogState.show }
                 actions={ [
                     {
@@ -143,7 +171,7 @@ export default function WalletGauge(props: Props) {
                         buttonText: "Send",
                         buttonVariant: 'polkadot',
                         callback: sendCallback,
-                        disabled: done || !extrinsicSubmissionState.canSubmit() || !client.isValidAddress(destination) || isNaN(Number(amount)) || Number(amount) === 0 || destination === accounts!.current!.accountId.address
+                        disabled: done || !extrinsicSubmissionState.canSubmit() || !isValidTransfer()
                     }
                 ] }
                 size="lg"
@@ -154,7 +182,7 @@ export default function WalletGauge(props: Props) {
                         id="destination"
                         label="Destination"
                         control={ <Form.Control
-                            isInvalid={ destination !== "" && (!client.isValidAddress(destination) || destination === accounts!.current!.accountId.address) }
+                            isInvalid={ destination !== "" && (!client.isValidAddress(destination) || accounts!.current!.accountId.equals({ type: "Polkadot", address: destination })) }
                             type="text"
                             placeholder="The beneficiary's SS58 address"
                             value={ destination }
@@ -198,6 +226,8 @@ export default function WalletGauge(props: Props) {
                     }
                     colors={ colorTheme.dialog }
                 />
+                <EstimatedFees fees={ fees }/>
+
                 <ExtrinsicSubmissionStateView
                     successMessage="Transfer successful."
                 />

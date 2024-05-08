@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
-import { CoinBalance, Numbers, Lgnt } from "@logion/node-api";
+import { CoinBalance, Numbers, Lgnt, Fees } from "@logion/node-api";
 import { BalanceState } from "@logion/client";
 
 import Table, { EmptyTableMessage } from "../../common/Table";
@@ -17,6 +17,7 @@ import ExtrinsicSubmissionStateView from "../../ExtrinsicSubmissionStateView";
 import AmountCell from "../../common/AmountCell";
 import { ExpectNewTransactionStatus, useCommonContext } from "../../common/CommonContext";
 import AssetNameCell from "../../common/AssetNameCell";
+import EstimatedFees from "../../loc/fees/EstimatedFees";
 
 interface Props {
     vaultFirst: boolean
@@ -27,20 +28,28 @@ export default function WalletRecoveryProcessTab(props: Props) {
     const { protectionState, recoveredBalanceState, mutateRecoveredBalanceState } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
     const { expectNewTransaction, expectNewTransactionState, stopExpectNewTransaction } = useCommonContext();
+    const [ transferFees, setTransferFees ] = useState<Fees>();
 
     const clearFormCallback = useCallback(() => {
         setRecoveredCoinBalance(null);
         clearSubmissionState();
         stopExpectNewTransaction();
+        setTransferFees(undefined);
     }, [ setRecoveredCoinBalance, clearSubmissionState, stopExpectNewTransaction ])
+
+    const createTransferParams = useCallback(() => {
+        return{
+            destination: accounts!.current!.accountId.address,
+            keepAlive: false,
+        }
+    }, [ accounts ]);
 
     const recoverCoin = useCallback(async () => {
         const call = async (callback: CallCallback) => {
             await mutateRecoveredBalanceState(async (state: BalanceState) => {
                 return state.transferAll({
                     signer: signer!,
-                    destination: accounts!.current!.accountId.address,
-                    keepAlive: false,
+                    payload: createTransferParams(),
                     callback,
                 });
             });
@@ -52,7 +61,14 @@ export default function WalletRecoveryProcessTab(props: Props) {
         } catch(_) {
             // State cleared on close
         }
-    }, [ accounts, signer, mutateRecoveredBalanceState, submitCall, clearFormCallback, expectNewTransaction ]);
+    }, [ signer, mutateRecoveredBalanceState, submitCall, clearFormCallback, expectNewTransaction, createTransferParams ]);
+
+    useEffect(() => {
+        if (recoveredBalanceState !== undefined) {
+            recoveredBalanceState.estimateFeesTransferAll(createTransferParams())
+                .then(setTransferFees)
+        }
+    }, [ recoveredBalanceState, createTransferParams ]);
 
     useEffect(() => {
         if(expectNewTransactionState.status === ExpectNewTransactionStatus.DONE) {
@@ -148,14 +164,17 @@ export default function WalletRecoveryProcessTab(props: Props) {
             >
                 {
                     expectNewTransactionState.status === ExpectNewTransactionStatus.IDLE &&
-                    <p>
-                        You are about to
-                        transfer { amountToRecover.coefficient.toFixedPrecision(2) }&nbsp;
-                        { amountToRecover.prefix.symbol }
-                        { recoveredCoinBalance?.coin.symbol }
-                        <br />from account { protectionState?.protectionParameters.recoveredAccount?.address || "" }
-                        <br />to account { accounts?.current?.accountId.address }.
-                    </p>
+                    <>
+                        <p>
+                            You are about to
+                            transfer { amountToRecover.coefficient.toFixedPrecision(2) }&nbsp;
+                            { amountToRecover.prefix.symbol }
+                            { recoveredCoinBalance?.coin.symbol }
+                            <br />from account { protectionState?.protectionParameters.recoveredAccount?.address || "" }
+                            <br />to account { accounts?.current?.accountId.address }.
+                        </p>
+                        <EstimatedFees fees={ transferFees }/>
+                    </>
                 }
                 <ExtrinsicSubmissionStateView />
                 {

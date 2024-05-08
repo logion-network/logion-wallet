@@ -1,5 +1,5 @@
 import { LocsState, LogionClient } from "@logion/client";
-import { ValidAccountId, AnyAccountId } from "@logion/node-api";
+import { ValidAccountId, AnyAccountId, Fees } from "@logion/node-api";
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
@@ -12,7 +12,7 @@ import FormGroup from '../../common/FormGroup';
 import NetworkWarning from '../../common/NetworkWarning';
 import { useCommonContext } from "../../common/CommonContext";
 
-import { useUserContext } from "../UserContext";
+import { useUserContext, ProtectionRequestParams } from "../UserContext";
 import { CallCallback, useLogionChain } from '../../logion-chain';
 import { SETTINGS_PATH } from '../UserPaths';
 
@@ -21,6 +21,7 @@ import LegalOfficers from './LegalOfficers';
 import './CreateProtectionRequestForm.css';
 import { LegalOfficerAndLoc } from './SelectLegalOfficerAndLoc';
 import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';
+import EstimatedFees from "../../loc/fees/EstimatedFees";
 
 export function getLegalOfficerAndLocs(locsState: LocsState | undefined, client: LogionClient | null) {
     if(locsState && client) {
@@ -45,35 +46,52 @@ export interface Props {
 export default function CreateProtectionRequestForm(props: Props) {
     const { api, client, clearSubmissionState, submitCall, extrinsicSubmissionState } = useLogionChain();
     const { colorTheme, nodesDown } = useCommonContext();
-    const { createProtectionRequest, locsState } = useUserContext();
+    const { createProtectionRequest, locsState, estimateFeesCreateProtectionRequest } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficerAndLoc | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficerAndLoc | null>(null);
     const [ addressToRecover, setAddressToRecover ] = useState<string>("");
     const [ addressToRecoverError, setAddressToRecoverError ] = useState<string>("");
+    const [ fees, setFees ] = useState<Fees>();
 
     const legalOfficersAndLocs = useMemo(() => getLegalOfficerAndLocs(locsState, client), [ locsState, client ]);
 
     const canSubmit = useMemo(() => {
         return legalOfficer1 !== null
-        && legalOfficer2 !== null
-        && (!props.isRecovery || addressToRecoverError === "");
+            && legalOfficer2 !== null
+            && (!props.isRecovery || addressToRecoverError === "")
+            && !legalOfficer1.legalOfficer.account.equals(legalOfficer2.legalOfficer.account);
     }, [ legalOfficer1, legalOfficer2, props.isRecovery, addressToRecoverError ]);
+
+    const createParams = useCallback<() => ProtectionRequestParams>(() => {
+        return {
+            legalOfficers: [
+                legalOfficer1!.legalOfficer,
+                legalOfficer2!.legalOfficer,
+            ],
+            addressToRecover: props.isRecovery ? ValidAccountId.polkadot(addressToRecover) : undefined,
+            requesterIdentityLoc1: legalOfficer1!.loc,
+            requesterIdentityLoc2: legalOfficer2!.loc,
+        }
+    }, [ legalOfficer1, legalOfficer2, addressToRecover, props.isRecovery ]);
+
+    useEffect(() => {
+        if (fees === undefined && estimateFeesCreateProtectionRequest !== null && canSubmit) {
+            const params = createParams();
+            estimateFeesCreateProtectionRequest(params).then(setFees);
+        }
+    }, [ estimateFeesCreateProtectionRequest, createParams, fees, canSubmit ]);
 
     const submit = useCallback(async () => {
         if(!canSubmit) {
             return;
         }
 
+        const params = createParams();
+
         const call = async (callback: CallCallback) => {
             await createProtectionRequest!({
-                legalOfficers: [
-                    legalOfficer1!.legalOfficer,
-                    legalOfficer2!.legalOfficer,
-                ],
-                addressToRecover: props.isRecovery ? ValidAccountId.polkadot(addressToRecover) : undefined,
+                ...params,
                 callback,
-                requesterIdentityLoc1: legalOfficer1!.loc,
-                requesterIdentityLoc2: legalOfficer2!.loc,
             });
         };
 
@@ -84,7 +102,7 @@ export default function CreateProtectionRequestForm(props: Props) {
         } finally {
             clearSubmissionState();
         }
-    }, [ legalOfficer1, legalOfficer2, addressToRecover, props.isRecovery, createProtectionRequest, submitCall, clearSubmissionState, canSubmit ]);
+    }, [ createProtectionRequest, submitCall, clearSubmissionState, canSubmit, createParams ]);
 
     let mainTitle;
     if(props.isRecovery) {
@@ -196,7 +214,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                         }
                         {
                             legalOfficersAndLocs.length >= 2 &&
-                            <>
                             <LegalOfficers
                                 legalOfficers={ legalOfficersAndLocs }
                                 legalOfficer1={ legalOfficer1 }
@@ -205,22 +222,29 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 setLegalOfficer2={ setLegalOfficer2 }
                                 label={ props.isRecovery ? "Select Legal Officer N°" : "Choose Legal Officer N°" }
                             />
-
-                            <ExtrinsicSubmissionStateView
-                                successMessage="Recovery successfully initiated."
-                            />
-
-                            {
-                                extrinsicSubmissionState.canSubmit() && canSubmit &&
-                                <Button
-                                    onClick={ submit }
-                                    variant={ "polkadot" }
-                                >
-                                    Proceed
-                                </Button>
-                            }
-                            </>
                         }
+                    </Frame>
+                </Col>
+                <Col>
+                    <Frame
+                        className="CreateProtectionRequestFormInitiateRecovery"
+                        fullHeight={ true }
+                    >
+                        { canSubmit &&
+                            <EstimatedFees fees={ fees } />
+                        }
+                        {
+                            extrinsicSubmissionState.canSubmit() && canSubmit &&
+                            <Button
+                                onClick={ submit }
+                                variant={ "polkadot" }
+                            >
+                                Proceed
+                            </Button>
+                        }
+                        <ExtrinsicSubmissionStateView
+                            successMessage="Recovery successfully initiated."
+                        />
                     </Frame>
                 </Col>
             </Row>

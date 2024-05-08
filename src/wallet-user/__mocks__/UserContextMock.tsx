@@ -1,4 +1,4 @@
-import { LogionNodeApiClass } from '@logion/node-api';
+import { LogionNodeApiClass, Fees } from '@logion/node-api';
 
 import { twoLegalOfficers } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';
@@ -7,7 +7,7 @@ import { AxiosFactory } from '@logion/client/dist/AxiosFactory.js';
 import { ComponentFactory } from '@logion/client/dist/ComponentFactory.js';
 import { LegalOfficerEndpoint, LogionClientConfig, SharedState } from '@logion/client/dist/SharedClient.js';
 import { NetworkState } from '@logion/client/dist/NetworkState.js';
-import { UserContext } from '../UserContext';
+import { UserContext, ProtectionRequestParams } from '../UserContext';
 import { BalanceState } from '@logion/client/dist/Balance.js';
 import {
     LocsState,
@@ -25,6 +25,10 @@ export let createTokenRequest = () => null;
 export let refreshRequests = jest.fn();
 
 export let createProtectionRequest = jest.fn().mockReturnValue(Promise.resolve());
+
+export function estimateFeesCreateProtectionRequest(_: ProtectionRequestParams): Promise<Fees> {
+    return Promise.resolve(Fees.zero());
+}
 
 export let activateProtection = jest.fn().mockReturnValue(Promise.resolve());
 
@@ -177,6 +181,7 @@ export function useUserContext() {
     return {
         refreshRequests,
         createProtectionRequest,
+        estimateFeesCreateProtectionRequest,
         activateProtection,
         claimRecovery,
         protectionState,

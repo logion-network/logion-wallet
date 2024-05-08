@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { CoinBalance, Numbers, Lgnt, ValidAccountId } from "@logion/node-api";
+import { CoinBalance, Numbers, Lgnt, ValidAccountId, Fees } from "@logion/node-api";
 import { ProtectionState, VaultState, VaultTransferRequest } from "@logion/client";
 
 import { CallCallback, useLogionChain } from "../../logion-chain";
@@ -24,6 +24,7 @@ import CoinIcon from "../../components/coin/CoinIcon";
 import ExtrinsicSubmissionStateView from "../../ExtrinsicSubmissionStateView";
 import AmountCell from "../../common/AmountCell";
 import AssetNameCell from "../../common/AssetNameCell";
+import EstimatedFees from "../../loc/fees/EstimatedFees";
 
 interface FormValues {
     legalOfficer: string | null;
@@ -48,6 +49,8 @@ export default function VaultRecoveryProcessTab() {
     const [ status, setStatus ] = useState<Status>(Status.IDLE);
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
     const [ legalOfficersOptions, setLegalOfficersOptions ] = useState<OptionType<ValidAccountId>[]>([]);
+    const [ transferFees, setTransferFees ] = useState<Fees>();
+    const [ cancelFees, setCancelFees ] = useState<Fees>();
 
     useEffect(() => {
         if (legalOfficersOptions.length === 0 && protectionState && availableLegalOfficers) {
@@ -70,6 +73,8 @@ export default function VaultRecoveryProcessTab() {
         setStatus(Status.IDLE);
         clearSubmissionState();
         setRequestToCancel(null);
+        setTransferFees(undefined);
+        setCancelFees(undefined);
     }, [ clearSubmissionState ]);
 
     const amountToRecover = useMemo<Numbers.PrefixedNumber>(() => recoveredCoinBalance?.available ?
@@ -91,13 +96,19 @@ export default function VaultRecoveryProcessTab() {
     },
     [ recoveredVaultState ]);
 
+    const createTransferParams = useCallback((amount: Numbers.PrefixedNumber) => {
+        return {
+            legalOfficer: getOfficer!(legalOfficer!)!,
+            amount: Lgnt.fromPrefixedNumber(amount),
+            destination: vaultState!.vaultAccount,
+        }
+    }, [ getOfficer, legalOfficer, vaultState ]);
+
     const recoverCoin = useCallback(async (amount: Numbers.PrefixedNumber) => {
         const call = async (callback: CallCallback) => {
             await mutateRecoveredVaultState(async (recoveredVaultState: VaultState) => {
                 return await recoveredVaultState.createVaultTransferRequest({
-                    legalOfficer: getOfficer!(legalOfficer!)!,
-                    amount: Lgnt.fromPrefixedNumber(amount),
-                    destination: vaultState!.vaultAccount,
+                    payload: createTransferParams(amount),
                     signer: signer!,
                     callback,
                 });
@@ -109,17 +120,34 @@ export default function VaultRecoveryProcessTab() {
         } catch(_) {
             // State cleared on close
         }
-    }, [ mutateRecoveredVaultState, getOfficer, legalOfficer, signer, vaultState, clearFormCallback, submitCall ]);
+    }, [ mutateRecoveredVaultState, signer, clearFormCallback, submitCall, createTransferParams ]);
+
+    useEffect(() => {
+        if (requestToCancel === null) {
+            if (legalOfficer !== null) {
+                recoveredVaultState?.estimateFeesCreateVaultTransferRequest(createTransferParams(amountToRecover))
+                    .then(setTransferFees);
+            } else {
+                setTransferFees(undefined);
+            }
+        }
+    }, [ requestToCancel, legalOfficer, recoveredVaultState, createTransferParams, amountToRecover ])
+
+    const createCancelParams = useCallback(() => {
+        return {
+            legalOfficer: getOfficer!(ValidAccountId.polkadot(requestToCancel!.legalOfficerAddress))!,
+            request: requestToCancel!,
+        }
+    },[ requestToCancel, getOfficer ])
 
     const cancelRequestCallback = useCallback(async () => {
         const call = async (callback: CallCallback) => {
             await mutateRecoveredVaultState(async (vaultState: VaultState) => {
-                return await vaultState.cancelVaultTransferRequest(
-                    getOfficer!(ValidAccountId.polkadot(requestToCancel!.legalOfficerAddress))!,
-                    requestToCancel!,
-                    signer!,
+                return await vaultState.cancelVaultTransferRequest({
+                    payload: createCancelParams(),
+                    signer: signer!,
                     callback,
-                );
+                });
             })
         }
         try {
@@ -128,7 +156,14 @@ export default function VaultRecoveryProcessTab() {
         } catch(_) {
             // State cleared on close
         }
-    }, [ requestToCancel, getOfficer, signer, mutateRecoveredVaultState, submitCall, clearFormCallback ]);
+    }, [ signer, mutateRecoveredVaultState, submitCall, clearFormCallback, createCancelParams ]);
+
+    useEffect(() => {
+        if (requestToCancel !== null && cancelFees === undefined) {
+            recoveredVaultState?.estimateFeesCancelVaultTransferRequest(createCancelParams())
+                .then(setCancelFees)
+        }
+    }, [ requestToCancel, cancelFees, createCancelParams, recoveredVaultState ]);
 
     if (!vaultState || !recoveredVaultState || availableLegalOfficers === undefined) {
         return null;
@@ -260,6 +295,7 @@ export default function VaultRecoveryProcessTab() {
                         <br />from account { recoveredVaultState?.vaultAccount.address }
                         <br />to account { vaultState.vaultAccount.address }.
                     </p>
+                    <EstimatedFees fees={ transferFees }/>
                 </>
                 }
                 <ExtrinsicSubmissionStateView />
@@ -287,6 +323,8 @@ export default function VaultRecoveryProcessTab() {
                 <h2>Cancel vault recovery</h2>
 
                 <p>This will cancel the vault recovery. Your Legal Officer will be notified.</p>
+
+                <EstimatedFees fees={ cancelFees }/>
 
                 <ExtrinsicSubmissionStateView />
             </Dialog>
