@@ -76,6 +76,8 @@ export default function VaultOutRequest() {
         try {
             await submitCall(call);
             close();
+        } catch(e) {
+            console.log(e);
         } finally {
             clearSubmissionState();
         }

@@ -26,7 +26,7 @@ export interface Props {
 }
 
 export default function OpenLoc(props: Props) {
-    const { signer, client, submitCall } = useLogionChain();
+    const { signer, client, submitCall, clearSubmissionState } = useLogionChain();
     const { refresh } = useCommonContext();
     const { mutateLocState, locState } = useLocContext();
     const [ acceptState, setAcceptState ] = useState<OpenStatus>(OpenStatus.NONE);
@@ -69,6 +69,8 @@ export default function OpenLoc(props: Props) {
         setAcceptState(OpenStatus.CREATING_LOC);
         try {
             await submitCall(openLoc);
+        } catch(e) {
+            console.log(e);
         } finally {
             setAcceptState(OpenStatus.CREATED_OR_ERROR);
         }
@@ -78,8 +80,9 @@ export default function OpenLoc(props: Props) {
     ]);
 
     const close = useCallback(() => {
+        clearSubmissionState();
         setAcceptState(OpenStatus.NONE);
-    }, []);
+    }, [ clearSubmissionState ]);
 
     const closeAndRefresh = useCallback(() => {
         close();

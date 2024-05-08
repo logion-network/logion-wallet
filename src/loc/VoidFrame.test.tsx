@@ -4,15 +4,6 @@ import VoidFrame from "./VoidFrame";
 
 describe("VoidFrame", () => {
 
-    it("renders empty if already void", () => {
-        const loc = {
-            voidInfo: {
-
-            }
-        } as unknown as LocData;
-        renderWithLoc(loc);
-    })
-
     it("renders for non-void non-collection LOC", () => {
         const loc = {
             locType: "Transaction",

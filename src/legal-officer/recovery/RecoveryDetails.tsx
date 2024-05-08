@@ -88,6 +88,8 @@ export default function RecoveryDetails() {
                 await submitCall(call);
                 refreshRequests!(false);
                 navigate(RECOVERY_REQUESTS_PATH);
+            } catch(e) {
+                console.log(e);
             } finally {
                 clearSubmissionState();
             }

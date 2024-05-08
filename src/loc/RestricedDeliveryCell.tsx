@@ -39,6 +39,8 @@ export default function RestrictedDeliveryCell(props: Props) {
                     return current;
                 }
             });
+        } catch(e) {
+            console.log(e);
         } finally {
             setDisabled(false);
         }

@@ -15,10 +15,6 @@ export interface Props {
 export default function VoidFrame(props: Props) {
     const { loc } = props;
 
-    if(loc.voidInfo) {
-        return null;
-    }
-
     return (
         <DangerFrame
             className="VoidFrame"

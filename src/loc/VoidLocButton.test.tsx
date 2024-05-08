@@ -46,10 +46,10 @@ describe("VoidLocButton", () => {
         // await waitFor(() => expect(dialog!).not.toBeVisible());
     });
 
-    it("disappears on cancel", async () => {
+    it("disappears on close", async () => {
         const dialog = await renderAndOpenDialog();
 
-        await clickByName("Cancel");
+        await clickByName("Close");
 
         await waitFor(() => expect(dialog!).not.toBeVisible());
     });

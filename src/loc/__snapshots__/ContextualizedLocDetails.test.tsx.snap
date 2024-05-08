@@ -411,70 +411,74 @@ exports[`ContextualizedLocDetails renders 1`] = `
     checkedItem="confidential document"
     context="Identity LOC"
   />
-  <VoidFrame
-    loc={
-      Object {
-        "createdOn": "2023-10-10T08:25:18.546Z",
-        "decisionOn": "2023-10-10T08:25:18.546Z",
-        "description": "Description",
-        "fees": Object {
-          "collectionItemFee": Lgnt {
-            "canonical": 0n,
+  <BlockNone
+    show={true}
+  >
+    <VoidFrame
+      loc={
+        Object {
+          "createdOn": "2023-10-10T08:25:18.546Z",
+          "decisionOn": "2023-10-10T08:25:18.546Z",
+          "description": "Description",
+          "fees": Object {
+            "collectionItemFee": Lgnt {
+              "canonical": 0n,
+            },
+            "legalFee": Lgnt {
+              "canonical": 0n,
+            },
+            "tokensRecordFee": Lgnt {
+              "canonical": 0n,
+            },
+            "valueFee": Lgnt {
+              "canonical": 0n,
+            },
           },
-          "legalFee": Lgnt {
-            "canonical": 0n,
+          "files": Array [],
+          "id": UUID {
+            "bytes": Array [
+              147,
+              99,
+              195,
+              214,
+              209,
+              7,
+              66,
+              26,
+              164,
+              75,
+              133,
+              199,
+              250,
+              176,
+              184,
+              67,
+            ],
           },
-          "tokensRecordFee": Lgnt {
-            "canonical": 0n,
+          "invitedContributors": Array [],
+          "issuers": Array [],
+          "links": Array [],
+          "locType": "Identity",
+          "metadata": Array [],
+          "ownerAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+              "type": "Polkadot",
+            },
           },
-          "valueFee": Lgnt {
-            "canonical": 0n,
+          "requesterAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+              "type": "Polkadot",
+            },
           },
-        },
-        "files": Array [],
-        "id": UUID {
-          "bytes": Array [
-            147,
-            99,
-            195,
-            214,
-            209,
-            7,
-            66,
-            26,
-            164,
-            75,
-            133,
-            199,
-            250,
-            176,
-            184,
-            67,
-          ],
-        },
-        "invitedContributors": Array [],
-        "issuers": Array [],
-        "links": Array [],
-        "locType": "Identity",
-        "metadata": Array [],
-        "ownerAccountId": ValidAccountId {
-          "anyAccountId": AnyAccountId {
-            "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
-            "type": "Polkadot",
-          },
-        },
-        "requesterAccountId": ValidAccountId {
-          "anyAccountId": AnyAccountId {
-            "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
-            "type": "Polkadot",
-          },
-        },
-        "requesterLocId": undefined,
-        "status": "OPEN",
-        "verifiedIssuer": false,
+          "requesterLocId": undefined,
+          "status": "OPEN",
+          "verifiedIssuer": false,
+        }
       }
-    }
-  />
+    />
+  </BlockNone>
 </LocPane>
 `;
 
@@ -739,5 +743,48 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
     checkedItem="confidential document"
     context="Identity LOC"
   />
+  <BlockNone
+    show={false}
+  >
+    <VoidFrame
+      loc={
+        Object {
+          "id": UUID {
+            "bytes": Uint8Array [
+              174,
+              212,
+              198,
+              228,
+              151,
+              158,
+              72,
+              173,
+              190,
+              110,
+              75,
+              211,
+              159,
+              185,
+              71,
+              98,
+            ],
+          },
+          "locType": "Identity",
+          "requesterAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+              "type": "Polkadot",
+            },
+          },
+          "userIdentity": Object {
+            "email": "john.doe@logion.network",
+            "firstName": "John",
+            "lastName": "Doe",
+            "phoneNumber": "+1234",
+          },
+        }
+      }
+    />
+  </BlockNone>
 </LocPane>
 `;
