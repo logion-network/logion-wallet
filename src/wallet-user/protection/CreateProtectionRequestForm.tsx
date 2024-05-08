@@ -79,6 +79,8 @@ export default function CreateProtectionRequestForm(props: Props) {
 
         try {
             await submitCall(call);
+        } catch(e) {
+            console.log(e);
         } finally {
             clearSubmissionState();
         }

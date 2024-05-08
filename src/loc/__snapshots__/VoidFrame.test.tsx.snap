@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VoidFrame renders empty if already void 1`] = `null`;
-
 exports[`VoidFrame renders for non-void collection LOC (only void without replacer) 1`] = `
 <DangerFrame
   className="VoidFrame"

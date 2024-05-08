@@ -88,8 +88,8 @@ export default function VoidLocReplaceExistingButton() {
                 size="lg"
                 actions={[
                     {
-                        id: "cancel",
-                        buttonText: "Cancel",
+                        id: "close",
+                        buttonText: "Close",
                         buttonVariant: "danger-outline",
                         callback: clearAndClose
                     },

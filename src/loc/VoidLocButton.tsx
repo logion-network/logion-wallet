@@ -58,8 +58,8 @@ export default function VoidLocButton() {
                 size="lg"
                 actions={[
                     {
-                        id: "cancel",
-                        buttonText: "Cancel",
+                        id: "close",
+                        buttonText: "Close",
                         buttonVariant: "danger-outline",
                         callback: clearAndClose,
                         disabled: extrinsicSubmissionState.submitted && !extrinsicSubmissionState.callEnded

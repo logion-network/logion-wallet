@@ -28,6 +28,8 @@ export default function LocPublishButton(props: PublishProps) {
         setPublishState({ status: PublishStatus.PUBLISHING });
         try {
             await submitCall(call);
+        } catch(e) {
+            console.log(e);
         } finally {
             setPublishState({ status: PublishStatus.DONE });
         }

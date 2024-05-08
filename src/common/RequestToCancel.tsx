@@ -38,6 +38,8 @@ export default function RequestToCancel(props: Props) {
         try {
             await submitCall(call);
             close();
+        } catch(e) {
+            console.log(e);
         } finally {
             clearSubmissionState();
         }

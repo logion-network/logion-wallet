@@ -167,6 +167,74 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
     locItems={Array []}
     viewer="User"
   />
+  <BlockNone
+    show={false}
+  >
+    <OpenLoc
+      loc={
+        Object {
+          "createdOn": "2023-10-10T08:25:18.546Z",
+          "decisionOn": "2023-10-10T08:25:18.546Z",
+          "description": "Description",
+          "fees": Object {
+            "collectionItemFee": Lgnt {
+              "canonical": 0n,
+            },
+            "legalFee": Lgnt {
+              "canonical": 0n,
+            },
+            "tokensRecordFee": Lgnt {
+              "canonical": 0n,
+            },
+            "valueFee": Lgnt {
+              "canonical": 0n,
+            },
+          },
+          "files": Array [],
+          "id": UUID {
+            "bytes": Array [
+              147,
+              99,
+              195,
+              214,
+              209,
+              7,
+              66,
+              26,
+              164,
+              75,
+              133,
+              199,
+              250,
+              176,
+              184,
+              67,
+            ],
+          },
+          "invitedContributors": Array [],
+          "issuers": Array [],
+          "links": Array [],
+          "locType": "Identity",
+          "metadata": Array [],
+          "ownerAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+              "type": "Polkadot",
+            },
+          },
+          "requesterAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+              "type": "Polkadot",
+            },
+          },
+          "requesterLocId": undefined,
+          "status": "OPEN",
+          "verifiedIssuer": false,
+        }
+      }
+    />
+  </BlockNone>
   <React.Fragment>
     <VoidDisclaimer
       loc={
@@ -540,6 +608,74 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
     locItems={Array []}
     viewer="User"
   />
+  <BlockNone
+    show={false}
+  >
+    <OpenLoc
+      loc={
+        Object {
+          "createdOn": "2023-10-10T08:25:18.546Z",
+          "decisionOn": "2023-10-10T08:25:18.546Z",
+          "description": "Description",
+          "fees": Object {
+            "collectionItemFee": Lgnt {
+              "canonical": 0n,
+            },
+            "legalFee": Lgnt {
+              "canonical": 0n,
+            },
+            "tokensRecordFee": Lgnt {
+              "canonical": 0n,
+            },
+            "valueFee": Lgnt {
+              "canonical": 0n,
+            },
+          },
+          "files": Array [],
+          "id": UUID {
+            "bytes": Array [
+              147,
+              99,
+              195,
+              214,
+              209,
+              7,
+              66,
+              26,
+              164,
+              75,
+              133,
+              199,
+              250,
+              176,
+              184,
+              67,
+            ],
+          },
+          "invitedContributors": Array [],
+          "issuers": Array [],
+          "links": Array [],
+          "locType": "Identity",
+          "metadata": Array [],
+          "ownerAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQx5kESPn8dWyX4KxMCKqUyCaWUwtui1isX6PVNcZh2Ghjitr",
+              "type": "Polkadot",
+            },
+          },
+          "requesterAccountId": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQv9qfqLY88pF4poNh6XpvUpxC9MAdcwLjVma8LMcyMYFff5h",
+              "type": "Polkadot",
+            },
+          },
+          "requesterLocId": undefined,
+          "status": "OPEN",
+          "verifiedIssuer": false,
+        }
+      }
+    />
+  </BlockNone>
   <React.Fragment>
     <VoidDisclaimer
       loc={

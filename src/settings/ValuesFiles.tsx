@@ -34,6 +34,8 @@ export function ValuesFiles() {
                 file: HashOrContent.fromContent(new BrowserFile(file, file.name)),
                 fileId
             });
+        } catch(e) {
+            console.log(e);
         } finally {
             setUploading({
                 ...uploading,

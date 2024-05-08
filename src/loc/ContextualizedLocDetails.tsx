@@ -13,6 +13,7 @@ import VoidFrame from "./VoidFrame";
 import AcceptRejectLocRequest from "./AcceptRejectLocRequest";
 import { locRequestsPath } from "src/legal-officer/LegalOfficerPaths";
 import { ReadOnlyLocState } from "@logion/client";
+import BlockNone from "src/components/blocknone/BlockNone";
 
 export default function ContextualizedLocDetails() {
     const {
@@ -89,12 +90,13 @@ export default function ContextualizedLocDetails() {
                 context={ loc.locType + " LOC" }
                 checkedItem="confidential document"
             />
-            {
-                (loc.status === "OPEN" || loc.status === "CLOSED") && !isReadOnly &&
+            <BlockNone
+                show={ (loc.status === "OPEN" || loc.status === "CLOSED") && !isReadOnly && loc.voidInfo === undefined }
+            >
                 <VoidFrame
                     loc={ loc }
                 />
-            }
+            </BlockNone>
         </LocPane>
     );
 }

@@ -68,6 +68,8 @@ export default function PendingVaultTransferRequests() {
         try {
             await submitCall(call);
             onApprovalSuccessCallback();
+        } catch(e) {
+            console.log(e);
         } finally {
             clearSubmissionState();
         }

@@ -4,13 +4,11 @@ import userEvent from "@testing-library/user-event";
 
 import { clickByName, typeByLabel } from "src/tests";
 import VoidLocReplaceExistingButton from "./VoidLocReplaceExistingButton";
-import { expectSubmitting, setupQueriesGetLegalOfficerCase } from "src/test/Util";
+import { setupQueriesGetLegalOfficerCase } from "src/test/Util";
 import { UUID } from "@logion/node-api";
 import { setupApiMock, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "src/__mocks__/LogionMock";
-import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { OpenLoc } from "src/__mocks__/LogionClientMock";
 import { setLocState } from "./__mocks__/LocContextMock";
-import { SUCCESSFUL_SUBMISSION, setExtrinsicSubmissionState } from "src/logion-chain/__mocks__/LogionChainMock";
 
 jest.mock("../common/CommonContext");
 jest.mock("./LocContext");
@@ -50,10 +48,10 @@ describe("VoidLocReplaceExistingButton", () => {
 
     });
 
-    it("disappears on cancel", async () => {
+    it("disappears on close", async () => {
         const dialog = await renderAndOpenDialog();
 
-        await clickByName("Cancel");
+        await clickByName("Close");
 
         await waitFor(() => expect(dialog!).not.toBeVisible());
     });

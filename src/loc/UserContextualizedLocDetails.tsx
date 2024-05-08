@@ -16,6 +16,7 @@ import { useMemo } from 'react';
 import IdenfyVerification from './IdenfyVerification';
 import { ReadOnlyLocState } from '@logion/client';
 import OpenLoc from './OpenLoc';
+import BlockNone from 'src/components/blocknone/BlockNone';
 
 export interface Props {
     contributionMode: ContributionMode;
@@ -79,12 +80,13 @@ export default function UserContextualizedLocDetails(props: Props) {
                 legalOfficer={ getOfficer(loc.ownerAccountId) }
                 contributionMode={ props.contributionMode }
             />
-            {
-                loc.status === "REVIEW_ACCEPTED" &&
+            <BlockNone
+                show={ loc.status === "REVIEW_ACCEPTED" }
+            >
                 <OpenLoc
                     loc={ loc }
                 />
-            }
+            </BlockNone>
             {
                 (loc.status === "OPEN" || loc.status === "CLOSED") &&
                 <>

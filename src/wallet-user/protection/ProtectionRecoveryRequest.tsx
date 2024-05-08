@@ -43,6 +43,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
     const activateProtectionCallback = useCallback(async () => {
         try {
             await submitCall(activateProtection!);
+        } catch(e) {
+            console.log(e);
         } finally {
             clearSubmissionState();
         }
@@ -51,6 +53,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
     const claimRecoveryCallback = useCallback(async () => {
         try {
             await submitCall(claimRecovery!);
+        } catch(e) {
+            console.log(e);
         } finally {
             clearSubmissionState();
         }
