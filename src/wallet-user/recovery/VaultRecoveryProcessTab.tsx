@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { CoinBalance, Numbers, Lgnt, ValidAccountId, Fees } from "@logion/node-api";
+import { TypesAccountData, Numbers, Lgnt, ValidAccountId, Fees } from "@logion/node-api";
 import { ProtectionState, VaultState, VaultTransferRequest } from "@logion/client";
 
 import { CallCallback, useLogionChain } from "../../logion-chain";
@@ -25,6 +25,8 @@ import ExtrinsicSubmissionStateView from "../../ExtrinsicSubmissionStateView";
 import AmountCell from "../../common/AmountCell";
 import AssetNameCell from "../../common/AssetNameCell";
 import EstimatedFees from "../../loc/fees/EstimatedFees";
+import { toOptimizedNumber } from "src/common/Amount";
+import { toUnit } from "src/common/AmountFormat";
 
 interface FormValues {
     legalOfficer: string | null;
@@ -44,7 +46,7 @@ export default function VaultRecoveryProcessTab() {
     const { getOfficer, signer, submitCall, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { colorTheme, availableLegalOfficers } = useCommonContext();
     const { protectionState, vaultState, mutateRecoveredVaultState, recoveredVaultState } = useUserContext();
-    const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
+    const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<TypesAccountData | null>(null);
     const [ legalOfficer, setLegalOfficer ] = useState<ValidAccountId | null>(null);
     const [ status, setStatus ] = useState<Status>(Status.IDLE);
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
@@ -78,9 +80,9 @@ export default function VaultRecoveryProcessTab() {
     }, [ clearSubmissionState ]);
 
     const amountToRecover = useMemo<Numbers.PrefixedNumber>(() => recoveredCoinBalance?.available ?
-            recoveredCoinBalance?.available :
-            new Numbers.PrefixedNumber("0", Numbers.NONE),
-        [ recoveredCoinBalance ])
+        toOptimizedNumber(recoveredCoinBalance?.available) :
+        new Numbers.PrefixedNumber("0", Numbers.NONE),
+    [ recoveredCoinBalance ]);
 
     const vaultRecoveryRequest = useMemo<VaultTransferRequest | null>(() => {
         if(recoveredVaultState) {
@@ -169,24 +171,24 @@ export default function VaultRecoveryProcessTab() {
         return null;
     }
 
-    const coinBalances: CoinBalance[] = recoveredVaultState ? recoveredVaultState.balances.filter(balance => balance.available.toNumber() > 0) : [];
+    const coinBalances = recoveredVaultState ? [ recoveredVaultState.balance ] : [];
     return (<>
             <div className="VaultRecoveryProcessTab content">
                 <Table
                     columns={ [
                         {
                             header: "",
-                            render: coinBalance => <CoinIcon coinId={ coinBalance.coin.id } height="36px" />,
+                            render: _ => <CoinIcon height="36px" />,
                             width: "70px",
                         },
                         {
                             header: "Name",
-                            render: coinBalance => <AssetNameCell balance={ coinBalance } />,
+                            render: coinBalance => <AssetNameCell unit={ toUnit(coinBalance.available) } />,
                             align: "left"
                         },
                         {
                             header: "Balance",
-                            render: coinBalance => <AmountCell amount={ Lgnt.fromPrefixedNumber(coinBalance.available) } />,
+                            render: coinBalance => <AmountCell amount={ coinBalance.available } />,
                             width: "300px",
                             align: 'right',
                         },
@@ -291,7 +293,7 @@ export default function VaultRecoveryProcessTab() {
                         You are about to request your legal officer to confirm the
                         transfer of { amountToRecover.coefficient.toFixedPrecision(2) }&nbsp;
                         { amountToRecover.prefix.symbol }
-                        { recoveredCoinBalance?.coin.symbol }
+                        { Lgnt.CODE }
                         <br />from account { recoveredVaultState?.vaultAccount.address }
                         <br />to account { vaultState.vaultAccount.address }.
                     </p>

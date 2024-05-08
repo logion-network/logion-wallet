@@ -4,64 +4,32 @@ exports[`WalletGauge renders 1`] = `
 <div
   className="WalletGauge"
 >
-  <Gauge
-    level={0.5}
-    readingDecimalPart="00"
-    readingIntegerPart="20"
-    unit="mLGNT"
+  <BalanceGauge
+    balance={
+      Object {
+        "available": Lgnt {
+          "canonical": 20000000000000000n,
+        },
+        "reserved": Lgnt {
+          "canonical": 0n,
+        },
+        "total": Lgnt {
+          "canonical": 20000000000000000n,
+        },
+      }
+    }
   />
   <BalanceDetails
     balance={
       Object {
-        "available": PrefixedNumber {
-          "_prefix": Object {
-            "symbol": "m",
-            "tenExponent": -3,
-          },
-          "_scientificNumber": ScientificNumber {
-            "_normalized": NormalizedNumber {
-              "_decimalPart": "",
-              "_integerPart": "20",
-              "_negative": false,
-              "_normalized": "20.",
-            },
-            "_tenExponent": -3,
-          },
+        "available": Lgnt {
+          "canonical": 20000000000000000n,
         },
-        "coin": Object {
-          "id": "lgnt",
-          "symbol": "LGNT",
+        "reserved": Lgnt {
+          "canonical": 0n,
         },
-        "level": 0.5,
-        "reserved": PrefixedNumber {
-          "_prefix": Object {
-            "symbol": "",
-            "tenExponent": 0,
-          },
-          "_scientificNumber": ScientificNumber {
-            "_normalized": NormalizedNumber {
-              "_decimalPart": "",
-              "_integerPart": "",
-              "_negative": false,
-              "_normalized": ".",
-            },
-            "_tenExponent": 0,
-          },
-        },
-        "total": PrefixedNumber {
-          "_prefix": Object {
-            "symbol": "m",
-            "tenExponent": -3,
-          },
-          "_scientificNumber": ScientificNumber {
-            "_normalized": NormalizedNumber {
-              "_decimalPart": "",
-              "_integerPart": "20",
-              "_negative": false,
-              "_normalized": "20.",
-            },
-            "_tenExponent": -3,
-          },
+        "total": Lgnt {
+          "canonical": 20000000000000000n,
         },
       }
     }

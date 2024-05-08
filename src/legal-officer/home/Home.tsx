@@ -10,7 +10,6 @@ import Loader from '../../common/Loader';
 import Table, { ActionCell, Cell, DateCell, DateTimeCell, EmptyTableMessage } from '../../common/Table';
 import TransferAmountCell, { transferBalance } from '../../common/TransferAmountCell';
 import AmountCell from '../../common/AmountCell';
-import Reading from '../../common/Reading';
 import Button from '../../common/Button';
 import LocStatusCell from '../../common/LocStatusCell';
 import ButtonGroup from '../../common/ButtonGroup';
@@ -27,6 +26,7 @@ import { toFeesClass } from "@logion/client/dist/Fees.js";
 import VaultTransferRequestDetails from '../vault/VaultTransferDetails';
 import VaultTransferRequestStatusCell from '../../common/VaultTransferRequestStatusCell';
 import { useResponsiveContext } from '../../common/Responsive';
+import BalanceReading from 'src/common/BalanceReading';
 
 const MAX_WAITING_SHOWN = 3;
 
@@ -100,11 +100,8 @@ export default function Home() {
                             </Col>
                             <Col>
                                 <div className="reading-container">
-                                    <Reading
-                                        readingIntegerPart={ balanceState.balances[0].available.coefficient.toInteger() }
-                                        readingDecimalPart={ balanceState.balances[0].available.coefficient.toFixedPrecisionDecimals(2) }
-                                        unit={ balanceState.balances[0].available.prefix.symbol + Lgnt.CODE }
-                                        level={ balanceState.balances[0].level }
+                                    <BalanceReading
+                                        balance={ balanceState.balance }
                                     />
                                     <Button
                                         onClick={ () => navigate(transactionsPath("lgnt")) }

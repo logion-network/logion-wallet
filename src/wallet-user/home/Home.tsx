@@ -1,6 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import { Lgnt } from '@logion/node-api';
 
 import { useCommonContext } from "../../common/CommonContext";
 import { FullWidthPane } from '../../common/Dashboard';
@@ -10,13 +9,12 @@ import Loader from '../../common/Loader';
 import Table, { DateCell, EmptyTableMessage } from '../../common/Table';
 import TransferAmountCell, { transferBalance } from '../../common/TransferAmountCell';
 import AmountCell from '../../common/AmountCell';
-import Reading from '../../common/Reading';
 import Button from '../../common/Button';
 import { TransactionStatusCell } from "../../common/TransactionStatusCell";
 import NetworkWarning from '../../common/NetworkWarning';
 import { useLogionChain } from '../../logion-chain';
 
-import { SETTINGS_PATH, transactionsPath } from '../UserPaths';
+import { SETTINGS_PATH, TRANSACTIONS_PATH } from '../UserPaths';
 
 import './Home.css';
 import TransactionType from '../../common/TransactionType';
@@ -26,6 +24,7 @@ import Shortcuts from '../../components/shortcuts/Shortcuts';
 import LocRequestButton from '../../components/locrequest/LocRequestButton';
 import { useMemo } from 'react';
 import { toFeesClass } from "@logion/client/dist/Fees.js";
+import BalanceReading from 'src/common/BalanceReading';
 
 export default function Home() {
     const { colorTheme } = useCommonContext();
@@ -118,14 +117,11 @@ export function Content() {
                             </Col>
                             <Col>
                                 <div className="reading-container">
-                                    <Reading
-                                        readingIntegerPart={ balanceState.balances[0].available.coefficient.toInteger() }
-                                        readingDecimalPart={ balanceState.balances[0].available.coefficient.toFixedPrecisionDecimals(2) }
-                                        unit={ balanceState.balances[0].available.prefix.symbol + Lgnt.CODE }
-                                        level={ balanceState.balances[0].level }
+                                    <BalanceReading
+                                        balance={ balanceState.balance }
                                     />
                                     <Button
-                                        onClick={ () => navigate(transactionsPath("lgnt")) }
+                                        onClick={ () => navigate(TRANSACTIONS_PATH) }
                                         slim={ true }
                                     >
                                         <Icon icon={ { id: "wallet" } } /> Go to my wallet

@@ -84,26 +84,8 @@ exports[`AccountAddress renders 1`] = `
       <React.Fragment>
         <InlineAmount
           amount={
-            PrefixedNumber {
-              "_prefix": Object {
-                "symbol": "",
-                "tenExponent": 0,
-              },
-              "_scientificNumber": ScientificNumber {
-                "_normalized": NormalizedNumber {
-                  "_decimalPart": "",
-                  "_integerPart": "2",
-                  "_negative": false,
-                  "_normalized": "2.",
-                },
-                "_tenExponent": 0,
-              },
-            }
-          }
-          coin={
-            Object {
-              "id": "lgnt",
-              "symbol": "LGNT",
+            Lgnt {
+              "canonical": 2000000000000000000n,
             }
           }
         />

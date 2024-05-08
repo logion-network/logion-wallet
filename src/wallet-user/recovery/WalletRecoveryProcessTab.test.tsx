@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor, getByRole } from '@testing-library/react';
-import { Numbers, CoinBalance, ValidAccountId, Fees } from "@logion/node-api";
+import { ValidAccountId, Fees, TypesAccountData, Lgnt } from "@logion/node-api";
 
 import { mutateRecoveredBalanceState, setProtectionState, setRecoveredBalanceState } from '../__mocks__/UserContextMock';
 
@@ -22,19 +22,14 @@ test("Recovered tokens can be transferred", async () => {
     } as unknown as ClaimedRecovery;
     setProtectionState(protectionState);
 
-    const coinBalance: CoinBalance = {
-        coin: {
-            id: 'dot',
-            symbol: 'DOT',
-        },
-        total: new Numbers.PrefixedNumber("100", Numbers.MILLI),
-        available: new Numbers.PrefixedNumber("100", Numbers.MILLI),
-        reserved: new Numbers.PrefixedNumber("0", Numbers.NONE),
-        level: 1
+    const coinBalance: TypesAccountData = {
+        total: Lgnt.from(0.1),
+        available: Lgnt.from(0.1),
+        reserved: Lgnt.zero(),
     }
 
     setRecoveredBalanceState({
-        balances: [ coinBalance ],
+        balance: coinBalance,
         estimateFeesTransferAll: () => Promise.resolve(Fees.zero()),
     } as unknown as BalanceState);
 

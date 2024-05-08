@@ -64,7 +64,7 @@ export default function UserRouter() {
             <Route path={ RECOVERY_RELATIVE_PATH } element={ <Recovery /> } />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     account={ accounts!.current?.accountId! }
-                    balances={ balanceState?.balances || null }
+                    balance={ balanceState?.balance || null }
                     transactions={ balanceState?.transactions || null }
                     type="Wallet"
                     vaultAddress={ vaultState?.vaultAccount || undefined }
@@ -72,7 +72,7 @@ export default function UserRouter() {
             } />
             <Route path={ VAULT_TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     account={ vaultState?.vaultAccount }
-                    balances={ vaultState?.balances || null }
+                    balance={ vaultState?.balance || null }
                     transactions={ vaultState?.transactions || null }
                     type="Vault"
                     vaultAddress={ vaultState?.vaultAccount || undefined }

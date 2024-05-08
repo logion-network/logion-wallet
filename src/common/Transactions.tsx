@@ -1,10 +1,9 @@
-import { useParams } from 'react-router';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { Transaction } from '@logion/client';
-import { CoinBalance, ValidAccountId } from '@logion/node-api';
+import { TypesAccountData, ValidAccountId } from '@logion/node-api';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
@@ -31,7 +30,7 @@ export type WalletType = "Wallet" | "Vault";
 
 export interface Props {
     account?: ValidAccountId,
-    balances: CoinBalance[] | null,
+    balance: TypesAccountData | null,
     transactions: Transaction[] | null,
     type: WalletType,
     vaultAddress?: ValidAccountId,
@@ -39,9 +38,9 @@ export interface Props {
 
 export default function Transactions(props: Props) {
     const { colorTheme } = useCommonContext();
-    const { account, balances, transactions, type, vaultAddress } = props;
+    const { account, balance, transactions, type, vaultAddress } = props;
 
-    if (balances === null || transactions === null) {
+    if (balance === null || transactions === null) {
         return null;
     }
 
@@ -56,22 +55,21 @@ export default function Transactions(props: Props) {
                 background: colorTheme.topMenuItems.iconGradient,
             } }
         >
-            <Content account={ account } balances={ balances } transactions={ transactions } type={ type } vaultAccount={ vaultAddress }/>
+            <Content account={ account } balance={ balance } transactions={ transactions } type={ type } vaultAccount={ vaultAddress }/>
         </FullWidthPane>
     );
 }
 
 interface ContentProps {
     account?: ValidAccountId,
-    balances: CoinBalance[],
+    balance: TypesAccountData,
     transactions: Transaction[],
     type: WalletType,
     vaultAccount?: ValidAccountId,
 }
 
 function Content(props: ContentProps) {
-    const { account, balances, transactions, type, vaultAccount } = props;
-    const { coinId } = useParams<"coinId">();
+    const { account, balance, transactions, type, vaultAccount } = props;
     const { width } = useResponsiveContext();
 
     const addressTitle = useMemo(() => {
@@ -82,11 +80,10 @@ function Content(props: ContentProps) {
         }
     }, [ props.type ]);
 
-    if (balances === null || transactions === null) {
+    if (balance === null || transactions === null) {
         return <Loader />;
     }
 
-    const balance = balances.filter(balance => balance.coin.id === coinId)[0];
     const columns: Column<Transaction>[] = [
         {
             header: "Status",

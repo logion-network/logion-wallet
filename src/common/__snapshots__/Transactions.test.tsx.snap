@@ -25,44 +25,63 @@ exports[`renders failed transaction 1`] = `
         },
       }
     }
-    balances={Array []}
-    transactions={Array []}
+    balance={
+      Object {
+        "available": Lgnt {
+          "canonical": 42n,
+        },
+        "reserved": Lgnt {
+          "canonical": 0n,
+        },
+        "total": Lgnt {
+          "canonical": 42n,
+        },
+      }
+    }
+    transactions={
+      Array [
+        Object {
+          "createdOn": "2021-07-28T12:30:00.000",
+          "error": Object {
+            "details": "someDetails",
+            "name": "aName",
+            "section": "aSection",
+          },
+          "fees": Object {
+            "inclusion": "125000",
+            "total": "125000",
+          },
+          "from": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
+              "type": "Polkadot",
+            },
+          },
+          "id": "id",
+          "method": "method",
+          "pallet": "pallet",
+          "reserved": "0",
+          "successful": false,
+          "tip": "0",
+          "to": ValidAccountId {
+            "anyAccountId": AnyAccountId {
+              "address": "vQuQm7K3Qt1nQYDzqQzCPQj6b4AQFPZgD5FLnEpBTvCx1rVix",
+              "type": "Polkadot",
+            },
+          },
+          "total": "125420",
+          "transferDirection": "Sent",
+          "transferValue": "420",
+          "type": "EXTRINSIC",
+        },
+      ]
+    }
     type="Wallet"
   />
 </FullWidthPane>
 `;
 
-exports[`renders null with missing data 1`] = `
-<FullWidthPane
-  className="Transactions"
-  mainTitle="Wallet"
-  titleIcon={
-    Object {
-      "background": Object {
-        "from": "#3b6cf4",
-        "to": "#6050dc",
-      },
-      "icon": Object {
-        "id": "wallet",
-      },
-    }
-  }
->
-  <Content
-    account={
-      ValidAccountId {
-        "anyAccountId": AnyAccountId {
-          "address": "vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz",
-          "type": "Polkadot",
-        },
-      }
-    }
-    balances={Array []}
-    transactions={Array []}
-    type="Wallet"
-  />
-</FullWidthPane>
-`;
+exports[`renders null with missing data 1`] = `null`;
 
 exports[`renders with all data 1`] = `
 <FullWidthPane
@@ -89,7 +108,19 @@ exports[`renders with all data 1`] = `
         },
       }
     }
-    balances={Array []}
+    balance={
+      Object {
+        "available": Lgnt {
+          "canonical": 42n,
+        },
+        "reserved": Lgnt {
+          "canonical": 0n,
+        },
+        "total": Lgnt {
+          "canonical": 42n,
+        },
+      }
+    }
     transactions={Array []}
     type="Wallet"
   />

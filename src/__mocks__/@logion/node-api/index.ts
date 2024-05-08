@@ -14,8 +14,7 @@ export {
 } from "@logion/node-api";
 
 export type {
-    Coin,
-    CoinBalance,
+    TypesAccountData,
 } from "@logion/node-api";
 
 import { api } from "src/__mocks__/LogionMock";

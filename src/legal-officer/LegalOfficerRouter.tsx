@@ -88,7 +88,7 @@ export default function LegalOfficerRouter() {
             <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ true } missingSettings={ missingSettings !== undefined } /> } />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     account={ accounts!.current!.accountId }
-                    balances={ balanceState?.balances || [] }
+                    balance={ balanceState?.balance || null }
                     transactions={ balanceState?.transactions || [] }
                     type="Wallet"
             /> } />

@@ -29,17 +29,11 @@ export function issuerDetailsPath(locId: UUID | string) {
         .replace(":locId", locId.toString())
 }
 
-export const TRANSACTIONS_RELATIVE_PATH = WALLET_RELATIVE_PATH + '/:coinId';
-const TRANSACTIONS_PATH = USER_PATH + TRANSACTIONS_RELATIVE_PATH;
-export function transactionsPath(coinId: string): string {
-    return TRANSACTIONS_PATH.replace(":coinId", coinId);
-}
+export const TRANSACTIONS_RELATIVE_PATH = WALLET_RELATIVE_PATH;
+export const TRANSACTIONS_PATH = USER_PATH + TRANSACTIONS_RELATIVE_PATH;
 
-export const VAULT_TRANSACTIONS_RELATIVE_PATH = VAULT_RELATIVE_PATH + '/:coinId';
-const VAULT_TRANSACTIONS_PATH = USER_PATH + VAULT_TRANSACTIONS_RELATIVE_PATH;
-export function vaultTransactionsPath(coinId: string): string {
-    return VAULT_TRANSACTIONS_PATH.replace(":coinId", coinId);
-}
+export const VAULT_TRANSACTIONS_RELATIVE_PATH = VAULT_RELATIVE_PATH;
+export const VAULT_TRANSACTIONS_PATH = USER_PATH + VAULT_TRANSACTIONS_RELATIVE_PATH;
 
 export function dataLocDetailsPath(locType: LocType, locId: string) {
     return USER_PATH + locDetailsRelativePath(locType)

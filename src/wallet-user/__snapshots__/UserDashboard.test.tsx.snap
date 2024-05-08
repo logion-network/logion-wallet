@@ -88,7 +88,7 @@ exports[`UserDashboard Given connected and account, then renders with router 1`]
         "id": "wallet",
         "onClick": [Function],
         "text": "Wallet",
-        "to": "/user/wallet/lgnt",
+        "to": "/user/wallet",
       },
       Object {
         "disabled": true,
@@ -105,7 +105,7 @@ exports[`UserDashboard Given connected and account, then renders with router 1`]
         "id": "vault",
         "onClick": [Function],
         "text": "Vault",
-        "to": "/user/vault/lgnt",
+        "to": "/user/vault",
       },
       Object {
         "exact": false,
@@ -252,7 +252,7 @@ exports[`UserDashboard Given disconnected and accounts then empty 1`] = `
         "id": "wallet",
         "onClick": [Function],
         "text": "Wallet",
-        "to": "/user/wallet/lgnt",
+        "to": "/user/wallet",
       },
       Object {
         "disabled": true,
@@ -269,7 +269,7 @@ exports[`UserDashboard Given disconnected and accounts then empty 1`] = `
         "id": "vault",
         "onClick": [Function],
         "text": "Vault",
-        "to": "/user/vault/lgnt",
+        "to": "/user/vault",
       },
       Object {
         "exact": false,

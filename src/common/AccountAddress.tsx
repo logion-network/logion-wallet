@@ -1,4 +1,4 @@
-import { CoinBalance } from "@logion/node-api";
+import { Lgnt, TypesAccountData } from '@logion/node-api';
 import { CSSProperties, useCallback } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -13,7 +13,7 @@ import { Spinner } from "react-bootstrap";
 import InlineAmount from "src/components/inlineamount/InlineAmount";
 
 export interface Props {
-    balance?: CoinBalance | null;
+    balance?: TypesAccountData | null;
     account: Account;
     disabled: boolean;
     login?: () => void;
@@ -101,12 +101,12 @@ export default function AccountAddress(props: Props) {
                         {
                             props.balance !== null &&
                             <>
-                            <InlineAmount amount={ props.balance.available } coin={ props.balance.coin } />{" "}
+                            <InlineAmount amount={ props.balance.available } />{" "}
                             {
-                                !props.balance.reserved.coefficient.isZero() &&
+                                props.balance.reserved.compareTo(Lgnt.zero()) !== 0 &&
                                 <span className="reserved">
                                     +{" "}
-                                    <InlineAmount amount={ props.balance.reserved } coin={ props.balance.coin } />
+                                    <InlineAmount amount={ props.balance.reserved } />
                                 </span>
                             }
                             </>

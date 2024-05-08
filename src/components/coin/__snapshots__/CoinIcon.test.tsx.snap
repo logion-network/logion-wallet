@@ -1,14 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CoinIcon renders DOT 1`] = `
-<img
-  alt="dot"
-  height="32px"
-  src="/assets/dot.png"
-  width="auto"
-/>
-`;
-
 exports[`CoinIcon renders LGNT 1`] = `
 <img
   alt="lgnt"
