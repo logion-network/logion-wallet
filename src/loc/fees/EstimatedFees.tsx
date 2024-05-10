@@ -20,9 +20,7 @@ export default function EstimatedFees(props: Props) {
         return props.otherFeesPaidBy !== undefined || props.inclusionFeePaidBy !== undefined;
     }, [ props.otherFeesPaidBy, props.inclusionFeePaidBy ]);
 
-    if(!props.fees) {
-        return null;
-    }
+    const fees = props.fees;
 
     const className = customClassName("EstimatedFees", props.centered === true ? "centered-table" : undefined);
     return (
@@ -34,19 +32,20 @@ export default function EstimatedFees(props: Props) {
                         <td>Blockchain record</td>
                         <td>
                             <AmountFormat
-                                amount={ props.fees.inclusionFee }
+                                amount={ fees?.inclusionFee }
                                 unit={ Numbers.NONE }
                                 decimals={4}
+                                undefinedText="-"
                             />
                         </td>
                         { showPaidBy && <td>{ props.inclusionFeePaidBy || "" }</td> }
                     </tr>
-                    { props.fees.storageFee !== undefined &&
+                    { fees?.storageFee !== undefined &&
                         <tr>
                             <td>File storage</td>
                             <td>
                                 <AmountFormat
-                                    amount={ props.fees.storageFee }
+                                    amount={ fees.storageFee }
                                     unit={ Numbers.NONE }
                                     decimals={4}
                                 />
@@ -54,12 +53,12 @@ export default function EstimatedFees(props: Props) {
                             { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
-                    { props.fees.legalFee !== undefined &&
+                    { fees?.legalFee !== undefined &&
                         <tr>
                             <td>Legal fee</td>
                             <td>
                                 <AmountFormat
-                                    amount={ props.fees.legalFee }
+                                    amount={ fees.legalFee }
                                     unit={ Numbers.NONE }
                                     decimals={4}
                                 />
@@ -67,12 +66,12 @@ export default function EstimatedFees(props: Props) {
                             { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
-                    { props.fees.certificateFee !== undefined &&
+                    { fees?.certificateFee !== undefined &&
                         <tr>
                             <td>Certificate fee</td>
                             <td>
                                 <AmountFormat
-                                    amount={ props.fees.certificateFee }
+                                    amount={ fees.certificateFee }
                                     unit={ Numbers.NONE }
                                     decimals={4}
                                 />
@@ -80,12 +79,12 @@ export default function EstimatedFees(props: Props) {
                             { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
-                    { props.fees.valueFee !== undefined &&
+                    { fees?.valueFee !== undefined &&
                         <tr>
                             <td>Value fee</td>
                             <td>
                                 <AmountFormat
-                                    amount={ props.fees.valueFee }
+                                    amount={ fees.valueFee }
                                     unit={ Numbers.NONE }
                                     decimals={4}
                                 />
@@ -93,12 +92,12 @@ export default function EstimatedFees(props: Props) {
                             { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
-                    { props.fees.collectionItemFee !== undefined &&
+                    { fees?.collectionItemFee !== undefined &&
                         <tr>
                             <td>Collection item fee</td>
                             <td>
                                 <AmountFormat
-                                    amount={ props.fees.collectionItemFee }
+                                    amount={ fees.collectionItemFee }
                                     unit={ Numbers.NONE }
                                     decimals={4}
                                 />
@@ -106,12 +105,12 @@ export default function EstimatedFees(props: Props) {
                             { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
-                    { props.fees.tokensRecordFee !== undefined &&
+                    { fees?.tokensRecordFee !== undefined &&
                         <tr>
                             <td>Tokens record fee</td>
                             <td>
                                 <AmountFormat
-                                    amount={ props.fees.tokensRecordFee }
+                                    amount={ fees.tokensRecordFee }
                                     unit={ Numbers.NONE }
                                     decimals={4}
                                 />
@@ -123,9 +122,10 @@ export default function EstimatedFees(props: Props) {
                         <td>Total</td>
                         <td>
                             <AmountFormat
-                                amount={ props.fees.totalFee }
+                                amount={ fees?.totalFee }
                                 unit={ Numbers.NONE }
                                 decimals={4}
+                                undefinedText="-"
                             />
                         </td>
                         { showPaidBy && <td></td> }

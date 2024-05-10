@@ -1,6 +1,6 @@
 import { LgntFormatter, Lgnt, Numbers } from "@logion/node-api";
 
-export default function AmountFormat(props: { amount?: Lgnt | undefined, decimals?: number, unit?: Numbers.UnitPrefix }) {
+export default function AmountFormat(props: { amount?: Lgnt | undefined, decimals?: number, unit?: Numbers.UnitPrefix, undefinedText?: string }) {
 
     if(props.amount) {
         const unit = props.unit ? props.unit : toUnit(props.amount);
@@ -9,7 +9,7 @@ export default function AmountFormat(props: { amount?: Lgnt | undefined, decimal
             <span>{ formatter.format(props.amount) }</span>
         );
     } else {
-        return <span></span>
+        return <span>{ props.undefinedText }</span>
     }
 }
 

@@ -21,6 +21,7 @@ exports[`EstimatedFees renders fees with certificate 1`] = `
               }
             }
             decimals={4}
+            undefinedText="-"
             unit={
               Object {
                 "symbol": "",
@@ -63,6 +64,7 @@ exports[`EstimatedFees renders fees with certificate 1`] = `
               }
             }
             decimals={4}
+            undefinedText="-"
             unit={
               Object {
                 "symbol": "",
@@ -98,6 +100,7 @@ exports[`EstimatedFees renders fees with legal 1`] = `
               }
             }
             decimals={4}
+            undefinedText="-"
             unit={
               Object {
                 "symbol": "",
@@ -140,6 +143,7 @@ exports[`EstimatedFees renders fees with legal 1`] = `
               }
             }
             decimals={4}
+            undefinedText="-"
             unit={
               Object {
                 "symbol": "",
@@ -175,6 +179,7 @@ exports[`EstimatedFees renders fees with storage 1`] = `
               }
             }
             decimals={4}
+            undefinedText="-"
             unit={
               Object {
                 "symbol": "",
@@ -217,6 +222,7 @@ exports[`EstimatedFees renders fees with storage 1`] = `
               }
             }
             decimals={4}
+            undefinedText="-"
             unit={
               Object {
                 "symbol": "",
@@ -252,6 +258,7 @@ exports[`EstimatedFees renders fees with storage and paid by 1`] = `
               }
             }
             decimals={4}
+            undefinedText="-"
             unit={
               Object {
                 "symbol": "",
@@ -300,6 +307,7 @@ exports[`EstimatedFees renders fees with storage and paid by 1`] = `
               }
             }
             decimals={4}
+            undefinedText="-"
             unit={
               Object {
                 "symbol": "",
@@ -336,6 +344,7 @@ exports[`EstimatedFees renders fees without storage 1`] = `
               }
             }
             decimals={4}
+            undefinedText="-"
             unit={
               Object {
                 "symbol": "",
@@ -357,6 +366,7 @@ exports[`EstimatedFees renders fees without storage 1`] = `
               }
             }
             decimals={4}
+            undefinedText="-"
             unit={
               Object {
                 "symbol": "",
