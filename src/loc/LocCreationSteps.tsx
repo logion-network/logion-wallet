@@ -48,8 +48,10 @@ export default function LocCreationSteps(props: Props) {
                 await mutateLocsState(async current => {
                     if (signer) {
                         const loc = await current.legalOfficer.createLoc({
-                            ...locToCreate,
-                            locType: locToCreate.locType,
+                            payload: {
+                                ...locToCreate,
+                                locType: locToCreate.locType,
+                            },
                             signer,
                             callback,
                         });

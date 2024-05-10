@@ -23,7 +23,9 @@ export default function VoidLocButton() {
             mutateLocState(async current => {
                 if (signer && (current instanceof OpenLoc || current instanceof ClosedLoc || current instanceof ClosedCollectionLoc)) {
                     return current.legalOfficer.voidLoc({
-                        reason,
+                        payload: {
+                            reason,
+                        },
                         signer,
                         callback,
                     });

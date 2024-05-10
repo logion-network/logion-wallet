@@ -31,7 +31,9 @@ export default function LocPublishPublicDataButton(props: Props) {
                     && props.locItem.submitter) {
 
                     return current.publishMetadata({
-                        nameHash: props.locItem.data().name.hash,
+                        payload: {
+                            nameHash: props.locItem.data().name.hash,
+                        },
                         signer: signer!,
                         callback,
                     });

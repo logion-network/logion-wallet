@@ -35,7 +35,9 @@ export default function CloseLocButton() {
             mutateLocState(async current => {
                 if(signer && current instanceof OpenLoc) {
                     return current.legalOfficer.close({
-                        autoAck,
+                        payload: {
+                            autoAck,
+                        },
                         signer,
                         callback,
                     });

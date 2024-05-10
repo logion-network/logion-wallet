@@ -30,7 +30,9 @@ export default function YourVote(props: Props) {
             if(signer && vote.data.status === "PENDING") {
                 const pendingVote = vote as PendingVote;
                 const updatedVote = await pendingVote.castVote({
-                    result: myVote,
+                    payload: {
+                        result: myVote,
+                    },
                     signer,
                     callback,
                 });

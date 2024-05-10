@@ -64,19 +64,25 @@ export default function AcknowledgeButton(props: Props) {
             if(signer && current instanceof OpenLoc) {
                 if(props.locItem.type === "Document") {
                     return current.legalOfficer.acknowledgeFile({
-                        hash: props.locItem.as<FileData>().hash,
+                        payload: {
+                            hash: props.locItem.as<FileData>().hash,
+                        },
                         signer,
                         callback,
                     });
                 } else if(props.locItem.type === "Data") {
                     return current.legalOfficer.acknowledgeMetadata({
-                        nameHash: props.locItem.as<MetadataData>().name.hash,
+                        payload: {
+                            nameHash: props.locItem.as<MetadataData>().name.hash,
+                        },
                         signer,
                         callback,
                     });
                 } else if(props.locItem.type === "Linked LOC") {
                     return current.legalOfficer.acknowledgeLink({
-                        target: props.locItem.as<LinkData>().linkedLoc.id,
+                        payload: {
+                            target: props.locItem.as<LinkData>().linkedLoc.id,
+                        },
                         signer,
                         callback,
                     });
