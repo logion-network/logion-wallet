@@ -1,6 +1,6 @@
 {
   "name": "logion-wallet",
-  "version": "0.57.0",
+  "version": "0.58.0",
   "private": true,
   "author": {
     "name": "Logion Team",
@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@creativecommons/cc-assets": "^0.1.0",
-    "@logion/client": "^0.44.0-1",
+    "@logion/client": "^0.44.0",
     "@logion/client-browser": "^0.3.5",
     "@logion/crossmint": "^0.1.32",
     "@logion/extension": "^0.8.1-1",
