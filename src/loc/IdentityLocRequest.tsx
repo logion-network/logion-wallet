@@ -42,7 +42,7 @@ export default function IdentityLocRequest(props: Props) {
     const [ invalidCompanyName, setInvalidCompanyName ] = useState<string>();
     const { accounts } = useLogionChain();
     const navigate = useNavigate();
-    const selectablelegalOfficers = useMemo(() => {
+    const selectableLegalOfficers = useMemo(() => {
         const legalOfficersWithNonVoidIdentityLoc = locsState?.legalOfficersWithNonVoidIdentityLoc.map(lo => lo.account.address);
         return availableLegalOfficers?.filter(lo => legalOfficersWithNonVoidIdentityLoc?.includes(lo.account.address) === false);
     }, [ locsState?.legalOfficersWithNonVoidIdentityLoc, availableLegalOfficers ]);
@@ -120,7 +120,7 @@ export default function IdentityLocRequest(props: Props) {
                         <SelectLegalOfficer
                             legalOfficer={ legalOfficer }
                             legalOfficerNumber={ 1 }
-                            legalOfficers={ selectablelegalOfficers || [] }
+                            legalOfficers={ selectableLegalOfficers || [] }
                             mode="select"
                             otherLegalOfficer={ null }
                             setLegalOfficer={ setLegalOfficer }
