@@ -29,7 +29,9 @@ export default function LocPublishLinkButton(props: Props) {
             publishMutator={ async (current, callback) => {
                 if(current instanceof OpenLoc) {
                     return current.publishLink({
-                        target: props.locItem.data().linkedLoc.id,
+                        payload: {
+                            target: props.locItem.data().linkedLoc.id,
+                        },
                         signer: signer!,
                         callback,
                     });

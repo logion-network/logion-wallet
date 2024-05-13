@@ -34,7 +34,9 @@ export default function LocPublishPrivateFileButton(props: Props) {
                 if(current instanceof OpenLoc) {
 
                     return current.publishFile({
-                        hash: props.locItem.data().hash,
+                        payload: {
+                            hash: props.locItem.data().hash,
+                        },
                         signer: signer!,
                         callback,
                     });

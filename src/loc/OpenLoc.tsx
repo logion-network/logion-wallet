@@ -51,7 +51,9 @@ export default function OpenLoc(props: Props) {
                     return current.open({
                         signer,
                         callback,
-                        autoPublish
+                        payload: {
+                            autoPublish
+                        }
                     });
                 } else {
                     return current;

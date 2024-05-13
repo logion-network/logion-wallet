@@ -16,7 +16,7 @@ export function mockVote(votes: Votes, data: VoteData): Vote {
     const vote = Votes.toVote(votes, data);
     if(vote instanceof PendingVote) {
         vote.castVote = params => {
-            vote.data.ballots[DEFAULT_USER_ACCOUNT.accountId.address] = params.result;
+            vote.data.ballots[DEFAULT_USER_ACCOUNT.accountId.address] = params.payload.result;
             params.callback!(mockSubmittableResult(true));
             return Promise.resolve(vote);
         };

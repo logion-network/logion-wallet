@@ -42,8 +42,10 @@ export default function VoidLocReplaceExistingButton() {
                         await mutateLocState(async current => {
                             if (signer && (current instanceof OpenLoc || current instanceof ClosedLoc || current instanceof ClosedCollectionLoc)) {
                                 return current.legalOfficer.voidLoc({
-                                    reason,
-                                    replacer: locId,
+                                    payload: {
+                                        reason,
+                                        replacer: locId,
+                                    },
                                     signer,
                                     callback,
                                 });

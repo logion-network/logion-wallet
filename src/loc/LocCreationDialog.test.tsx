@@ -7,7 +7,7 @@ import { TEST_WALLET_USER } from "../wallet-user/TestData";
 
 import LocCreationDialog from "./LocCreationDialog";
 import { setAuthenticatedUser } from "src/common/__mocks__/ModelMock";
-import { LocData, OpenLoc, OpenLocParams, BlockchainSubmissionParams, LogionClient } from "@logion/client";
+import { LocData, OpenLoc, OpenLocParams, BlockchainSubmission, LogionClient } from "@logion/client";
 import { mockSubmittableResult } from "../logion-chain/__mocks__/SignatureMock";
 import { setLocsState } from "../legal-officer/__mocks__/LegalOfficerContextMock";
 import { SUCCESSFUL_SUBMISSION, setClientMock, setExtrinsicSubmissionState } from "../logion-chain/__mocks__/LogionChainMock";
@@ -147,7 +147,7 @@ function mockLegalOfficerCreateLoc(requesterLocId?: UUID) {
     locsState.findById = () => openLoc;
 
     locsState.legalOfficer = {
-        createLoc: async function (params: OpenLocParams & BlockchainSubmissionParams): Promise<OpenLoc> {
+        createLoc: async function (params: BlockchainSubmission<OpenLocParams>): Promise<OpenLoc> {
             params.callback!(mockSubmittableResult(true));
             return openLoc;
         }
