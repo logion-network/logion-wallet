@@ -146,6 +146,15 @@ export class ClosedLoc extends LocRequestState {
     };
 }
 
+export class ClosedIdentityLoc extends LocRequestState {
+
+    legalOfficer: {
+        requestVote: any,
+    } = {
+        requestVote: jest.fn(),
+    };
+}
+
 export class EditableRequest extends LocRequestState {
     addMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
     deleteMetadata: jest.Mock<Promise<EditableRequest>> | undefined;

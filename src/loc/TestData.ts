@@ -48,6 +48,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
             legalFee: loc.legalFee,
             collectionItemFee: loc.collectionItemFee,
             tokensRecordFee: loc.tokensRecordFee,
-        }
+        },
+        secrets: [],
     };
 }

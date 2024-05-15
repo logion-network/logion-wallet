@@ -5,7 +5,7 @@ import Icon from "../../common/Icon";
 import Dialog from "../../common/Dialog";
 import { useLocContext } from "../LocContext";
 import { CallCallback, useLogionChain } from "../../logion-chain";
-import { ClosedLoc } from "@logion/client";
+import { ClosedIdentityLoc } from "@logion/client";
 import './Nominate.css';
 import ExtrinsicSubmissionStateView from "src/ExtrinsicSubmissionStateView";
 
@@ -26,7 +26,7 @@ export default function Nominate() {
     const changeIssuer = useCallback(async () => {
         setStatus('Confirming');
         const call = async (callback: CallCallback) => mutateLocState(async current => {
-            if(signer && current instanceof ClosedLoc) {
+            if(signer && current instanceof ClosedIdentityLoc) {
                 if(isIssuer) {
                     return current.legalOfficer.dismissIssuer({
                         signer,
@@ -36,7 +36,7 @@ export default function Nominate() {
                     return current.legalOfficer.nominateIssuer({
                         signer,
                         callback,
-                    });   
+                    });
                 }
             } else {
                 return current;

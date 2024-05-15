@@ -61,6 +61,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
         },
       },
       "requesterLocId": undefined,
+      "secrets": Array [],
       "status": "OPEN",
       "verifiedIssuer": false,
     }
@@ -160,6 +161,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
           },
         },
         "requesterLocId": undefined,
+        "secrets": Array [],
         "status": "OPEN",
         "verifiedIssuer": false,
       }
@@ -229,6 +231,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
             },
           },
           "requesterLocId": undefined,
+          "secrets": Array [],
           "status": "OPEN",
           "verifiedIssuer": false,
         }
@@ -295,6 +298,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
             },
           },
           "requesterLocId": undefined,
+          "secrets": Array [],
           "status": "OPEN",
           "verifiedIssuer": false,
         }
@@ -361,6 +365,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
             },
           },
           "requesterLocId": undefined,
+          "secrets": Array [],
           "status": "OPEN",
           "verifiedIssuer": false,
         }
@@ -426,6 +431,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
             },
           },
           "requesterLocId": undefined,
+          "secrets": Array [],
           "status": "OPEN",
           "verifiedIssuer": false,
         }
@@ -501,6 +507,7 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
         },
       },
       "requesterLocId": undefined,
+      "secrets": Array [],
       "status": "OPEN",
       "verifiedIssuer": false,
     }
@@ -601,6 +608,7 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
           },
         },
         "requesterLocId": undefined,
+        "secrets": Array [],
         "status": "OPEN",
         "verifiedIssuer": false,
       }
@@ -670,6 +678,7 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
             },
           },
           "requesterLocId": undefined,
+          "secrets": Array [],
           "status": "OPEN",
           "verifiedIssuer": false,
         }
@@ -736,6 +745,7 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
             },
           },
           "requesterLocId": undefined,
+          "secrets": Array [],
           "status": "OPEN",
           "verifiedIssuer": false,
         }
@@ -802,6 +812,7 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
             },
           },
           "requesterLocId": undefined,
+          "secrets": Array [],
           "status": "OPEN",
           "verifiedIssuer": false,
         }
@@ -867,6 +878,7 @@ exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
             },
           },
           "requesterLocId": undefined,
+          "secrets": Array [],
           "status": "OPEN",
           "verifiedIssuer": false,
         }

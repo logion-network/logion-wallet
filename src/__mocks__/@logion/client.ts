@@ -16,6 +16,7 @@ import {
     LocsState,
     HashOrContent,
     ClosedLoc,
+    ClosedIdentityLoc,
     ReadOnlyLocState,
     PendingRequest,
 } from '../LogionClientMock';
@@ -39,6 +40,7 @@ export {
     LocsState,
     HashOrContent,
     ClosedLoc,
+    ClosedIdentityLoc,
     ReadOnlyLocState,
     isTokenCompatibleWith,
     LegalOfficerClass,
