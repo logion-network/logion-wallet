@@ -47,6 +47,7 @@ export default function AddSecretDialog(props: Props) {
             ] }
             onSubmit={ handleSubmit(submit) }
         >
+            <h3>Add a Recoverable Secret</h3>
             <FormGroup
                 id="name"
                 label="Name"

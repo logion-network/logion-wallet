@@ -1,6 +1,8 @@
 import Table, { EmptyTableMessage, Cell, ActionCell } from "../../common/Table";
 import { Secret } from "@logion/client";
 import Button from "react-bootstrap/Button";
+import Icon from "../../common/Icon";
+import ViewableSecret from "./ViewableSecret";
 
 export interface Properties {
     secrets: Secret[];
@@ -16,17 +18,24 @@ export default function SecretsTable(props: Properties) {
                 columns={ [
                     {
                         header: "Name",
+                        width: "200px",
                         render: secret => <Cell content={ secret.name } />
                     },
                     {
                         header: "Value",
-                        render: secret => <Cell content={ secret.value } />
+                        render: secret => <ViewableSecret value={ secret.value } />
                     },
                     {
                         header: "",
+                        width: "70px",
                         render: secret =>
                             <ActionCell>
-                                <Button onClick={ () => props.onRemoveSecret(secret) }>X</Button>
+                                <Button
+                                    variant="danger"
+                                    onClick={ () => props.onRemoveSecret(secret) }
+                                >
+                                    <Icon icon={ { id: 'trash' } } />
+                                </Button>
                             </ActionCell>
                     },
                 ] }
