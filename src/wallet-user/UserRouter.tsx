@@ -25,7 +25,8 @@ import {
     ISSUER_TOKENS_RECORD_RELATIVE_PATH,
     TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH,
     ISSUER_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH,
-    INVITED_CONTRIBUTORS_RELATIVE_PATH
+    INVITED_CONTRIBUTORS_RELATIVE_PATH,
+    SECRETS_RELATIVE_PATH
 } from "./UserPaths";
 import Settings from "../settings/Settings";
 import Transactions from "../common/Transactions";
@@ -47,6 +48,7 @@ import { UserInvitedContributorsPane } from "../loc/invited-contributor/InvitedC
 import LocsDashboard from 'src/loc/dashboard/LocsDashboard';
 import LocRequestButton from "../components/locrequest/LocRequestButton";
 import DataLocRequest from "../loc/DataLocRequest";
+import SecretsPane from "../loc/secrets/SecretsPane";
 
 export default function UserRouter() {
     const { accounts } = useLogionChain();
@@ -173,6 +175,7 @@ export default function UserRouter() {
             <Route path={ TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='Requester'/> } />
             <Route path={ ISSUER_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='VerifiedIssuer'/> } />
             <Route path={ INVITED_CONTRIBUTORS_RELATIVE_PATH } element={ <UserInvitedContributorsPane contributionMode='Requester'/> }/>
+            <Route path={ SECRETS_RELATIVE_PATH } element={ <SecretsPane/> }/>
         </Routes>
     );
 }

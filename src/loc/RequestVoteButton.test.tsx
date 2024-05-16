@@ -1,7 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { clickByName } from "src/tests";
 import RequestVoteButton from "./RequestVoteButton";
-import { ClosedLoc } from "src/__mocks__/@logion/client";
+import { ClosedIdentityLoc } from "src/__mocks__/@logion/client";
 import { setLocState } from "./__mocks__/LocContextMock";
 import { FAILED_SUBMISSION, NO_SUBMISSION, SUCCESSFUL_SUBMISSION, setExtrinsicSubmissionState } from "src/logion-chain/__mocks__/LogionChainMock";
 import { expectSubmitting } from "src/test/Util";
@@ -12,7 +12,7 @@ jest.mock("../logion-chain");
 describe("RequestVoteButton", () => {
 
     it("submits vote", async () => {
-        const locState = new ClosedLoc();
+        const locState = new ClosedIdentityLoc();
         setLocState(locState);
         locState.legalOfficer.requestVote = async (params: any) => {
             return VOTE_ID;
@@ -25,7 +25,7 @@ describe("RequestVoteButton", () => {
     });
 
     it("successfully creates a vote", async () => {
-        const locState = new ClosedLoc();
+        const locState = new ClosedIdentityLoc();
         setLocState(locState);
         locState.legalOfficer.requestVote = async (params: any) => {
             return VOTE_ID;
@@ -39,7 +39,7 @@ describe("RequestVoteButton", () => {
     });
 
     it("shows error on failure", async () => {
-        const locState = new ClosedLoc();
+        const locState = new ClosedIdentityLoc();
         setLocState(locState);
         locState.legalOfficer.requestVote = async () => {};
         setExtrinsicSubmissionState(FAILED_SUBMISSION);

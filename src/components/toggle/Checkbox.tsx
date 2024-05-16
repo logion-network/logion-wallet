@@ -1,8 +1,9 @@
 import './Checkbox.css';
 import './Toggle.css';
+import './Eye.css';
 import { customClassName } from "../../common/types/Helpers";
 
-export type Skin = "Checkbox" | "Toggle white" | "Toggle black";
+export type Skin = "Checkbox" | "Toggle white" | "Toggle black" | "Eye";
 
 export interface Props {
     checked: boolean;

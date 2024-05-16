@@ -27,6 +27,7 @@ import ViewQrCodeButton from './ViewQrCodeButton';
 import ViewCertificateButton from './ViewCertificateButton';
 import InvitedContributorsButton from "./invited-contributor/InvitedContributorsButton";
 import { CollectionLimits, DEFAULT_LIMITS } from "./CollectionLimitsForm";
+import SecretsButton from "./secrets/SecretsButton";
 
 export interface Props {
     loc: LocData;
@@ -87,7 +88,7 @@ export default function CertificateAndDetailsButtons(props: Props) {
                             { loc.locType === 'Identity' && props.viewer === 'LegalOfficer' && !isLogionIdentityLoc({ ...loc, requesterAddress: loc.requesterAccountId?.address }) && loc.requesterAccountId?.type === "Polkadot" && loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
 
                             { loc.locType === 'Identity' && !isLogionIdentityLoc({ ...loc, requesterAddress: loc.requesterAccountId?.address }) && props.viewer === 'LegalOfficer' && loc.status === "CLOSED" && hasVoteFeature && !loc.voteId && !props.isReadOnly && <RequestVoteButton/> }
-
+                            { loc.locType === 'Identity' && props.viewer === 'User' && loc.status === "CLOSED" && <SecretsButton /> }
                             { loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <ArchiveButton/> }
                             { loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && !props.isReadOnly && <ArchiveButton/> }
 

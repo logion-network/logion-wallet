@@ -117,3 +117,10 @@ export function invitedContributorsPath(locId: UUID) {
         .replace(":locId", locId.toString());
 }
 
+export const SECRETS_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + '/secrets';
+export function secretsPath(locId: UUID) {
+    return USER_PATH + SECRETS_RELATIVE_PATH
+        .replace(":locType", "identity")
+        .replace(":locId", locId.toString());
+}
+

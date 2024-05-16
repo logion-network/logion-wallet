@@ -60,6 +60,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         },
       },
       "requesterLocId": undefined,
+      "secrets": Array [],
       "status": "OPEN",
       "verifiedIssuer": false,
     }
@@ -124,6 +125,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
           },
         },
         "requesterLocId": undefined,
+        "secrets": Array [],
         "status": "OPEN",
         "verifiedIssuer": false,
       }
@@ -199,6 +201,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
           },
         },
         "requesterLocId": undefined,
+        "secrets": Array [],
         "status": "OPEN",
         "verifiedIssuer": false,
       }
@@ -271,6 +274,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
           },
         },
         "requesterLocId": undefined,
+        "secrets": Array [],
         "status": "OPEN",
         "verifiedIssuer": false,
       }
@@ -336,6 +340,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
           },
         },
         "requesterLocId": undefined,
+        "secrets": Array [],
         "status": "OPEN",
         "verifiedIssuer": false,
       }
@@ -401,6 +406,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
           },
         },
         "requesterLocId": undefined,
+        "secrets": Array [],
         "status": "OPEN",
         "verifiedIssuer": false,
       }
@@ -473,6 +479,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
             },
           },
           "requesterLocId": undefined,
+          "secrets": Array [],
           "status": "OPEN",
           "verifiedIssuer": false,
         }

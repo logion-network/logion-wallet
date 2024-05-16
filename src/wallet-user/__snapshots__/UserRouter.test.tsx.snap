@@ -262,5 +262,9 @@ exports[`renders 1`] = `
     }
     path="/loc/:locType/:locId/invited-contributors"
   />
+  <Route
+    element={<SecretsPane />}
+    path="/loc/:locType/:locId/secrets"
+  />
 </Routes>
 `;
