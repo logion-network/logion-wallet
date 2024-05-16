@@ -51,3 +51,6 @@ export function fullTokensRecordsCertificate(locId: UUID, recordId: Hash, noRedi
 export function getBaseUrl(): string {
     return `${ window.location.protocol }//${ window.location.host }`;
 }
+
+export const SECRET_RECOVERY_RELATIVE_PATH = "/secret-recovery";
+export const SECRET_RECOVERY_PATH = PUBLIC_PATH + SECRET_RECOVERY_RELATIVE_PATH;

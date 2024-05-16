@@ -1,5 +1,5 @@
 .Login {
-    height: 100vh;
+    min-height: 100vh;
     background: linear-gradient(0deg, #9f1278 0%, #3b6cf4 100%);
     display: flex;
     position: relative;
@@ -65,23 +65,12 @@
     margin-right: 10px;
 }
 
-.Login .node-info {
+.Login .recovery-container {
     text-align: center;
-    margin-bottom: 60px;
-}
-
-.Login .node-info .name {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.Login .node-info .peer-id {
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
-.Login .node-info .peer-id img {
-    margin-right: 10px;
+    position: relative;
+    z-index: 1;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
 }
 
 .Login .left-character {

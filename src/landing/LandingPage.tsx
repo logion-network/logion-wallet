@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../common/Button';
 import Dialog from '../common/Dialog';
@@ -12,6 +13,7 @@ import AbsoluteLogo from '../AbsoluteLogo';
 import './LandingPage.css';
 import { Tutorial } from './Tutorial';
 import { useLogionChain } from '../logion-chain';
+import { SECRET_RECOVERY_PATH } from 'src/PublicPaths';
 
 export interface Props {
     activeStep: Step,
@@ -24,6 +26,7 @@ type DialogType = 'install' | 'create' | 'recover' | null;
 export default function LandingPage(props: Props) {
     const { tryEnableMetaMask } = useLogionChain();
     const [ showDialog, setShowDialog ] = useState<DialogType>(null);
+    const navigate = useNavigate();
 
     let stepsLeft;
     if(props.activeStep === 'install') {
@@ -170,7 +173,10 @@ export default function LandingPage(props: Props) {
                                     Inaccessible wallet?&nbsp;
                                     <strong>recovery process</strong>
                                 </p>
-                                <Button onClick={ () => setShowDialog("recover") }>Start my recovery process</Button>
+                                <div className="recovery-buttons">
+                                    <Button onClick={ () => setShowDialog("recover") }>Start my recovery process</Button>
+                                    <Button onClick={ () => navigate(SECRET_RECOVERY_PATH) }>Request secret recovery</Button>
+                                </div>
                                 <Dialog
                                     actions={[
                                         {

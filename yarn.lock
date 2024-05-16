@@ -12185,7 +12185,7 @@ __metadata:
     react-date-picker: ^9.1.0
     react-dev-utils: ^12.0.1
     react-dom: ^18.2.0
-    react-hook-form: ^7.39.1
+    react-hook-form: ^7.51.4
     react-refresh: ^0.11.0
     react-responsive: ^9.0.0
     react-router-dom: ^6.4.3
@@ -14968,12 +14968,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:^7.39.1":
-  version: 7.39.1
-  resolution: "react-hook-form@npm:7.39.1"
+"react-hook-form@npm:^7.51.4":
+  version: 7.51.4
+  resolution: "react-hook-form@npm:7.51.4"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: 5a5a5530451c337f0366ceb7884b376cc20dec4b667789cd9aab4a9e6c8286308449bd6ba03bd89096541a81051c83307c8b45cd90970fa3c7ffc58ef2e3da78
+  checksum: b3587c23425025cc4ab9d4de71420aeb9b28809a9183691584ecbbf5bb3d85ab8c232afb01424efed11a761c9c726521a230d4e092c7ad6bb70a011a7ba0acf7
   languageName: node
   linkType: hard
 

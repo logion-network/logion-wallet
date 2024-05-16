@@ -156,13 +156,15 @@ exports[`IdentityLocRequest renders 1`] = `
             control={
               Object {
                 "_defaultValues": Object {},
+                "_disableForm": [Function],
                 "_executeSchema": [Function],
                 "_fields": Object {},
-                "_focusError": [Function],
                 "_formState": Object {
                   "dirtyFields": Object {},
+                  "disabled": false,
                   "errors": Object {},
                   "isDirty": false,
+                  "isLoading": false,
                   "isSubmitSuccessful": false,
                   "isSubmitted": false,
                   "isSubmitting": false,
@@ -170,6 +172,7 @@ exports[`IdentityLocRequest renders 1`] = `
                   "isValidating": false,
                   "submitCount": 0,
                   "touchedFields": Object {},
+                  "validatingFields": Object {},
                 },
                 "_formValues": Object {},
                 "_getDirty": [Function],
@@ -193,9 +196,13 @@ exports[`IdentityLocRequest renders 1`] = `
                   "isValid": false,
                   "isValidating": false,
                   "touchedFields": false,
+                  "validatingFields": false,
                 },
                 "_removeUnmounted": [Function],
-                "_stateFlags": Object {
+                "_reset": [Function],
+                "_resetDefaultValues": [Function],
+                "_setErrors": [Function],
+                "_state": Object {
                   "action": false,
                   "mount": false,
                   "watch": false,
@@ -213,17 +220,21 @@ exports[`IdentityLocRequest renders 1`] = `
                     "subscribe": [Function],
                     "unsubscribe": [Function],
                   },
-                  "watch": Object {
+                  "values": Object {
                     "next": [Function],
                     "observers": Array [],
                     "subscribe": [Function],
                     "unsubscribe": [Function],
                   },
                 },
+                "_updateDisabledField": [Function],
                 "_updateFieldArray": [Function],
+                "_updateFormState": [Function],
                 "_updateValid": [Function],
                 "getFieldState": [Function],
+                "handleSubmit": [Function],
                 "register": [Function],
+                "setError": [Function],
                 "unregister": [Function],
               }
             }

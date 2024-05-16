@@ -304,11 +304,20 @@ exports[`renders create 1`] = `
                 recovery process
               </strong>
             </p>
-            <Button
-              onClick={[Function]}
+            <div
+              className="recovery-buttons"
             >
-              Start my recovery process
-            </Button>
+              <Button
+                onClick={[Function]}
+              >
+                Start my recovery process
+              </Button>
+              <Button
+                onClick={[Function]}
+              >
+                Request secret recovery
+              </Button>
+            </div>
             <Dialog
               actions={
                 Array [
@@ -851,11 +860,20 @@ exports[`renders install 1`] = `
                 recovery process
               </strong>
             </p>
-            <Button
-              onClick={[Function]}
+            <div
+              className="recovery-buttons"
             >
-              Start my recovery process
-            </Button>
+              <Button
+                onClick={[Function]}
+              >
+                Start my recovery process
+              </Button>
+              <Button
+                onClick={[Function]}
+              >
+                Request secret recovery
+              </Button>
+            </div>
             <Dialog
               actions={
                 Array [

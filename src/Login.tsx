@@ -13,6 +13,7 @@ import AbsoluteLogo from './AbsoluteLogo';
 import './Login.css';
 import Icon from "./common/Icon";
 import Alert from "./common/Alert";
+import { SECRET_RECOVERY_PATH } from "./PublicPaths";
 
 export const LOGIN_PATH = "/login";
 
@@ -129,12 +130,14 @@ export default function Login() {
                     </Button>
                 </div>
 
-                <div className="node-info">
-                    <p className="name">You are currently connected to the following logion node:</p>
-                    <p className="peer-id">
-                        <img src={process.env.PUBLIC_URL + "/assets/node.svg"} alt="node icon" />
-                        Peer ID: {connectedNodeMetadata.peerId}
-                    </p>
+                <div className="recovery-container">
+                    <h2>Do you need to recover a secret?</h2>
+
+                    <Button
+                        onClick={ () => navigate(SECRET_RECOVERY_PATH) }
+                    >
+                       Recover a secret
+                    </Button>
                 </div>
             </Container>
             <div className="left-character">

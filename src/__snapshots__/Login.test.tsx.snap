@@ -87,22 +87,16 @@ exports[`Login renders 1`] = `
       </Button>
     </div>
     <div
-      className="node-info"
+      className="recovery-container"
     >
-      <p
-        className="name"
+      <h2>
+        Do you need to recover a secret?
+      </h2>
+      <Button
+        onClick={[Function]}
       >
-        You are currently connected to the following logion node:
-      </p>
-      <p
-        className="peer-id"
-      >
-        <img
-          alt="node icon"
-          src="/assets/node.svg"
-        />
-        Peer ID: 
-      </p>
+        Recover a secret
+      </Button>
     </div>
   </Container>
   <div

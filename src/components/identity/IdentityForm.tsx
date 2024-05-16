@@ -126,7 +126,6 @@ export default function IdentityForm(props: Props) {
                 </Col>
             </Row>
 
-            <h3>Address</h3>
             <FormGroup
                 id="line1"
                 label="Line1"
