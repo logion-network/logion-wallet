@@ -47,7 +47,8 @@ function UserSecretsPane() {
             contributionMode="Requester"
         >
             <Frame
-                title="Secrets"
+                title="Recoverable secrets"
+                titleIcon={ { icon: { id: "key" } } }
             >
                 <SecretsTable
                     secrets={ locState?.data().secrets || [] }
