@@ -269,6 +269,7 @@
     display: block;
     top: -87px;
     right: 0;
+    z-index: -1;
 }
 
 .LandingPage .recovery-container .recovery-process {
@@ -290,6 +291,15 @@
 
 .LandingPage .recovery-container .recovery-process .Button.btn.btn-primary:focus {
     box-shadow: none;
+}
+
+.LandingPage .recovery-buttons {
+    display: flex;
+    justify-content: center;
+}
+
+.LandingPage .recovery-buttons :nth-child(n+2) {
+    margin-left: 20px;
 }
 
 .LandingPage .protection-container {
