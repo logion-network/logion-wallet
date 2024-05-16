@@ -11,7 +11,7 @@ export default function ViewableSecret(props: Props) {
     return (
         <div className="ViewableSecret">
             { !hidden && <span>{ props.value }</span> }
-            { hidden && <span>******</span> }
+            { hidden && <span>••••••</span> }
             <Checkbox checked={ hidden } setChecked={ setHidden } skin="Eye" />
         </div>
     )

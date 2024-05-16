@@ -2,6 +2,8 @@ import Button from "../../common/Button";
 import { useNavigate } from "react-router-dom";
 import { secretsPath } from "../../wallet-user/UserPaths";
 import { useLocContext } from "../LocContext";
+import Icon from "../../common/Icon";
+import "./SecretsButton.css";
 
 export default function SecretsButton() {
     const { loc } = useLocContext();
@@ -11,7 +13,9 @@ export default function SecretsButton() {
     }
 
     return (
-        <Button onClick={ () => { navigate(secretsPath(loc.id))} }>
+        <Button className="SecretsButton"
+                onClick={ () => navigate(secretsPath(loc.id)) }>
+            <Icon icon={ { id: "key" } } />
             Recoverable secrets
         </Button>
     )
