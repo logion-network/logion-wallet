@@ -1,7 +1,5 @@
 import { Secret } from "@logion/client";
 import Dialog from "../../common/Dialog";
-import { useForm } from "react-hook-form";
-import { useCallback } from "react";
 import Icon from "../../common/Icon";
 import ViewableSecret from "./ViewableSecret";
 import "./RemoveSecretDialog.css"
@@ -13,18 +11,6 @@ export interface Props {
 }
 
 export default function RemoveSecretDialog(props: Props) {
-    const { handleSubmit, reset } = useForm<{}>();
-
-    const cancel = useCallback(() => {
-        props.onCancel();
-        reset();
-    }, [ props, reset ])
-
-    const submit = useCallback((_: {}) => {
-        props.onRemoveSecret(props.secret!);
-        reset();
-    }, [ props, reset ])
-
     return (
         <Dialog
             className="RemoveSecretDialog"
@@ -35,16 +21,15 @@ export default function RemoveSecretDialog(props: Props) {
                     id: "cancel",
                     buttonText: "Cancel",
                     buttonVariant: "secondary",
-                    callback: cancel,
+                    callback: props.onCancel,
                 },
                 {
                     id: "remove",
                     buttonText: "Remove",
                     buttonVariant: "primary",
-                    type: "submit",
+                    callback: () => props.onRemoveSecret(props.secret!),
                 }
             ] }
-            onSubmit={ handleSubmit(submit) }
         >
             <Icon icon={{id: "big-warning"}} type="png" height="70px"/>
             <p>You are about to remove the secret <strong>{ props.secret?.name }</strong>:</p>
