@@ -1,20 +1,12 @@
 .Spacer {
-    margin-left: -15px;
     position: absolute;
-    horiz-align: center;
     top: 50%;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 
-    width: 100%;
     justify-content: center;
     align-items: center;
 
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
-
-    -webkit-align-items: center;
-    -webkit-box-align: center;
 }
 

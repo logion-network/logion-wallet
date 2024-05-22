@@ -5,11 +5,9 @@ import {
     LegalOfficer,
     LocsState,
     Votes,
-    ProtectionRequest,
 } from '@logion/client';
 import { LocType, LegalOfficerData, ValidAccountId } from "@logion/node-api";
 
-import { fetchProtectionRequests } from '../common/Model';
 import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 import { useLogionChain } from '../logion-chain';
@@ -17,6 +15,7 @@ import { VaultApi } from '../vault/VaultApi';
 import { DateTime } from "luxon";
 import { fetchAllLocsParams } from 'src/loc/LegalOfficerLocContext';
 import { Locs, getLocsMap } from 'src/loc/Locs';
+import { RecoveryRequest, fetchRecoveryRequests } from './Model';
 
 export const SETTINGS_KEYS = [ 'oath' ];
 
@@ -36,13 +35,10 @@ export interface MissingSettings {
 }
 
 export interface LegalOfficerContext {
-    refreshRequests: ((clearBeforeRefresh: boolean) => void),
-    locsState: LocsState | null,
-    pendingProtectionRequests: ProtectionRequest[] | null,
-    activatedProtectionRequests: ProtectionRequest[] | null,
-    protectionRequestsHistory: ProtectionRequest[] | null,
-    pendingRecoveryRequests: ProtectionRequest[] | null,
-    recoveryRequestsHistory: ProtectionRequest[] | null,
+    refreshRequests: ((clearBeforeRefresh: boolean) => void);
+    locsState: LocsState | null;
+    pendingRecoveryRequests: RecoveryRequest[] | null;
+    recoveryRequestsHistory: RecoveryRequest[] | null;
     axios?: AxiosInstance;
     pendingVaultTransferRequests?: VaultTransferRequest[];
     vaultTransferRequestsHistory?: VaultTransferRequest[];
@@ -76,9 +72,6 @@ function initialContextValue(): FullLegalOfficerContext {
         dataAddress: null,
         refreshRequests: DEFAULT_NOOP,
         locsState: null,
-        pendingProtectionRequests: null,
-        activatedProtectionRequests: null,
-        protectionRequestsHistory: null,
         pendingRecoveryRequests: null,
         recoveryRequestsHistory: null,
         updateSetting: () => Promise.reject(),
@@ -134,11 +127,8 @@ interface Action {
     type: ActionType;
     dataAddress?: ValidAccountId;
     locsState?: LocsState;
-    pendingProtectionRequests?: ProtectionRequest[];
-    protectionRequestsHistory?: ProtectionRequest[];
-    activatedProtectionRequests?: ProtectionRequest[];
-    pendingRecoveryRequests?: ProtectionRequest[],
-    recoveryRequestsHistory?: ProtectionRequest[],
+    pendingRecoveryRequests?: RecoveryRequest[],
+    recoveryRequestsHistory?: RecoveryRequest[],
     refreshRequests?: (clearBeforeRefresh: boolean) => void;
     clearBeforeRefresh?: boolean;
     axios?: AxiosInstance;
@@ -203,9 +193,6 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
             if(action.dataAddress === state.dataAddress) {
                 return {
                     ...state,
-                    pendingProtectionRequests: action.pendingProtectionRequests!,
-                    protectionRequestsHistory: action.protectionRequestsHistory!,
-                    activatedProtectionRequests: action.activatedProtectionRequests!,
                     pendingRecoveryRequests: action.pendingRecoveryRequests!,
                     recoveryRequestsHistory: action.recoveryRequestsHistory!,
                     pendingVaultTransferRequests: action.pendingVaultTransferRequests!,
@@ -506,20 +493,15 @@ export function LegalOfficerContextProvider(props: Props) {
             (async function() {
                 const axios = axiosFactory(currentAddress);
 
-                const allRequests = await fetchProtectionRequests(axios, {
-                    legalOfficerAddress: currentAddress.address,
-                });
-                const pendingProtectionRequests = allRequests.filter(request => ["PENDING"].includes(request.status) && !request.isRecovery);
-                const activatedProtectionRequests = allRequests.filter(request => ["ACTIVATED"].includes(request.status));
-                const pendingRecoveryRequests = allRequests.filter(request => ["PENDING"].includes(request.status) && request.isRecovery);
-                const protectionRequestsHistory = allRequests.filter(request =>
-                    ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"].includes(request.status)
-                    && !request.isRecovery
-                );
-                const recoveryRequestsHistory = allRequests.filter(request =>
-                    ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"].includes(request.status)
-                    && request.isRecovery
-                );
+                const allAccountRecoveryRequests = await fetchRecoveryRequests(axios);
+                const pendingRecoveryRequests: RecoveryRequest[] = allAccountRecoveryRequests
+                    .filter(request => ["PENDING"].includes(request.status))
+                    .sort((a, b) => a.createdOn.localeCompare(b.createdOn));
+                const recoveryRequestsHistory: RecoveryRequest[] = allAccountRecoveryRequests
+                    .filter(request =>
+                        ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"].includes(request.status)
+                    )
+                    .sort((a, b) => b.createdOn.localeCompare(a.createdOn));
 
                 const allVaultTransferRequestsResult = (await new VaultApi(axios, currentAddress).getVaultTransferRequests({
                     legalOfficerAddress: currentAddress.address,
@@ -532,9 +514,6 @@ export function LegalOfficerContextProvider(props: Props) {
                 dispatch({
                     type: "SET_REQUESTS_DATA",
                     dataAddress: currentAddress,
-                    pendingProtectionRequests,
-                    activatedProtectionRequests,
-                    protectionRequestsHistory,
                     pendingRecoveryRequests,
                     recoveryRequestsHistory,
                     pendingVaultTransferRequests,

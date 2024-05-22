@@ -12,7 +12,7 @@ exports[`renders 1`] = `
   />
   <Route
     element={<RecoveryDetails />}
-    path="/recovery-details/:requestId"
+    path="/recovery/:requestId/:type"
   />
   <Route
     element={

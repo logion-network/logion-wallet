@@ -2,7 +2,6 @@ jest.mock('../../common/CommonContext');
 jest.mock('../LegalOfficerContext');
 jest.mock('../../logion-chain');
 jest.mock('../../logion-chain/Signature');
-jest.mock('../../loc/Model');
 jest.mock("../../loc/LocContext");
 
 import { render, screen, waitFor } from '@testing-library/react';

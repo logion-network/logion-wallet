@@ -5,49 +5,6 @@ exports[`renders and compares with different data 1`] = `
   className="AccountInfo"
 >
   <div
-    className="ComparableField"
-  >
-    <div
-      className="FormGroup"
-      style={
-        Object {
-          "backgroundColor": "#eff3fe",
-        }
-      }
-    >
-      <style>
-        
-    .FormGroup .form-control,
-    .FormGroup .form-control[readonly],
-    .FormGroup .input-group .btn-primary {
-        color: #000000;
-    }
-    
-      </style>
-      <div
-        data-testid="accountAddressGroup"
-      >
-        <label
-          className="form-label"
-          htmlFor="accountAddress"
-        >
-          some label
-        </label>
-        <input
-          className="form-control"
-          data-testid="accountAddress"
-          id="accountAddress"
-          name="accountAddress"
-          onBlur={[Function]}
-          onChange={[Function]}
-          readOnly={true}
-          type="text"
-          value="vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
-        />
-      </div>
-    </div>
-  </div>
-  <div
     className="Identity"
   >
     <div
@@ -513,49 +470,6 @@ exports[`renders and compares with same data 1`] = `
   className="AccountInfo"
 >
   <div
-    className="ComparableField"
-  >
-    <div
-      className="FormGroup"
-      style={
-        Object {
-          "backgroundColor": "#eff3fe",
-        }
-      }
-    >
-      <style>
-        
-    .FormGroup .form-control,
-    .FormGroup .form-control[readonly],
-    .FormGroup .input-group .btn-primary {
-        color: #000000;
-    }
-    
-      </style>
-      <div
-        data-testid="accountAddressGroup"
-      >
-        <label
-          className="form-label"
-          htmlFor="accountAddress"
-        >
-          some label
-        </label>
-        <input
-          className="form-control"
-          data-testid="accountAddress"
-          id="accountAddress"
-          name="accountAddress"
-          onBlur={[Function]}
-          onChange={[Function]}
-          readOnly={true}
-          type="text"
-          value="vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
-        />
-      </div>
-    </div>
-  </div>
-  <div
     className="Identity"
   >
     <div
@@ -1020,49 +934,6 @@ exports[`renders without comparison 1`] = `
 <div
   className="AccountInfo"
 >
-  <div
-    className="ComparableField"
-  >
-    <div
-      className="FormGroup"
-      style={
-        Object {
-          "backgroundColor": "#eff3fe",
-        }
-      }
-    >
-      <style>
-        
-    .FormGroup .form-control,
-    .FormGroup .form-control[readonly],
-    .FormGroup .input-group .btn-primary {
-        color: #000000;
-    }
-    
-      </style>
-      <div
-        data-testid="accountAddressGroup"
-      >
-        <label
-          className="form-label"
-          htmlFor="accountAddress"
-        >
-          some label
-        </label>
-        <input
-          className="form-control"
-          data-testid="accountAddress"
-          id="accountAddress"
-          name="accountAddress"
-          onBlur={[Function]}
-          onChange={[Function]}
-          readOnly={true}
-          type="text"
-          value="vQxHAE33LeJYV69GCB4o4YcCgnDu8y99u5hy2751fRdxjX9kz"
-        />
-      </div>
-    </div>
-  </div>
   <div
     className="Identity"
   >

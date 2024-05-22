@@ -9,9 +9,7 @@ import { FullWidthPane } from "../../common/Dashboard";
 import { useParams, useNavigate } from 'react-router';
 import { RECOVERY_REQUESTS_PATH } from "../LegalOfficerPaths";
 import Button from "../../common/Button";
-import { acceptProtectionRequest, rejectProtectionRequest } from "../../loc/Model";
-import { fetchRecoveryInfo } from "../Model";
-import { RecoveryInfo } from "../Types";
+import { RecoveryInfo, acceptAccountRecoveryRequest, acceptSecretRecoveryRequest, fetchRecoveryInfo, rejectAccountRecoveryRequest, rejectSecretRecoveryRequest, toRecoveryRequestType } from "../Model";
 import AccountInfo from "../../common/AccountInfo";
 import Alert from "../../common/Alert";
 import Frame from "../../common/Frame";
@@ -35,6 +33,7 @@ export default function RecoveryDetails() {
     const { colorTheme } = useCommonContext();
     const { refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<"requestId">();
+    const { type } = useParams<"type">();
     const [ recoveryInfo, setRecoveryInfo ] = useState<RecoveryInfo | null>(null);
     const [ visible, setVisible ] = useState(Visible.NONE);
     const navigate = useNavigate();
@@ -43,28 +42,26 @@ export default function RecoveryDetails() {
     useEffect(() => {
         if (recoveryInfo === null && axiosFactory !== undefined) {
             const currentAccount = accounts!.current!.accountId;
-            fetchRecoveryInfo(axiosFactory(currentAccount)!, requestId!)
+            fetchRecoveryInfo(axiosFactory(currentAccount)!, requestId!, toRecoveryRequestType(type))
                 .then(recoveryInfo => setRecoveryInfo(recoveryInfo));
         }
-    }, [ axiosFactory, accounts, recoveryInfo, setRecoveryInfo, requestId ]);
+    }, [ axiosFactory, accounts, recoveryInfo, setRecoveryInfo, requestId, type ]);
 
     const alreadyVouched = useCallback(async (lost: ValidAccountId, rescuer: ValidAccountId, currentAddress: ValidAccountId) => {
         const activeRecovery = await api?.queries.getActiveRecovery(
             lost,
             rescuer
         );
-
         return !!(activeRecovery && activeRecovery.legalOfficers.find(lo => lo.equals(currentAddress)));
-
     }, [ api ]);
 
-    const accept = useCallback(async () => {
+    const acceptAccountRecovery = useCallback(async () => {
         const currentAddress = accounts!.current!.accountId;
-        const lost = ValidAccountId.polkadot(recoveryInfo!.accountToRecover!.requesterAddress);
-        const rescuer = ValidAccountId.polkadot(recoveryInfo!.recoveryAccount.requesterAddress);
+        const lost = ValidAccountId.polkadot(recoveryInfo!.accountRecovery!.address1);
+        const rescuer = ValidAccountId.polkadot(recoveryInfo!.accountRecovery!.address2);
 
         if (await alreadyVouched(lost, rescuer, currentAddress)) {
-            await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
+            await acceptAccountRecoveryRequest(axiosFactory!(currentAddress)!, {
                 requestId: requestId!,
             });
             refreshRequests!(false);
@@ -80,7 +77,7 @@ export default function RecoveryDetails() {
                     submittable,
                     callback,
                 });
-                await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
+                await acceptAccountRecoveryRequest(axiosFactory!(currentAddress)!, {
                     requestId: requestId!,
                 });
             };
@@ -96,18 +93,36 @@ export default function RecoveryDetails() {
         }
     }, [ axiosFactory, requestId, accounts, api, recoveryInfo, alreadyVouched, navigate, refreshRequests, submitCall, clearSubmissionState, signer ]);
 
-    const doReject = useCallback(() => {
-        (async function() {
+    const acceptSecretRecovery = useCallback(async () => {
+        const currentAddress = accounts!.current!.accountId;
+        await acceptSecretRecoveryRequest(axiosFactory!(currentAddress)!, {
+            requestId: requestId!,
+        });
+        refreshRequests!(false);
+        navigate(RECOVERY_REQUESTS_PATH);
+    }, [ axiosFactory, requestId, accounts, navigate, refreshRequests ]);
+
+    const doReject = useCallback(async () => {
+        if(type === "ACCOUNT") {
             const currentAccount = accounts!.current!.accountId;
-            await rejectProtectionRequest(axiosFactory!(currentAccount)!, {
-                legalOfficerAddress: currentAccount.address,
+            await rejectAccountRecoveryRequest(axiosFactory!(currentAccount)!, {
                 requestId: requestId!,
                 rejectReason,
             });
             refreshRequests!(false);
             navigate(RECOVERY_REQUESTS_PATH);
-        })();
-    }, [ axiosFactory, requestId, accounts, rejectReason, refreshRequests, navigate ]);
+        } else if(type === "SECRET") {
+            const currentAccount = accounts!.current!.accountId;
+            await rejectSecretRecoveryRequest(axiosFactory!(currentAccount)!, {
+                requestId: requestId!,
+                rejectReason,
+            });
+            refreshRequests!(false);
+            navigate(RECOVERY_REQUESTS_PATH);
+        } else {
+            throw new Error(`Unsupported type ${ type }`);
+        }
+    }, [ axiosFactory, requestId, accounts, rejectReason, refreshRequests, navigate, type ]);
 
     if (!api || recoveryInfo === null) {
         return null;
@@ -116,7 +131,7 @@ export default function RecoveryDetails() {
     return (
         <FullWidthPane
             className="RecoveryDetails"
-            mainTitle="Account Recovery Execution"
+            mainTitle="Recovery Request"
             titleIcon={ {
                 icon: {
                     id: 'recovery_request',
@@ -126,25 +141,18 @@ export default function RecoveryDetails() {
         >
             <Frame className="main-frame">
                 <Row>
-                    <Alert variant="info">
-                        I did my due diligence and authorize the transfer of all assets<br />
-                        from the account address "From" to the account address "To" as detailed below :
-                    </Alert>
-                </Row>
-                <Row>
                     <Spacer>
                         <Icon icon={ { id: 'arrow-recovery' } } />
                     </Spacer>
                     <Col className="AccountInfoFrom">
-                        <h3>From</h3>
+                        <h3>Identity 1</h3>
                         <Frame altColors={ true }>
                             <AccountInfo
                                 label="Account address, subject of the recovery"
-                                address={ recoveryInfo.addressToRecover }
-                                identity={ recoveryInfo.accountToRecover?.userIdentity }
-                                postalAddress={ recoveryInfo.accountToRecover?.userPostalAddress }
-                                otherIdentity={ recoveryInfo.recoveryAccount.userIdentity }
-                                otherPostalAddress={ recoveryInfo.recoveryAccount.userPostalAddress }
+                                identity={ recoveryInfo.identity1?.userIdentity }
+                                postalAddress={ recoveryInfo.identity1?.userPostalAddress }
+                                otherIdentity={ recoveryInfo.identity2.userIdentity }
+                                otherPostalAddress={ recoveryInfo.identity2.userPostalAddress }
                                 colors={ colorTheme.dashboard }
                                 squeeze={ true }
                                 noComparison={ false }
@@ -152,15 +160,14 @@ export default function RecoveryDetails() {
                         </Frame>
                     </Col>
                     <Col className="AccountInfoTo">
-                        <h3>To</h3>
+                        <h3>Identity 2</h3>
                         <Frame altColors={ true }>
                             <AccountInfo
                                 label="Account address where all assets will be transferred"
-                                address={ recoveryInfo.recoveryAccount.requesterAddress }
-                                identity={ recoveryInfo.recoveryAccount.userIdentity }
-                                postalAddress={ recoveryInfo.recoveryAccount.userPostalAddress }
-                                otherIdentity={ recoveryInfo.accountToRecover?.userIdentity }
-                                otherPostalAddress={ recoveryInfo.accountToRecover?.userPostalAddress }
+                                identity={ recoveryInfo.identity2.userIdentity }
+                                postalAddress={ recoveryInfo.identity2.userPostalAddress }
+                                otherIdentity={ recoveryInfo.identity1?.userIdentity }
+                                otherPostalAddress={ recoveryInfo.identity1?.userPostalAddress }
                                 colors={ colorTheme.dashboard }
                                 squeeze={ true }
                                 noComparison={ false }
@@ -169,22 +176,51 @@ export default function RecoveryDetails() {
                     </Col>
                 </Row>
                 {
-                    (extrinsicSubmissionState.canSubmit() || extrinsicSubmissionState.callEnded) &&
+                    recoveryInfo.type === "ACCOUNT" &&
                     <Row>
-                        <ButtonGroup aria-label="actions">
-                            <Button variant="link" onClick={ () => navigate(RECOVERY_REQUESTS_PATH) }>
-                                Back to requests list
-                            </Button>
-                            <Button variant="secondary" onClick={ () => setVisible(Visible.REJECT) }>Refuse</Button>
+                        <Alert variant="info">
+                            I did my due diligence and authorize the transfer of all assets
+                            from the account address<br/>
+                            <strong>{ recoveryInfo.accountRecovery?.address1 || "" }</strong><br/>
+                            to the account address<br/>
+                            <strong>{ recoveryInfo.accountRecovery?.address2 || "" }</strong>
+                        </Alert>
+                    </Row>
+                }
+                {
+                    recoveryInfo.type === "SECRET" &&
+                    <Row>
+                        <Alert variant="info">
+                            I did my due diligence and authorize the retrieval of a secret by the above person.
+                        </Alert>
+                    </Row>
+                }
+                <Row>
+                    <ButtonGroup aria-label="actions">
+                        <Button variant="link" onClick={ () => navigate(RECOVERY_REQUESTS_PATH) }>
+                            Back to requests list
+                        </Button>
+                        <Button variant="secondary" onClick={ () => setVisible(Visible.REJECT) }>Refuse</Button>
+                        {
+                            recoveryInfo.type === "ACCOUNT" &&
                             <Button
                                 variant="polkadot"
-                                onClick={ accept }
+                                onClick={ acceptAccountRecovery }
+                                disabled={ !extrinsicSubmissionState.canSubmit() && !extrinsicSubmissionState.callEnded }
                             >
                                 Proceed
                             </Button>
-                        </ButtonGroup>
-                    </Row>
-                }
+                        }
+                        {
+                            recoveryInfo.type === "SECRET" &&
+                            <Button
+                                onClick={ acceptSecretRecovery }
+                            >
+                                Proceed
+                            </Button>
+                        }
+                    </ButtonGroup>
+                </Row>
                 <ExtrinsicSubmissionStateView />
             </Frame>
             <Dialog
@@ -205,9 +241,20 @@ export default function RecoveryDetails() {
                 show={ visible === Visible.REJECT }
                 size="lg"
             >
-                I did my due diligence and refuse to grant the
-                account { recoveryInfo.accountToRecover?.requesterAddress || "-" } the right to transfer all assets
-                to the account { recoveryInfo.recoveryAccount.requesterAddress }.
+                {
+                    recoveryInfo.type === "ACCOUNT" &&
+                    <>
+                    I did my due diligence and refuse to grant the{" "}
+                    account { recoveryInfo.accountRecovery?.address1 || "-" } the right to transfer all assets{" "}
+                    to the account { recoveryInfo.accountRecovery?.address2 || "-" }.
+                    </>
+                }
+                {
+                    recoveryInfo.type === "SECRET" &&
+                    <>
+                    I did my due diligence and do not authorize the retrieval of a secret by the above person.
+                    </>
+                }
                 <Form.Group>
                     <Form.Label>Reason</Form.Label>
                     <Form.Control
