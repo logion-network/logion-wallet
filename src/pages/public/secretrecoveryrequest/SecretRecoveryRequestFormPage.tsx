@@ -12,14 +12,17 @@ import { useCallback, useState } from "react";
 import Alert from "src/common/Alert";
 import Icon from "src/common/Icon";
 import CopyPasteButton from "src/common/CopyPasteButton";
+import { useLogionChain } from "../../../logion-chain";
+import { UUID } from "@logion/node-api";
 
 export default function SecretRecoveryRequestFormPage() {
     const { colorTheme } = useCommonContext();
     const { control: secretControl, trigger: secretTrigger, formState: { errors: secretErrors }, setValue, getValues } = useForm<SecretFormValues>();
-    const { control: identityControl, trigger: identityTrigger, formState: { errors: identityErrors } } = useForm<IdentityFormValues>();
+    const { control: identityControl, trigger: identityTrigger, formState: { errors: identityErrors }, getValues: getIdentityValues } = useForm<IdentityFormValues>();
     const [ error, setError ] = useState<string>();
     const [ submitting, setSubmitting ] = useState(false);
     const [ submitted, setSubmitted ] = useState(false);
+    const { client } = useLogionChain();
 
     const submit = useCallback(async () => {
         setError(undefined);
@@ -27,11 +30,31 @@ export default function SecretRecoveryRequestFormPage() {
         setSubmitted(false);
         const results = await Promise.all([ secretTrigger(), identityTrigger() ]);
         const formError = !(results[0] && results[1]);
-        if(formError) {
+        const { locId, secretName, challenge } = getValues();
+        const requesterIdentityLocId = UUID.fromAnyString(locId);
+        if(formError || requesterIdentityLocId === undefined) {
             setError("Some information above is not valid");
         } else {
             try {
-                // TODO: actually submit data
+                const identity = getIdentityValues();
+                await client!.secretRecovery.createSecretRecoveryRequest({
+                    requesterIdentityLocId,
+                    secretName,
+                    challenge,
+                    userIdentity: {
+                        firstName: identity.firstName,
+                        lastName: identity.lastName,
+                        email: identity.email,
+                        phoneNumber: identity.phoneNumber,
+                    },
+                    userPostalAddress: {
+                        line1: identity.line1,
+                        line2: identity.line2,
+                        postalCode: identity.postalCode,
+                        city: identity.city,
+                        country: identity.country,
+                    },
+                })
                 setSubmitted(true);
             } catch(e) {
                 if(e instanceof Error) {
@@ -42,7 +65,7 @@ export default function SecretRecoveryRequestFormPage() {
             }
         }
         setSubmitting(false);
-    }, [ secretTrigger, identityTrigger ]);
+    }, [ secretTrigger, identityTrigger, client, getValues, getIdentityValues ]);
 
     return (
         <div className="SecretRecoveryRequestFormPage">
