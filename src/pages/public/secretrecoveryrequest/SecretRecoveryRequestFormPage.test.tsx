@@ -91,6 +91,11 @@ function mockClient(expectedLocId: UUID, data: { locType: LocType, status: LocRe
                     return Promise.resolve(undefined);
                 }
             }
+        },
+        secretRecovery: {
+            createSecretRecoveryRequest: () => {
+                return Promise.resolve(undefined);
+            }
         }
     } as unknown as LogionClient;
 }
