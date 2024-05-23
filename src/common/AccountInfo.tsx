@@ -3,12 +3,10 @@ import { UserIdentity as IdentityType, PostalAddress as PostalAddressType } from
 import Identity from "./Identity";
 import PostalAddress from "./PostalAddress";
 import './AccountInfo.css';
-import ComparableField from "./ComparableField";
 import { BackgroundAndForegroundColors } from "./ColorTheme";
 
 export interface Props {
     label: string
-    address: string
     identity?: IdentityType
     postalAddress?: PostalAddressType
     otherIdentity?: IdentityType
@@ -21,15 +19,6 @@ export interface Props {
 export default function AccountInfo(props: Props) {
     return (
         <div className="AccountInfo">
-            <ComparableField
-                id="accountAddress"
-                label={ props.label }
-                data={ props }
-                field={ props => props.address }
-                colors={ props.colors }
-                squeeze={ props.squeeze }
-                noComparison={ true }
-            />
             <Identity
                 identity={ props.identity }
                 otherIdentity={ props.otherIdentity }

@@ -8,7 +8,6 @@ import { shallowRender } from "../tests";
 import AcceptRejectLocRequest from "./AcceptRejectLocRequest";
 
 jest.mock("../logion-chain");
-jest.mock('./Model');
 jest.mock("./LocContext");
 
 describe("AcceptRejectLocRequest", () => {

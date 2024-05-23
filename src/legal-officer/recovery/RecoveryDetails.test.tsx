@@ -1,6 +1,5 @@
 jest.mock('../../logion-chain/Signature');
 jest.mock("../../common/CommonContext");
-jest.mock("../../loc/Model");
 jest.mock("../Model");
 jest.mock("../LegalOfficerContext");
 jest.mock("../../logion-chain");
@@ -11,15 +10,14 @@ import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import RecoveryDetails from './RecoveryDetails';
-import { RecoveryInfo } from '../Types';
-import { acceptProtectionRequest, rejectProtectionRequest } from '../../loc/__mocks__/ModelMock';
-import { setFetchRecoveryInfo } from '../__mocks__/ModelMock';
-import { PROTECTION_REQUESTS_HISTORY } from '../TestData';
+import { acceptAccountRecoveryRequest, rejectAccountRecoveryRequest, setFetchRecoveryInfo } from '../__mocks__/ModelMock';
+import { RECOVERY_REQUESTS_HISTORY } from '../TestData';
 import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../../logion-chain/__mocks__/LogionChainMock';
 import { setParams, navigate } from '../../__mocks__/ReactRouterMock';
 import { refreshRequests } from '../__mocks__/LegalOfficerContextMock';
 import { It, Mock } from 'moq.ts';
 import { setupApiMock } from '../../__mocks__/LogionMock';
+import { RecoveryInfo } from "../Model";
 
 describe("RecoveryDetails", () => {
 
@@ -28,11 +26,21 @@ describe("RecoveryDetails", () => {
             current: DEFAULT_LEGAL_OFFICER_ACCOUNT,
             all: [ DEFAULT_LEGAL_OFFICER_ACCOUNT],
         });
-        const protectionRequest = PROTECTION_REQUESTS_HISTORY[0];
+        const protectionRequest = RECOVERY_REQUESTS_HISTORY[0];
         const recoveryConfig: RecoveryInfo = {
-            addressToRecover: protectionRequest.addressToRecover!,
-            accountToRecover: protectionRequest,
-            recoveryAccount: protectionRequest,
+            type: "ACCOUNT",
+            identity1: {
+                userIdentity: protectionRequest.userIdentity,
+                userPostalAddress: protectionRequest.userPostalAddress,
+            },
+            identity2: {
+                userIdentity: protectionRequest.userIdentity,
+                userPostalAddress: protectionRequest.userPostalAddress,
+            },
+            accountRecovery: {
+                address1: protectionRequest.addressToRecover!,
+                address2: protectionRequest.requesterAddress,
+            },
         };
         setFetchRecoveryInfo(jest.fn().mockResolvedValue(recoveryConfig));
         setParams({ requestId: protectionRequest.id });
@@ -54,7 +62,7 @@ describe("RecoveryDetails", () => {
         await waitFor(() => processButton = screen.getByRole("button", {name: "Proceed"}));
         await userEvent.click(processButton!);
 
-        await waitFor(() => expect(acceptProtectionRequest).toBeCalledWith(
+        await waitFor(() => expect(acceptAccountRecoveryRequest).toHaveBeenCalledWith(
             axiosMock.object(),
             expect.objectContaining({
                 requestId: protectionRequest.id,
@@ -67,14 +75,24 @@ describe("RecoveryDetails", () => {
             current: DEFAULT_LEGAL_OFFICER_ACCOUNT,
             all: [ DEFAULT_LEGAL_OFFICER_ACCOUNT],
         });
-        const protectionRequest = PROTECTION_REQUESTS_HISTORY[0];
+        const protectionRequest = RECOVERY_REQUESTS_HISTORY[0];
         const recoveryConfig: RecoveryInfo = {
-            addressToRecover: protectionRequest.addressToRecover!,
-            accountToRecover: protectionRequest,
-            recoveryAccount: protectionRequest,
+            type: "ACCOUNT",
+            identity1: {
+                userIdentity: protectionRequest.userIdentity,
+                userPostalAddress: protectionRequest.userPostalAddress,
+            },
+            identity2: {
+                userIdentity: protectionRequest.userIdentity,
+                userPostalAddress: protectionRequest.userPostalAddress,
+            },
+            accountRecovery: {
+                address1: protectionRequest.addressToRecover!,
+                address2: protectionRequest.requesterAddress,
+            },
         };
         setFetchRecoveryInfo(jest.fn().mockResolvedValue(recoveryConfig));
-        setParams({ requestId: protectionRequest.id });
+        setParams({ requestId: protectionRequest.id, type: "ACCOUNT" });
 
         render(<RecoveryDetails />);
 
@@ -86,11 +104,11 @@ describe("RecoveryDetails", () => {
         await waitFor(() => confirmButton = screen.getAllByRole("button", {name: "Refuse"})[1]);
         await userEvent.click(confirmButton!);
 
-        await waitFor(() => expect(rejectProtectionRequest).toBeCalledWith(axiosMock.object(), expect.objectContaining({
-            legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId.address,
+        await waitFor(() => expect(rejectAccountRecoveryRequest).toHaveBeenCalledWith(axiosMock.object(), expect.objectContaining({
             requestId: protectionRequest.id,
+            rejectReason: "",
         })));
-        await waitFor(() => expect(refreshRequests).toBeCalled());
-        await waitFor(() => expect(navigate).toBeCalledWith("/legal-officer/recovery"));
+        await waitFor(() => expect(refreshRequests).toHaveBeenCalled());
+        await waitFor(() => expect(navigate).toHaveBeenCalledWith("/legal-officer/recovery"));
     });
 });

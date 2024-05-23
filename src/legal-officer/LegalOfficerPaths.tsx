@@ -7,16 +7,19 @@ import {
     LOC_REQUESTS_RELATIVE_PATH,
     LOC_DETAILS_RELATIVE_PATH,
 } from '../RootPaths';
+import { RecoveryRequestType } from './Model';
 
 export const HOME_PATH = LEGAL_OFFICER_PATH;
 
 export const RECOVERY_REQUESTS_RELATIVE_PATH = '/recovery';
 export const RECOVERY_REQUESTS_PATH = LEGAL_OFFICER_PATH + RECOVERY_REQUESTS_RELATIVE_PATH;
 
-export const RECOVERY_DETAILS_RELATIVE_PATH = '/recovery-details/:requestId';
+export const RECOVERY_DETAILS_RELATIVE_PATH = RECOVERY_REQUESTS_RELATIVE_PATH + '/:requestId/:type';
 export const RECOVERY_DETAILS_PATH = LEGAL_OFFICER_PATH + RECOVERY_DETAILS_RELATIVE_PATH;
-export function recoveryDetailsPath(requestId: string): string {
-    return RECOVERY_DETAILS_PATH.replace(":requestId", requestId);
+export function recoveryDetailsPath(requestId: string, type: RecoveryRequestType): string {
+    return RECOVERY_DETAILS_PATH
+        .replace(":requestId", requestId)
+        .replace(":type", type);
 }
 
 export const SETTINGS_RELATIVE_PATH = '/settings';

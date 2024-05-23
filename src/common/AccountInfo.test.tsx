@@ -3,7 +3,6 @@ import { UserIdentity as IdentityType, PostalAddress as PostalAddressType } from
 import { render } from "../tests";
 import { DEFAULT_IDENTITY, COLOR_THEME, DEFAULT_ADDRESS } from "./TestData";
 import AccountInfo from "./AccountInfo";
-import { TEST_WALLET_USER } from "../wallet-user/TestData";
 
 const DIFFERENT_IDENTITY: IdentityType = {
     firstName: "John2",
@@ -24,7 +23,6 @@ test("renders without comparison", () => {
     const tree = render(
         <AccountInfo
             label="some label"
-            address={ TEST_WALLET_USER.address }
             identity={ DEFAULT_IDENTITY }
             postalAddress={ DEFAULT_ADDRESS }
             colors={ COLOR_THEME.dashboard }
@@ -39,7 +37,6 @@ test("renders and compares with same data", () => {
     const tree = render(
         <AccountInfo
             label="some label"
-            address={ TEST_WALLET_USER.address }
             identity={ DEFAULT_IDENTITY }
             otherIdentity={ DEFAULT_IDENTITY }
             postalAddress={ DEFAULT_ADDRESS }
@@ -56,7 +53,6 @@ test("renders and compares with different data", () => {
     const tree = render(
         <AccountInfo
             label="some label"
-            address={ TEST_WALLET_USER.address }
             identity={ DEFAULT_IDENTITY }
             otherIdentity={ DIFFERENT_IDENTITY }
             postalAddress={ DEFAULT_ADDRESS }

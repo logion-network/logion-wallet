@@ -4,9 +4,11 @@ import Icon from "../../common/Icon";
 import { ORANGE, GREEN, RED, YELLOW } from "../../common/ColorTheme";
 
 import './RecoveryRequestStatus.css';
+import { RecoveryRequestType } from '../Model';
 
 export interface Props {
-    status: ProtectionRequestStatusType,
+    status: ProtectionRequestStatusType;
+    type: RecoveryRequestType;
 }
 
 export default function RecoveryRequestStatus(props: Props) {
@@ -18,11 +20,11 @@ export default function RecoveryRequestStatus(props: Props) {
         statusColor = ORANGE;
         icon = (<Icon icon={{ id: "pending" }} />);
         status = <span style={{color: statusColor}}>Pending</span>;
-    } else if(props.status === "ACCEPTED") {
+    } else if(props.status === "ACCEPTED" && props.type === "ACCOUNT") {
         statusColor = YELLOW;
         icon = (<Icon icon={{ id: "accepted" }} />);
         status = <span style={{color: statusColor, textTransform: "uppercase"}}>Accepted</span>;
-    } else if(props.status === "ACTIVATED") {
+    } else if(props.status === "ACTIVATED" || (props.status === "ACCEPTED" && props.type === "SECRET")) {
         statusColor = GREEN;
         icon = (<Icon icon={{ id: "activated" }} />);
         status = <span style={{color: statusColor, textTransform: "uppercase"}}>Accepted</span>;

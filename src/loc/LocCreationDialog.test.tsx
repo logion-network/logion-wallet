@@ -15,7 +15,6 @@ import { SUCCESSFUL_SUBMISSION, setClientMock, setExtrinsicSubmissionState } fro
 jest.mock("../logion-chain/Signature");
 jest.mock("../common/CommonContext");
 jest.mock("../common/Model");
-jest.mock("./Model");
 jest.mock("../legal-officer/LegalOfficerContext");
 jest.mock("../logion-chain");
 jest.mock("./LocContext");

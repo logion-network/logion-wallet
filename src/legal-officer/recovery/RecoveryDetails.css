@@ -3,6 +3,10 @@
     margin-bottom: 50px;
 }
 
+.RecoveryDetails .main-frame > .row:first-child {
+    position: relative;
+}
+
 .RecoveryDetails h3 {
     text-align: center;
     font-weight: bold;
