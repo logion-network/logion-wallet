@@ -7,7 +7,7 @@ import {
     LOC_REQUESTS_RELATIVE_PATH,
     LOC_DETAILS_RELATIVE_PATH,
 } from '../RootPaths';
-import { RecoveryRequestType } from './Model';
+import { RecoveryRequestType } from "@logion/client";
 
 export const HOME_PATH = LEGAL_OFFICER_PATH;
 

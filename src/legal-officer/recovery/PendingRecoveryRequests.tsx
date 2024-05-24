@@ -8,7 +8,7 @@ import { useLegalOfficerContext } from '../LegalOfficerContext';
 import RecoveryRequestStatus from './RecoveryRequestStatus';
 import { recoveryDetailsPath } from "../LegalOfficerPaths";
 import { useLogionChain } from '../../logion-chain';
-import { RecoveryRequest } from '../Model';
+import { PendingRecoveryRequest } from "@logion/client";
 
 export default function PendingRecoveryRequests() {
     const { api } = useLogionChain();
@@ -19,32 +19,32 @@ export default function PendingRecoveryRequests() {
         return null;
     }
 
-    let columns: Column<RecoveryRequest>[];
+    let columns: Column<PendingRecoveryRequest>[];
 
     columns = [
         {
             header: "First name",
-            render: request => <Cell content={ request.userIdentity.firstName } />,
+            render: request => <Cell content={ request.data.userIdentity.firstName } />,
             align: 'left',
         },
         {
             header: "Last name",
-            render: request => <Cell content={ request.userIdentity.lastName } />,
+            render: request => <Cell content={ request.data.userIdentity.lastName } />,
             align: 'left',
         },
         {
             header: "Status",
-            render: request => <RecoveryRequestStatus status={ request.status } type={ request.type } />,
+            render: request => <RecoveryRequestStatus status={ request.data.status } type={ request.data.type } />,
             width: "140px",
         },
         {
             header: "Submission date",
-            render: request => <DateTimeCell dateTime={ request.createdOn } />,
+            render: request => <DateTimeCell dateTime={ request.data.createdOn } />,
             width: "120px",
         },
         {
             header: "Type",
-            render: request => <Cell content={ request.type } />,
+            render: request => <Cell content={ request.data.type } />,
             width: "200px",
         },
         {
@@ -53,7 +53,7 @@ export default function PendingRecoveryRequests() {
                 <ButtonGroup aria-label="actions">
                     <Button
                         variant="primary"
-                        onClick={ () => navigate(recoveryDetailsPath(request.id, request.type)) }
+                        onClick={ () => navigate(recoveryDetailsPath(request.data.id, request.data.type)) }
                     >
                         Review and proceed
                     </Button>

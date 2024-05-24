@@ -4,7 +4,7 @@ import Icon from "../../common/Icon";
 import { ORANGE, GREEN, RED, YELLOW } from "../../common/ColorTheme";
 
 import './RecoveryRequestStatus.css';
-import { RecoveryRequestType } from '../Model';
+import { RecoveryRequestType } from "@logion/client";
 
 export interface Props {
     status: ProtectionRequestStatusType;

@@ -5,6 +5,8 @@ import {
     LegalOfficer,
     LocsState,
     Votes,
+    PendingRecoveryRequest,
+    ReviewedRecoveryRequest,
 } from '@logion/client';
 import { LocType, LegalOfficerData, ValidAccountId } from "@logion/node-api";
 
@@ -15,7 +17,6 @@ import { VaultApi } from '../vault/VaultApi';
 import { DateTime } from "luxon";
 import { fetchAllLocsParams } from 'src/loc/LegalOfficerLocContext';
 import { Locs, getLocsMap } from 'src/loc/Locs';
-import { RecoveryRequest, fetchRecoveryRequests } from './Model';
 
 export const SETTINGS_KEYS = [ 'oath' ];
 
@@ -37,8 +38,8 @@ export interface MissingSettings {
 export interface LegalOfficerContext {
     refreshRequests: ((clearBeforeRefresh: boolean) => void);
     locsState: LocsState | null;
-    pendingRecoveryRequests: RecoveryRequest[] | null;
-    recoveryRequestsHistory: RecoveryRequest[] | null;
+    pendingRecoveryRequests: PendingRecoveryRequest[] | null;
+    recoveryRequestsHistory: ReviewedRecoveryRequest[] | null;
     axios?: AxiosInstance;
     pendingVaultTransferRequests?: VaultTransferRequest[];
     vaultTransferRequestsHistory?: VaultTransferRequest[];
@@ -127,8 +128,8 @@ interface Action {
     type: ActionType;
     dataAddress?: ValidAccountId;
     locsState?: LocsState;
-    pendingRecoveryRequests?: RecoveryRequest[],
-    recoveryRequestsHistory?: RecoveryRequest[],
+    pendingRecoveryRequests?: PendingRecoveryRequest[],
+    recoveryRequestsHistory?: ReviewedRecoveryRequest[],
     refreshRequests?: (clearBeforeRefresh: boolean) => void;
     clearBeforeRefresh?: boolean;
     axios?: AxiosInstance;
@@ -484,7 +485,7 @@ export function LegalOfficerContextProvider(props: Props) {
     // ------------------ Protection, recovery and vault -------------------------------
 
     const refreshRequests = useCallback(() => {
-        if(accounts && accounts.current && axiosFactory && isReadyLegalOfficer) {
+        if(accounts && accounts.current && axiosFactory && isReadyLegalOfficer && client !== null) {
             dispatch({
                 type: "REFRESH_REQUESTS_CALLED"
             });
@@ -492,16 +493,12 @@ export function LegalOfficerContextProvider(props: Props) {
 
             (async function() {
                 const axios = axiosFactory(currentAddress);
-
-                const allAccountRecoveryRequests = await fetchRecoveryRequests(axios);
-                const pendingRecoveryRequests: RecoveryRequest[] = allAccountRecoveryRequests
-                    .filter(request => ["PENDING"].includes(request.status))
-                    .sort((a, b) => a.createdOn.localeCompare(b.createdOn));
-                const recoveryRequestsHistory: RecoveryRequest[] = allAccountRecoveryRequests
-                    .filter(request =>
-                        ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"].includes(request.status)
-                    )
-                    .sort((a, b) => b.createdOn.localeCompare(a.createdOn));
+                const recoveryReview = client.withCurrentAccount(currentAddress).recoveryReview;
+                const allAccountRecoveryRequests = await recoveryReview.fetchRecoveryRequests();
+                const pendingRecoveryRequests = allAccountRecoveryRequests.pendingRequests
+                    .sort((a, b) => a.data.createdOn.localeCompare(b.data.createdOn));
+                const recoveryRequestsHistory = allAccountRecoveryRequests.reviewedRequests
+                    .sort((a, b) => b.data.createdOn.localeCompare(a.data.createdOn));
 
                 const allVaultTransferRequestsResult = (await new VaultApi(axios, currentAddress).getVaultTransferRequests({
                     legalOfficerAddress: currentAddress.address,
@@ -522,7 +519,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 });
             })();
         }
-    }, [ accounts, axiosFactory, isReadyLegalOfficer ]);
+    }, [ accounts, axiosFactory, isReadyLegalOfficer, client ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests !== refreshRequests) {

@@ -1,6 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
 import Detail from "../../common/Detail";
-import { RecoveryRequest } from '../Model';
+import { RecoveryRequest } from "@logion/client";
 
 export interface ProtectionRequestDetailsProps {
     request : RecoveryRequest,
@@ -14,21 +14,21 @@ export default function RecoveryRequestDetails(props: ProtectionRequestDetailsPr
                 <Col md={3}>
                     <Detail
                         label="Email"
-                        value={ props.request.userIdentity.email }
+                        value={ props.request.data.userIdentity.email }
                     />
                 </Col>
                 <Col md={3}>
                     <Detail
                         label="Phone number"
-                        value={ props.request.userIdentity.phoneNumber }
+                        value={ props.request.data.userIdentity.phoneNumber }
                     />
                 </Col>
                 {
-                    props.request.status === "REJECTED" &&
+                    props.request.data.status === "REJECTED" &&
                     <Col>
                         <Detail
                             label="Reject reason"
-                            value={ props.request.rejectReason || "-" }
+                            value={ props.request.data.rejectReason || "-" }
                         />
                     </Col>
                 }
