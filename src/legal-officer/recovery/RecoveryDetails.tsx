@@ -9,7 +9,7 @@ import { FullWidthPane } from "../../common/Dashboard";
 import { useParams, useNavigate } from 'react-router';
 import { RECOVERY_REQUESTS_PATH } from "../LegalOfficerPaths";
 import Button from "../../common/Button";
-import { RecoveryInfo, acceptAccountRecoveryRequest, acceptSecretRecoveryRequest, fetchRecoveryInfo, rejectAccountRecoveryRequest, rejectSecretRecoveryRequest, toRecoveryRequestType } from "../Model";
+import { RecoveryInfo, PendingRecoveryRequest } from "@logion/client";
 import AccountInfo from "../../common/AccountInfo";
 import Alert from "../../common/Alert";
 import Frame from "../../common/Frame";
@@ -29,23 +29,27 @@ enum Visible {
 }
 
 export default function RecoveryDetails() {
-    const { accounts, axiosFactory, api, submitCall, signer, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
+    const { accounts, api, submitCall, signer, clearSubmissionState, extrinsicSubmissionState } = useLogionChain();
     const { colorTheme } = useCommonContext();
-    const { refreshRequests } = useLegalOfficerContext();
+    const { refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const { requestId } = useParams<"requestId">();
     const { type } = useParams<"type">();
+    const [ pendingRecoveryRequest, setPendingRecoveryRequest ] = useState<PendingRecoveryRequest | null | undefined>(null);
     const [ recoveryInfo, setRecoveryInfo ] = useState<RecoveryInfo | null>(null);
     const [ visible, setVisible ] = useState(Visible.NONE);
     const navigate = useNavigate();
     const [ rejectReason, setRejectReason ] = useState<string>("");
 
     useEffect(() => {
-        if (recoveryInfo === null && axiosFactory !== undefined) {
-            const currentAccount = accounts!.current!.accountId;
-            fetchRecoveryInfo(axiosFactory(currentAccount)!, requestId!, toRecoveryRequestType(type))
-                .then(recoveryInfo => setRecoveryInfo(recoveryInfo));
+        if (pendingRecoveryRequest === null && pendingRecoveryRequests !== null) {
+            const pendingRequest = pendingRecoveryRequests.find(request => request.data.id === requestId && request.data.type === type);
+            setPendingRecoveryRequest(pendingRequest);
+            if (pendingRequest !== undefined) {
+                pendingRequest.fetchRecoveryInfo()
+                    .then(recoveryInfo => setRecoveryInfo(recoveryInfo));
+            }
         }
-    }, [ axiosFactory, accounts, recoveryInfo, setRecoveryInfo, requestId, type ]);
+    }, [ pendingRecoveryRequest, pendingRecoveryRequests, setPendingRecoveryRequest, requestId, type ]);
 
     const alreadyVouched = useCallback(async (lost: ValidAccountId, rescuer: ValidAccountId, currentAddress: ValidAccountId) => {
         const activeRecovery = await api?.queries.getActiveRecovery(
@@ -61,9 +65,7 @@ export default function RecoveryDetails() {
         const rescuer = ValidAccountId.polkadot(recoveryInfo!.accountRecovery!.address2);
 
         if (await alreadyVouched(lost, rescuer, currentAddress)) {
-            await acceptAccountRecoveryRequest(axiosFactory!(currentAddress)!, {
-                requestId: requestId!,
-            });
+            await pendingRecoveryRequest!.accept();
             refreshRequests!(false);
             navigate(RECOVERY_REQUESTS_PATH);
         } else {
@@ -77,9 +79,7 @@ export default function RecoveryDetails() {
                     submittable,
                     callback,
                 });
-                await acceptAccountRecoveryRequest(axiosFactory!(currentAddress)!, {
-                    requestId: requestId!,
-                });
+                await pendingRecoveryRequest!.accept();
             };
             try {
                 await submitCall(call);
@@ -91,38 +91,23 @@ export default function RecoveryDetails() {
                 clearSubmissionState();
             }
         }
-    }, [ axiosFactory, requestId, accounts, api, recoveryInfo, alreadyVouched, navigate, refreshRequests, submitCall, clearSubmissionState, signer ]);
+    }, [ accounts, api, pendingRecoveryRequest, alreadyVouched, navigate, refreshRequests, submitCall, clearSubmissionState, signer, recoveryInfo ]);
 
     const acceptSecretRecovery = useCallback(async () => {
-        const currentAddress = accounts!.current!.accountId;
-        await acceptSecretRecoveryRequest(axiosFactory!(currentAddress)!, {
-            requestId: requestId!,
-        });
+        await pendingRecoveryRequest!.accept();
         refreshRequests!(false);
         navigate(RECOVERY_REQUESTS_PATH);
-    }, [ axiosFactory, requestId, accounts, navigate, refreshRequests ]);
+    }, [ navigate, refreshRequests, pendingRecoveryRequest ]);
 
     const doReject = useCallback(async () => {
-        if(type === "ACCOUNT") {
-            const currentAccount = accounts!.current!.accountId;
-            await rejectAccountRecoveryRequest(axiosFactory!(currentAccount)!, {
-                requestId: requestId!,
-                rejectReason,
-            });
-            refreshRequests!(false);
-            navigate(RECOVERY_REQUESTS_PATH);
-        } else if(type === "SECRET") {
-            const currentAccount = accounts!.current!.accountId;
-            await rejectSecretRecoveryRequest(axiosFactory!(currentAccount)!, {
-                requestId: requestId!,
-                rejectReason,
-            });
+        if(pendingRecoveryRequest) {
+            await pendingRecoveryRequest.reject({ rejectReason });
             refreshRequests!(false);
             navigate(RECOVERY_REQUESTS_PATH);
         } else {
-            throw new Error(`Unsupported type ${ type }`);
+            throw new Error(`Recovery Request not found: id ${ requestId } type ${ type }`);
         }
-    }, [ axiosFactory, requestId, accounts, rejectReason, refreshRequests, navigate, type ]);
+    }, [ requestId, rejectReason, refreshRequests, navigate, type, pendingRecoveryRequest ]);
 
     if (!api || recoveryInfo === null) {
         return null;

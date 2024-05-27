@@ -1,5 +1,4 @@
 jest.mock('../LegalOfficerContext');
-jest.mock('../Model');
 
 import { shallowRender } from '../../tests';
 import RecoveryRequestsHistory from './RecoveryRequestsHistory';

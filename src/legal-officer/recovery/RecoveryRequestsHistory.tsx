@@ -17,28 +17,28 @@ export default function RecoveryRequestsHistory() {
                 columns={[
                     {
                         header: "First name",
-                        render: request => <Cell content={ request.userIdentity.firstName }/>,
+                        render: request => <Cell content={ request.data.userIdentity.firstName }/>,
                         align: 'left',
                     },
                     {
                         header: "Last name",
-                        render: request => <Cell content={ request.userIdentity.lastName }/>,
+                        render: request => <Cell content={ request.data.userIdentity.lastName }/>,
                         align: 'left',
                         renderDetails: request => <RecoveryRequestDetails request={ request } />
                     },
                     {
                         header: "Status",
-                        render: request => <RecoveryRequestStatus status={ request.status } type={ request.type } />,
+                        render: request => <RecoveryRequestStatus status={ request.data.status } type={ request.data.type } />,
                         width: "170px",
                     },
                     {
                         header: "Submission date",
-                        render: request => <DateTimeCell dateTime={ request.createdOn } />,
+                        render: request => <DateTimeCell dateTime={ request.data.createdOn } />,
                         width: "120px",
                     },
                     {
                         header: "Type",
-                        render: request => <Cell content={ request.type } />,
+                        render: request => <Cell content={ request.data.type } />,
                         width: "120px",
                     },
                 ]}
