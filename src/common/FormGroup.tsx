@@ -20,8 +20,10 @@ export default function FormGroup(props: Props) {
     const inlineCss = `
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: ${props.colors.foreground};
+        background-color: ${props.colors.background};
     }
     `;
 

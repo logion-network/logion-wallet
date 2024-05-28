@@ -53,8 +53,10 @@ Object {
                 
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #ffffff;
     }
     
               </style>
@@ -154,8 +156,10 @@ Object {
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #ffffff;
     }
     
             </style>

@@ -28,8 +28,10 @@ exports[`renders and compares with different address 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -79,8 +81,10 @@ exports[`renders and compares with different address 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -130,8 +134,10 @@ exports[`renders and compares with different address 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -177,8 +183,10 @@ exports[`renders and compares with different address 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -228,8 +236,10 @@ exports[`renders and compares with different address 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -289,8 +299,10 @@ exports[`renders and compares with same address 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -340,8 +352,10 @@ exports[`renders and compares with same address 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -391,8 +405,10 @@ exports[`renders and compares with same address 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -438,8 +454,10 @@ exports[`renders and compares with same address 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -489,8 +507,10 @@ exports[`renders and compares with same address 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -550,8 +570,10 @@ exports[`renders without comparison 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -601,8 +623,10 @@ exports[`renders without comparison 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -652,8 +676,10 @@ exports[`renders without comparison 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -699,8 +725,10 @@ exports[`renders without comparison 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
@@ -750,8 +778,10 @@ exports[`renders without comparison 1`] = `
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly],
+    .FormGroup .form-control[disabled],
     .FormGroup .input-group .btn-primary {
         color: #000000;
+        background-color: #eff3fe;
     }
     
           </style>
