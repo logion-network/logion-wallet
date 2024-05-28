@@ -54,3 +54,17 @@ export function getBaseUrl(): string {
 
 export const SECRET_RECOVERY_RELATIVE_PATH = "/secret-recovery";
 export const SECRET_RECOVERY_PATH = PUBLIC_PATH + SECRET_RECOVERY_RELATIVE_PATH;
+
+export const SECRET_DOWNLOAD_RELATIVE_PATH = "/secret-download/:locId/:challenge/:requestId";
+export const SECRET_DOWNLOAD_PATH = PUBLIC_PATH + SECRET_DOWNLOAD_RELATIVE_PATH;
+
+export function secretDownloadPageUrl(locId: UUID, challenge: string, requestId: string) {
+    return SECRET_DOWNLOAD_PATH
+        .replace(":locId", locId.toDecimalString())
+        .replace(":challenge", challenge)
+        .replace(":requestId", requestId);
+}
+
+export function fullSecretDownloadPageUrl(locId: UUID, challenge: string, requestId: string) {
+    return `${ getBaseUrl() }${ secretDownloadPageUrl(locId, challenge, requestId) }`;
+}

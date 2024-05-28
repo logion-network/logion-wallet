@@ -14,6 +14,7 @@ import Icon from "src/common/Icon";
 import CopyPasteButton from "src/common/CopyPasteButton";
 import { useLogionChain } from "../../../logion-chain";
 import { UUID } from "@logion/node-api";
+import { fullSecretDownloadPageUrl } from "src/PublicPaths";
 
 export default function SecretRecoveryRequestFormPage() {
     const { colorTheme } = useCommonContext();
@@ -21,13 +22,13 @@ export default function SecretRecoveryRequestFormPage() {
     const { control: identityControl, trigger: identityTrigger, formState: { errors: identityErrors }, getValues: getIdentityValues } = useForm<IdentityFormValues>();
     const [ error, setError ] = useState<string>();
     const [ submitting, setSubmitting ] = useState(false);
-    const [ submitted, setSubmitted ] = useState(false);
     const { client } = useLogionChain();
+    const [ downloadUrl, setDownloadUrl ] = useState<string>();
 
     const submit = useCallback(async () => {
         setError(undefined);
         setSubmitting(true);
-        setSubmitted(false);
+        setDownloadUrl(undefined);
         const results = await Promise.all([ secretTrigger(), identityTrigger() ]);
         const formError = !(results[0] && results[1]);
         const { locId, secretName, challenge } = getValues();
@@ -37,7 +38,7 @@ export default function SecretRecoveryRequestFormPage() {
         } else {
             try {
                 const identity = getIdentityValues();
-                await client!.secretRecovery.createSecretRecoveryRequest({
+                const recoveryRequestId = await client!.secretRecovery.createSecretRecoveryRequest({
                     requesterIdentityLocId,
                     secretName,
                     challenge,
@@ -54,8 +55,8 @@ export default function SecretRecoveryRequestFormPage() {
                         city: identity.city,
                         country: identity.country,
                     },
-                })
-                setSubmitted(true);
+                });
+                setDownloadUrl(fullSecretDownloadPageUrl(requesterIdentityLocId, challenge, recoveryRequestId));
             } catch(e) {
                 if(e instanceof Error) {
                     setError(e.message);
@@ -70,7 +71,7 @@ export default function SecretRecoveryRequestFormPage() {
     return (
         <div className="SecretRecoveryRequestFormPage">
             {
-                !submitted &&
+                downloadUrl === undefined &&
                 <Container>
                     <Row>
                         <Col>
@@ -117,7 +118,7 @@ export default function SecretRecoveryRequestFormPage() {
                 </Container>
             }
             {
-                submitted &&
+                downloadUrl !== undefined &&
                 <Container>
                     <Row>
                         <Col>
@@ -129,9 +130,18 @@ export default function SecretRecoveryRequestFormPage() {
                                 <p>Your request to recover secret <strong>{ getValues().secretName }</strong>{" "}
                                     from LOC <strong>{ getValues().locId }</strong>{" "}
                                     has been submitted successfully.</p>
-                                <p><strong>Please keep below challenge in a safe place, you will need it in order
+                                <p><strong>Please keep below URL in a safe place, you will need it in order
                                     to retrieve the secret once your request has been approved</strong>:</p>
-                                <p className="challenge">{ getValues().challenge } <CopyPasteButton value={ getValues().challenge } /></p>
+                                <p>
+                                    <a
+                                        href={ downloadUrl }
+                                    >
+                                        { downloadUrl }
+                                    </a>{" "}
+                                    <CopyPasteButton
+                                        value={ downloadUrl }
+                                    />
+                                </p>
                             </Frame>
                         </Col>
                     </Row>

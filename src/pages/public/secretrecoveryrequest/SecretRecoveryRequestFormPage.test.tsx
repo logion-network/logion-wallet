@@ -4,6 +4,7 @@ import { screen, render, waitFor } from '@testing-library/react';
 import SecretRecoveryRequestFormPage from './SecretRecoveryRequestFormPage';
 import { clickByName, typeByLabel } from 'src/tests';
 import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
+import { fullCertificateUrl, fullSecretDownloadPageUrl } from 'src/PublicPaths';
 
 jest.mock("src/logion-chain");
 
@@ -23,7 +24,7 @@ describe("SecretRecoveryRequestFormPage", () => {
         await waitFor(() => expect(screen.queryByText("Submission successful")).toBeInTheDocument());
         expect(screen.queryByText(LOC_ID.toDecimalString())).toBeInTheDocument();
         expect(screen.queryByText(SECRET_NAME)).toBeInTheDocument();
-        expect(screen.queryByText(CHALLENGE)).toBeInTheDocument();
+        expect(screen.queryByRole("link", {name: fullSecretDownloadPageUrl(LOC_ID, CHALLENGE, REQUEST_ID)})).toBeInTheDocument();
         expect(screen.queryByRole("button", { name: "Submit" })).not.toBeInTheDocument();
     });
 
@@ -94,7 +95,7 @@ function mockClient(expectedLocId: UUID, data: { locType: LocType, status: LocRe
         },
         secretRecovery: {
             createSecretRecoveryRequest: () => {
-                return Promise.resolve(undefined);
+                return Promise.resolve(REQUEST_ID);
             }
         }
     } as unknown as LogionClient;
@@ -103,6 +104,7 @@ function mockClient(expectedLocId: UUID, data: { locType: LocType, status: LocRe
 const LOC_ID = new UUID();
 const SECRET_NAME = "Key";
 const CHALLENGE = "Some random challenge";
+const REQUEST_ID = "aff8be0d-dbbb-4f08-98a8-5e2020b23f56";
 
 async function fillInSecretRecoveryRequestForm() {
     await typeByLabel("Identity LOC ID", LOC_ID.toDecimalString());
