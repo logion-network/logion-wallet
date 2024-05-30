@@ -3216,15 +3216,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/client@npm:^0.45.0-11":
-  version: 0.45.0-11
-  resolution: "@logion/client@npm:0.45.0-11"
+"@logion/client@npm:^0.45.0-12":
+  version: 0.45.0-12
+  resolution: "@logion/client@npm:0.45.0-12"
   dependencies:
-    "@logion/node-api": ^0.30.0
+    "@logion/node-api": ^0.31.0-1
     axios: ^1.6.7
     luxon: ^3.4.4
     mime-db: ^1.52.0
-  checksum: de3a57af11603beb5a1384c96cb679b1e0a55023f7908623e433f3da7acd075cd8fe79bd52fa5c22995cb55b2e8f8400e711ada217ed9f8f010172ce12ca5aaf
+  checksum: df543a9e5494d47a7a539434fb14d9d6e88808ed82d34c559495233581b164a1f13bbcef84289f27f122388bdd968e4db9b8ca8eb734c0bf42883c6ab72c5f89
   languageName: node
   linkType: hard
 
@@ -3239,15 +3239,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/extension@npm:^0.8.1-1":
-  version: 0.8.1-1
-  resolution: "@logion/extension@npm:0.8.1-1"
+"@logion/extension@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "@logion/extension@npm:0.8.1"
   dependencies:
     "@polkadot/extension-compat-metamask": ^0.47.3
     "@polkadot/extension-dapp": ^0.47.3
   peerDependencies:
     "@logion/client-browser": 0.x
-  checksum: 4a6bb518cd5cdb6c15862c1df492701e33c4be6bff97131e42efe4a6e4c6912d180c5641f23e7722be5c25dba472d70631fef3e5b17f3d1f63e515b26ff3bf07
+  checksum: 90fe261872b8c807c70e7f2839139b83d2b44284c44b4b4fbde5d10ac580c2e995bb7674dab015cde6418c39407c02927510dbcc8c86c33de82f38b0581ef437
   languageName: node
   linkType: hard
 
@@ -3263,9 +3263,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/node-api@npm:^0.30.0":
-  version: 0.30.0
-  resolution: "@logion/node-api@npm:0.30.0"
+"@logion/node-api@npm:^0.31.0-1":
+  version: 0.31.0-1
+  resolution: "@logion/node-api@npm:0.31.0-1"
   dependencies:
     "@polkadot/api": ^11.0.2
     "@polkadot/util": ^12.6.2
@@ -3274,7 +3274,7 @@ __metadata:
     bech32: ^2.0.0
     fast-sha256: ^1.3.0
     uuid: ^9.0.0
-  checksum: 3499cf24a63d9331be073aa9429c3df9e2109b6ea5d7087f8fc32cca5547c525c07d9eeb78eabe7d1e2df25d9fecd382820af33b7151dc3dde7e77e3344804b6
+  checksum: 44051de5dbb2ecb1b4e2ea00cee7105c679d460ad25bde65b7b2726379a4fcb7770a52061ee1982530e0690b114016e1a5a9d456627e7f613ab70f23fb233965
   languageName: node
   linkType: hard
 
@@ -12106,10 +12106,10 @@ __metadata:
     "@babel/preset-react": ^7.23.3
     "@babel/preset-typescript": ^7.23.3
     "@creativecommons/cc-assets": ^0.1.0
-    "@logion/client": ^0.45.0-11
+    "@logion/client": ^0.45.0-12
     "@logion/client-browser": ^0.3.5
     "@logion/crossmint": ^0.1.32
-    "@logion/extension": ^0.8.1-1
+    "@logion/extension": ^0.8.1
     "@logion/multiversx": ^0.1.13
     "@multiversx/sdk-extension-provider": ^2.0.7
     "@pmmmwh/react-refresh-webpack-plugin": ^0.5.3
