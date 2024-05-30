@@ -25,6 +25,7 @@ interface FormValues {
     fileName: string;
     contentType: string;
     description: string;
+    chargeSubmitter: boolean;
 }
 
 type Status = 'Idle' | 'Hashing' | 'Confirming' | 'Uploading' | 'Error';
@@ -33,7 +34,11 @@ export default function AddTokensRecordDialog(props: Props) {
     const { colorTheme } = useCommonContext();
     const { mutateLocState, locState } = useLocContext();
     const { signer, submitCall, clearSubmissionState } = useLogionChain();
-    const { control, handleSubmit, formState: { errors }, reset, setValue, getValues } = useForm<FormValues>();
+    const { control, handleSubmit, formState: { errors }, reset, setValue, getValues, clearErrors } = useForm<FormValues>({
+        defaultValues: {
+            chargeSubmitter: false,
+        }
+    });
     const [ file, setFile ] = useState<File>();
     const [ uploadError, setUploadError ] = useState<string>();
     const [ status, setStatus ] = useState<Status>('Idle');
@@ -44,7 +49,8 @@ export default function AddTokensRecordDialog(props: Props) {
         setFile(file);
         setValue("fileName", file.name);
         setValue("contentType", file.type);
-    }, [ setValue ]);
+        clearErrors();
+    }, [ setValue, clearErrors ]);
 
     const onError = useCallback((error?: string) => {
         setStatus('Error');
@@ -168,7 +174,7 @@ export default function AddTokensRecordDialog(props: Props) {
                         name="fileName"
                         control={ control }
                         defaultValue=""
-                        rules={ { maxLength: 255, required: true } }
+                        rules={ { maxLength: 255, required: "Missing file name" } }
                         render={ ({ field }) => (
                             <Form.Control
                                 isInvalid={ !!errors.fileName?.message }
@@ -180,6 +186,7 @@ export default function AddTokensRecordDialog(props: Props) {
                         ) } />
 
                 }
+                feedback={ errors.fileName?.message }
                 colors={ colorTheme.dialog }
             />
             <FormGroup
@@ -190,7 +197,7 @@ export default function AddTokensRecordDialog(props: Props) {
                         name="contentType"
                         control={ control }
                         defaultValue=""
-                        rules={ { maxLength: 255, required: true } }
+                        rules={ { maxLength: 255, required: "Missing content type" } }
                         render={ ({ field }) => (
                             <Form.Control
                                 isInvalid={ !!errors.contentType?.message }
@@ -202,6 +209,7 @@ export default function AddTokensRecordDialog(props: Props) {
                         ) } />
 
                 }
+                feedback={ errors.contentType?.message }
                 colors={ colorTheme.dialog }
             />
             <FormGroup
@@ -212,7 +220,7 @@ export default function AddTokensRecordDialog(props: Props) {
                         name="description"
                         control={ control }
                         defaultValue=""
-                        rules={ { maxLength: 4096, required: true } }
+                        rules={ { maxLength: 4096, required: "Missing public descripition" } }
                         render={ ({ field }) => (
                             <Form.Control
                                 isInvalid={ !!errors.description?.message }
@@ -223,6 +231,26 @@ export default function AddTokensRecordDialog(props: Props) {
                         ) } />
 
                 }
+                feedback={ errors.description?.message }
+                colors={ colorTheme.dialog }
+            />
+            <FormGroup
+                id="chargeSubmitter"
+                label="All fees charged to the submitter"
+                control={
+                    <Controller
+                        name="chargeSubmitter"
+                        control={ control }
+                        render={ ({ field }) => (
+                            <Form.Check
+                                isInvalid={ !!errors.chargeSubmitter?.message }
+                                aria-describedby="chargeSubmitter"
+                                { ...field }
+                                value={ field.value ? "checked" : "" } // Fixes typing issue
+                            />
+                    ) } />
+                }
+                feedback={ errors.chargeSubmitter?.message }
                 colors={ colorTheme.dialog }
             />
             { status === 'Hashing' &&
