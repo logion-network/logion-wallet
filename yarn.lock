@@ -3264,8 +3264,8 @@ __metadata:
   linkType: hard
 
 "@logion/node-api@npm:^0.31.0-1":
-  version: 0.31.0-1
-  resolution: "@logion/node-api@npm:0.31.0-1"
+  version: 0.31.0-2
+  resolution: "@logion/node-api@npm:0.31.0-2"
   dependencies:
     "@polkadot/api": ^11.0.2
     "@polkadot/util": ^12.6.2
@@ -3274,7 +3274,7 @@ __metadata:
     bech32: ^2.0.0
     fast-sha256: ^1.3.0
     uuid: ^9.0.0
-  checksum: 44051de5dbb2ecb1b4e2ea00cee7105c679d460ad25bde65b7b2726379a4fcb7770a52061ee1982530e0690b114016e1a5a9d456627e7f613ab70f23fb233965
+  checksum: e69299c3fada965de1073d95cfcb9c000a10f4117a0e82b9ddcc1d350ceea0d7d906f8d21ab6ab76a25c7ef8b396974b469c1367433b24ce3f2f69cf03d4ed07
   languageName: node
   linkType: hard
 
