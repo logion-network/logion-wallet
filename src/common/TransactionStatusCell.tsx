@@ -27,7 +27,7 @@ export function TransactionStatusCellDetails(props: StatusCellProps) {
                     <Detail label="Description" value="This transaction has been executed." />
                 </Col>
                 <Col style={{width: "50%"}}>
-                    <Detail label="Fees (LGNT)" value={ <EstimatedFees fees={ toFeesClass(props.transaction.fees) } hideTitle={ true } /> } />
+                    <Detail label="Fees (LGNT)" value={ <EstimatedFees fees={ toFeesClass(props.transaction.fees) } hideTitle={ true } hideNetworkLoadWarning={ true }/> } />
                 </Col>
             </>
         );

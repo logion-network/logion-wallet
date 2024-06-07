@@ -12,6 +12,7 @@ export interface Props {
     centered?: boolean;
     inclusionFeePaidBy?: string;
     otherFeesPaidBy?: string;
+    hideNetworkLoadWarning?: boolean;
 }
 
 export default function EstimatedFees(props: Props) {
@@ -39,6 +40,7 @@ export default function EstimatedFees(props: Props) {
                             />
                         </td>
                         { showPaidBy && <td>{ props.inclusionFeePaidBy || "" }</td> }
+                        { props.hideNetworkLoadWarning !== true && <td>(can be impacted by network load)</td> }
                     </tr>
                     { fees?.storageFee !== undefined &&
                         <tr>
