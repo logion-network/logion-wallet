@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import {
-    PendingProtection,
     UnavailableProtection,
     RejectedRecovery,
+    PendingRecovery,
 } from "@logion/client";
 
 import { useLogionChain } from '../../logion-chain';
@@ -70,7 +70,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
         const legalOfficer2 = protectionParameters.legalOfficers[1];
         let legalOfficer1Status: ProtectionRequestStatus;
         let legalOfficer2Status: ProtectionRequestStatus;
-        if(protectionState instanceof PendingProtection || protectionState instanceof RejectedRecovery) {
+        if(protectionState instanceof PendingRecovery || protectionState instanceof RejectedRecovery) {
             legalOfficer1Status = protectionParameters.states[0].status;
             legalOfficer2Status = protectionParameters.states[1].status;
         } else if(props.type === 'accepted') {

@@ -6,15 +6,14 @@ import {
     LegalOfficer,
     LegalOfficerClass,
     NoProtection,
-    PendingProtection,
     ProtectionState,
     SignCallback,
-    AcceptedProtection,
-    PendingRecovery,
     RejectedRecovery,
     BalanceState,
     LocsState,
     VaultState,
+    ActiveRecovery,
+    AcceptedRecovery,
 } from "@logion/client";
 
 import { useLogionChain, AxiosFactory } from '../logion-chain';
@@ -45,7 +44,6 @@ export interface UserContext {
     activateProtection: ((callback: SignCallback) => Promise<void>) | null,
     claimRecovery: ((callback: SignCallback) => Promise<void>) | null,
     cancelProtection: () => Promise<void>,
-    resubmitProtection: (legalOfficer: LegalOfficer) => Promise<void>,
     protectionState?: ProtectionState,
     vaultState?: VaultState,
     mutateVaultState: (mutator: (current: VaultState) => Promise<VaultState>) => Promise<void>,
@@ -72,7 +70,6 @@ function initialContextValue(): FullUserContext {
         activateProtection: null,
         claimRecovery: null,
         cancelProtection: () => Promise.reject(),
-        resubmitProtection: () => Promise.reject(),
         mutateVaultState: () => Promise.reject(),
         mutateRecoveredVaultState: () => Promise.reject(),
         mutateRecoveredBalanceState: () => Promise.reject(),
@@ -105,7 +102,6 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_MUTATE_LOCS_STATE'
     | 'MUTATE_LOCS_STATE'
     | 'SET_PROTECTION_CANCEL'
-    | 'SET_PROTECTION_RESUBMIT'
     | 'SET_PROTECTION_CHANGE_LO'
     ;
 
@@ -258,11 +254,6 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                 ...state,
                 cancelProtection: action.cancelProtection!,
             }
-        case "SET_PROTECTION_RESUBMIT":
-            return {
-                ...state,
-                resubmitProtection: action.resubmitProtection!,
-            }
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -293,7 +284,6 @@ export function UserContextProvider(props: Props) {
     const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
         if(client !== null) {
             const currentAddress = accounts!.current!.accountId;
-            const forceStateFetch = currentAddress.toKey() !== contextValue.dataAddress;
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress.toKey(),
@@ -306,14 +296,10 @@ export function UserContextProvider(props: Props) {
                 let recoveredVaultState: VaultState | undefined;
                 let recoveredBalanceState: BalanceState | undefined;
                 if(currentAddress.type === "Polkadot") {
-                    if(protectionState === undefined || forceStateFetch) {
-                        protectionState = await client.protectionState();
-                    } else if(contextValue.protectionState instanceof PendingProtection) {
-                        protectionState = await contextValue.protectionState.refresh();
-                    }
+                    protectionState = await client.protectionState();
 
                     if (protectionState instanceof ActiveProtection
-                            || protectionState instanceof PendingRecovery
+                            || protectionState instanceof ActiveRecovery
                             || protectionState instanceof ClaimedRecovery) {
                         vaultState = await protectionState.vaultState();
                     }
@@ -338,7 +324,7 @@ export function UserContextProvider(props: Props) {
                 });
             })();
         }
-    }, [ dispatch, accounts, client, contextValue.protectionState, contextValue.dataAddress ]);
+    }, [ dispatch, accounts, client, contextValue.protectionState ]);
 
     useEffect(() => {
         if(client !== undefined
@@ -440,7 +426,7 @@ export function UserContextProvider(props: Props) {
 
 
     const activateProtectionCallback = useCallback(async (callback: SignCallback) => {
-        const acceptedProtection = contextValue.protectionState as AcceptedProtection;
+        const acceptedProtection = contextValue.protectionState as AcceptedRecovery;
         const protectionState = await acceptedProtection.activate({ signer: signer!, callback });
         const vaultState = await protectionState.vaultState();
         dispatch({
@@ -460,7 +446,7 @@ export function UserContextProvider(props: Props) {
     }, [ contextValue, activateProtectionCallback ]);
 
     const claimRecoveryCallback = useCallback(async (callback: SignCallback) => {
-        const pendingRecovery = contextValue.protectionState as PendingRecovery;
+        const pendingRecovery = contextValue.protectionState as ActiveRecovery;
         const protectionState = await pendingRecovery.claimRecovery({ signer: signer!, callback });
         const recoveredBalanceState = await protectionState.recoveredBalanceState();
         const recoveredVaultState = await protectionState.recoveredVaultState();
@@ -572,15 +558,6 @@ export function UserContextProvider(props: Props) {
         })
     }, [ contextValue.protectionState ])
 
-    const resubmitProtectionCallback = useCallback(async (legalOfficer: LegalOfficer) => {
-        const rejectedProtection = contextValue.protectionState as RejectedRecovery;
-        const pendingProtection = await rejectedProtection.resubmit(legalOfficer);
-        dispatch({
-            type: "REFRESH_PROTECTION_STATE",
-            protectionState: pendingProtection
-        })
-    }, [ contextValue.protectionState ])
-
     useEffect(() => {
         if (contextValue.cancelProtection !== cancelProtectionCallback) {
             dispatch({
@@ -589,15 +566,6 @@ export function UserContextProvider(props: Props) {
             });
         }
     }, [ contextValue.cancelProtection, cancelProtectionCallback]);
-
-    useEffect(() => {
-        if (contextValue.resubmitProtection !== resubmitProtectionCallback) {
-            dispatch({
-                type: "SET_PROTECTION_RESUBMIT",
-                resubmitProtection: resubmitProtectionCallback,
-            });
-        }
-    }, [ contextValue.resubmitProtection, resubmitProtectionCallback ]);
 
     return (
         <UserContextObject.Provider value={ contextValue }>
