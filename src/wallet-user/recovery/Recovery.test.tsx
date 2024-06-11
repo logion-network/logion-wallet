@@ -5,9 +5,9 @@ import {shallowRender} from "../../tests";
 import Recovery from "./Recovery";
 import { setProtectionState } from '../__mocks__/UserContextMock';
 import { PENDING_RECOVERY_REQUESTS, ACCEPTED_RECOVERY_REQUESTS, ACTIVATED_RECOVERY_REQUESTS } from "../protection/TestData";
-import { PendingProtection, AcceptedProtection, PendingRecovery, ClaimedRecovery } from "@logion/client";
+import { PendingRecovery, ClaimedRecovery, ActiveRecovery } from "@logion/client";
 import { ValidAccountId } from "@logion/node-api";
-import { RecoverySharedState } from "@logion/client/dist/Recovery.js";
+import { AcceptedRecovery, RecoverySharedState } from "@logion/client/dist/AccountRecovery.js";
 import { GUILLAUME, PATRICK } from "../../common/TestData";
 
 test("renders", () => {
@@ -17,11 +17,11 @@ test("renders", () => {
 });
 
 test("renders pending protection request", () => {
-    setProtectionState(new PendingProtection({
+    setProtectionState(new PendingRecovery({
         pendingProtectionRequests: PENDING_RECOVERY_REQUESTS,
         acceptedProtectionRequests: [],
         allRequests: PENDING_RECOVERY_REQUESTS,
-        selectedLegalOfficers: [ PATRICK, GUILLAUME ]
+        selectedLegalOfficers: [ PATRICK, GUILLAUME ],
     } as unknown as RecoverySharedState));
 
     const tree = shallowRender(<Recovery />)
@@ -30,7 +30,7 @@ test("renders pending protection request", () => {
 });
 
 test("renders accepted protection request", () => {
-    setProtectionState(new AcceptedProtection({
+    setProtectionState(new AcceptedRecovery({
         pendingProtectionRequests: [],
         acceptedProtectionRequests: ACCEPTED_RECOVERY_REQUESTS,
         allRequests: ACCEPTED_RECOVERY_REQUESTS,
@@ -43,7 +43,7 @@ test("renders accepted protection request", () => {
 });
 
 test("renders protected but not claimed", () => {
-    setProtectionState(new PendingRecovery({
+    setProtectionState(new ActiveRecovery({
         pendingProtectionRequests: [],
         acceptedProtectionRequests: ACCEPTED_RECOVERY_REQUESTS,
         allRequests: ACCEPTED_RECOVERY_REQUESTS,

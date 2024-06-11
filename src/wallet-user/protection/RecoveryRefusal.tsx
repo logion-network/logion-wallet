@@ -15,7 +15,7 @@ export interface Props {
 
 export default function RecoveryRefusal(props: Props) {
     const { recovery, refusal } = props;
-    const { cancelProtection, resubmitProtection } = useUserContext()
+    const { cancelProtection } = useUserContext()
     const rejectedState = recovery.protectionParameters.states[0];
     const currentLegalOfficer = rejectedState.legalOfficer;
     const otherState = recovery.protectionParameters.states[1];
@@ -60,13 +60,6 @@ export default function RecoveryRefusal(props: Props) {
                 </>
             }
             <div className="restart">
-                { refusal === 'single' &&
-                    <ButtonGroup>
-                        <Button onClick={ () => resubmitProtection(rejectedState.legalOfficer) }>
-                            Submit your request again
-                        </Button>
-                    </ButtonGroup>
-                }
                 <ButtonGroup>
                     <Button onClick={ cancelProtection }>
                         Cancel your recovery request

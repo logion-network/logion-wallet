@@ -5,9 +5,9 @@ import CreateProtectionRequestForm from "../protection/CreateProtectionRequestFo
 import ProtectionRecoveryRequest from '../protection/ProtectionRecoveryRequest';
 import RecoveryProcess from './RecoveryProcess';
 import {
-    AcceptedProtection,
+    AcceptedRecovery,
     NoProtection,
-    PendingProtection,
+    PendingRecovery,
     UnavailableProtection,
     RejectedRecovery
 } from "@logion/client";
@@ -33,9 +33,9 @@ export default function Recovery() {
             } else {
                 return <ProtectionRecoveryRequest type='activated' />;
             }
-        } else if(protectionState instanceof AcceptedProtection) {
+        } else if(protectionState instanceof AcceptedRecovery) {
             return <ProtectionRecoveryRequest type='accepted' />;
-        } else if(protectionState instanceof PendingProtection) {
+        } else if(protectionState instanceof PendingRecovery) {
             return <ProtectionRecoveryRequest type='pending' />;
         } else if (protectionState instanceof RejectedRecovery) {
             return <ProtectionRecoveryRequest type='rejected' />;
