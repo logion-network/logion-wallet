@@ -624,7 +624,7 @@ function buildClientHelpers(
         axiosFactory: buildAxiosFactory(client),
         isCurrentAuthenticated: () => client.isTokenValid(DateTime.now()),
         getOfficer: accountId => client.allLegalOfficers.find(legalOfficer => legalOfficer.account.equals(accountId)),
-        saveOfficer: legalOfficer => client.directoryClient.createOrUpdate(legalOfficer),
+        saveOfficer: legalOfficer => client.legalOfficerClient.createOrUpdate(legalOfficer),
         accounts,
         client: updatedClient,
     }
@@ -696,7 +696,6 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 } else {
                     logionClient = await LogionClient.create({
                         rpcEndpoints: config.rpcEndpoints,
-                        directoryEndpoint: config.directory,
                         buildFileUploader: () => new BrowserAxiosFileUploader(),
                         logionClassificationLoc: UUID.fromAnyString(config.logionClassification),
                         creativeCommonsLoc: UUID.fromAnyString(config.creativeCommons),
