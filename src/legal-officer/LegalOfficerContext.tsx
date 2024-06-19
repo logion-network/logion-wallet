@@ -548,7 +548,7 @@ export function LegalOfficerContextProvider(props: Props) {
 
             (async function() {
                 const onchainSettings = await api.queries.getLegalOfficerData(currentAddress);
-                const legalOfficer = (await client.directoryClient.getLegalOfficers()).find(legalOfficer => legalOfficer.account.equals(currentAddress));
+                const legalOfficer = (await client.legalOfficerClient.getLegalOfficers()).find(legalOfficer => legalOfficer.account.equals(currentAddress));
                 const missingSettings = getMissingSettings(legalOfficer, onchainSettings);
                 dispatch({
                     type: "SET_LEGAL_OFFICER",

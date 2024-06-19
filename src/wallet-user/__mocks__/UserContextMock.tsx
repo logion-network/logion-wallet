@@ -2,7 +2,7 @@ import { LogionNodeApiClass, Fees } from '@logion/node-api';
 
 import { twoLegalOfficers } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';
-import { AccountTokens, DirectoryClient, NoProtection, ProtectionState, LegalOfficerClass, DraftRequest } from '@logion/client';
+import { AccountTokens, LegalOfficerClient, NoProtection, ProtectionState, LegalOfficerClass, DraftRequest } from '@logion/client';
 import { AxiosFactory } from '@logion/client/dist/AxiosFactory.js';
 import { ComponentFactory } from '@logion/client/dist/ComponentFactory.js';
 import { LegalOfficerEndpoint, LogionClientConfig, SharedState } from '@logion/client/dist/SharedClient.js';
@@ -42,7 +42,7 @@ export const DEFAULT_SHARED_STATE: SharedState = {
     config: {
 
     } as LogionClientConfig,
-    directoryClient: {} as DirectoryClient,
+    legalOfficerClient: {} as LegalOfficerClient,
     legalOfficers: twoLegalOfficers,
     allLegalOfficers: twoLegalOfficers,
     networkState: {} as NetworkState<LegalOfficerEndpoint>,
