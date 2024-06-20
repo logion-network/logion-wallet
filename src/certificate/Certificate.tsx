@@ -293,6 +293,17 @@ export default function Certificate() {
                 </Container>
             }
             {
+                loc.data.voidInfo === undefined &&loc.data.status !== "CLOSED" &&
+                <Container>
+                    <div className="not-closed-frame">
+                        <NotClosedMessage loc={ loc } />
+                    </div>
+                    <div className="not-closed-stamp">
+                        <Icon icon={{id: "not_closed_certificate_background"}} />
+                    </div>
+                </Container>
+            }
+            {
                 supersededLoc !== undefined &&
                 <Container>
                     <div className="supersede-frame">
@@ -572,6 +583,22 @@ function SupersedeMessage(props: { loc: PublicLoc, redirected: boolean }) {
                         { props.loc.data.id.toDecimalString() }
                     </NewTabLink>
                     </p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+function NotClosedMessage(props: { loc: PublicLoc | undefined }) {
+    return (
+        <div className="NotClosedMessage">
+            <div className="content">
+                <div className="icon">
+                    <Icon icon={{id: 'big-warning'}} height="64px" type="png"/>
+                </div>
+                <div className="text">
+                    <h2>This Logion Legal Officer Case is not yet closed</h2>
+                    <p>It means that it should be considered as work in progress, content may still be added.</p>
                 </div>
             </div>
         </div>
