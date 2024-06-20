@@ -71,7 +71,8 @@
 }
 
 .void-frame,
-.network-frame {
+.network-frame,
+.not-closed-frame {
     border: 2px solid #e11a25;
     border-radius: 12px;
     padding: 30px;
@@ -168,6 +169,34 @@
 
 .Certificate .qrcode-container {
     text-align: center;
+}
+
+.not-closed-stamp {
+    position: fixed;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+.not-closed-stamp img {
+    height: 70vh;
+}
+
+.NotClosedMessage {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.NotClosedMessage .content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.NotClosedMessage .text {
+    margin-left: 15px;
 }
 
 @media screen and (max-width: 1400px) {
