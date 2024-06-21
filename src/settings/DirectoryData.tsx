@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { LegalOfficer } from "@logion/client";
+import { CreateOrUpdateLegalOfficer } from "@logion/client";
 import { ValidAccountId } from "@logion/node-api";
 
 import Button from "../common/Button";
@@ -370,12 +370,10 @@ export default function DirectoryData() {
     );
 }
 
-function toLegalOfficer(formValues: FormValues): LegalOfficer {
+function toLegalOfficer(formValues: FormValues): CreateOrUpdateLegalOfficer {
     return {
         account: ValidAccountId.polkadot(formValues.address),
         additionalDetails: formValues.additionalDetails,
-        name: "",
-        node: "",
         postalAddress: {
             company: formValues.company,
             line1: formValues.line1,
@@ -390,7 +388,5 @@ function toLegalOfficer(formValues: FormValues): LegalOfficer {
             email: formValues.email,
             phoneNumber: formValues.phoneNumber,
         },
-        nodeId: "",
-        region: "Europe",
     }
 }
