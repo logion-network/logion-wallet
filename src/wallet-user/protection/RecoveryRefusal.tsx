@@ -1,11 +1,10 @@
-import { RejectedRecovery } from "@logion/client";
+import { RejectedRecovery, LegalOfficerProtectionState } from "@logion/client";
 import Button from "../../common/Button";
 import { useUserContext } from "../UserContext";
 import { useCommonContext } from "../../common/CommonContext";
 import './RecoveryRefusal.css';
 import { RED } from "../../common/ColorTheme";
 import ButtonGroup from "../../common/ButtonGroup";
-import { LegalOfficerProtectionState } from "@logion/client/dist/Recovery.js";
 import { Refusal } from "./ProtectionRecoveryRequest";
 
 export interface Props {

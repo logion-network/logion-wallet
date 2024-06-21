@@ -1,6 +1,5 @@
 import { DateTime } from 'luxon';
-import { toIsoString } from "@logion/client";
-import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
+import { toIsoString, ProtectionRequest } from "@logion/client";
 
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../common/TestData";
 
@@ -29,7 +28,6 @@ export const RECOVERY_REQUESTS_HISTORY: ProtectionRequest[] = [
             country: "Belgium",
         },
         createdOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),
-        isRecovery: true,
         addressToRecover: "5EsuBEtGbx8DoKTcKYDceJudEuzzHSS6GBPhbaPh4rsYsuoL",
         status: "PENDING"
     }

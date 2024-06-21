@@ -22,7 +22,7 @@ import { SETTINGS_PATH } from '../UserPaths';
 import SelectLegalOfficer from './SelectLegalOfficer';
 
 import './ProtectionRecoveryRequest.css';
-import { ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient.js';
+import { ProtectionRequestStatus } from '@logion/client';
 import RecoveryRefusal from "./RecoveryRefusal";
 import ButtonGroup from "../../common/ButtonGroup";
 import ExtrinsicSubmissionStateView from 'src/ExtrinsicSubmissionStateView';

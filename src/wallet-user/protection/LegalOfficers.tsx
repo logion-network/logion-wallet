@@ -1,4 +1,4 @@
-import { ProtectionRequestStatus } from "@logion/client/dist/RecoveryClient.js";
+import { ProtectionRequestStatus } from "@logion/client";
 
 import './LegalOfficers.css';
 import SelectLegalOfficerAndLoc, { LegalOfficerAndLoc } from "./SelectLegalOfficerAndLoc";
