@@ -1,6 +1,6 @@
 import {
     AccountTokens,
-    LegalOfficer,
+    CreateOrUpdateLegalOfficer,
     LegalOfficerClass,
     LogionClient,
     Token,
@@ -256,7 +256,7 @@ export interface LogionChainContextType {
     authenticate: (address: ValidAccountId[]) => Promise<void>,
     authenticateAddress: (address: ValidAccountId, signer?: RawSigner) => Promise<LogionClient | undefined>,
     getOfficer?: (address: ValidAccountId | undefined) => LegalOfficerClass | undefined,
-    saveOfficer?: (legalOfficer: LegalOfficer) => Promise<void>,
+    saveOfficer?: (legalOfficer: CreateOrUpdateLegalOfficer) => Promise<void>,
     reconnect: () => void,
     tryEnableMetaMask: () => Promise<void>,
     extrinsicSubmissionState: ExtrinsicSubmissionState;
@@ -611,7 +611,7 @@ function buildClientHelpers(
     axiosFactory: AxiosFactory,
     isCurrentAuthenticated: () => boolean,
     getOfficer: (owner: ValidAccountId | undefined) => LegalOfficerClass | undefined,
-    saveOfficer: (legalOfficer: LegalOfficer) => Promise<void>,
+    saveOfficer: (legalOfficer: CreateOrUpdateLegalOfficer) => Promise<void>,
     accounts: Accounts,
     client: LogionClient,
 } {

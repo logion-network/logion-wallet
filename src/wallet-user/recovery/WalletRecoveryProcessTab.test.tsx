@@ -5,9 +5,7 @@ import { ValidAccountId, Fees, TypesAccountData, Lgnt } from "@logion/node-api";
 import { mutateRecoveredBalanceState, setProtectionState, setRecoveredBalanceState } from '../__mocks__/UserContextMock';
 
 import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
-import { ClaimedRecovery } from '@logion/client';
-import { ProtectionParameters } from '@logion/client/dist/Recovery.js';
-import { BalanceState } from '@logion/client/dist/Balance.js';
+import { ClaimedRecovery, ProtectionParameters, BalanceState } from '@logion/client';
 
 jest.mock('../../logion-chain');
 jest.mock('../../common/CommonContext');

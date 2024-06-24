@@ -1,8 +1,7 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { LegalOfficerClass } from "@logion/client";
+import { LegalOfficerClass, ProtectionRequestStatus } from "@logion/client";
 import { ValidAccountId } from "@logion/node-api";
-import { ProtectionRequestStatus } from "@logion/client/dist/RecoveryClient.js";
 
 import { ORANGE, GREEN, RED, YELLOW, BackgroundAndForegroundColors } from "../../common/ColorTheme";
 import Select, { OptionType } from '../../common/Select';
