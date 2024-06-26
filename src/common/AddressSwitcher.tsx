@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function AddressSwitcher() {
     const { logout, accounts, authenticate, selectAddress } = useLogionChain();
-    const { colorTheme, balanceState } = useCommonContext();
+    const { colorTheme, balanceState, accountsBalances } = useCommonContext();
     const [ confirm, setConfirm ] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -64,6 +64,7 @@ export default function AddressSwitcher() {
                                 onClick={ () => account.token ? selectAddressCallback(account.accountId) : undefined }
                             >
                                 <AccountAddress
+                                    balance={ accountsBalances[account.accountId.address] }
                                     account={ account }
                                     disabled={ account.token === undefined }
                                     login={ () => authenticateCallback(account.accountId) }
