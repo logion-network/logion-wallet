@@ -1,4 +1,5 @@
 import { UUID, Hash } from "@logion/node-api";
+import config from "src/config";
 
 export const PUBLIC_PATH = "/public";
 export const CERTIFICATE_RELATIVE_PATH = "/certificate/:locId";
@@ -49,7 +50,7 @@ export function fullTokensRecordsCertificate(locId: UUID, recordId: Hash, noRedi
 }
 
 export function getBaseUrl(): string {
-    return `${ window.location.protocol }//${ window.location.host }`;
+    return config.baseUrl || `${ window.location.protocol }//${ window.location.host }`;
 }
 
 export const SECRET_RECOVERY_RELATIVE_PATH = "/secret-recovery";
