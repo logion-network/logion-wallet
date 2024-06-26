@@ -29,6 +29,7 @@ export enum ExpectNewTransactionStatus {
 export function useCommonContext() {
     const commonContext:Partial<CommonContext> = {
         balanceState,
+        accountsBalances: {},
         colorTheme: COLOR_THEME,
         setColorTheme,
         refresh,

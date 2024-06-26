@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "
 import { DateTime } from 'luxon';
 import { LegalOfficerClass, BalanceState, LogionClient, Endpoint } from "@logion/client";
 import { InjectedAccount } from "@logion/extension";
-import { ValidAccountId } from "@logion/node-api";
+import { ValidAccountId, TypesAccountData } from "@logion/node-api";
 
 import { useLogionChain } from '../logion-chain';
 import { Children } from './types/Helpers';
@@ -25,6 +25,7 @@ export type Viewer = 'User' | 'LegalOfficer';
 
 export interface CommonContext {
     balanceState?: BalanceState;
+    accountsBalances: Record<string, TypesAccountData>;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
     refresh: (clearOnRefresh: boolean) => void;
@@ -87,6 +88,7 @@ function initialContextValue(): FullCommonContext {
         expectNewTransaction: () => {},
         stopExpectNewTransaction: () => {},
         setNotification: () => {},
+        accountsBalances: {},
     }
 }
 
@@ -136,6 +138,7 @@ interface Action {
     stopExpectNewTransaction?: () => void;
     notificationText?: string;
     setNotification?: (text?: string) => void;
+    accountsBalances?: Record<string, TypesAccountData>;
 }
 
 const MAX_REFRESH_COUNT = 12;
@@ -167,6 +170,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 return {
                     ...state,
                     balanceState: action.balanceState,
+                    accountsBalances: action.accountsBalances || {},
                     availableLegalOfficers: action.availableLegalOfficers!,
                     backendConfig: action.backendConfig!,
                     nodesUp,
@@ -315,6 +319,12 @@ export function CommonContextProvider(props: Props) {
                     balanceState = await client.balanceState();
                 }
 
+                const accountsBalances: Record<string, TypesAccountData> = {};
+                for (const account of accounts.all || []) {
+                    const balance = await client.logionApi.queries.getAccountData(account.accountId);
+                    accountsBalances[account.accountId.address] = balance;
+                }
+
                 const configPromises = await Promise.allSettled(client.legalOfficers.map(legalOfficer => legalOfficer.getConfig()));
                 const backendConfigs: Record<string, BackendConfig> = {};
                 for(let i = 0; i < configPromises.length; ++i) {
@@ -341,6 +351,7 @@ export function CommonContextProvider(props: Props) {
                     type: "SET_DATA",
                     dataAddress: currentAddress.toKey(),
                     balanceState,
+                    accountsBalances,
                     nodesUp,
                     nodesDown,
                     availableLegalOfficers,
