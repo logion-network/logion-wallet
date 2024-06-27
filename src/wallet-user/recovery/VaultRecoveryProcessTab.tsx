@@ -20,7 +20,6 @@ import { useUserContext } from "../UserContext";
 
 import { buildOptions } from "../protection/SelectLegalOfficer";
 import "./VaultRecoveryProcessTab.css"
-import CoinIcon from "../../components/coin/CoinIcon";
 import ExtrinsicSubmissionStateView from "../../ExtrinsicSubmissionStateView";
 import AmountCell from "../../common/AmountCell";
 import AssetNameCell from "../../common/AssetNameCell";
@@ -177,11 +176,6 @@ export default function VaultRecoveryProcessTab() {
                 <Table
                     columns={ [
                         {
-                            header: "",
-                            render: _ => <CoinIcon height="36px" />,
-                            width: "70px",
-                        },
-                        {
                             header: "Name",
                             render: coinBalance => <AssetNameCell unit={ toUnit(coinBalance.available) } />,
                             align: "left"
@@ -213,7 +207,7 @@ export default function VaultRecoveryProcessTab() {
                                             setStatus(Status.TRANSFERRING)
                                         } }
                                     >
-                                        Transfer
+                                        Recover
                                     </Button>
                                 }
                             </>,
@@ -234,11 +228,6 @@ export default function VaultRecoveryProcessTab() {
                         </EmptyTableMessage>
                     ) }
                 />
-            </div>
-            <div className="recovery-process-footer">
-                <img className="recovery-process-footer-image"
-                     src={ process.env.PUBLIC_URL + "/assets/recovery-process.png" }
-                     alt="legal officer giving key" />
             </div>
             <Dialog
                 show={ status !== Status.IDLE }

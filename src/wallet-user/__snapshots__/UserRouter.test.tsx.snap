@@ -15,10 +15,6 @@ exports[`renders 1`] = `
     path="/settings"
   />
   <Route
-    element={<Recovery />}
-    path="/recovery"
-  />
-  <Route
     element={
       <Transactions
         account={

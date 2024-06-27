@@ -1,15 +1,18 @@
 import {
+    AcceptedRecovery,
     NoProtection,
+    PendingRecovery,
+    RejectedRecovery,
     UnavailableProtection,
 } from "@logion/client";
 
 import { useUserContext } from "../UserContext";
 
-import GoToRecovery from './GoToRecovery';
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
 import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 import Loader from '../../common/Loader';
 import { FullWidthPane } from '../../common/Dashboard';
+import RecoveryProcess from "../recovery/RecoveryProcess";
 
 export default function TrustProtection() {
     const { protectionState } = useUserContext();
@@ -33,15 +36,30 @@ export default function TrustProtection() {
     if(protectionState instanceof UnavailableProtection) {
         return <ProtectionRecoveryRequest type='unavailable' />;
     } else if(protectionState instanceof NoProtection) {
-        return <CreateProtectionRequestForm isRecovery={ false } />;
+        return <CreateProtectionRequestForm />;
     } else {
-        const goToRecovery = protectionState.protectionParameters.isRecovery && !protectionState.protectionParameters.isClaimed;
-        if(goToRecovery) {
-            return <GoToRecovery />;
-        } else if(protectionState.protectionParameters.isActive) {
-            return <ProtectionRecoveryRequest type='activated' />;
+        if(protectionState.protectionParameters.isRecovery) {
+            if(protectionState.protectionParameters.isActive) {
+                if(protectionState.protectionParameters.isClaimed) {
+                    return <RecoveryProcess />;
+                } else {
+                    return <ProtectionRecoveryRequest type='activated' />;
+                }
+            } else if(protectionState instanceof AcceptedRecovery) {
+                return <ProtectionRecoveryRequest type='accepted' />;
+            } else if(protectionState instanceof PendingRecovery) {
+                return <ProtectionRecoveryRequest type='pending' />;
+            } else if (protectionState instanceof RejectedRecovery) {
+                return <ProtectionRecoveryRequest type='rejected' />;
+            } else {
+                return null;
+            }
         } else {
-            return null;
+            if(protectionState.protectionParameters.isActive) {
+                return <ProtectionRecoveryRequest type='activated' />;
+            } else {
+                return null;
+            }
         }
     }
 }

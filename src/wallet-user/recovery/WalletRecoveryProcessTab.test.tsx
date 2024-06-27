@@ -34,7 +34,7 @@ test("Recovered tokens can be transferred", async () => {
     render(<WalletRecoveryProcessTab vaultFirst={ false } />);
 
     let transferButton: HTMLElement;
-    await waitFor(() => transferButton = screen.getByRole("button", {name: "Transfer"}));
+    await waitFor(() => transferButton = screen.getByRole("button", {name: "Recover"}));
     await userEvent.click(transferButton!);
 
     let dialog: HTMLElement;

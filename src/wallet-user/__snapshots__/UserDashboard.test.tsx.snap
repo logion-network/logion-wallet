@@ -19,22 +19,6 @@ exports[`UserDashboard Given connected and account, then renders with router 1`]
         "text": "Settings",
         "to": "/user/settings",
       },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-          "icon": Object {
-            "id": "recovery",
-          },
-        },
-        "id": "recovery",
-        "onClick": [Function],
-        "text": "Recovery",
-        "to": "/user/recovery",
-      },
     ]
   }
   menuMiddle={
@@ -182,22 +166,6 @@ exports[`UserDashboard Given disconnected and accounts then empty 1`] = `
         "id": "settings",
         "text": "Settings",
         "to": "/user/settings",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-          "icon": Object {
-            "id": "recovery",
-          },
-        },
-        "id": "recovery",
-        "onClick": [Function],
-        "text": "Recovery",
-        "to": "/user/recovery",
       },
     ]
   }

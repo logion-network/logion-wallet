@@ -17,11 +17,44 @@ exports[`CreateProtectionRequestForm renders 1`] = `
   <Row>
     <Col>
       <Frame
+        className="CreateProtectionRequestFormInitiateRecovery"
+      >
+        <h3>
+          Initiate recovery
+        </h3>
+        <p>
+          If you already activated the protection on another account but lost access to it, you may recover your assets my initiating a recovery. To do so, please tick the checkbox below and follow the instructions.
+        </p>
+        <p>
+          If you want to activate the protection on a new account, leave below checkbox unticked.
+        </p>
+        <FormGroup
+          colors={
+            Object {
+              "altBackground": "#eff3fe",
+              "background": "#ffffff",
+              "foreground": "#000000",
+              "link": "#3b6cf426",
+            }
+          }
+          control={
+            <FormCheck
+              checked={false}
+              label="I want to initiate a recovery"
+              onChange={[Function]}
+              type="checkbox"
+            />
+          }
+          feedback=""
+          id="isRecovery"
+        />
+      </Frame>
+      <Frame
         className="CreateProtectionRequestFormLegalOfficers"
         disabled={false}
       >
         <h3>
-          Choose your Legal Officers
+          Select your Legal Officers
         </h3>
         <Alert
           variant="warning"

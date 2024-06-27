@@ -57,3 +57,7 @@
 .RecoveryProcess .asset-name-cell {
     line-height: 40px;
 }
+
+.RecoveryProcess .account-protection-container {
+    padding-top: 40px;
+}
