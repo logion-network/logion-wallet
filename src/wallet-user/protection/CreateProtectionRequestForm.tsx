@@ -39,16 +39,13 @@ export function getLegalOfficerAndLocs(locsState: LocsState | undefined, client:
     }
 }
 
-export interface Props {
-    isRecovery: boolean,
-}
-
-export default function CreateProtectionRequestForm(props: Props) {
+export default function CreateProtectionRequestForm() {
     const { api, client, clearSubmissionState, submitCall, extrinsicSubmissionState } = useLogionChain();
     const { colorTheme, nodesDown } = useCommonContext();
     const { createProtectionRequest, locsState, estimateFeesCreateProtectionRequest } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficerAndLoc | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficerAndLoc | null>(null);
+    const [ isRecovery, setIsRecovery ] = useState(false);
     const [ addressToRecover, setAddressToRecover ] = useState<string>("");
     const [ addressToRecoverError, setAddressToRecoverError ] = useState<string>("");
     const [ fees, setFees ] = useState<Fees>();
@@ -58,9 +55,9 @@ export default function CreateProtectionRequestForm(props: Props) {
     const canSubmit = useMemo(() => {
         return legalOfficer1 !== null
             && legalOfficer2 !== null
-            && (!props.isRecovery || addressToRecoverError === "")
+            && (!isRecovery || addressToRecoverError === "")
             && !legalOfficer1.legalOfficer.account.equals(legalOfficer2.legalOfficer.account);
-    }, [ legalOfficer1, legalOfficer2, props.isRecovery, addressToRecoverError ]);
+    }, [ legalOfficer1, legalOfficer2, isRecovery, addressToRecoverError ]);
 
     const createParams = useCallback<() => ProtectionRequestParams>(() => {
         return {
@@ -68,11 +65,11 @@ export default function CreateProtectionRequestForm(props: Props) {
                 legalOfficer1!.legalOfficer,
                 legalOfficer2!.legalOfficer,
             ],
-            addressToRecover: props.isRecovery ? ValidAccountId.polkadot(addressToRecover) : undefined,
+            addressToRecover: isRecovery ? ValidAccountId.polkadot(addressToRecover) : undefined,
             requesterIdentityLoc1: legalOfficer1!.loc,
             requesterIdentityLoc2: legalOfficer2!.loc,
         }
-    }, [ legalOfficer1, legalOfficer2, addressToRecover, props.isRecovery ]);
+    }, [ legalOfficer1, legalOfficer2, addressToRecover, isRecovery ]);
 
     useEffect(() => {
         if (fees === undefined && estimateFeesCreateProtectionRequest !== null && canSubmit) {
@@ -104,22 +101,15 @@ export default function CreateProtectionRequestForm(props: Props) {
         }
     }, [ createProtectionRequest, submitCall, clearSubmissionState, canSubmit, createParams ]);
 
-    let mainTitle;
-    if(props.isRecovery) {
-        mainTitle = "Recovery";
-    } else {
-        mainTitle = "My Logion Protection";
-    }
-
     let subTitle;
-    if(props.isRecovery) {
-        subTitle = "Start recovery process";
+    if(isRecovery) {
+        subTitle = "Initiate recovery process";
     } else {
         subTitle = "Activate my Logion Protection";
     }
 
     useEffect(() => {
-        if(!props.isRecovery) {
+        if(!isRecovery) {
             setAddressToRecoverError("");
         } else {
             const account = new AnyAccountId(addressToRecover, "Polkadot");
@@ -136,25 +126,18 @@ export default function CreateProtectionRequestForm(props: Props) {
                 setAddressToRecoverError("A valid SS58 address is required");
             }
         }
-    }, [ api, addressToRecover, client, props.isRecovery ])
-
-    let legalOfficersTitle;
-    if(props.isRecovery) {
-        legalOfficersTitle = "Select your Legal Officers";
-    } else {
-        legalOfficersTitle = "Choose your Legal Officers";
-    }
+    }, [ api, addressToRecover, client, isRecovery ])
 
     return (
         <FullWidthPane
-            mainTitle={ mainTitle }
+            mainTitle="My Logion Protection"
             subTitle={ subTitle }
             titleIcon={{
                 icon: {
-                    id: props.isRecovery ? 'recovery' : 'shield',
-                    hasVariants: props.isRecovery ? false : true,
+                    id: isRecovery ? 'recovery' : 'shield',
+                    hasVariants: isRecovery ? false : true,
                 },
-                background: props.isRecovery ? colorTheme.recoveryItems.iconGradient : undefined,
+                background: isRecovery ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
         >
             {
@@ -167,12 +150,34 @@ export default function CreateProtectionRequestForm(props: Props) {
             }
             <Row>
                 <Col>
-                    {
-                        props.isRecovery &&
-                        <Frame
-                            className="CreateProtectionRequestFormInitiateRecovery"
-                        >
-                            <h3>Initiate recovery</h3>
+                    <Frame
+                        className="CreateProtectionRequestFormInitiateRecovery"
+                    >
+                        <h3>Initiate recovery</h3>
+                        <p>
+                            If you already activated the protection on another account but lost
+                            access to it, you may recover your assets my initiating a recovery.
+                            To do so, please tick the checkbox below and follow the instructions.
+                        </p>
+                        <p>
+                            If you want to activate the protection on a new account, leave below
+                            checkbox unticked.
+                        </p>
+                        <FormGroup
+                            id="isRecovery"
+                            control={
+                                <Form.Check
+                                    label="I want to initiate a recovery"
+                                    type="checkbox"
+                                    checked={ isRecovery }
+                                    onChange={ () => setIsRecovery(!isRecovery) }
+                                />
+                            }
+                            feedback={ addressToRecoverError }
+                            colors={ colorTheme.frame }
+                        />
+                        {
+                            isRecovery &&
                             <FormGroup
                                 id="accountToRecover"
                                 label="Address to Recover"
@@ -188,16 +193,16 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 feedback={ addressToRecoverError }
                                 colors={ colorTheme.frame }
                             />
-                        </Frame>
-                    }
+                        }
+                    </Frame>
 
                     <Frame
                         className="CreateProtectionRequestFormLegalOfficers"
                         disabled={ addressToRecoverError !== "" }
                     >
-                        <h3>{ legalOfficersTitle }</h3>
+                        <h3>Select your Legal Officers</h3>
                         {
-                            props.isRecovery &&
+                            isRecovery &&
                             <Alert variant="warning">
                                 Please select the 2 legal officers you’ve selected at the creation of the account to be
                                 recovered. Please note that those Legal Officers will execute their due diligence to authorize
@@ -220,7 +225,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 setLegalOfficer1={ setLegalOfficer1 }
                                 legalOfficer2={ legalOfficer2 }
                                 setLegalOfficer2={ setLegalOfficer2 }
-                                label={ props.isRecovery ? "Select Legal Officer N°" : "Choose Legal Officer N°" }
+                                label="Select Legal Officer N°"
                             />
                         }
                     </Frame>

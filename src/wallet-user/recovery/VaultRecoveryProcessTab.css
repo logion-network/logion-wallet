@@ -4,5 +4,4 @@
 
 .VaultRecoveryProcessTab .Table .body {
     overflow-y: auto;
-    height: calc(100vh - 575px);
 }

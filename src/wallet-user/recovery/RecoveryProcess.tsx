@@ -1,3 +1,4 @@
+import { Lgnt } from '@logion/node-api';
 import { useState } from 'react';
 
 import { useCommonContext } from '../../common/CommonContext';
@@ -11,9 +12,9 @@ import { useUserContext } from '../UserContext';
 
 import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
 import VaultRecoveryProcessTab from "./VaultRecoveryProcessTab";
+import AccountProtectionFrame from '../protection/AccountProtectionFrame';
 
 import './RecoveryProcess.css';
-import { Lgnt } from '@logion/node-api';
 
 interface TabTitleProps {
     iconId: string,
@@ -47,7 +48,8 @@ export default function RecoveryProcess() {
     return (
         <FullWidthPane
             className="RecoveryProcess"
-            mainTitle="Recovery Process"
+            mainTitle="My Logion Protection"
+            subTitle="Recovery Process"
             titleIcon={ {
                 icon: {
                     id: 'recovery',
@@ -91,6 +93,10 @@ export default function RecoveryProcess() {
                     ] }
                     onSelect={ key => setTabKey(key) }
                 />
+
+                <div className="account-protection-container">
+                    <AccountProtectionFrame type='activated' />
+                </div>
             </>
         </FullWidthPane>
     );

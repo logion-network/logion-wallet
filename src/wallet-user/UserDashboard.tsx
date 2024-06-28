@@ -9,7 +9,6 @@ import {
     HOME_PATH,
     TRUST_PROTECTION_PATH,
     SETTINGS_PATH,
-    RECOVERY_PATH,
     locRequestsPath,
     ISSUER_PATH,
     TRANSACTIONS_PATH,
@@ -166,19 +165,6 @@ export default function UserDashboard() {
                 },
                 background: colorTheme.bottomMenuItems.iconGradient,
             },
-        });
-        menuBottom.push({
-            id: "recovery",
-            text: "Recovery",
-            to: RECOVERY_PATH,
-            exact: true,
-            icon: {
-                icon: {
-                    id: 'recovery'
-                },
-                background: colorTheme.recoveryItems.iconGradient,
-            },
-            onClick: refreshAll,
         });
     }
 

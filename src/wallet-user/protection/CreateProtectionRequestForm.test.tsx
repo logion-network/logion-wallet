@@ -19,7 +19,7 @@ import { LocsState } from "@logion/client";
 describe("CreateProtectionRequestForm", () => {
 
     it("renders", () => {
-        const tree = shallowRender(<CreateProtectionRequestForm isRecovery={ false } />)
+        const tree = shallowRender(<CreateProtectionRequestForm />)
         expect(tree).toMatchSnapshot();
     });
 
@@ -31,8 +31,7 @@ describe("CreateProtectionRequestForm", () => {
 
     it("should call submit", async  () => {
         setLocsState(LOCS_STATE);
-        render(<CreateProtectionRequestForm isRecovery={ false } />);
-
+        render(<CreateProtectionRequestForm />);
         await selectLegalOfficers();
 
         await clickByName("Proceed");
@@ -46,10 +45,9 @@ describe("CreateProtectionRequestForm", () => {
 
     it("should call submit for recovery and recovery already in progress", async  () => {
         setLocsState(LOCS_STATE);
-        render(<CreateProtectionRequestForm isRecovery={ true } />);
-
+        render(<CreateProtectionRequestForm />);
+        await startRecovery();
         await userEvent.type(screen.getByLabelText("Address to Recover"), TEST_WALLET_USER2.address);
-
         await selectLegalOfficers();
 
         await clickByName("Proceed");
@@ -64,11 +62,9 @@ describe("CreateProtectionRequestForm", () => {
     it("should call submit for recovery and no recovery already in progress", async  () => {
         setLocsState(LOCS_STATE);
         resetSubmitting();
-
-        render(<CreateProtectionRequestForm isRecovery={ true } />);
-
+        render(<CreateProtectionRequestForm />);
+        await startRecovery();
         await userEvent.type(screen.getByLabelText("Address to Recover"), TEST_WALLET_USER2.address);
-
         await selectLegalOfficers();
 
         await clickByName("Proceed");
@@ -80,6 +76,11 @@ describe("CreateProtectionRequestForm", () => {
         ));
     });
 });
+
+async function startRecovery() {
+    const checkbox = screen.getByLabelText("I want to initiate a recovery");
+    await userEvent.click(checkbox);
+}
 
 async function selectLegalOfficers() {
     const legalOfficer1Select = screen.getByTestId('legalOfficer1Group');

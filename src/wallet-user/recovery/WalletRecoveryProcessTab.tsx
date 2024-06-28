@@ -12,7 +12,6 @@ import IconTextRow from "../../common/IconTextRow";
 
 import { CallCallback, useLogionChain } from "../../logion-chain";
 import { useUserContext } from "../UserContext";
-import CoinIcon from "../../components/coin/CoinIcon";
 import ExtrinsicSubmissionStateView from "../../ExtrinsicSubmissionStateView";
 import AmountCell from "../../common/AmountCell";
 import { ExpectNewTransactionStatus, useCommonContext } from "../../common/CommonContext";
@@ -97,11 +96,6 @@ export default function WalletRecoveryProcessTab(props: Props) {
                 <Table
                     columns={ [
                         {
-                            header: "",
-                            render: _ => <CoinIcon height="36px" />,
-                            width: "70px",
-                        },
-                        {
                             header: "Name",
                             render: coinBalance => <AssetNameCell unit={ toUnit(coinBalance.total) } />,
                             align: "left"
@@ -119,7 +113,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
                                 variant="recovery"
                                 onClick={ () => setRecoveredCoinBalance(coinBalance) }
                             >
-                                Transfer
+                                Recover
                             </Button>,
                             width: "300px",
                         }
@@ -138,11 +132,6 @@ export default function WalletRecoveryProcessTab(props: Props) {
                         </EmptyTableMessage>
                     ) }
                 />
-            </div>
-            <div className="recovery-process-footer">
-                <img className="recovery-process-footer-image"
-                        src={ process.env.PUBLIC_URL + "/assets/recovery-process.png" }
-                        alt="legal officer giving key" />
             </div>
             <Dialog
                 show={ recoveredCoinBalance !== null }

@@ -8,7 +8,6 @@ import {
 import {
     TRUST_PROTECTION_RELATIVE_PATH,
     SETTINGS_RELATIVE_PATH,
-    RECOVERY_RELATIVE_PATH,
     TRANSACTIONS_RELATIVE_PATH,
     VAULT_TRANSACTIONS_RELATIVE_PATH,
     SETTINGS_PATH,
@@ -36,7 +35,6 @@ import { useCommonContext } from "../common/CommonContext";
 import { useUserContext } from "./UserContext";
 import Home from "./home/Home";
 import TrustProtection from "./protection/TrustProtection";
-import Recovery from "./recovery/Recovery";
 import { useLogionChain } from '../logion-chain';
 import IdentityLocRequest from "../loc/IdentityLocRequest";
 import IssuerDashboard from "./issuer/IssuerDashboard";
@@ -63,7 +61,6 @@ export default function UserRouter() {
         <Routes>
             <Route path={ TRUST_PROTECTION_RELATIVE_PATH } element={ <TrustProtection />} />
             <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ false } /> } />
-            <Route path={ RECOVERY_RELATIVE_PATH } element={ <Recovery /> } />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     account={ accounts!.current?.accountId! }
                     balance={ balanceState?.balance || null }
