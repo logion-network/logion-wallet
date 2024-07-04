@@ -79,7 +79,7 @@ async function checkFormDisabled() {
     });
 }
 
-function setupLocsState(legalOfficersWithValidIdentityLoc: LegalOfficerClass[]) {
+function setupLocsState(legalOfficersWithNonVoidIdentityLoc: LegalOfficerClass[]) {
     const draftRequest = {
         locId,
         locsState: () => locsState,
@@ -88,7 +88,7 @@ function setupLocsState(legalOfficersWithValidIdentityLoc: LegalOfficerClass[]) 
         }),
     } as DraftRequest;
     const locsState = {
-        legalOfficersWithValidIdentityLoc,
+        legalOfficersWithNonVoidIdentityLoc,
         requestTransactionLoc: () => Promise.resolve(draftRequest),
         requestCollectionLoc: () => Promise.resolve(draftRequest),
     } as unknown as LocsState;

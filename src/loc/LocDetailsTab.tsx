@@ -21,7 +21,7 @@ import { Row } from "src/common/Grid";
 import { Viewer } from "src/common/CommonContext";
 import Button from "src/common/Button";
 import Icon from "src/common/Icon";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import WarningDialog from "src/common/WarningDialog";
 import { useLocContext } from "./LocContext";
 import { useNavigate } from "react-router-dom";
@@ -242,6 +242,25 @@ export function LocDetailsTabContent(props: ContentProps) {
         });
     }, [ mutateLocState ]);
 
+    const canSubmit = useMemo(() => {
+        return loc
+            && (loc.locType === "Identity" || (legalOfficer && locState?.locsState().hasValidIdentityLoc(legalOfficer)))
+            && allLinkTargetsValid(locState);
+    }, [ loc, legalOfficer, locState ]);
+
+    const canCancel = useMemo(() => {
+        return loc && locState
+            && hasNoIncomingLink(locState)
+            && (
+                loc.locType !== "Identity"
+                || (
+                    legalOfficer
+                    && locState?.locsState().draftRequests["Transaction"].find(loc => loc.isOwner(legalOfficer.account)) === undefined
+                    && locState?.locsState().draftRequests["Collection"].find(loc => loc.isOwner(legalOfficer.account)) === undefined
+                )
+            )
+    }, [ loc, legalOfficer, locState ]);
+
     if(!loc) {
         return null;
     }
@@ -389,6 +408,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                                 <Button
                                     variant="danger"
                                     onClick={ confirmCancel }
+                                    disabled={ !canCancel }
                                 >
                                     <Icon icon={{ id: "void_inv" }}/> Cancel request
                                 </Button>
@@ -397,6 +417,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                                 loc.status === "DRAFT" &&
                                 <Button
                                     onClick={ confirmSubmit }
+                                    disabled={ !canSubmit }
                                 >
                                     <Icon icon={{ id: "submit" }}/> Submit request
                                 </Button>
@@ -460,4 +481,41 @@ export function LocDetailsTabContent(props: ContentProps) {
             <p>You are about to send your request for review to your Legal Officer.</p>
         </WarningDialog>
     </>);
+}
+
+function allLinkTargetsValid(locState: LocRequestState | null) {
+    if(locState) {
+        return locState.data().links.find(link => !targetValid(locState, link.target)) === undefined;
+    } else {
+        return false;
+    }
+}
+
+function targetValid(locState: LocRequestState, targetId: UUID) {
+    const target = locState.locsState().findByIdOrUndefined(targetId);
+    return target && target.data().status === "CLOSED" && target.data().voidInfo === undefined;
+}
+
+function hasNoIncomingLink(locState: LocRequestState) {
+    const locsState = locState.locsState();
+    const all = mergeRequests(locsState.draftRequests)
+        .concat(mergeRequests(locsState.acceptedRequests))
+        .concat(mergeRequests(locsState.rejectedRequests))
+        .concat(mergeRequests(locsState.openLocs))
+        .concat(mergeRequests(locsState.closedLocs))
+        .concat(mergeRequests(locsState.voidedLocs))
+    ;
+    return all.find(request => hasLinkTo(request, locState)) === undefined;
+}
+
+function mergeRequests(requests: Record<LocType, LocRequestState[]>) {
+    return ([] as LocRequestState[])
+        .concat(requests["Collection"])
+        .concat(requests["Identity"])
+        .concat(requests["Transaction"])
+    ;
+}
+
+function hasLinkTo(request: LocRequestState, target: LocRequestState) {
+    return request.data().links.find(link => link.target.equalTo(target.data().id)) !== undefined;
 }

@@ -36,6 +36,14 @@ exports[`DraftLocInstructions renders 1`] = `
                   Confidential documents will not be publicly available and will stay confidential between you and your Legal Officer.
                 </li>
               </ul>
+              <p>
+                You must have a valid Identity LOC In order to submit this LOC for review.
+                 
+                Also, if your LOC contains a link, its target must be closed and not void.
+              </p>
+              <p>
+                You won't be able to cancel this request if it is the target of a link in another request.
+              </p>
             </React.Fragment>
           }
         />
