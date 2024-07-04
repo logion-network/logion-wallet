@@ -301,6 +301,7 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
                 14,
               ],
             },
+            "links": Array [],
             "locType": "Transaction",
             "status": "CLOSED",
           }
@@ -344,6 +345,7 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
               14,
             ],
           },
+          "links": Array [],
           "locType": "Transaction",
           "status": "CLOSED",
         }
@@ -549,6 +551,7 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
                 14,
               ],
             },
+            "links": Array [],
             "locType": "Transaction",
             "status": "CLOSED",
           }
@@ -592,6 +595,7 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
               14,
             ],
           },
+          "links": Array [],
           "locType": "Transaction",
           "status": "CLOSED",
         }
@@ -790,6 +794,7 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
                 14,
               ],
             },
+            "links": Array [],
             "locType": "Transaction",
             "status": "OPEN",
           }
@@ -833,6 +838,7 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
               14,
             ],
           },
+          "links": Array [],
           "locType": "Transaction",
           "status": "OPEN",
         }
@@ -1044,6 +1050,7 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
                 14,
               ],
             },
+            "links": Array [],
             "locType": "Transaction",
             "status": "OPEN",
           }
@@ -1087,6 +1094,7 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
               14,
             ],
           },
+          "links": Array [],
           "locType": "Transaction",
           "status": "OPEN",
         }
@@ -1299,6 +1307,7 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
                 14,
               ],
             },
+            "links": Array [],
             "locType": "Identity",
             "status": "OPEN",
           }
@@ -1342,6 +1351,7 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
               14,
             ],
           },
+          "links": Array [],
           "locType": "Identity",
           "status": "OPEN",
         }
@@ -1553,6 +1563,7 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
                 14,
               ],
             },
+            "links": Array [],
             "locType": "Transaction",
             "status": "OPEN",
             "voidInfo": Object {},
@@ -1597,6 +1608,7 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
               14,
             ],
           },
+          "links": Array [],
           "locType": "Transaction",
           "status": "OPEN",
           "voidInfo": Object {},
@@ -1793,6 +1805,7 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
                 14,
               ],
             },
+            "links": Array [],
             "locType": "Transaction",
             "status": "OPEN",
             "voidInfo": Object {},
@@ -1837,6 +1850,7 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
               14,
             ],
           },
+          "links": Array [],
           "locType": "Transaction",
           "status": "OPEN",
           "voidInfo": Object {},

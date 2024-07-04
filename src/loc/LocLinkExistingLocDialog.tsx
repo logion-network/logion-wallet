@@ -17,8 +17,8 @@ export interface Props {
 }
 
 export default function LocLinkExistingDialog(props: Props) {
-    const { api, client } = useLogionChain();
-    const { mutateLocState, locItems } = useLocContext();
+    const { client } = useLogionChain();
+    const { mutateLocState, locItems, locState } = useLocContext();
     const { control, handleSubmit, setError, clearErrors, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
             locId: ""
@@ -32,9 +32,9 @@ export default function LocLinkExistingDialog(props: Props) {
             setError("locId", { type: "value", message: "Invalid LOC ID" })
             return
         }
-        const loc = await api!.queries.getLegalOfficerCase(locId);
+        const loc = locState?.locsState().findByIdOrUndefined(locId);
         if (!loc) {
-            setError("locId", { type: "value", message: "LOC not found on chain" })
+            setError("locId", { type: "value", message: "LOC not found" })
             return
         }
         const alreadyLinked = locItems.find(item => item.type === 'Linked LOC' && item.as<LinkData>().linkedLoc.id.toString() === locId.toString())
@@ -55,7 +55,7 @@ export default function LocLinkExistingDialog(props: Props) {
         });
         reset();
         props.exit();
-    }, [ props, locItems, api, setError, clearErrors, reset, client, mutateLocState ])
+    }, [ props, locItems, locState, setError, clearErrors, reset, client, mutateLocState ])
 
     return (
         <>

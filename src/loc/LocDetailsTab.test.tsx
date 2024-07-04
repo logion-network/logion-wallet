@@ -182,6 +182,7 @@ function buildLocMock(params: MockParameters): { loc: LocData, locState: LocRequ
         closed: params.status === "CLOSED",
         createdOn,
         closedOn: params.status === "CLOSED" ? closedOn : undefined,
+        links: [],
     } as unknown as LocData;
 
     if(params.voidLoc) {
@@ -190,10 +191,49 @@ function buildLocMock(params: MockParameters): { loc: LocData, locState: LocRequ
         };
     }
 
-    const locState = {
+    const locsState = {
+        draftRequests: {
+            Collection: [],
+            Identity: [],
+            Transaction: [],
+        },
+        openLocs: {
+            Collection: [],
+            Identity: [],
+            Transaction: [],
+        },
+        closedLocs: {
+            Collection: [],
+            Identity: [],
+            Transaction: [],
+        },
+        voidedLocs: {
+            Collection: [],
+            Identity: [],
+            Transaction: [],
+        },
+        pendingRequests: {
+            Collection: [],
+            Identity: [],
+            Transaction: [],
+        },
+        rejectedRequests: {
+            Collection: [],
+            Identity: [],
+            Transaction: [],
+        },
+        acceptedRequests: {
+            Collection: [],
+            Identity: [],
+            Transaction: [],
+        },
+    };
 
+    const locState = {
         isLogionIdentity: () => params.isLogionIdentityLoc === true,
         isLogionData: () => params.locType === "Collection" || params.locType === "Transaction",
+        locsState: () => locsState,
+        data: () => loc,
     } as unknown as LocRequestState;
 
     return { loc, locState };

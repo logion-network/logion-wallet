@@ -32,6 +32,16 @@ export default function DraftLocInstructions(props: Props) {
                                         <li>Public data will be publicly available on the logion blockchain and public certificate.</li>
                                         <li>Confidential documents will not be publicly available and will stay confidential between you and your Legal Officer.</li>
                                     </ul>
+                                    {
+                                        props.locType !== "Identity" &&
+                                        <p>You must have a valid Identity LOC In order to submit this LOC for review.{" "}
+                                            Also, if your LOC contains a link, its target must be closed and not void.</p>
+                                    }
+                                    <p>You won't be able to cancel this request if it is the target of a link in another request.</p>
+                                    {
+                                        props.locType === "Identity" &&
+                                        <p>You won't be able to cancel this request as long as other requests rely on it.</p>
+                                    }
                                 </>
                             }
                         />

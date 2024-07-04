@@ -25,9 +25,9 @@ export default function DataLocRequest(props: Props) {
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficerClass | null>(null);
     const { locsState } = useUserContext();
     const navigate = useNavigate();
-    const legalOfficersWithValidIdentityLoc = useMemo(() => {
+    const legalOfficersWithNonVoidIdentityLoc = useMemo(() => {
         if (locsState !== undefined) {
-            return locsState.legalOfficersWithValidIdentityLoc
+            return locsState.legalOfficersWithNonVoidIdentityLoc
         } else {
             return []
         }
@@ -42,12 +42,12 @@ export default function DataLocRequest(props: Props) {
         >
             <Row>
                 <Col md={ 6 }>
-                    { legalOfficersWithValidIdentityLoc.length > 0 &&
+                    { legalOfficersWithNonVoidIdentityLoc.length > 0 &&
                         <Frame>
                             <SelectLegalOfficer
                                 legalOfficer={ legalOfficer }
                                 legalOfficerNumber={ 1 }
-                                legalOfficers={ legalOfficersWithValidIdentityLoc }
+                                legalOfficers={ legalOfficersWithNonVoidIdentityLoc }
                                 mode="select"
                                 otherLegalOfficer={ null }
                                 setLegalOfficer={ setLegalOfficer }
@@ -57,7 +57,7 @@ export default function DataLocRequest(props: Props) {
                             />
                         </Frame>
                     }
-                    { legalOfficersWithValidIdentityLoc.length > 0 &&
+                    { legalOfficersWithNonVoidIdentityLoc.length > 0 &&
                         <Frame className="request-additional-id-loc-frame">
                             <p className="info-text">If you do not see the Logion Legal officer you are looking for,
                                 please request an Identity LOC to the Logion Legal Officer of your choice by
@@ -67,7 +67,7 @@ export default function DataLocRequest(props: Props) {
                             </ButtonGroup>
                         </Frame>
                     }
-                    { legalOfficersWithValidIdentityLoc.length === 0 &&
+                    { legalOfficersWithNonVoidIdentityLoc.length === 0 &&
                         <Frame className="request-id-loc-frame">
                             <p className="info-text">To submit a { locType } LOC request, you must select a Logion Legal
                                 Officer who already executed an Identity LOC linked to your Polkadot address.</p>
