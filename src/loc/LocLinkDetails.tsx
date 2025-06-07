@@ -6,6 +6,7 @@ import { LinkItem } from "./LocItem";
 import NewTabLink from "../common/NewTabLink";
 import CopyPasteButton from "../common/CopyPasteButton";
 import LocItemEstimatedFees from "./LocItemEstimatedFees";
+import { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 export interface Props {
     item: LinkItem;
@@ -23,7 +24,7 @@ export default function LocLinkDetails(props: Props) {
                     </>
                 }
                 <div className="frame-title">{ props.item.isPublishedOrAcknowledged() ? "Published data" : "Data to be published" }</div>
-                <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.data().nature.validValue() : "-" }</LocItemDetail>
+                <LocItemDetail label="Public Description">{ props.item.hasData() ? validValueOrHex(props.item.data().nature) : "-" }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
                     { props.item.submitter?.address || "-" }
                 </LocItemDetail>

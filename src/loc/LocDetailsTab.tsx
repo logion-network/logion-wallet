@@ -32,6 +32,7 @@ import { createDocumentTemplateItem, createLinkTemplateItem, createMetadataTempl
 import { useLogionChain } from "src/logion-chain";
 import { CollectionInfo } from "./CollectionInfo";
 import { TransactionInfo } from "./TransactionInfo";
+import { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 export interface Props {
     loc: LocData;
@@ -150,7 +151,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                     const templateLinks = new Set<string>();
                     if(loc.status !== "CLOSED") {
                         for(const documentTemplate of theTemplate.documents) {
-                            const file = loc.files.find(item => item.nature.validValue() === documentTemplate.publicDescription);
+                            const file = loc.files.find(item => validValueOrHex(item.nature) === documentTemplate.publicDescription);
                             if(file) {
                                 templateDocuments.add(file.nature.validValue());
                             }
@@ -158,7 +159,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                         }
 
                         for(const dataTemplate of theTemplate.metadata) {
-                            const data = loc.metadata.find(item => item.name.validValue() === dataTemplate.name);
+                            const data = loc.metadata.find(item => validValueOrHex(item.name) === dataTemplate.name);
                             if(data) {
                                 templateItems.add(data.name.validValue());
                             }
@@ -166,7 +167,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                         }
 
                         for(const linkTemplate of theTemplate.links) {
-                            const link = loc.links.find(item => item.nature.validValue() === linkTemplate.publicDescription);
+                            const link = loc.links.find(item => validValueOrHex(item.nature) === linkTemplate.publicDescription);
                             let linkData: LinkData | undefined;
                             if(link) {
                                 templateLinks.add(link.nature.validValue());
@@ -179,9 +180,9 @@ export function LocDetailsTabContent(props: ContentProps) {
                     setTemplateItems(items);
 
                     const customItems = locItems.filter(item =>
-                        (item.type === "Linked LOC" && !templateLinks.has(item.as<LinkData>().nature.validValue()))
-                        || (item.type === "Data" && !templateItems.has(item.as<MetadataData>().name.validValue()))
-                        || (item.type === "Document" && !templateDocuments.has(item.as<FileData>().nature.validValue()))
+                        (item.type === "Linked LOC" && !templateLinks.has(validValueOrHex(item.as<LinkData>().nature)))
+                        || (item.type === "Data" && !templateItems.has(validValueOrHex(item.as<MetadataData>().name)))
+                        || (item.type === "Document" && !templateDocuments.has(validValueOrHex(item.as<FileData>().nature)))
                     );
                     setCustomItems(customItems);
                 })();

@@ -29,6 +29,7 @@ import CellWithCopyPaste from "src/components/table/CellWithCopyPaste";
 import { useResponsiveContext } from "src/common/Responsive";
 import ViewCertificateButton from "./ViewCertificateButton";
 import ViewQrCodeButton from "./ViewQrCodeButton";
+import { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 export interface Props {
     collectionLoc: LocData;
@@ -179,7 +180,7 @@ function CollectionLocItemChecker(props: LocalProps) {
         },
         {
             header: "Description",
-            render: item => <Cell content={ item.description.validValue() } overflowing tooltipId={ `description-${ item.id.toHex() }` } />,
+            render: item => <Cell content={ validValueOrHex(item.description) } overflowing tooltipId={ `description-${ item.id.toHex() }` } />,
             align: "left",
         },
         {

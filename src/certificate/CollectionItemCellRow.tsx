@@ -10,6 +10,7 @@ import MenuIcon from "src/common/MenuIcon";
 import ClaimAssetButton from "./ClaimAssetButton";
 import { customClassName } from "src/common/types/Helpers";
 import { CertificateItemDetails } from "src/components/certificateitemdetails/CertificateItemDetails";
+import { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 export interface Props {
     locId: UUID,
@@ -50,7 +51,7 @@ export default function CollectionItemCellRow(props: Props) {
                                 <li className={ props.checkResult?.collectionItemFile?.hash === file.hash ? "matched" : ""}>
                                     <Row>
                                         <Col md={ 8 }>
-                                            { file.name.validValue() } ({ file.contentType.validValue() }, { file.size.toString() } bytes)
+                                            { validValueOrHex(file.name) } ({ validValueOrHex(file.contentType) }, { file.size.toString() } bytes)
                                         </Col>
                                         <Col md={ 3 }>
                                             {
@@ -61,7 +62,7 @@ export default function CollectionItemCellRow(props: Props) {
                                                     item={ item }
                                                     file={{
                                                         hash: file.hash,
-                                                        name: file.name.validValue(),
+                                                        name: validValueOrHex(file.name),
                                                         type: "Item",
                                                     }}
                                                     tokenForDownload={ tokenForDownload }

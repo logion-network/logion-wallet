@@ -7,6 +7,7 @@ import LocItemDetail from "./LocItemDetail";
 import './LocItemDetails.css'
 import { FileItem } from "./LocItem";
 import LocItemEstimatedFees from "./LocItemEstimatedFees";
+import { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 export interface Props {
     item: FileItem;
@@ -34,7 +35,7 @@ export default function LocPrivateFileDetails(props: Props) {
                         </>
                     }
                     <div className="frame-title">{ props.item.isPublishedOrAcknowledged() ? "Published document related data" : "Document related data to be published" }</div>
-                    <LocItemDetail label="Public Description">{ props.item.hasData() ? props.item.data().nature.validValue() : null }</LocItemDetail>
+                    <LocItemDetail label="Public Description">{ props.item.hasData() ? validValueOrHex(props.item.data().nature) : null }</LocItemDetail>
                     {
                         props.fileName !== undefined &&
                         <LocItemDetail label="File name">{ props.fileName }</LocItemDetail>

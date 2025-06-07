@@ -7,6 +7,7 @@ import ClaimAssetButton from "./ClaimAssetButton";
 import { Row } from "../common/Grid";
 import { Col } from "react-bootstrap";
 import { customClassName } from "src/common/types/Helpers";
+import { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 export interface TokensRecordsProps {
     locId: UUID,
@@ -55,7 +56,7 @@ function TokensRecordCell(props: TokensRecordCellProps) {
     const { tokensRecord } = props;
     return (
         <div className="TokensRecordCell">
-            <TRCell label="Description">{ tokensRecord.description.validValue() }</TRCell>
+            <TRCell label="Description">{ validValueOrHex(tokensRecord.description) }</TRCell>
             <TRCell label="Timestamp">
                 <InlineDateTime dateTime={ tokensRecord.addedOn } />
             </TRCell>
@@ -77,8 +78,8 @@ function TokensRecordFileCell(props: TokensRecordFileCellProps) {
     return (
         <Row className={className}>
             <Col md={ 8 }>
-                <strong>{ tokensRecordFile.name.validValue() }</strong>
-                <TRCell label="File type">{ tokensRecordFile.contentType.validValue() }</TRCell>
+                <strong>{ validValueOrHex(tokensRecordFile.name) }</strong>
+                <TRCell label="File type">{ validValueOrHex(tokensRecordFile.contentType) }</TRCell>
                 <TRCell label="File size">{ tokensRecordFile.size.toString() } (bytes)</TRCell>
                 <TRCell label="Hash">{ tokensRecordFile.hash.toHex() }</TRCell>
             </Col>
@@ -90,7 +91,7 @@ function TokensRecordFileCell(props: TokensRecordFileCellProps) {
                     record={ tokensRecord }
                     file={ {
                         hash: tokensRecordFile.hash,
-                        name: tokensRecordFile.name.validValue(),
+                        name: validValueOrHex(tokensRecordFile.name),
                         type: "TokensRecord",
                     } }
                     tokenForDownload={ tokenForDownload }

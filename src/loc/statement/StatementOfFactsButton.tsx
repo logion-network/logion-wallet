@@ -26,6 +26,7 @@ import {
     getTokensRecordDeliveries
 } from "../FileModel";
 import { creativeCommonsBadges } from "../../components/license/CreativeCommonsIcon";
+import { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
@@ -179,12 +180,12 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 locId: locData.id.toDecimalString(),
                 requester,
                 publicItems: locData.metadata.map(item => ({
-                    description: item.name.validValue(),
-                    content: item.value.validValue(),
+                    description: validValueOrHex(item.name),
+                    content: validValueOrHex(item.value),
                     timestamp: item.addedOn?.toISO() || "",
                 })),
                 privateItems: locData.files.map(item => ({
-                    publicDescription: item.nature.validValue(),
+                    publicDescription: validValueOrHex(item.nature),
                     privateDescription: item.name,
                     hash: item.hash.toHex(),
                     timestamp: item.addedOn?.toISO() || "",
@@ -193,16 +194,16 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 collectionItem: (props.item ? {
                     id: props.item.id.toHex(),
                     addedOn: props.item.addedOn,
-                    description: props.item.description.validValue(),
+                    description: validValueOrHex(props.item.description),
                     restrictedDelivery: props.item.restrictedDelivery,
                     token: props.item.token ? {
-                        type: props.item.token.type.validValue(),
-                        id: props.item.token.id.validValue(),
+                        type: validValueOrHex(props.item.token.type),
+                        id: validValueOrHex(props.item.token.id),
                     } : undefined,
                     files: props.item.files.map(file => ({
                         hash: file.hash.toHex(),
-                        name: file.name.validValue(),
-                        contentType: file.contentType.validValue(),
+                        name: validValueOrHex(file.name),
+                        contentType: validValueOrHex(file.contentType),
                         size: file.size.toString(),
                         deliveries: toSofDeliveries(file, deliveries),
                     })),
@@ -238,13 +239,13 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 oathText: settings!['oath'] || "-",
                 tokensRecords: tokensRecords.map(record => ({
                     id: record.id.toHex(),
-                    description: record.description.validValue(),
+                    description: validValueOrHex(record.description),
                     issuer: record.issuer.address,
                     addedOn: record.addedOn,
                     files: record.files.map(file => ({
                         hash: file.hash.toHex(),
-                        name: file.name.validValue(),
-                        contentType: file.contentType.validValue(),
+                        name: validValueOrHex(file.name),
+                        contentType: validValueOrHex(file.contentType),
                         size: file.size.toString(),
                         deliveries: toSofDeliveries(file, tokensRecordFileDeliveries[record.id.toHex()]),
                     })),
