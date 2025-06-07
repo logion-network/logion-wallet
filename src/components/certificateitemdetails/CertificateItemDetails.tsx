@@ -5,7 +5,7 @@ import CertificateDateTimeCell from "src/certificate/CertificateDateTimeCell";
 import TermsAndConditions from "src/certificate/TermsAndConditions";
 
 import "./CertificateItemDetails.css";
-import InlineHashString from "../inlinehashstring/InlineHashString";
+import InlineHashString, { validValueOrHex } from "../inlinehashstring/InlineHashString";
 
 export interface Props {
     item: CollectionItem;
@@ -41,10 +41,10 @@ export function CertificateItemDetails(props: Props) {
             token !== undefined &&
             <Row>
                 <CertificateCell md={ 4 } label="Underlying Token Type:">
-                    { token.type.validValue() }
+                    { validValueOrHex(token.type) }
                 </CertificateCell>
                 <CertificateCell md={ 8 } label="Underlying Token ID:">
-                    <pre>{ token.id.validValue() }</pre>
+                    <pre>{ validValueOrHex(token.id) }</pre>
                 </CertificateCell>
             </Row>
         }

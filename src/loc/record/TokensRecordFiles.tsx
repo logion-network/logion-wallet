@@ -16,6 +16,7 @@ import ButtonGroup from "../../common/ButtonGroup";
 import Col from "react-bootstrap/Col";
 import { Row } from "../../common/Grid";
 import "./TokensRecordFiles.css";
+import { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 export interface Props {
     record: TokensRecord;
@@ -46,8 +47,8 @@ function TokensRecordFileCell(props: Props & { loc: LocData, file: UploadableIte
     return (
         <Row className="TokensRecordFile">
             <Col md={ 7 }>
-                <Row><strong>{ file.name.validValue() }</strong></Row>
-                <TRCell label="File type" value={ file.contentType.validValue() } />
+                <Row><strong>{ validValueOrHex(file.name) }</strong></Row>
+                <TRCell label="File type" value={ validValueOrHex(file.contentType) } />
                 <TRCell label="File size" value={ `${ file.size.toString() } (bytes)`} />
                 <TRCell label="Hash" value={ file.hash.toHex() } />
             </Col>
@@ -55,7 +56,7 @@ function TokensRecordFileCell(props: Props & { loc: LocData, file: UploadableIte
                 <ButtonGroup>
                     <ViewFileButton
                         nodeOwner={ loc.ownerAccountId }
-                        fileName={ file.name.validValue() }
+                        fileName={ validValueOrHex(file.name) }
                         downloader={ (axios) => getTokensRecordFileSource(axios, {
                             locId: loc.id.toString(),
                             recordId: record.id,

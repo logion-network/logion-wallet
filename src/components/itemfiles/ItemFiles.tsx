@@ -12,6 +12,7 @@ import FrameTitle from "../frametitle/FrameTitle";
 
 import "./ItemFiles.css";
 import ViewFileButton from "src/common/ViewFileButton";
+import { validValueOrHex } from "../inlinehashstring/InlineHashString";
 
 export interface DeliveredFile {
     name: HashString;
@@ -83,12 +84,12 @@ export default function ItemFiles(props: Props) {
                 columns={[
                     {
                         header: "Name",
-                        render: file => <Cell content={ file.name.validValue() } />,
+                        render: file => <Cell content={ validValueOrHex(file.name) } />,
                         align: "left",
                     },
                     {
                         header: "Type",
-                        render: file => <Cell content={ file.contentType.validValue() } />,
+                        render: file => <Cell content={ validValueOrHex(file.contentType) } />,
                         align: "left",
                     },
                     {
@@ -101,7 +102,7 @@ export default function ItemFiles(props: Props) {
                         render: file => <Cell content={
                             <ViewFileButton
                                 nodeOwner={ props.collectionLoc.ownerAccountId }
-                                fileName={ file.name.validValue() }
+                                fileName={ validValueOrHex(file.name) }
                                 downloader={ () => props.downloader(file.hash) }
                             />
                         } />,

@@ -8,6 +8,10 @@ export default function InlineHashString(props: Props) {
     return <>{ validValueOrHex(props.value) }</>;
 }
 
-export function validValueOrHex(hashString: HashString): string {
-    return hashString.isValidValue() ? hashString.validValue() : hashString.hash.toHex();
+export function validValueOrHex(hashString: HashString | undefined): string {
+    if(hashString) {
+        return hashString && hashString.isValidValue() ? hashString.validValue() : hashString.hash.toHex();
+    } else {
+        return "-";
+    }
 }

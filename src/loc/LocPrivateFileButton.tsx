@@ -13,6 +13,7 @@ import { useLocContext } from "./LocContext";
 import { EditableRequest, HashOrContent } from "@logion/client";
 import { Hash } from "@logion/node-api";
 import { BrowserFile } from "@logion/client-browser";
+import { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 type Status = 'Idle' | 'UploadDialog' | 'Hashing' | 'Uploading';
 
@@ -138,7 +139,7 @@ export function LocPrivateFileButton(props: Props) {
                 <p>A document with hash</p>
                 <p>{ duplicateHash?.toHex() }</p>
                 <p>already exists in this LOC:</p>
-                <p>{ existingItem?.data().nature.validValue() }</p>
+                <p>{ validValueOrHex(existingItem?.data().nature) }</p>
             </Dialog>
         </>
     )

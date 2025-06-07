@@ -15,6 +15,7 @@ import ButtonGroup from "../../common/ButtonGroup";
 import CopyPasteButton from "../../common/CopyPasteButton";
 import ViewQrCodeButton from "../ViewQrCodeButton";
 import { useResponsiveContext } from "../../common/Responsive";
+import { validValueOrHex } from "src/components/inlinehashstring/InlineHashString";
 
 const LARGE_TOKENS_RECORDS_SET_SIZE = 1000;
 
@@ -58,7 +59,7 @@ export default function TokensRecordTable(props: Props) {
         },
         {
             header: "Description",
-            render: record => <Cell content={ record.description.validValue() } />,
+            render: record => <Cell content={ validValueOrHex(record.description) } />,
             align: "left",
         },
         {
